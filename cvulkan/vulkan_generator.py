@@ -127,6 +127,7 @@ def main():
     add_pyobject()
     add_extension_functions()
     add_proc_addr_functions()
+    add_macros_functions()
     add_pyvk_functions()
     add_pymethod()
     add_pymodule()
@@ -821,6 +822,9 @@ def add_constants():
             value = constant["@value"]
             add_result(name, value)
 
+    # Custom constants
+    add_result('VK_API_VERSION_1_0', 'VK_API_VERSION_1_0')
+
     text = '\n\n'
     text += ';\n'.join(result)
     text += ';\n'
@@ -1127,6 +1131,43 @@ def add_proc_addr_functions():
         ''')
 
 
+def add_macros_functions():
+    out.write('''
+        static PyObject *
+        PyVK_MAKE_VERSION(PyObject *self, PyObject *args) {
+            const int major, minor, patch;
+            if (!PyArg_ParseTuple(args, "iii", &major, &minor, &patch))
+                return NULL;
+            return PyLong_FromLong(
+                (((major) << 22) | ((minor) << 12) | (patch)));
+        }
+
+        static PyObject *
+        PyVK_VERSION_MAJOR(PyObject *self, PyObject *args) {
+            const int version;
+            if (!PyArg_ParseTuple(args, "i", &version))
+                return NULL;
+            return PyLong_FromLong(((uint32_t)(version) >> 22));
+        }
+
+        static PyObject *
+        PyVK_VERSION_MINOR(PyObject *self, PyObject *args) {
+            const int version;
+            if (!PyArg_ParseTuple(args, "i", &version))
+                return NULL;
+            return PyLong_FromLong((((uint32_t)(version) >> 12) & 0x3ff));
+        }
+
+        static PyObject *
+        PyVK_VERSION_PATCH(PyObject *self, PyObject *args) {
+            const int version;
+            if (!PyArg_ParseTuple(args, "i", &version))
+                return NULL;
+            return PyLong_FromLong(((uint32_t)(version) & 0xfff));
+        }
+        ''')
+
+
 def add_extension_functions():
     """Extension functions
 
@@ -1221,7 +1262,17 @@ def add_pymethod():
                       'value': 'load_sdk',
                       'arg': 'METH_NOARGS',
                       'doc': '"Load SDK"'})
+
+    # Add getProcAddr functions
     for name in ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr'):
+        functions.append({'name': name,
+                          'value': '(PyCFunction)Py%s' % name,
+                          'arg': 'METH_VARARGS',
+                          'doc': '""'})
+
+    # Add macros
+    for name in ('VK_MAKE_VERSION', 'VK_VERSION_MAJOR', 'VK_VERSION_MINOR',
+                 'VK_VERSION_PATCH'):
         functions.append({'name': name,
                           'value': '(PyCFunction)Py%s' % name,
                           'arg': 'METH_VARARGS',

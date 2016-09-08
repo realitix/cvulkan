@@ -3,7 +3,7 @@ from setuptools import setup, find_packages, Extension
 vulkanmodule = Extension('vulkan',
                          sources=['cvulkan/vulkanmodule.c'])
 setup(
-    name="vulkan",
+    name="cvulkan",
     version="0.1",
     packages=find_packages(),
     author="realitix",
