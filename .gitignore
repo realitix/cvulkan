@@ -87,3 +87,8 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+cvulkan/cache_vk_plateform.h
+cvulkan/cache_vk.xml
+cvulkan/cache_vulkan.h
+
