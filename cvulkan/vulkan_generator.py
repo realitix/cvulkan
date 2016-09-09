@@ -68,6 +68,7 @@ MAPPING_EXTENSION_DEFINE = {
     'vkCreateXlibSurfaceKHR': 'VK_USE_PLATFORM_XLIB_KHR'
 }
 
+CUSTOM_COMMANDS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr')
 
 vulkan_plateform = None
 vulkan_h = None
@@ -864,10 +865,9 @@ def add_initsdk():
 
 
 def add_pyvk_functions():
-    custom_commands = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr')
     for command in commands:
         cname = command['proto']['name']
-        if cname in custom_commands or cname in vk_extension_functions:
+        if cname in CUSTOM_COMMANDS or cname in vk_extension_functions:
             continue
         cname = command['proto']['name']
         add_pyvk_function(command)
@@ -1286,10 +1286,9 @@ def add_pymethod():
                           'doc': '"Handle"'})
 
     # Add vk command
-    custom_commands = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr')
     for command in commands:
         cname = command['proto']['name']
-        if cname in custom_commands or cname in vk_extension_functions:
+        if cname in CUSTOM_COMMANDS or cname in vk_extension_functions:
             continue
         functions.append({'name': command['proto']['name'],
                           'value': ('(PyCFunction) Py' +
