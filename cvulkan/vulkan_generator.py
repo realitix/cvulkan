@@ -359,11 +359,14 @@ def pyobject_to_val():
         return 'tmp' + str(random.randrange(99999999))
 
     arraychar_convert = '''
-        PyObject * {0} = PyUnicode_AsASCIIString({{member}});
-        char* {1} = PyBytes_AsString({0});
-        char* {2} = strdup({1});
-        {{member_struct}} = {2};
-        Py_DECREF({0});
+        if ({{member}} == Py_None) {{{{ {{member_struct}} = NULL; }}}}
+        else {{{{
+            PyObject * {0} = PyUnicode_AsASCIIString({{member}});
+            char* {1} = PyBytes_AsString({0});
+            char* {2} = strdup({1});
+            {{member_struct}} = {2};
+            Py_DECREF({0});
+        }}}}
         '''.format(rand_name(), rand_name(), rand_name())
 
     listchar_convert = '''
@@ -1023,7 +1026,7 @@ def add_pyvk_function(command, pyfunction=None):
                 PyObject* pyreturn = PyObject_Call((PyObject *)&Py{0}Type,
                                                    NULL, NULL);
                 memcpy(((Py{0}*)pyreturn)->base,
-                       values + i*sizeof({0}), sizeof({0}));
+                       values + i, sizeof({0}));
             '''.format(return_object['type'])
 
         definition += '''
