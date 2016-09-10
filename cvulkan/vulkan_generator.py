@@ -70,6 +70,9 @@ MAPPING_EXTENSION_DEFINE = {
 
 CUSTOM_COMMANDS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr')
 
+# Members which must always be null
+NULL_MEMBERS = ('pNext',)
+
 vulkan_plateform = None
 vulkan_h = None
 vk_xml = None
@@ -584,6 +587,8 @@ def val_to_pyobject(member):
 
 
 def extracts_vars(members, optional=True, return_error='-1'):
+    members = [m for m in members if m not in NULL_MEMBERS]
+
     if not members:
         return ''
 
@@ -615,6 +620,7 @@ def extracts_vars(members, optional=True, return_error='-1'):
 
 
 def add_pyobject():
+
     def add_struct(s):
         definition = '''
             typedef struct {{ PyObject_HEAD {0} *base; }}
@@ -685,6 +691,10 @@ def add_pyobject():
     def add_init_py_to_val(members):
         result = ''
         for member in members:
+            if member['name'] in NULL_MEMBERS:
+                result = '\n(self->base)->%s = NULL;\n' % member['name']
+                continue
+
             name = get_member_type_name(member)
             val = pyobject_to_val().get(name, None)
             if not val:
