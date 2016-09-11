@@ -7,7 +7,6 @@ vkLoadSdk()
 # Create instance
 print("- create vkapplicationinfo")
 appInfo = VkApplicationInfo(
-    sType=VK_STRUCTURE_TYPE_APPLICATION_INFO,
     pApplicationName="Hello Triangle",
     applicationVersion=VK_MAKE_VERSION(1, 0, 0),
     pEngineName="No Engine",
@@ -16,18 +15,25 @@ appInfo = VkApplicationInfo(
 
 print("- list extensions")
 extensions = vkEnumerateInstanceExtensionProperties(None)
-print("availables: %s" % [e.extensionName for e in extensions])
+extensions = [e.extensionName for e in extensions]
+print("availables: %s" % extensions)
 
 print("- list layers")
 layers = vkEnumerateInstanceLayerProperties(None)
-print("availables: %s" % [l.layerName for l in layers])
+layers = [l.layerName for l in layers]
+print("availables: %s" % layers)
 
-print("- create instance")
+print("- create instance info")
 createInfo = VkInstanceCreateInfo(
-    sType=VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
     flags=0,
     pApplicationInfo=appInfo,
     enabledExtensionCount=len(extensions),
     ppEnabledExtensionNames=extensions,
     enabledLayerCount=len(layers),
     ppEnabledLayerNames=layers)
+
+print("- create instance")
+instance = vkCreateInstance(pCreateInfo=createInfo)
+
+print("- get vkCreateDebugReportCallback function")
+vkCreateDebugReportCallback = vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT")

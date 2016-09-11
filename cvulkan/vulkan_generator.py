@@ -71,7 +71,10 @@ MAPPING_EXTENSION_DEFINE = {
 CUSTOM_COMMANDS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr')
 
 # Members which must always be null
-NULL_MEMBERS = ('pNext',)
+NULL_MEMBERS = ('pNext', 'pAllocator')
+
+# Members which must be filled automatically
+AUTO_MEMBERS = ('sType',)
 
 vulkan_plateform = None
 vulkan_h = None
@@ -377,8 +380,16 @@ def pyobject_to_val():
         char** {1} = malloc(sizeof(char*)*{0} + 1);
         int {2};
         for ({2} = 0; {2} < {0}; {2}++) {{{{
-            PyObject* ascii_str = PyUnicode_AsASCIIString(
-            PyList_GetItem({{member}}, {2}));
+            PyObject* item = PyList_GetItem({{member}}, {2});
+            if (item == NULL) return -1;
+
+            PyObject* ascii_str = PyUnicode_AsASCIIString(item);
+            if (ascii_str == NULL) {{{{
+                PyErr_SetString(PyExc_TypeError,
+                "{{member}} must be a list of strings");
+                return -1;
+            }}}}
+
             char* tmp2 = PyBytes_AsString(ascii_str);
             {1}[{2}] = strdup(tmp2);
             Py_DECREF(ascii_str);
@@ -586,8 +597,9 @@ def val_to_pyobject(member):
     return None
 
 
-def extracts_vars(members, optional=True, return_error='-1'):
-    members = [m for m in members if m not in NULL_MEMBERS]
+def extracts_vars(members, return_error='-1'):
+    members = [m for m in members
+               if m not in NULL_MEMBERS and m not in AUTO_MEMBERS]
 
     if not members:
         return ''
@@ -607,8 +619,6 @@ def extracts_vars(members, optional=True, return_error='-1'):
     final_result += result + '\n'
 
     result = 'PyArg_ParseTupleAndKeywords(args, kwds, "'
-    if optional:
-        result += '|'
     result += 'O' * len(members)
     result += '", kwlist'
     for member in members:
@@ -692,7 +702,12 @@ def add_pyobject():
         result = ''
         for member in members:
             if member['name'] in NULL_MEMBERS:
-                result = '\n(self->base)->%s = NULL;\n' % member['name']
+                result += '\n(self->base)->%s = NULL;\n' % member['name']
+                continue
+
+            if member['name'] in AUTO_MEMBERS:
+                result += '\n(self->base)->%s = %s;\n' % (member['name'],
+                                                         member['@values'])
                 continue
 
             name = get_member_type_name(member)
@@ -920,6 +935,9 @@ def add_pyvk_function(command, pyfunction=None):
             return result
 
         for member in members:
+            if member['name'] in NULL_MEMBERS:
+                result += '\nreturn_struct.%s = NULL;\n' % member['name']
+                continue
             name = get_member_type_name(member)
             val = pyobject_to_val().get(name, None)
             if not val:
@@ -958,8 +976,7 @@ def add_pyvk_function(command, pyfunction=None):
                               PyObject *kwds) {
         ''' % (pyfunction if pyfunction else cname))
     var_names = [p['name'] for p in command['param']][:num_param]
-    definition += extracts_vars(var_names, optional=False,
-                                return_error='NULL')
+    definition += extracts_vars(var_names, return_error='NULL')
     definition += add_return_struct(command['param'][:num_param])
     definition += add_py_to_val(command['param'][:num_param])
 
