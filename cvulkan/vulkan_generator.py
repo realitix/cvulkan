@@ -1131,17 +1131,27 @@ def add_proc_addr_functions():
                                                 &instance, &pName))
                       return NULL;
 
-                {2} arg0 = PyCapsule_GetPointer(instance, "{2}");
+                {2}* arg0 = PyCapsule_GetPointer(instance, "{2}");
+                if(arg0 == NULL) return NULL;
+
                 PyObject* tmp = PyUnicode_AsASCIIString(pName);
+                if(tmp == NULL) return NULL;
+
                 char* arg1 = PyBytes_AsString(tmp);
+                if(arg1 == NULL) return NULL;
                 Py_DECREF(tmp);
 
-                PFN_vkVoidFunction fun = {0}(arg0, arg1);
+                PFN_vkVoidFunction fun = {0}(*arg0, arg1);
                 if (fun == NULL) {{
                       PyErr_SetString(PyExc_ImportError, "error");
                       return NULL;
                 }}
                 PyObject* pointer = PyCapsule_New(fun, NULL, NULL);
+                if (pointer == NULL) return NULL;
+
+                PyObject* call_args = Py_BuildValue("(O)", pointer);
+                if (call_args == NULL) return NULL;
+
                 PyObject* pyreturn = NULL;
         '''.format(info['name'], info['arg'], info['type']))
 
@@ -1150,7 +1160,8 @@ def add_proc_addr_functions():
                 out.write('''
                     if (strcmp(arg1, "{0}") == 0) {{
                         pyreturn = PyObject_Call((PyObject *)&Py{0}Type,
-                            pointer, NULL);
+                            call_args, NULL);
+                        if (pyreturn == NULL) return NULL;
                     }}
                 '''.format(name))
 
@@ -1246,6 +1257,7 @@ def add_extension_functions():
                 if (!PyArg_ParseTuple(args, "O", &capsule))
                     return -1;
                 self->pfn = (PFN_{0}) PyCapsule_GetPointer(capsule, NULL);
+                if (self->pfn == NULL) return -1;
                 return 0;
             }}
         '''.format(name)
