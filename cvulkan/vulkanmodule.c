@@ -23107,8 +23107,50 @@ static PyTypeObject PyvkCmdDrawIndexedIndirectCountAMDType = {
 static PyObject* PyvkGetInstanceProcAddr(
     PyObject *self, PyObject *args, PyObject *kwds) {
 
+<<<<<<< HEAD
     PyObject* instance = NULL;
     PyObject* pName = NULL;
+=======
+    //TEST
+    VkApplicationInfo appInfo = {};
+    appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
+    appInfo.pApplicationName = "Hello Triangle";
+    appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.pEngineName = "No Engine";
+    appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
+    appInfo.apiVersion = VK_API_VERSION_1_0;
+
+    char *extensions[1] = {"VK_EXT_debug_report"};
+    VkInstanceCreateInfo createInfo = {};
+    createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+    createInfo.pApplicationInfo = &appInfo;
+    createInfo.enabledLayerCount = 0;
+    createInfo.ppEnabledLayerNames = NULL;
+    createInfo.enabledExtensionCount = 1;
+    createInfo.ppEnabledExtensionNames = extensions;
+
+    VkInstance instance;
+    VkResult result = vkCreateInstance(&createInfo, NULL, &instance);
+    if (result != VK_SUCCESS) {
+         PyErr_SetString(PyExc_ValueError, "Instance can't be created");
+         return NULL;
+    }
+
+    PFN_vkCreateDebugReportCallbackEXT fun = (PFN_vkCreateDebugReportCallbackEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT");
+    if (fun == NULL) {
+        PyErr_SetString(PyExc_ImportError, "Can't import function fun");
+        return NULL;
+    }
+    else {
+        PyErr_SetString(PyExc_ImportError, "It works");
+        return NULL;
+    }
+    return Py_None;
+
+    // NORMAL function
+    /*PyObject* instance = NULL;
+    char* pName = NULL;
+>>>>>>> to test in pure C
     static char *kwlist[] = {"instance", "pName", NULL};
 
     if(!PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist,
@@ -23434,6 +23476,7 @@ static PyObject* PyvkGetInstanceProcAddr(
 
     Py_INCREF(pyreturn);
     return pyreturn;
+    */
 }
 
 static PyObject* PyvkGetDeviceProcAddr(
