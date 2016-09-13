@@ -30,9 +30,13 @@ createInfo = VkInstanceCreateInfo(
 instance = vkCreateInstance(pCreateInfo=createInfo)
 
 vkCreateDebugReportCallback = vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT")
+vkDestroyDebugReportCallback = vkGetInstanceProcAddr(instance, "vkDestroyDebugReportCallbackEXT")
 
 def debugCallback(*args):
     print(args)
 
 debug_create = VkDebugReportCallbackCreateInfoEXT(flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT, pfnCallback = debugCallback)
 callback = vkCreateDebugReportCallback(instance=instance, pCreateInfo=debug_create)
+
+#vkDestroyDebugReportCallback(instance, callback) We don't call it to see the error
+vkDestroyInstance(instance)

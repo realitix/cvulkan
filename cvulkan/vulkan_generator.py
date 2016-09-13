@@ -673,7 +673,7 @@ def get_debug_create_init():
              (self->base)->pUserData = NULL;
              (self->base)->flags = flags;
              (self->base)->pfnCallback =
-                 (PFN_vkDebugReportCallbackEXT)debug_callback;
+                 (PFN_vkDebugReportCallbackEXT)(&debug_callback);
 
              return 0;
          }
@@ -900,8 +900,12 @@ def add_constants():
 
         for constant in enum['enum']:
             if '@bitpos' in constant:
-                value = str(int(constant['@bitpos']) + 1).zfill(8)
-                constant['@value'] = '0x{}'.format(value)
+                value = constant['@bitpos']
+                numVal = int(value, 0)
+                numVal = 1 << numVal
+                value = '0x%08x' % numVal
+                #constant['@value'] = '0x{}'.format(value)
+                constant['@value'] = value
             name = constant["@name"]
             value = constant["@value"]
             add_result(name, value)
@@ -956,7 +960,7 @@ def add_pyvk_functions():
         add_pyvk_function(command)
 
 
-def add_pyvk_function(command, pyfunction=None):
+def add_pyvk_function(command, pyfunction=None, call_name=''):
     def normalize_param(command):
         if not isinstance(command['param'], list):
             command['param'] = [command['param']]
@@ -1018,6 +1022,7 @@ def add_pyvk_function(command, pyfunction=None):
 
     cname = command['proto']['name']
     ctype = command['proto']['type']
+    call_name = call_name if call_name else cname
 
     command = normalize_param(command)
     count_param = get_count_param(command)
@@ -1074,7 +1079,7 @@ def add_pyvk_function(command, pyfunction=None):
 
         # first call which count
         definition += '\nuint32_t count;'
-        func_str_call = '\n%s(' % cname
+        func_str_call = '\n%s(' % call_name
         func_str_call += ','.join(param_func) + ',' if param_func else ''
         func_str_call += '&count, NULL)'
         if ctype == 'VkResult':
@@ -1088,7 +1093,7 @@ def add_pyvk_function(command, pyfunction=None):
             '''.format(return_object['type'])
 
         # call with array
-        func_str_call = '\n%s(' % cname
+        func_str_call = '\n%s(' % call_name
         func_str_call += ','.join(param_func) + ',' if param_func else ''
         func_str_call += '&count, values)'
         if ctype == 'VkResult':
@@ -1133,7 +1138,7 @@ def add_pyvk_function(command, pyfunction=None):
         definition += '\n{0} *value = malloc(sizeof({0}));\n'.format(
             return_object['type'])
         # call
-        func_str_call = '\n%s(' % cname
+        func_str_call = '\n%s(' % call_name
         func_str_call += ','.join(param_func) + ',' if param_func else ''
         func_str_call += 'value)'
         if ctype == 'VkResult':
@@ -1156,9 +1161,8 @@ def add_pyvk_function(command, pyfunction=None):
             definition += '''
                 PyObject* return_value = PyLong_FromLong(*value);
                 '''
-
     else:
-        definition += '\n%s(' % cname
+        definition += '\n%s(' % call_name
         param_func = [get_param(p) for p in command['param']]
 
         definition += ','.join(param_func)
@@ -1328,9 +1332,11 @@ def add_extension_functions():
         out.write(definition)
 
     def add_call(command):
+        name = command['proto']['name']
         add_pyvk_function(
             command,
-            pyfunction=command['proto']['name'] + '_call')
+            pyfunction=name + '_call',
+            call_name='(*(((Py%s*)self)->pfn))' % name)
 
     def add_type(command):
         name = command['proto']['name']
