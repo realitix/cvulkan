@@ -4271,472 +4271,120 @@ extern "C" {
 // END VULKAN H
 
 static PyObject *VulkanError;
-static PyObject *VkErrorFragmentedPool;
-static PyObject *VkErrorDeviceLost;
-static PyObject *VkTimeout;
-static PyObject *VkErrorInitializationFailed;
-static PyObject *VkErrorOutOfDeviceMemory;
-static PyObject *VkErrorOutOfHostMemory;
-static PyObject *VkErrorExtensionNotPresent;
-static PyObject *VkNotReady;
-static PyObject *VkEventSet;
 static PyObject *VkIncomplete;
-static PyObject *VkErrorMemoryMapFailed;
-static PyObject *VkErrorIncompatibleDriver;
-static PyObject *VkErrorFormatNotSupported;
-static PyObject *VkErrorTooManyObjects;
 static PyObject *VkErrorLayerNotPresent;
+static PyObject *VkTimeout;
+static PyObject *VkErrorIncompatibleDriver;
+static PyObject *VkErrorTooManyObjects;
+static PyObject *VkErrorInitializationFailed;
+static PyObject *VkErrorExtensionNotPresent;
 static PyObject *VkErrorFeatureNotPresent;
+static PyObject *VkEventSet;
 static PyObject *VkEventReset;
+static PyObject *VkErrorFormatNotSupported;
+static PyObject *VkNotReady;
+static PyObject *VkErrorOutOfDeviceMemory;
+static PyObject *VkErrorFragmentedPool;
+static PyObject *VkErrorMemoryMapFailed;
+static PyObject *VkErrorOutOfHostMemory;
+static PyObject *VkErrorDeviceLost;
 int raise(int value) {
     switch(value) {
 
-    case -12:
-        PyErr_SetString(VkErrorFragmentedPool, "");
-        return 1;
-
-    case -4:
-        PyErr_SetString(VkErrorDeviceLost, "");
-        return 1;
-
-    case 2:
-        PyErr_SetString(VkTimeout, "");
-        return 1;
-
-    case -3:
-        PyErr_SetString(VkErrorInitializationFailed, "");
-        return 1;
-
-    case -2:
-        PyErr_SetString(VkErrorOutOfDeviceMemory, "");
-        return 1;
-
-    case -1:
-        PyErr_SetString(VkErrorOutOfHostMemory, "");
-        return 1;
-
-    case -7:
-        PyErr_SetString(VkErrorExtensionNotPresent, "");
-        return 1;
-
-    case 1:
-        PyErr_SetString(VkNotReady, "");
-        return 1;
-
-    case 3:
-        PyErr_SetString(VkEventSet, "");
-        return 1;
-
     case 5:
         PyErr_SetString(VkIncomplete, "");
-        return 1;
-
-    case -5:
-        PyErr_SetString(VkErrorMemoryMapFailed, "");
-        return 1;
-
-    case -9:
-        PyErr_SetString(VkErrorIncompatibleDriver, "");
-        return 1;
-
-    case -11:
-        PyErr_SetString(VkErrorFormatNotSupported, "");
-        return 1;
-
-    case -10:
-        PyErr_SetString(VkErrorTooManyObjects, "");
         return 1;
 
     case -6:
         PyErr_SetString(VkErrorLayerNotPresent, "");
         return 1;
 
+    case 2:
+        PyErr_SetString(VkTimeout, "");
+        return 1;
+
+    case -9:
+        PyErr_SetString(VkErrorIncompatibleDriver, "");
+        return 1;
+
+    case -10:
+        PyErr_SetString(VkErrorTooManyObjects, "");
+        return 1;
+
+    case -3:
+        PyErr_SetString(VkErrorInitializationFailed, "");
+        return 1;
+
+    case -7:
+        PyErr_SetString(VkErrorExtensionNotPresent, "");
+        return 1;
+
     case -8:
         PyErr_SetString(VkErrorFeatureNotPresent, "");
+        return 1;
+
+    case 3:
+        PyErr_SetString(VkEventSet, "");
         return 1;
 
     case 4:
         PyErr_SetString(VkEventReset, "");
         return 1;
+
+    case -11:
+        PyErr_SetString(VkErrorFormatNotSupported, "");
+        return 1;
+
+    case 1:
+        PyErr_SetString(VkNotReady, "");
+        return 1;
+
+    case -2:
+        PyErr_SetString(VkErrorOutOfDeviceMemory, "");
+        return 1;
+
+    case -12:
+        PyErr_SetString(VkErrorFragmentedPool, "");
+        return 1;
+
+    case -5:
+        PyErr_SetString(VkErrorMemoryMapFailed, "");
+        return 1;
+
+    case -1:
+        PyErr_SetString(VkErrorOutOfHostMemory, "");
+        return 1;
+
+    case -4:
+        PyErr_SetString(VkErrorDeviceLost, "");
+        return 1;
     }
     return 0;
 }
 
-static PFN_vkCmdClearAttachments vkCmdClearAttachments;
-
-static PFN_vkCreateImageView vkCreateImageView;
-
-static PFN_vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties;
-
-static PFN_vkFreeDescriptorSets vkFreeDescriptorSets;
-
-static PFN_vkGetQueryPoolResults vkGetQueryPoolResults;
-
-static PFN_vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout;
-
-static PFN_vkCmdWriteTimestamp vkCmdWriteTimestamp;
-
-static PFN_vkCreateEvent vkCreateEvent;
-
-static PFN_vkDestroyFramebuffer vkDestroyFramebuffer;
-
-static PFN_vkBindBufferMemory vkBindBufferMemory;
-
-static PFN_vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties;
-
-static PFN_vkCreateBufferView vkCreateBufferView;
-
-static PFN_vkCreateShaderModule vkCreateShaderModule;
-
-static PFN_vkCmdCopyImage vkCmdCopyImage;
-
-static PFN_vkSetEvent vkSetEvent;
-
-static PFN_vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults;
-
-static PFN_vkGetDisplayModePropertiesKHR vkGetDisplayModePropertiesKHR;
-
-static PFN_vkCmdBindDescriptorSets vkCmdBindDescriptorSets;
-
-static PFN_vkCmdSetBlendConstants vkCmdSetBlendConstants;
-
-#ifdef VK_USE_PLATFORM_XCB_KHR
-
-static PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR;
-
-#endif
-
-static PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV vkGetPhysicalDeviceExternalImageFormatPropertiesNV;
-
-static PFN_vkCmdDrawIndexedIndirectCountAMD vkCmdDrawIndexedIndirectCountAMD;
-
-static PFN_vkMergePipelineCaches vkMergePipelineCaches;
-
-static PFN_vkResetFences vkResetFences;
-
-static PFN_vkDestroyInstance vkDestroyInstance;
-
-static PFN_vkCmdWaitEvents vkCmdWaitEvents;
-
-static PFN_vkDestroyShaderModule vkDestroyShaderModule;
-
-static PFN_vkCreatePipelineLayout vkCreatePipelineLayout;
-
-static PFN_vkCmdPushConstants vkCmdPushConstants;
-
-#ifdef VK_USE_PLATFORM_ANDROID_KHR
-
-static PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR;
-
-#endif
-
-#ifdef VK_USE_PLATFORM_MIR_KHR
-
-static PFN_vkGetPhysicalDeviceMirPresentationSupportKHR vkGetPhysicalDeviceMirPresentationSupportKHR;
-
-#endif
-
-static PFN_vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties;
-
-static PFN_vkGetDisplayPlaneSupportedDisplaysKHR vkGetDisplayPlaneSupportedDisplaysKHR;
-
-static PFN_vkBeginCommandBuffer vkBeginCommandBuffer;
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-static PFN_vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR;
-
-#endif
-
-static PFN_vkCmdDrawIndirect vkCmdDrawIndirect;
-
-static PFN_vkCmdExecuteCommands vkCmdExecuteCommands;
-
-static PFN_vkCmdSetViewport vkCmdSetViewport;
-
-static PFN_vkMapMemory vkMapMemory;
-
-static PFN_vkAllocateDescriptorSets vkAllocateDescriptorSets;
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-static PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
-
-#endif
-
-static PFN_vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements;
-
-static PFN_vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges;
-
-static PFN_vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures;
-
-static PFN_vkUnmapMemory vkUnmapMemory;
-
-static PFN_vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout;
-
-static PFN_vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR;
-
-static PFN_vkQueuePresentKHR vkQueuePresentKHR;
-
-static PFN_vkWaitForFences vkWaitForFences;
-
-static PFN_vkCreateBuffer vkCreateBuffer;
-
-static PFN_vkCreateGraphicsPipelines vkCreateGraphicsPipelines;
-
-static PFN_vkGetPhysicalDeviceDisplayPropertiesKHR vkGetPhysicalDeviceDisplayPropertiesKHR;
-
-static PFN_vkDestroyDescriptorPool vkDestroyDescriptorPool;
-
-static PFN_vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR;
-
-static PFN_vkDestroyImageView vkDestroyImageView;
-
-static PFN_vkFreeCommandBuffers vkFreeCommandBuffers;
-
-#ifdef VK_USE_PLATFORM_WIN32_KHR
-
-static PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR;
-
-#endif
-
-static PFN_vkCmdDrawIndirectCountAMD vkCmdDrawIndirectCountAMD;
-
-static PFN_vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask;
-
-static PFN_vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage;
-
-static PFN_vkAllocateMemory vkAllocateMemory;
-
-static PFN_vkCmdBlitImage vkCmdBlitImage;
-
-static PFN_vkGetDeviceQueue vkGetDeviceQueue;
-
-static PFN_vkGetFenceStatus vkGetFenceStatus;
-
-static PFN_vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties;
-
-static PFN_vkCreateDescriptorPool vkCreateDescriptorPool;
-
-static PFN_vkCmdCopyBuffer vkCmdCopyBuffer;
-
-static PFN_vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT;
-
-static PFN_vkCreateDevice vkCreateDevice;
-
-static PFN_vkCmdClearColorImage vkCmdClearColorImage;
-
-static PFN_vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT;
-
-static PFN_vkCreateSwapchainKHR vkCreateSwapchainKHR;
-
-static PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT;
-
-static PFN_vkQueueWaitIdle vkQueueWaitIdle;
-
-static PFN_vkCmdNextSubpass vkCmdNextSubpass;
-
-static PFN_vkCmdEndRenderPass vkCmdEndRenderPass;
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-static PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR;
-
-#endif
-
-static PFN_vkQueueBindSparse vkQueueBindSparse;
-
-static PFN_vkCmdCopyBufferToImage vkCmdCopyBufferToImage;
-
-static PFN_vkCmdSetEvent vkCmdSetEvent;
-
-static PFN_vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties;
-
-static PFN_vkCreateImage vkCreateImage;
-
-static PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabilitiesKHR;
-
-static PFN_vkCmdBindVertexBuffers vkCmdBindVertexBuffers;
-
-static PFN_vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR;
-
-static PFN_vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT;
-
-static PFN_vkUpdateDescriptorSets vkUpdateDescriptorSets;
-
-static PFN_vkCmdSetLineWidth vkCmdSetLineWidth;
-
-static PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT;
-
-static PFN_vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties;
-
-static PFN_vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices;
-
-static PFN_vkCreateDisplayModeKHR vkCreateDisplayModeKHR;
-
-#ifdef VK_USE_PLATFORM_WIN32_KHR
-
-static PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR;
-
-#endif
-
-static PFN_vkCmdDispatchIndirect vkCmdDispatchIndirect;
-
-static PFN_vkCreateFramebuffer vkCreateFramebuffer;
-
-static PFN_vkCmdSetStencilReference vkCmdSetStencilReference;
-
-static PFN_vkCmdSetDepthBounds vkCmdSetDepthBounds;
-
-#ifdef VK_USE_PLATFORM_WIN32_KHR
-
-static PFN_vkGetMemoryWin32HandleNV vkGetMemoryWin32HandleNV;
-
-#endif
-
-static PFN_vkDestroyPipeline vkDestroyPipeline;
-
-static PFN_vkCmdPipelineBarrier vkCmdPipelineBarrier;
-
-static PFN_vkDestroyImage vkDestroyImage;
-
-static PFN_vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties;
-
-static PFN_vkCmdSetScissor vkCmdSetScissor;
-
-static PFN_vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect;
-
-static PFN_vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR;
-
-static PFN_vkCmdDispatch vkCmdDispatch;
-
-static PFN_vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties;
-
-static PFN_vkCmdFillBuffer vkCmdFillBuffer;
-
-static PFN_vkCmdDraw vkCmdDraw;
-
-static PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT;
-
-static PFN_vkCreateDisplayPlaneSurfaceKHR vkCreateDisplayPlaneSurfaceKHR;
-
-static PFN_vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR;
-
-static PFN_vkCreateComputePipelines vkCreateComputePipelines;
-
-static PFN_vkDestroyCommandPool vkDestroyCommandPool;
-
-static PFN_vkCreateRenderPass vkCreateRenderPass;
-
-static PFN_vkDestroyBuffer vkDestroyBuffer;
-
-static PFN_vkAcquireNextImageKHR vkAcquireNextImageKHR;
-
-static PFN_vkAllocateCommandBuffers vkAllocateCommandBuffers;
-
-static PFN_vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment;
-
-static PFN_vkDestroyDevice vkDestroyDevice;
-
-static PFN_vkDestroyQueryPool vkDestroyQueryPool;
-
-static PFN_vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer;
-
-static PFN_vkCmdResetEvent vkCmdResetEvent;
-
-static PFN_vkCreateSampler vkCreateSampler;
-
-static PFN_vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT;
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-static PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR;
-
-#endif
-
-static PFN_vkCmdBindIndexBuffer vkCmdBindIndexBuffer;
-
-static PFN_vkDestroyEvent vkDestroyEvent;
-
-static PFN_vkCreateSemaphore vkCreateSemaphore;
-
-#ifdef VK_USE_PLATFORM_MIR_KHR
-
-static PFN_vkCreateMirSurfaceKHR vkCreateMirSurfaceKHR;
-
-#endif
-
-static PFN_vkCreateInstance vkCreateInstance;
-
-static PFN_vkDestroyPipelineCache vkDestroyPipelineCache;
-
-static PFN_vkCmdBeginRenderPass vkCmdBeginRenderPass;
-
-static PFN_vkGetImageSubresourceLayout vkGetImageSubresourceLayout;
-
-static PFN_vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties;
-
-static PFN_vkResetCommandBuffer vkResetCommandBuffer;
-
-static PFN_vkResetDescriptorPool vkResetDescriptorPool;
-
-static PFN_vkCmdDrawIndexed vkCmdDrawIndexed;
-
-static PFN_vkGetEventStatus vkGetEventStatus;
-
-static PFN_vkFreeMemory vkFreeMemory;
-
-static PFN_vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges;
-
-static PFN_vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties;
-
-static PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR vkGetPhysicalDeviceDisplayPlanePropertiesKHR;
-
-static PFN_vkCmdBeginQuery vkCmdBeginQuery;
-
-static PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr;
-
-static PFN_vkCreateQueryPool vkCreateQueryPool;
-
-static PFN_vkEndCommandBuffer vkEndCommandBuffer;
-
-static PFN_vkDestroyPipelineLayout vkDestroyPipelineLayout;
-
-static PFN_vkDeviceWaitIdle vkDeviceWaitIdle;
-
 static PFN_vkDestroySurfaceKHR vkDestroySurfaceKHR;
-
-static PFN_vkDestroySampler vkDestroySampler;
-
-static PFN_vkQueueSubmit vkQueueSubmit;
-
-static PFN_vkBindImageMemory vkBindImageMemory;
-
-static PFN_vkDestroyRenderPass vkDestroyRenderPass;
-
-static PFN_vkCreatePipelineCache vkCreatePipelineCache;
-
-static PFN_vkGetRenderAreaGranularity vkGetRenderAreaGranularity;
-
-static PFN_vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements;
-
-static PFN_vkResetCommandPool vkResetCommandPool;
-
-static PFN_vkDestroySwapchainKHR vkDestroySwapchainKHR;
-
-static PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr;
-
-static PFN_vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT;
-
-static PFN_vkCreateFence vkCreateFence;
-
-static PFN_vkCreateCommandPool vkCreateCommandPool;
 
 static PFN_vkCmdResolveImage vkCmdResolveImage;
 
-static PFN_vkDestroyBufferView vkDestroyBufferView;
+static PFN_vkGetDisplayPlaneSupportedDisplaysKHR vkGetDisplayPlaneSupportedDisplaysKHR;
 
-static PFN_vkGetDisplayPlaneCapabilitiesKHR vkGetDisplayPlaneCapabilitiesKHR;
+static PFN_vkCmdDebugMarkerEndEXT vkCmdDebugMarkerEndEXT;
+
+static PFN_vkCmdDrawIndirect vkCmdDrawIndirect;
+
+static PFN_vkGetPhysicalDeviceDisplayPlanePropertiesKHR vkGetPhysicalDeviceDisplayPlanePropertiesKHR;
+
+static PFN_vkDestroySemaphore vkDestroySemaphore;
+
+static PFN_vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask;
+
+static PFN_vkGetDisplayModePropertiesKHR vkGetDisplayModePropertiesKHR;
+
+static PFN_vkDestroySwapchainKHR vkDestroySwapchainKHR;
+
+static PFN_vkCmdSetViewport vkCmdSetViewport;
+
+static PFN_vkCmdCopyBuffer vkCmdCopyBuffer;
 
 #ifdef VK_USE_PLATFORM_XCB_KHR
 
@@ -4744,27 +4392,379 @@ static PFN_vkCreateXcbSurfaceKHR vkCreateXcbSurfaceKHR;
 
 #endif
 
-static PFN_vkResetEvent vkResetEvent;
+static PFN_vkAllocateCommandBuffers vkAllocateCommandBuffers;
 
-static PFN_vkGetImageMemoryRequirements vkGetImageMemoryRequirements;
+static PFN_vkDestroyBufferView vkDestroyBufferView;
 
-static PFN_vkDestroySemaphore vkDestroySemaphore;
+static PFN_vkCmdDrawIndexed vkCmdDrawIndexed;
 
-static PFN_vkCmdSetDepthBias vkCmdSetDepthBias;
+static PFN_vkCmdDraw vkCmdDraw;
 
-static PFN_vkCmdUpdateBuffer vkCmdUpdateBuffer;
+static PFN_vkCmdBlitImage vkCmdBlitImage;
 
-static PFN_vkDestroyFence vkDestroyFence;
+static PFN_vkAcquireNextImageKHR vkAcquireNextImageKHR;
+
+static PFN_vkWaitForFences vkWaitForFences;
+
+static PFN_vkCreateDescriptorPool vkCreateDescriptorPool;
+
+static PFN_vkCreateFramebuffer vkCreateFramebuffer;
 
 static PFN_vkCmdBindPipeline vkCmdBindPipeline;
 
-static PFN_vkCmdSetStencilCompareMask vkCmdSetStencilCompareMask;
+static PFN_vkResetDescriptorPool vkResetDescriptorPool;
+
+static PFN_vkCmdExecuteCommands vkCmdExecuteCommands;
+
+static PFN_vkGetDeviceMemoryCommitment vkGetDeviceMemoryCommitment;
+
+static PFN_vkCmdWriteTimestamp vkCmdWriteTimestamp;
+
+#ifdef VK_USE_PLATFORM_ANDROID_KHR
+
+static PFN_vkCreateAndroidSurfaceKHR vkCreateAndroidSurfaceKHR;
+
+#endif
+
+static PFN_vkCmdCopyQueryPoolResults vkCmdCopyQueryPoolResults;
+
+static PFN_vkGetPhysicalDeviceFormatProperties vkGetPhysicalDeviceFormatProperties;
+
+static PFN_vkCreateBufferView vkCreateBufferView;
+
+static PFN_vkCmdDrawIndexedIndirect vkCmdDrawIndexedIndirect;
+
+static PFN_vkDestroyDebugReportCallbackEXT vkDestroyDebugReportCallbackEXT;
+
+static PFN_vkCreatePipelineCache vkCreatePipelineCache;
+
+static PFN_vkDebugMarkerSetObjectTagEXT vkDebugMarkerSetObjectTagEXT;
+
+static PFN_vkResetCommandBuffer vkResetCommandBuffer;
+
+static PFN_vkCmdSetScissor vkCmdSetScissor;
+
+static PFN_vkCmdSetBlendConstants vkCmdSetBlendConstants;
+
+static PFN_vkCreateDebugReportCallbackEXT vkCreateDebugReportCallbackEXT;
 
 static PFN_vkCmdEndQuery vkCmdEndQuery;
 
-static PFN_vkCmdResetQueryPool vkCmdResetQueryPool;
+static PFN_vkDestroyDevice vkDestroyDevice;
+
+static PFN_vkBindImageMemory vkBindImageMemory;
+
+static PFN_vkCreatePipelineLayout vkCreatePipelineLayout;
+
+static PFN_vkCmdSetDepthBounds vkCmdSetDepthBounds;
+
+static PFN_vkCmdWaitEvents vkCmdWaitEvents;
 
 static PFN_vkGetPipelineCacheData vkGetPipelineCacheData;
+
+static PFN_vkDestroyFramebuffer vkDestroyFramebuffer;
+
+static PFN_vkDebugReportMessageEXT vkDebugReportMessageEXT;
+
+static PFN_vkGetEventStatus vkGetEventStatus;
+
+static PFN_vkBeginCommandBuffer vkBeginCommandBuffer;
+
+static PFN_vkCmdResetEvent vkCmdResetEvent;
+
+static PFN_vkGetInstanceProcAddr vkGetInstanceProcAddr;
+
+#ifdef VK_USE_PLATFORM_XCB_KHR
+
+static PFN_vkGetPhysicalDeviceXcbPresentationSupportKHR vkGetPhysicalDeviceXcbPresentationSupportKHR;
+
+#endif
+
+static PFN_vkCmdDispatch vkCmdDispatch;
+
+static PFN_vkDebugMarkerSetObjectNameEXT vkDebugMarkerSetObjectNameEXT;
+
+static PFN_vkCmdSetDepthBias vkCmdSetDepthBias;
+
+#ifdef VK_USE_PLATFORM_WIN32_KHR
+
+static PFN_vkGetMemoryWin32HandleNV vkGetMemoryWin32HandleNV;
+
+#endif
+
+static PFN_vkCmdCopyImage vkCmdCopyImage;
+
+static PFN_vkGetDisplayPlaneCapabilitiesKHR vkGetDisplayPlaneCapabilitiesKHR;
+
+static PFN_vkCmdDebugMarkerInsertEXT vkCmdDebugMarkerInsertEXT;
+
+static PFN_vkCreateImageView vkCreateImageView;
+
+static PFN_vkMergePipelineCaches vkMergePipelineCaches;
+
+static PFN_vkGetPhysicalDeviceExternalImageFormatPropertiesNV vkGetPhysicalDeviceExternalImageFormatPropertiesNV;
+
+static PFN_vkCreateDisplayModeKHR vkCreateDisplayModeKHR;
+
+static PFN_vkDestroyEvent vkDestroyEvent;
+
+static PFN_vkCreateCommandPool vkCreateCommandPool;
+
+static PFN_vkCmdCopyBufferToImage vkCmdCopyBufferToImage;
+
+static PFN_vkResetFences vkResetFences;
+
+static PFN_vkCmdDrawIndexedIndirectCountAMD vkCmdDrawIndexedIndirectCountAMD;
+
+static PFN_vkGetDeviceProcAddr vkGetDeviceProcAddr;
+
+#ifdef VK_USE_PLATFORM_MIR_KHR
+
+static PFN_vkCreateMirSurfaceKHR vkCreateMirSurfaceKHR;
+
+#endif
+
+static PFN_vkCmdSetEvent vkCmdSetEvent;
+
+static PFN_vkDestroyFence vkDestroyFence;
+
+static PFN_vkGetPhysicalDeviceFeatures vkGetPhysicalDeviceFeatures;
+
+static PFN_vkFreeDescriptorSets vkFreeDescriptorSets;
+
+static PFN_vkDestroyBuffer vkDestroyBuffer;
+
+static PFN_vkCreateFence vkCreateFence;
+
+static PFN_vkDestroyQueryPool vkDestroyQueryPool;
+
+static PFN_vkCreateGraphicsPipelines vkCreateGraphicsPipelines;
+
+static PFN_vkCreateEvent vkCreateEvent;
+
+static PFN_vkDestroyImage vkDestroyImage;
+
+static PFN_vkDestroyRenderPass vkDestroyRenderPass;
+
+static PFN_vkBindBufferMemory vkBindBufferMemory;
+
+static PFN_vkCmdBindIndexBuffer vkCmdBindIndexBuffer;
+
+static PFN_vkCmdClearDepthStencilImage vkCmdClearDepthStencilImage;
+
+static PFN_vkDestroyDescriptorSetLayout vkDestroyDescriptorSetLayout;
+
+static PFN_vkDeviceWaitIdle vkDeviceWaitIdle;
+
+static PFN_vkQueueWaitIdle vkQueueWaitIdle;
+
+static PFN_vkCreateSemaphore vkCreateSemaphore;
+
+static PFN_vkResetEvent vkResetEvent;
+
+static PFN_vkCmdDrawIndirectCountAMD vkCmdDrawIndirectCountAMD;
+
+static PFN_vkCmdNextSubpass vkCmdNextSubpass;
+
+static PFN_vkCmdBindDescriptorSets vkCmdBindDescriptorSets;
+
+#ifdef VK_USE_PLATFORM_WIN32_KHR
+
+static PFN_vkGetPhysicalDeviceWin32PresentationSupportKHR vkGetPhysicalDeviceWin32PresentationSupportKHR;
+
+#endif
+
+static PFN_vkGetPhysicalDeviceQueueFamilyProperties vkGetPhysicalDeviceQueueFamilyProperties;
+
+static PFN_vkQueuePresentKHR vkQueuePresentKHR;
+
+static PFN_vkCreateDescriptorSetLayout vkCreateDescriptorSetLayout;
+
+static PFN_vkDestroyPipelineLayout vkDestroyPipelineLayout;
+
+static PFN_vkCmdUpdateBuffer vkCmdUpdateBuffer;
+
+static PFN_vkEndCommandBuffer vkEndCommandBuffer;
+
+static PFN_vkCreateSwapchainKHR vkCreateSwapchainKHR;
+
+static PFN_vkCreateSharedSwapchainsKHR vkCreateSharedSwapchainsKHR;
+
+static PFN_vkCmdBeginQuery vkCmdBeginQuery;
+
+static PFN_vkGetPhysicalDeviceImageFormatProperties vkGetPhysicalDeviceImageFormatProperties;
+
+static PFN_vkGetPhysicalDeviceDisplayPropertiesKHR vkGetPhysicalDeviceDisplayPropertiesKHR;
+
+static PFN_vkGetPhysicalDeviceMemoryProperties vkGetPhysicalDeviceMemoryProperties;
+
+static PFN_vkGetQueryPoolResults vkGetQueryPoolResults;
+
+static PFN_vkSetEvent vkSetEvent;
+
+static PFN_vkCreateInstance vkCreateInstance;
+
+static PFN_vkCreateImage vkCreateImage;
+
+static PFN_vkGetImageSubresourceLayout vkGetImageSubresourceLayout;
+
+static PFN_vkDestroySampler vkDestroySampler;
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+static PFN_vkCreateWaylandSurfaceKHR vkCreateWaylandSurfaceKHR;
+
+#endif
+
+static PFN_vkCmdDebugMarkerBeginEXT vkCmdDebugMarkerBeginEXT;
+
+static PFN_vkCreateShaderModule vkCreateShaderModule;
+
+static PFN_vkCmdDispatchIndirect vkCmdDispatchIndirect;
+
+static PFN_vkGetRenderAreaGranularity vkGetRenderAreaGranularity;
+
+static PFN_vkCmdResetQueryPool vkCmdResetQueryPool;
+
+#ifdef VK_USE_PLATFORM_MIR_KHR
+
+static PFN_vkGetPhysicalDeviceMirPresentationSupportKHR vkGetPhysicalDeviceMirPresentationSupportKHR;
+
+#endif
+
+static PFN_vkDestroyPipelineCache vkDestroyPipelineCache;
+
+static PFN_vkCreateSampler vkCreateSampler;
+
+static PFN_vkResetCommandPool vkResetCommandPool;
+
+static PFN_vkAllocateMemory vkAllocateMemory;
+
+static PFN_vkGetDeviceQueue vkGetDeviceQueue;
+
+static PFN_vkGetFenceStatus vkGetFenceStatus;
+
+static PFN_vkDestroyInstance vkDestroyInstance;
+
+static PFN_vkGetPhysicalDeviceSparseImageFormatProperties vkGetPhysicalDeviceSparseImageFormatProperties;
+
+static PFN_vkQueueBindSparse vkQueueBindSparse;
+
+static PFN_vkCmdBeginRenderPass vkCmdBeginRenderPass;
+
+static PFN_vkAllocateDescriptorSets vkAllocateDescriptorSets;
+
+static PFN_vkCmdEndRenderPass vkCmdEndRenderPass;
+
+static PFN_vkQueueSubmit vkQueueSubmit;
+
+static PFN_vkCmdPushConstants vkCmdPushConstants;
+
+static PFN_vkCreateComputePipelines vkCreateComputePipelines;
+
+static PFN_vkEnumerateDeviceLayerProperties vkEnumerateDeviceLayerProperties;
+
+static PFN_vkCmdClearAttachments vkCmdClearAttachments;
+
+static PFN_vkCmdSetStencilReference vkCmdSetStencilReference;
+
+#ifdef VK_USE_PLATFORM_WIN32_KHR
+
+static PFN_vkCreateWin32SurfaceKHR vkCreateWin32SurfaceKHR;
+
+#endif
+
+static PFN_vkGetPhysicalDeviceSurfaceSupportKHR vkGetPhysicalDeviceSurfaceSupportKHR;
+
+static PFN_vkUnmapMemory vkUnmapMemory;
+
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+static PFN_vkGetPhysicalDeviceXlibPresentationSupportKHR vkGetPhysicalDeviceXlibPresentationSupportKHR;
+
+#endif
+
+static PFN_vkCreateBuffer vkCreateBuffer;
+
+static PFN_vkCreateDevice vkCreateDevice;
+
+static PFN_vkCmdBindVertexBuffers vkCmdBindVertexBuffers;
+
+static PFN_vkInvalidateMappedMemoryRanges vkInvalidateMappedMemoryRanges;
+
+static PFN_vkCreateQueryPool vkCreateQueryPool;
+
+static PFN_vkGetImageSparseMemoryRequirements vkGetImageSparseMemoryRequirements;
+
+static PFN_vkGetImageMemoryRequirements vkGetImageMemoryRequirements;
+
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+static PFN_vkCreateXlibSurfaceKHR vkCreateXlibSurfaceKHR;
+
+#endif
+
+static PFN_vkEnumerateInstanceLayerProperties vkEnumerateInstanceLayerProperties;
+
+static PFN_vkDestroyCommandPool vkDestroyCommandPool;
+
+static PFN_vkGetPhysicalDeviceSurfaceFormatsKHR vkGetPhysicalDeviceSurfaceFormatsKHR;
+
+static PFN_vkDestroyImageView vkDestroyImageView;
+
+static PFN_vkCmdFillBuffer vkCmdFillBuffer;
+
+static PFN_vkCmdPipelineBarrier vkCmdPipelineBarrier;
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+static PFN_vkGetPhysicalDeviceWaylandPresentationSupportKHR vkGetPhysicalDeviceWaylandPresentationSupportKHR;
+
+#endif
+
+static PFN_vkGetBufferMemoryRequirements vkGetBufferMemoryRequirements;
+
+static PFN_vkGetSwapchainImagesKHR vkGetSwapchainImagesKHR;
+
+static PFN_vkCmdClearColorImage vkCmdClearColorImage;
+
+static PFN_vkEnumerateDeviceExtensionProperties vkEnumerateDeviceExtensionProperties;
+
+static PFN_vkGetPhysicalDeviceProperties vkGetPhysicalDeviceProperties;
+
+static PFN_vkFlushMappedMemoryRanges vkFlushMappedMemoryRanges;
+
+static PFN_vkDestroyDescriptorPool vkDestroyDescriptorPool;
+
+static PFN_vkFreeCommandBuffers vkFreeCommandBuffers;
+
+static PFN_vkCreateRenderPass vkCreateRenderPass;
+
+static PFN_vkEnumerateInstanceExtensionProperties vkEnumerateInstanceExtensionProperties;
+
+static PFN_vkCmdCopyImageToBuffer vkCmdCopyImageToBuffer;
+
+static PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR vkGetPhysicalDeviceSurfaceCapabilitiesKHR;
+
+static PFN_vkGetPhysicalDeviceSurfacePresentModesKHR vkGetPhysicalDeviceSurfacePresentModesKHR;
+
+static PFN_vkDestroyShaderModule vkDestroyShaderModule;
+
+static PFN_vkCmdSetLineWidth vkCmdSetLineWidth;
+
+static PFN_vkMapMemory vkMapMemory;
+
+static PFN_vkCreateDisplayPlaneSurfaceKHR vkCreateDisplayPlaneSurfaceKHR;
+
+static PFN_vkCmdSetStencilWriteMask vkCmdSetStencilWriteMask;
+
+static PFN_vkDestroyPipeline vkDestroyPipeline;
+
+static PFN_vkUpdateDescriptorSets vkUpdateDescriptorSets;
+
+static PFN_vkEnumeratePhysicalDevices vkEnumeratePhysicalDevices;
+
+static PFN_vkFreeMemory vkFreeMemory;
 
 static PyObject * load_sdk(PyObject *self, PyObject *args) {
     void* vk_sdk = LOAD_SDK();
@@ -4775,218 +4775,10 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkCmdClearAttachments = (PFN_vkCmdClearAttachments)dlsym(vk_sdk, "vkCmdClearAttachments");
-    if( vkCmdClearAttachments == NULL ) {
+    vkCmdResolveImage = (PFN_vkCmdResolveImage)dlsym(vk_sdk, "vkCmdResolveImage");
+    if( vkCmdResolveImage == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdClearAttachments in sdk");
-        return NULL;
-    }
-
-
-    vkCreateImageView = (PFN_vkCreateImageView)dlsym(vk_sdk, "vkCreateImageView");
-    if( vkCreateImageView == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateImageView in sdk");
-        return NULL;
-    }
-
-
-    vkGetPhysicalDeviceProperties = (PFN_vkGetPhysicalDeviceProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceProperties");
-    if( vkGetPhysicalDeviceProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPhysicalDeviceProperties in sdk");
-        return NULL;
-    }
-
-
-    vkFreeDescriptorSets = (PFN_vkFreeDescriptorSets)dlsym(vk_sdk, "vkFreeDescriptorSets");
-    if( vkFreeDescriptorSets == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkFreeDescriptorSets in sdk");
-        return NULL;
-    }
-
-
-    vkGetQueryPoolResults = (PFN_vkGetQueryPoolResults)dlsym(vk_sdk, "vkGetQueryPoolResults");
-    if( vkGetQueryPoolResults == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetQueryPoolResults in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyDescriptorSetLayout = (PFN_vkDestroyDescriptorSetLayout)dlsym(vk_sdk, "vkDestroyDescriptorSetLayout");
-    if( vkDestroyDescriptorSetLayout == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyDescriptorSetLayout in sdk");
-        return NULL;
-    }
-
-
-    vkCmdWriteTimestamp = (PFN_vkCmdWriteTimestamp)dlsym(vk_sdk, "vkCmdWriteTimestamp");
-    if( vkCmdWriteTimestamp == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdWriteTimestamp in sdk");
-        return NULL;
-    }
-
-
-    vkCreateEvent = (PFN_vkCreateEvent)dlsym(vk_sdk, "vkCreateEvent");
-    if( vkCreateEvent == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateEvent in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyFramebuffer = (PFN_vkDestroyFramebuffer)dlsym(vk_sdk, "vkDestroyFramebuffer");
-    if( vkDestroyFramebuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyFramebuffer in sdk");
-        return NULL;
-    }
-
-
-    vkBindBufferMemory = (PFN_vkBindBufferMemory)dlsym(vk_sdk, "vkBindBufferMemory");
-    if( vkBindBufferMemory == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkBindBufferMemory in sdk");
-        return NULL;
-    }
-
-
-    vkGetPhysicalDeviceMemoryProperties = (PFN_vkGetPhysicalDeviceMemoryProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceMemoryProperties");
-    if( vkGetPhysicalDeviceMemoryProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPhysicalDeviceMemoryProperties in sdk");
-        return NULL;
-    }
-
-
-    vkCreateBufferView = (PFN_vkCreateBufferView)dlsym(vk_sdk, "vkCreateBufferView");
-    if( vkCreateBufferView == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateBufferView in sdk");
-        return NULL;
-    }
-
-
-    vkCreateShaderModule = (PFN_vkCreateShaderModule)dlsym(vk_sdk, "vkCreateShaderModule");
-    if( vkCreateShaderModule == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateShaderModule in sdk");
-        return NULL;
-    }
-
-
-    vkCmdCopyImage = (PFN_vkCmdCopyImage)dlsym(vk_sdk, "vkCmdCopyImage");
-    if( vkCmdCopyImage == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdCopyImage in sdk");
-        return NULL;
-    }
-
-
-    vkSetEvent = (PFN_vkSetEvent)dlsym(vk_sdk, "vkSetEvent");
-    if( vkSetEvent == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkSetEvent in sdk");
-        return NULL;
-    }
-
-
-    vkCmdCopyQueryPoolResults = (PFN_vkCmdCopyQueryPoolResults)dlsym(vk_sdk, "vkCmdCopyQueryPoolResults");
-    if( vkCmdCopyQueryPoolResults == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdCopyQueryPoolResults in sdk");
-        return NULL;
-    }
-
-
-    vkCmdBindDescriptorSets = (PFN_vkCmdBindDescriptorSets)dlsym(vk_sdk, "vkCmdBindDescriptorSets");
-    if( vkCmdBindDescriptorSets == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdBindDescriptorSets in sdk");
-        return NULL;
-    }
-
-
-    vkCmdSetBlendConstants = (PFN_vkCmdSetBlendConstants)dlsym(vk_sdk, "vkCmdSetBlendConstants");
-    if( vkCmdSetBlendConstants == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetBlendConstants in sdk");
-        return NULL;
-    }
-
-
-    vkMergePipelineCaches = (PFN_vkMergePipelineCaches)dlsym(vk_sdk, "vkMergePipelineCaches");
-    if( vkMergePipelineCaches == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkMergePipelineCaches in sdk");
-        return NULL;
-    }
-
-
-    vkResetFences = (PFN_vkResetFences)dlsym(vk_sdk, "vkResetFences");
-    if( vkResetFences == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkResetFences in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyInstance = (PFN_vkDestroyInstance)dlsym(vk_sdk, "vkDestroyInstance");
-    if( vkDestroyInstance == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyInstance in sdk");
-        return NULL;
-    }
-
-
-    vkCmdWaitEvents = (PFN_vkCmdWaitEvents)dlsym(vk_sdk, "vkCmdWaitEvents");
-    if( vkCmdWaitEvents == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdWaitEvents in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyShaderModule = (PFN_vkDestroyShaderModule)dlsym(vk_sdk, "vkDestroyShaderModule");
-    if( vkDestroyShaderModule == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyShaderModule in sdk");
-        return NULL;
-    }
-
-
-    vkCreatePipelineLayout = (PFN_vkCreatePipelineLayout)dlsym(vk_sdk, "vkCreatePipelineLayout");
-    if( vkCreatePipelineLayout == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreatePipelineLayout in sdk");
-        return NULL;
-    }
-
-
-    vkCmdPushConstants = (PFN_vkCmdPushConstants)dlsym(vk_sdk, "vkCmdPushConstants");
-    if( vkCmdPushConstants == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdPushConstants in sdk");
-        return NULL;
-    }
-
-
-    vkGetPhysicalDeviceSparseImageFormatProperties = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceSparseImageFormatProperties");
-    if( vkGetPhysicalDeviceSparseImageFormatProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPhysicalDeviceSparseImageFormatProperties in sdk");
-        return NULL;
-    }
-
-
-    vkBeginCommandBuffer = (PFN_vkBeginCommandBuffer)dlsym(vk_sdk, "vkBeginCommandBuffer");
-    if( vkBeginCommandBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkBeginCommandBuffer in sdk");
+                        "Can't load vkCmdResolveImage in sdk");
         return NULL;
     }
 
@@ -4999,10 +4791,18 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkCmdExecuteCommands = (PFN_vkCmdExecuteCommands)dlsym(vk_sdk, "vkCmdExecuteCommands");
-    if( vkCmdExecuteCommands == NULL ) {
+    vkDestroySemaphore = (PFN_vkDestroySemaphore)dlsym(vk_sdk, "vkDestroySemaphore");
+    if( vkDestroySemaphore == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdExecuteCommands in sdk");
+                        "Can't load vkDestroySemaphore in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetStencilCompareMask = (PFN_vkCmdSetStencilCompareMask)dlsym(vk_sdk, "vkCmdSetStencilCompareMask");
+    if( vkCmdSetStencilCompareMask == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetStencilCompareMask in sdk");
         return NULL;
     }
 
@@ -5015,58 +4815,50 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkMapMemory = (PFN_vkMapMemory)dlsym(vk_sdk, "vkMapMemory");
-    if( vkMapMemory == NULL ) {
+    vkCmdCopyBuffer = (PFN_vkCmdCopyBuffer)dlsym(vk_sdk, "vkCmdCopyBuffer");
+    if( vkCmdCopyBuffer == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkMapMemory in sdk");
+                        "Can't load vkCmdCopyBuffer in sdk");
         return NULL;
     }
 
 
-    vkAllocateDescriptorSets = (PFN_vkAllocateDescriptorSets)dlsym(vk_sdk, "vkAllocateDescriptorSets");
-    if( vkAllocateDescriptorSets == NULL ) {
+    vkAllocateCommandBuffers = (PFN_vkAllocateCommandBuffers)dlsym(vk_sdk, "vkAllocateCommandBuffers");
+    if( vkAllocateCommandBuffers == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkAllocateDescriptorSets in sdk");
+                        "Can't load vkAllocateCommandBuffers in sdk");
         return NULL;
     }
 
 
-    vkGetBufferMemoryRequirements = (PFN_vkGetBufferMemoryRequirements)dlsym(vk_sdk, "vkGetBufferMemoryRequirements");
-    if( vkGetBufferMemoryRequirements == NULL ) {
+    vkDestroyBufferView = (PFN_vkDestroyBufferView)dlsym(vk_sdk, "vkDestroyBufferView");
+    if( vkDestroyBufferView == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetBufferMemoryRequirements in sdk");
+                        "Can't load vkDestroyBufferView in sdk");
         return NULL;
     }
 
 
-    vkInvalidateMappedMemoryRanges = (PFN_vkInvalidateMappedMemoryRanges)dlsym(vk_sdk, "vkInvalidateMappedMemoryRanges");
-    if( vkInvalidateMappedMemoryRanges == NULL ) {
+    vkCmdDrawIndexed = (PFN_vkCmdDrawIndexed)dlsym(vk_sdk, "vkCmdDrawIndexed");
+    if( vkCmdDrawIndexed == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkInvalidateMappedMemoryRanges in sdk");
+                        "Can't load vkCmdDrawIndexed in sdk");
         return NULL;
     }
 
 
-    vkGetPhysicalDeviceFeatures = (PFN_vkGetPhysicalDeviceFeatures)dlsym(vk_sdk, "vkGetPhysicalDeviceFeatures");
-    if( vkGetPhysicalDeviceFeatures == NULL ) {
+    vkCmdDraw = (PFN_vkCmdDraw)dlsym(vk_sdk, "vkCmdDraw");
+    if( vkCmdDraw == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPhysicalDeviceFeatures in sdk");
+                        "Can't load vkCmdDraw in sdk");
         return NULL;
     }
 
 
-    vkUnmapMemory = (PFN_vkUnmapMemory)dlsym(vk_sdk, "vkUnmapMemory");
-    if( vkUnmapMemory == NULL ) {
+    vkCmdBlitImage = (PFN_vkCmdBlitImage)dlsym(vk_sdk, "vkCmdBlitImage");
+    if( vkCmdBlitImage == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkUnmapMemory in sdk");
-        return NULL;
-    }
-
-
-    vkCreateDescriptorSetLayout = (PFN_vkCreateDescriptorSetLayout)dlsym(vk_sdk, "vkCreateDescriptorSetLayout");
-    if( vkCreateDescriptorSetLayout == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateDescriptorSetLayout in sdk");
+                        "Can't load vkCmdBlitImage in sdk");
         return NULL;
     }
 
@@ -5079,10 +4871,354 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkCreateBuffer = (PFN_vkCreateBuffer)dlsym(vk_sdk, "vkCreateBuffer");
-    if( vkCreateBuffer == NULL ) {
+    vkCreateDescriptorPool = (PFN_vkCreateDescriptorPool)dlsym(vk_sdk, "vkCreateDescriptorPool");
+    if( vkCreateDescriptorPool == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateBuffer in sdk");
+                        "Can't load vkCreateDescriptorPool in sdk");
+        return NULL;
+    }
+
+
+    vkCreateFramebuffer = (PFN_vkCreateFramebuffer)dlsym(vk_sdk, "vkCreateFramebuffer");
+    if( vkCreateFramebuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateFramebuffer in sdk");
+        return NULL;
+    }
+
+
+    vkCmdBindPipeline = (PFN_vkCmdBindPipeline)dlsym(vk_sdk, "vkCmdBindPipeline");
+    if( vkCmdBindPipeline == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdBindPipeline in sdk");
+        return NULL;
+    }
+
+
+    vkResetDescriptorPool = (PFN_vkResetDescriptorPool)dlsym(vk_sdk, "vkResetDescriptorPool");
+    if( vkResetDescriptorPool == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkResetDescriptorPool in sdk");
+        return NULL;
+    }
+
+
+    vkCmdExecuteCommands = (PFN_vkCmdExecuteCommands)dlsym(vk_sdk, "vkCmdExecuteCommands");
+    if( vkCmdExecuteCommands == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdExecuteCommands in sdk");
+        return NULL;
+    }
+
+
+    vkGetDeviceMemoryCommitment = (PFN_vkGetDeviceMemoryCommitment)dlsym(vk_sdk, "vkGetDeviceMemoryCommitment");
+    if( vkGetDeviceMemoryCommitment == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetDeviceMemoryCommitment in sdk");
+        return NULL;
+    }
+
+
+    vkCmdWriteTimestamp = (PFN_vkCmdWriteTimestamp)dlsym(vk_sdk, "vkCmdWriteTimestamp");
+    if( vkCmdWriteTimestamp == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdWriteTimestamp in sdk");
+        return NULL;
+    }
+
+
+    vkCmdCopyQueryPoolResults = (PFN_vkCmdCopyQueryPoolResults)dlsym(vk_sdk, "vkCmdCopyQueryPoolResults");
+    if( vkCmdCopyQueryPoolResults == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdCopyQueryPoolResults in sdk");
+        return NULL;
+    }
+
+
+    vkGetPhysicalDeviceFormatProperties = (PFN_vkGetPhysicalDeviceFormatProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceFormatProperties");
+    if( vkGetPhysicalDeviceFormatProperties == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetPhysicalDeviceFormatProperties in sdk");
+        return NULL;
+    }
+
+
+    vkCreateBufferView = (PFN_vkCreateBufferView)dlsym(vk_sdk, "vkCreateBufferView");
+    if( vkCreateBufferView == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateBufferView in sdk");
+        return NULL;
+    }
+
+
+    vkCmdDrawIndexedIndirect = (PFN_vkCmdDrawIndexedIndirect)dlsym(vk_sdk, "vkCmdDrawIndexedIndirect");
+    if( vkCmdDrawIndexedIndirect == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdDrawIndexedIndirect in sdk");
+        return NULL;
+    }
+
+
+    vkCreatePipelineCache = (PFN_vkCreatePipelineCache)dlsym(vk_sdk, "vkCreatePipelineCache");
+    if( vkCreatePipelineCache == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreatePipelineCache in sdk");
+        return NULL;
+    }
+
+
+    vkResetCommandBuffer = (PFN_vkResetCommandBuffer)dlsym(vk_sdk, "vkResetCommandBuffer");
+    if( vkResetCommandBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkResetCommandBuffer in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetScissor = (PFN_vkCmdSetScissor)dlsym(vk_sdk, "vkCmdSetScissor");
+    if( vkCmdSetScissor == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetScissor in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetBlendConstants = (PFN_vkCmdSetBlendConstants)dlsym(vk_sdk, "vkCmdSetBlendConstants");
+    if( vkCmdSetBlendConstants == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetBlendConstants in sdk");
+        return NULL;
+    }
+
+
+    vkCmdEndQuery = (PFN_vkCmdEndQuery)dlsym(vk_sdk, "vkCmdEndQuery");
+    if( vkCmdEndQuery == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdEndQuery in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyDevice = (PFN_vkDestroyDevice)dlsym(vk_sdk, "vkDestroyDevice");
+    if( vkDestroyDevice == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyDevice in sdk");
+        return NULL;
+    }
+
+
+    vkBindImageMemory = (PFN_vkBindImageMemory)dlsym(vk_sdk, "vkBindImageMemory");
+    if( vkBindImageMemory == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkBindImageMemory in sdk");
+        return NULL;
+    }
+
+
+    vkCreatePipelineLayout = (PFN_vkCreatePipelineLayout)dlsym(vk_sdk, "vkCreatePipelineLayout");
+    if( vkCreatePipelineLayout == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreatePipelineLayout in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetDepthBounds = (PFN_vkCmdSetDepthBounds)dlsym(vk_sdk, "vkCmdSetDepthBounds");
+    if( vkCmdSetDepthBounds == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetDepthBounds in sdk");
+        return NULL;
+    }
+
+
+    vkCmdWaitEvents = (PFN_vkCmdWaitEvents)dlsym(vk_sdk, "vkCmdWaitEvents");
+    if( vkCmdWaitEvents == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdWaitEvents in sdk");
+        return NULL;
+    }
+
+
+    vkGetPipelineCacheData = (PFN_vkGetPipelineCacheData)dlsym(vk_sdk, "vkGetPipelineCacheData");
+    if( vkGetPipelineCacheData == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetPipelineCacheData in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyFramebuffer = (PFN_vkDestroyFramebuffer)dlsym(vk_sdk, "vkDestroyFramebuffer");
+    if( vkDestroyFramebuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyFramebuffer in sdk");
+        return NULL;
+    }
+
+
+    vkGetEventStatus = (PFN_vkGetEventStatus)dlsym(vk_sdk, "vkGetEventStatus");
+    if( vkGetEventStatus == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetEventStatus in sdk");
+        return NULL;
+    }
+
+
+    vkBeginCommandBuffer = (PFN_vkBeginCommandBuffer)dlsym(vk_sdk, "vkBeginCommandBuffer");
+    if( vkBeginCommandBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkBeginCommandBuffer in sdk");
+        return NULL;
+    }
+
+
+    vkCmdResetEvent = (PFN_vkCmdResetEvent)dlsym(vk_sdk, "vkCmdResetEvent");
+    if( vkCmdResetEvent == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdResetEvent in sdk");
+        return NULL;
+    }
+
+
+    vkGetInstanceProcAddr = (PFN_vkGetInstanceProcAddr)dlsym(vk_sdk, "vkGetInstanceProcAddr");
+    if( vkGetInstanceProcAddr == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetInstanceProcAddr in sdk");
+        return NULL;
+    }
+
+
+    vkCmdDispatch = (PFN_vkCmdDispatch)dlsym(vk_sdk, "vkCmdDispatch");
+    if( vkCmdDispatch == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdDispatch in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetDepthBias = (PFN_vkCmdSetDepthBias)dlsym(vk_sdk, "vkCmdSetDepthBias");
+    if( vkCmdSetDepthBias == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetDepthBias in sdk");
+        return NULL;
+    }
+
+
+    vkCmdCopyImage = (PFN_vkCmdCopyImage)dlsym(vk_sdk, "vkCmdCopyImage");
+    if( vkCmdCopyImage == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdCopyImage in sdk");
+        return NULL;
+    }
+
+
+    vkCreateImageView = (PFN_vkCreateImageView)dlsym(vk_sdk, "vkCreateImageView");
+    if( vkCreateImageView == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateImageView in sdk");
+        return NULL;
+    }
+
+
+    vkMergePipelineCaches = (PFN_vkMergePipelineCaches)dlsym(vk_sdk, "vkMergePipelineCaches");
+    if( vkMergePipelineCaches == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkMergePipelineCaches in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyEvent = (PFN_vkDestroyEvent)dlsym(vk_sdk, "vkDestroyEvent");
+    if( vkDestroyEvent == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyEvent in sdk");
+        return NULL;
+    }
+
+
+    vkCreateCommandPool = (PFN_vkCreateCommandPool)dlsym(vk_sdk, "vkCreateCommandPool");
+    if( vkCreateCommandPool == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateCommandPool in sdk");
+        return NULL;
+    }
+
+
+    vkCmdCopyBufferToImage = (PFN_vkCmdCopyBufferToImage)dlsym(vk_sdk, "vkCmdCopyBufferToImage");
+    if( vkCmdCopyBufferToImage == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdCopyBufferToImage in sdk");
+        return NULL;
+    }
+
+
+    vkResetFences = (PFN_vkResetFences)dlsym(vk_sdk, "vkResetFences");
+    if( vkResetFences == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkResetFences in sdk");
+        return NULL;
+    }
+
+
+    vkGetDeviceProcAddr = (PFN_vkGetDeviceProcAddr)dlsym(vk_sdk, "vkGetDeviceProcAddr");
+    if( vkGetDeviceProcAddr == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetDeviceProcAddr in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetEvent = (PFN_vkCmdSetEvent)dlsym(vk_sdk, "vkCmdSetEvent");
+    if( vkCmdSetEvent == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetEvent in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyFence = (PFN_vkDestroyFence)dlsym(vk_sdk, "vkDestroyFence");
+    if( vkDestroyFence == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyFence in sdk");
+        return NULL;
+    }
+
+
+    vkGetPhysicalDeviceFeatures = (PFN_vkGetPhysicalDeviceFeatures)dlsym(vk_sdk, "vkGetPhysicalDeviceFeatures");
+    if( vkGetPhysicalDeviceFeatures == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetPhysicalDeviceFeatures in sdk");
+        return NULL;
+    }
+
+
+    vkFreeDescriptorSets = (PFN_vkFreeDescriptorSets)dlsym(vk_sdk, "vkFreeDescriptorSets");
+    if( vkFreeDescriptorSets == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkFreeDescriptorSets in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyBuffer = (PFN_vkDestroyBuffer)dlsym(vk_sdk, "vkDestroyBuffer");
+    if( vkDestroyBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyBuffer in sdk");
+        return NULL;
+    }
+
+
+    vkCreateFence = (PFN_vkCreateFence)dlsym(vk_sdk, "vkCreateFence");
+    if( vkCreateFence == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateFence in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyQueryPool = (PFN_vkDestroyQueryPool)dlsym(vk_sdk, "vkDestroyQueryPool");
+    if( vkDestroyQueryPool == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyQueryPool in sdk");
         return NULL;
     }
 
@@ -5095,34 +5231,42 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkDestroyDescriptorPool = (PFN_vkDestroyDescriptorPool)dlsym(vk_sdk, "vkDestroyDescriptorPool");
-    if( vkDestroyDescriptorPool == NULL ) {
+    vkCreateEvent = (PFN_vkCreateEvent)dlsym(vk_sdk, "vkCreateEvent");
+    if( vkCreateEvent == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyDescriptorPool in sdk");
+                        "Can't load vkCreateEvent in sdk");
         return NULL;
     }
 
 
-    vkDestroyImageView = (PFN_vkDestroyImageView)dlsym(vk_sdk, "vkDestroyImageView");
-    if( vkDestroyImageView == NULL ) {
+    vkDestroyImage = (PFN_vkDestroyImage)dlsym(vk_sdk, "vkDestroyImage");
+    if( vkDestroyImage == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyImageView in sdk");
+                        "Can't load vkDestroyImage in sdk");
         return NULL;
     }
 
 
-    vkFreeCommandBuffers = (PFN_vkFreeCommandBuffers)dlsym(vk_sdk, "vkFreeCommandBuffers");
-    if( vkFreeCommandBuffers == NULL ) {
+    vkDestroyRenderPass = (PFN_vkDestroyRenderPass)dlsym(vk_sdk, "vkDestroyRenderPass");
+    if( vkDestroyRenderPass == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkFreeCommandBuffers in sdk");
+                        "Can't load vkDestroyRenderPass in sdk");
         return NULL;
     }
 
 
-    vkCmdSetStencilWriteMask = (PFN_vkCmdSetStencilWriteMask)dlsym(vk_sdk, "vkCmdSetStencilWriteMask");
-    if( vkCmdSetStencilWriteMask == NULL ) {
+    vkBindBufferMemory = (PFN_vkBindBufferMemory)dlsym(vk_sdk, "vkBindBufferMemory");
+    if( vkBindBufferMemory == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetStencilWriteMask in sdk");
+                        "Can't load vkBindBufferMemory in sdk");
+        return NULL;
+    }
+
+
+    vkCmdBindIndexBuffer = (PFN_vkCmdBindIndexBuffer)dlsym(vk_sdk, "vkCmdBindIndexBuffer");
+    if( vkCmdBindIndexBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdBindIndexBuffer in sdk");
         return NULL;
     }
 
@@ -5135,18 +5279,234 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkAllocateMemory = (PFN_vkAllocateMemory)dlsym(vk_sdk, "vkAllocateMemory");
-    if( vkAllocateMemory == NULL ) {
+    vkDestroyDescriptorSetLayout = (PFN_vkDestroyDescriptorSetLayout)dlsym(vk_sdk, "vkDestroyDescriptorSetLayout");
+    if( vkDestroyDescriptorSetLayout == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkAllocateMemory in sdk");
+                        "Can't load vkDestroyDescriptorSetLayout in sdk");
         return NULL;
     }
 
 
-    vkCmdBlitImage = (PFN_vkCmdBlitImage)dlsym(vk_sdk, "vkCmdBlitImage");
-    if( vkCmdBlitImage == NULL ) {
+    vkDeviceWaitIdle = (PFN_vkDeviceWaitIdle)dlsym(vk_sdk, "vkDeviceWaitIdle");
+    if( vkDeviceWaitIdle == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdBlitImage in sdk");
+                        "Can't load vkDeviceWaitIdle in sdk");
+        return NULL;
+    }
+
+
+    vkQueueWaitIdle = (PFN_vkQueueWaitIdle)dlsym(vk_sdk, "vkQueueWaitIdle");
+    if( vkQueueWaitIdle == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkQueueWaitIdle in sdk");
+        return NULL;
+    }
+
+
+    vkCreateSemaphore = (PFN_vkCreateSemaphore)dlsym(vk_sdk, "vkCreateSemaphore");
+    if( vkCreateSemaphore == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateSemaphore in sdk");
+        return NULL;
+    }
+
+
+    vkResetEvent = (PFN_vkResetEvent)dlsym(vk_sdk, "vkResetEvent");
+    if( vkResetEvent == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkResetEvent in sdk");
+        return NULL;
+    }
+
+
+    vkCmdNextSubpass = (PFN_vkCmdNextSubpass)dlsym(vk_sdk, "vkCmdNextSubpass");
+    if( vkCmdNextSubpass == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdNextSubpass in sdk");
+        return NULL;
+    }
+
+
+    vkCmdBindDescriptorSets = (PFN_vkCmdBindDescriptorSets)dlsym(vk_sdk, "vkCmdBindDescriptorSets");
+    if( vkCmdBindDescriptorSets == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdBindDescriptorSets in sdk");
+        return NULL;
+    }
+
+
+    vkGetPhysicalDeviceQueueFamilyProperties = (PFN_vkGetPhysicalDeviceQueueFamilyProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceQueueFamilyProperties");
+    if( vkGetPhysicalDeviceQueueFamilyProperties == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetPhysicalDeviceQueueFamilyProperties in sdk");
+        return NULL;
+    }
+
+
+    vkCreateDescriptorSetLayout = (PFN_vkCreateDescriptorSetLayout)dlsym(vk_sdk, "vkCreateDescriptorSetLayout");
+    if( vkCreateDescriptorSetLayout == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateDescriptorSetLayout in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyPipelineLayout = (PFN_vkDestroyPipelineLayout)dlsym(vk_sdk, "vkDestroyPipelineLayout");
+    if( vkDestroyPipelineLayout == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyPipelineLayout in sdk");
+        return NULL;
+    }
+
+
+    vkCmdUpdateBuffer = (PFN_vkCmdUpdateBuffer)dlsym(vk_sdk, "vkCmdUpdateBuffer");
+    if( vkCmdUpdateBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdUpdateBuffer in sdk");
+        return NULL;
+    }
+
+
+    vkEndCommandBuffer = (PFN_vkEndCommandBuffer)dlsym(vk_sdk, "vkEndCommandBuffer");
+    if( vkEndCommandBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkEndCommandBuffer in sdk");
+        return NULL;
+    }
+
+
+    vkCmdBeginQuery = (PFN_vkCmdBeginQuery)dlsym(vk_sdk, "vkCmdBeginQuery");
+    if( vkCmdBeginQuery == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdBeginQuery in sdk");
+        return NULL;
+    }
+
+
+    vkGetPhysicalDeviceImageFormatProperties = (PFN_vkGetPhysicalDeviceImageFormatProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceImageFormatProperties");
+    if( vkGetPhysicalDeviceImageFormatProperties == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetPhysicalDeviceImageFormatProperties in sdk");
+        return NULL;
+    }
+
+
+    vkGetPhysicalDeviceMemoryProperties = (PFN_vkGetPhysicalDeviceMemoryProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceMemoryProperties");
+    if( vkGetPhysicalDeviceMemoryProperties == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetPhysicalDeviceMemoryProperties in sdk");
+        return NULL;
+    }
+
+
+    vkGetQueryPoolResults = (PFN_vkGetQueryPoolResults)dlsym(vk_sdk, "vkGetQueryPoolResults");
+    if( vkGetQueryPoolResults == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetQueryPoolResults in sdk");
+        return NULL;
+    }
+
+
+    vkSetEvent = (PFN_vkSetEvent)dlsym(vk_sdk, "vkSetEvent");
+    if( vkSetEvent == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkSetEvent in sdk");
+        return NULL;
+    }
+
+
+    vkCreateInstance = (PFN_vkCreateInstance)dlsym(vk_sdk, "vkCreateInstance");
+    if( vkCreateInstance == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateInstance in sdk");
+        return NULL;
+    }
+
+
+    vkCreateImage = (PFN_vkCreateImage)dlsym(vk_sdk, "vkCreateImage");
+    if( vkCreateImage == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateImage in sdk");
+        return NULL;
+    }
+
+
+    vkGetImageSubresourceLayout = (PFN_vkGetImageSubresourceLayout)dlsym(vk_sdk, "vkGetImageSubresourceLayout");
+    if( vkGetImageSubresourceLayout == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetImageSubresourceLayout in sdk");
+        return NULL;
+    }
+
+
+    vkDestroySampler = (PFN_vkDestroySampler)dlsym(vk_sdk, "vkDestroySampler");
+    if( vkDestroySampler == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroySampler in sdk");
+        return NULL;
+    }
+
+
+    vkCreateShaderModule = (PFN_vkCreateShaderModule)dlsym(vk_sdk, "vkCreateShaderModule");
+    if( vkCreateShaderModule == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateShaderModule in sdk");
+        return NULL;
+    }
+
+
+    vkCmdDispatchIndirect = (PFN_vkCmdDispatchIndirect)dlsym(vk_sdk, "vkCmdDispatchIndirect");
+    if( vkCmdDispatchIndirect == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdDispatchIndirect in sdk");
+        return NULL;
+    }
+
+
+    vkGetRenderAreaGranularity = (PFN_vkGetRenderAreaGranularity)dlsym(vk_sdk, "vkGetRenderAreaGranularity");
+    if( vkGetRenderAreaGranularity == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkGetRenderAreaGranularity in sdk");
+        return NULL;
+    }
+
+
+    vkCmdResetQueryPool = (PFN_vkCmdResetQueryPool)dlsym(vk_sdk, "vkCmdResetQueryPool");
+    if( vkCmdResetQueryPool == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdResetQueryPool in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyPipelineCache = (PFN_vkDestroyPipelineCache)dlsym(vk_sdk, "vkDestroyPipelineCache");
+    if( vkDestroyPipelineCache == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyPipelineCache in sdk");
+        return NULL;
+    }
+
+
+    vkCreateSampler = (PFN_vkCreateSampler)dlsym(vk_sdk, "vkCreateSampler");
+    if( vkCreateSampler == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateSampler in sdk");
+        return NULL;
+    }
+
+
+    vkResetCommandPool = (PFN_vkResetCommandPool)dlsym(vk_sdk, "vkResetCommandPool");
+    if( vkResetCommandPool == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkResetCommandPool in sdk");
+        return NULL;
+    }
+
+
+    vkAllocateMemory = (PFN_vkAllocateMemory)dlsym(vk_sdk, "vkAllocateMemory");
+    if( vkAllocateMemory == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkAllocateMemory in sdk");
         return NULL;
     }
 
@@ -5167,66 +5527,18 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkGetPhysicalDeviceFormatProperties = (PFN_vkGetPhysicalDeviceFormatProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceFormatProperties");
-    if( vkGetPhysicalDeviceFormatProperties == NULL ) {
+    vkDestroyInstance = (PFN_vkDestroyInstance)dlsym(vk_sdk, "vkDestroyInstance");
+    if( vkDestroyInstance == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPhysicalDeviceFormatProperties in sdk");
+                        "Can't load vkDestroyInstance in sdk");
         return NULL;
     }
 
 
-    vkCreateDescriptorPool = (PFN_vkCreateDescriptorPool)dlsym(vk_sdk, "vkCreateDescriptorPool");
-    if( vkCreateDescriptorPool == NULL ) {
+    vkGetPhysicalDeviceSparseImageFormatProperties = (PFN_vkGetPhysicalDeviceSparseImageFormatProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceSparseImageFormatProperties");
+    if( vkGetPhysicalDeviceSparseImageFormatProperties == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateDescriptorPool in sdk");
-        return NULL;
-    }
-
-
-    vkCmdCopyBuffer = (PFN_vkCmdCopyBuffer)dlsym(vk_sdk, "vkCmdCopyBuffer");
-    if( vkCmdCopyBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdCopyBuffer in sdk");
-        return NULL;
-    }
-
-
-    vkCreateDevice = (PFN_vkCreateDevice)dlsym(vk_sdk, "vkCreateDevice");
-    if( vkCreateDevice == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateDevice in sdk");
-        return NULL;
-    }
-
-
-    vkCmdClearColorImage = (PFN_vkCmdClearColorImage)dlsym(vk_sdk, "vkCmdClearColorImage");
-    if( vkCmdClearColorImage == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdClearColorImage in sdk");
-        return NULL;
-    }
-
-
-    vkQueueWaitIdle = (PFN_vkQueueWaitIdle)dlsym(vk_sdk, "vkQueueWaitIdle");
-    if( vkQueueWaitIdle == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkQueueWaitIdle in sdk");
-        return NULL;
-    }
-
-
-    vkCmdNextSubpass = (PFN_vkCmdNextSubpass)dlsym(vk_sdk, "vkCmdNextSubpass");
-    if( vkCmdNextSubpass == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdNextSubpass in sdk");
-        return NULL;
-    }
-
-
-    vkCmdEndRenderPass = (PFN_vkCmdEndRenderPass)dlsym(vk_sdk, "vkCmdEndRenderPass");
-    if( vkCmdEndRenderPass == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdEndRenderPass in sdk");
+                        "Can't load vkGetPhysicalDeviceSparseImageFormatProperties in sdk");
         return NULL;
     }
 
@@ -5239,318 +5551,6 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkCmdCopyBufferToImage = (PFN_vkCmdCopyBufferToImage)dlsym(vk_sdk, "vkCmdCopyBufferToImage");
-    if( vkCmdCopyBufferToImage == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdCopyBufferToImage in sdk");
-        return NULL;
-    }
-
-
-    vkCmdSetEvent = (PFN_vkCmdSetEvent)dlsym(vk_sdk, "vkCmdSetEvent");
-    if( vkCmdSetEvent == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetEvent in sdk");
-        return NULL;
-    }
-
-
-    vkEnumerateDeviceLayerProperties = (PFN_vkEnumerateDeviceLayerProperties)dlsym(vk_sdk, "vkEnumerateDeviceLayerProperties");
-    if( vkEnumerateDeviceLayerProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkEnumerateDeviceLayerProperties in sdk");
-        return NULL;
-    }
-
-
-    vkCreateImage = (PFN_vkCreateImage)dlsym(vk_sdk, "vkCreateImage");
-    if( vkCreateImage == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateImage in sdk");
-        return NULL;
-    }
-
-
-    vkCmdBindVertexBuffers = (PFN_vkCmdBindVertexBuffers)dlsym(vk_sdk, "vkCmdBindVertexBuffers");
-    if( vkCmdBindVertexBuffers == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdBindVertexBuffers in sdk");
-        return NULL;
-    }
-
-
-    vkUpdateDescriptorSets = (PFN_vkUpdateDescriptorSets)dlsym(vk_sdk, "vkUpdateDescriptorSets");
-    if( vkUpdateDescriptorSets == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkUpdateDescriptorSets in sdk");
-        return NULL;
-    }
-
-
-    vkCmdSetLineWidth = (PFN_vkCmdSetLineWidth)dlsym(vk_sdk, "vkCmdSetLineWidth");
-    if( vkCmdSetLineWidth == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetLineWidth in sdk");
-        return NULL;
-    }
-
-
-    vkEnumerateDeviceExtensionProperties = (PFN_vkEnumerateDeviceExtensionProperties)dlsym(vk_sdk, "vkEnumerateDeviceExtensionProperties");
-    if( vkEnumerateDeviceExtensionProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkEnumerateDeviceExtensionProperties in sdk");
-        return NULL;
-    }
-
-
-    vkEnumeratePhysicalDevices = (PFN_vkEnumeratePhysicalDevices)dlsym(vk_sdk, "vkEnumeratePhysicalDevices");
-    if( vkEnumeratePhysicalDevices == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkEnumeratePhysicalDevices in sdk");
-        return NULL;
-    }
-
-
-    vkCmdDispatchIndirect = (PFN_vkCmdDispatchIndirect)dlsym(vk_sdk, "vkCmdDispatchIndirect");
-    if( vkCmdDispatchIndirect == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdDispatchIndirect in sdk");
-        return NULL;
-    }
-
-
-    vkCreateFramebuffer = (PFN_vkCreateFramebuffer)dlsym(vk_sdk, "vkCreateFramebuffer");
-    if( vkCreateFramebuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateFramebuffer in sdk");
-        return NULL;
-    }
-
-
-    vkCmdSetStencilReference = (PFN_vkCmdSetStencilReference)dlsym(vk_sdk, "vkCmdSetStencilReference");
-    if( vkCmdSetStencilReference == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetStencilReference in sdk");
-        return NULL;
-    }
-
-
-    vkCmdSetDepthBounds = (PFN_vkCmdSetDepthBounds)dlsym(vk_sdk, "vkCmdSetDepthBounds");
-    if( vkCmdSetDepthBounds == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetDepthBounds in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyPipeline = (PFN_vkDestroyPipeline)dlsym(vk_sdk, "vkDestroyPipeline");
-    if( vkDestroyPipeline == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyPipeline in sdk");
-        return NULL;
-    }
-
-
-    vkCmdPipelineBarrier = (PFN_vkCmdPipelineBarrier)dlsym(vk_sdk, "vkCmdPipelineBarrier");
-    if( vkCmdPipelineBarrier == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdPipelineBarrier in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyImage = (PFN_vkDestroyImage)dlsym(vk_sdk, "vkDestroyImage");
-    if( vkDestroyImage == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyImage in sdk");
-        return NULL;
-    }
-
-
-    vkEnumerateInstanceExtensionProperties = (PFN_vkEnumerateInstanceExtensionProperties)dlsym(vk_sdk, "vkEnumerateInstanceExtensionProperties");
-    if( vkEnumerateInstanceExtensionProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkEnumerateInstanceExtensionProperties in sdk");
-        return NULL;
-    }
-
-
-    vkCmdSetScissor = (PFN_vkCmdSetScissor)dlsym(vk_sdk, "vkCmdSetScissor");
-    if( vkCmdSetScissor == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetScissor in sdk");
-        return NULL;
-    }
-
-
-    vkCmdDrawIndexedIndirect = (PFN_vkCmdDrawIndexedIndirect)dlsym(vk_sdk, "vkCmdDrawIndexedIndirect");
-    if( vkCmdDrawIndexedIndirect == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdDrawIndexedIndirect in sdk");
-        return NULL;
-    }
-
-
-    vkCmdDispatch = (PFN_vkCmdDispatch)dlsym(vk_sdk, "vkCmdDispatch");
-    if( vkCmdDispatch == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdDispatch in sdk");
-        return NULL;
-    }
-
-
-    vkEnumerateInstanceLayerProperties = (PFN_vkEnumerateInstanceLayerProperties)dlsym(vk_sdk, "vkEnumerateInstanceLayerProperties");
-    if( vkEnumerateInstanceLayerProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkEnumerateInstanceLayerProperties in sdk");
-        return NULL;
-    }
-
-
-    vkCmdFillBuffer = (PFN_vkCmdFillBuffer)dlsym(vk_sdk, "vkCmdFillBuffer");
-    if( vkCmdFillBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdFillBuffer in sdk");
-        return NULL;
-    }
-
-
-    vkCmdDraw = (PFN_vkCmdDraw)dlsym(vk_sdk, "vkCmdDraw");
-    if( vkCmdDraw == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdDraw in sdk");
-        return NULL;
-    }
-
-
-    vkCreateComputePipelines = (PFN_vkCreateComputePipelines)dlsym(vk_sdk, "vkCreateComputePipelines");
-    if( vkCreateComputePipelines == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateComputePipelines in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyCommandPool = (PFN_vkDestroyCommandPool)dlsym(vk_sdk, "vkDestroyCommandPool");
-    if( vkDestroyCommandPool == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyCommandPool in sdk");
-        return NULL;
-    }
-
-
-    vkCreateRenderPass = (PFN_vkCreateRenderPass)dlsym(vk_sdk, "vkCreateRenderPass");
-    if( vkCreateRenderPass == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateRenderPass in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyBuffer = (PFN_vkDestroyBuffer)dlsym(vk_sdk, "vkDestroyBuffer");
-    if( vkDestroyBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyBuffer in sdk");
-        return NULL;
-    }
-
-
-    vkAllocateCommandBuffers = (PFN_vkAllocateCommandBuffers)dlsym(vk_sdk, "vkAllocateCommandBuffers");
-    if( vkAllocateCommandBuffers == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkAllocateCommandBuffers in sdk");
-        return NULL;
-    }
-
-
-    vkGetDeviceMemoryCommitment = (PFN_vkGetDeviceMemoryCommitment)dlsym(vk_sdk, "vkGetDeviceMemoryCommitment");
-    if( vkGetDeviceMemoryCommitment == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetDeviceMemoryCommitment in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyDevice = (PFN_vkDestroyDevice)dlsym(vk_sdk, "vkDestroyDevice");
-    if( vkDestroyDevice == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyDevice in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyQueryPool = (PFN_vkDestroyQueryPool)dlsym(vk_sdk, "vkDestroyQueryPool");
-    if( vkDestroyQueryPool == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyQueryPool in sdk");
-        return NULL;
-    }
-
-
-    vkCmdCopyImageToBuffer = (PFN_vkCmdCopyImageToBuffer)dlsym(vk_sdk, "vkCmdCopyImageToBuffer");
-    if( vkCmdCopyImageToBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdCopyImageToBuffer in sdk");
-        return NULL;
-    }
-
-
-    vkCmdResetEvent = (PFN_vkCmdResetEvent)dlsym(vk_sdk, "vkCmdResetEvent");
-    if( vkCmdResetEvent == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdResetEvent in sdk");
-        return NULL;
-    }
-
-
-    vkCreateSampler = (PFN_vkCreateSampler)dlsym(vk_sdk, "vkCreateSampler");
-    if( vkCreateSampler == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateSampler in sdk");
-        return NULL;
-    }
-
-
-    vkCmdBindIndexBuffer = (PFN_vkCmdBindIndexBuffer)dlsym(vk_sdk, "vkCmdBindIndexBuffer");
-    if( vkCmdBindIndexBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdBindIndexBuffer in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyEvent = (PFN_vkDestroyEvent)dlsym(vk_sdk, "vkDestroyEvent");
-    if( vkDestroyEvent == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyEvent in sdk");
-        return NULL;
-    }
-
-
-    vkCreateSemaphore = (PFN_vkCreateSemaphore)dlsym(vk_sdk, "vkCreateSemaphore");
-    if( vkCreateSemaphore == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateSemaphore in sdk");
-        return NULL;
-    }
-
-
-    vkCreateInstance = (PFN_vkCreateInstance)dlsym(vk_sdk, "vkCreateInstance");
-    if( vkCreateInstance == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateInstance in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyPipelineCache = (PFN_vkDestroyPipelineCache)dlsym(vk_sdk, "vkDestroyPipelineCache");
-    if( vkDestroyPipelineCache == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyPipelineCache in sdk");
-        return NULL;
-    }
-
-
     vkCmdBeginRenderPass = (PFN_vkCmdBeginRenderPass)dlsym(vk_sdk, "vkCmdBeginRenderPass");
     if( vkCmdBeginRenderPass == NULL ) {
         PyErr_SetString(PyExc_ImportError,
@@ -5559,130 +5559,18 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkGetImageSubresourceLayout = (PFN_vkGetImageSubresourceLayout)dlsym(vk_sdk, "vkGetImageSubresourceLayout");
-    if( vkGetImageSubresourceLayout == NULL ) {
+    vkAllocateDescriptorSets = (PFN_vkAllocateDescriptorSets)dlsym(vk_sdk, "vkAllocateDescriptorSets");
+    if( vkAllocateDescriptorSets == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetImageSubresourceLayout in sdk");
+                        "Can't load vkAllocateDescriptorSets in sdk");
         return NULL;
     }
 
 
-    vkGetPhysicalDeviceQueueFamilyProperties = (PFN_vkGetPhysicalDeviceQueueFamilyProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceQueueFamilyProperties");
-    if( vkGetPhysicalDeviceQueueFamilyProperties == NULL ) {
+    vkCmdEndRenderPass = (PFN_vkCmdEndRenderPass)dlsym(vk_sdk, "vkCmdEndRenderPass");
+    if( vkCmdEndRenderPass == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPhysicalDeviceQueueFamilyProperties in sdk");
-        return NULL;
-    }
-
-
-    vkResetCommandBuffer = (PFN_vkResetCommandBuffer)dlsym(vk_sdk, "vkResetCommandBuffer");
-    if( vkResetCommandBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkResetCommandBuffer in sdk");
-        return NULL;
-    }
-
-
-    vkResetDescriptorPool = (PFN_vkResetDescriptorPool)dlsym(vk_sdk, "vkResetDescriptorPool");
-    if( vkResetDescriptorPool == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkResetDescriptorPool in sdk");
-        return NULL;
-    }
-
-
-    vkCmdDrawIndexed = (PFN_vkCmdDrawIndexed)dlsym(vk_sdk, "vkCmdDrawIndexed");
-    if( vkCmdDrawIndexed == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdDrawIndexed in sdk");
-        return NULL;
-    }
-
-
-    vkGetEventStatus = (PFN_vkGetEventStatus)dlsym(vk_sdk, "vkGetEventStatus");
-    if( vkGetEventStatus == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetEventStatus in sdk");
-        return NULL;
-    }
-
-
-    vkFreeMemory = (PFN_vkFreeMemory)dlsym(vk_sdk, "vkFreeMemory");
-    if( vkFreeMemory == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkFreeMemory in sdk");
-        return NULL;
-    }
-
-
-    vkFlushMappedMemoryRanges = (PFN_vkFlushMappedMemoryRanges)dlsym(vk_sdk, "vkFlushMappedMemoryRanges");
-    if( vkFlushMappedMemoryRanges == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkFlushMappedMemoryRanges in sdk");
-        return NULL;
-    }
-
-
-    vkGetPhysicalDeviceImageFormatProperties = (PFN_vkGetPhysicalDeviceImageFormatProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceImageFormatProperties");
-    if( vkGetPhysicalDeviceImageFormatProperties == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPhysicalDeviceImageFormatProperties in sdk");
-        return NULL;
-    }
-
-
-    vkCmdBeginQuery = (PFN_vkCmdBeginQuery)dlsym(vk_sdk, "vkCmdBeginQuery");
-    if( vkCmdBeginQuery == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdBeginQuery in sdk");
-        return NULL;
-    }
-
-
-    vkGetDeviceProcAddr = (PFN_vkGetDeviceProcAddr)dlsym(vk_sdk, "vkGetDeviceProcAddr");
-    if( vkGetDeviceProcAddr == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetDeviceProcAddr in sdk");
-        return NULL;
-    }
-
-
-    vkCreateQueryPool = (PFN_vkCreateQueryPool)dlsym(vk_sdk, "vkCreateQueryPool");
-    if( vkCreateQueryPool == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateQueryPool in sdk");
-        return NULL;
-    }
-
-
-    vkEndCommandBuffer = (PFN_vkEndCommandBuffer)dlsym(vk_sdk, "vkEndCommandBuffer");
-    if( vkEndCommandBuffer == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkEndCommandBuffer in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyPipelineLayout = (PFN_vkDestroyPipelineLayout)dlsym(vk_sdk, "vkDestroyPipelineLayout");
-    if( vkDestroyPipelineLayout == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyPipelineLayout in sdk");
-        return NULL;
-    }
-
-
-    vkDeviceWaitIdle = (PFN_vkDeviceWaitIdle)dlsym(vk_sdk, "vkDeviceWaitIdle");
-    if( vkDeviceWaitIdle == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDeviceWaitIdle in sdk");
-        return NULL;
-    }
-
-
-    vkDestroySampler = (PFN_vkDestroySampler)dlsym(vk_sdk, "vkDestroySampler");
-    if( vkDestroySampler == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroySampler in sdk");
+                        "Can't load vkCmdEndRenderPass in sdk");
         return NULL;
     }
 
@@ -5695,34 +5583,90 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkBindImageMemory = (PFN_vkBindImageMemory)dlsym(vk_sdk, "vkBindImageMemory");
-    if( vkBindImageMemory == NULL ) {
+    vkCmdPushConstants = (PFN_vkCmdPushConstants)dlsym(vk_sdk, "vkCmdPushConstants");
+    if( vkCmdPushConstants == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkBindImageMemory in sdk");
+                        "Can't load vkCmdPushConstants in sdk");
         return NULL;
     }
 
 
-    vkDestroyRenderPass = (PFN_vkDestroyRenderPass)dlsym(vk_sdk, "vkDestroyRenderPass");
-    if( vkDestroyRenderPass == NULL ) {
+    vkCreateComputePipelines = (PFN_vkCreateComputePipelines)dlsym(vk_sdk, "vkCreateComputePipelines");
+    if( vkCreateComputePipelines == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyRenderPass in sdk");
+                        "Can't load vkCreateComputePipelines in sdk");
         return NULL;
     }
 
 
-    vkCreatePipelineCache = (PFN_vkCreatePipelineCache)dlsym(vk_sdk, "vkCreatePipelineCache");
-    if( vkCreatePipelineCache == NULL ) {
+    vkEnumerateDeviceLayerProperties = (PFN_vkEnumerateDeviceLayerProperties)dlsym(vk_sdk, "vkEnumerateDeviceLayerProperties");
+    if( vkEnumerateDeviceLayerProperties == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreatePipelineCache in sdk");
+                        "Can't load vkEnumerateDeviceLayerProperties in sdk");
         return NULL;
     }
 
 
-    vkGetRenderAreaGranularity = (PFN_vkGetRenderAreaGranularity)dlsym(vk_sdk, "vkGetRenderAreaGranularity");
-    if( vkGetRenderAreaGranularity == NULL ) {
+    vkCmdClearAttachments = (PFN_vkCmdClearAttachments)dlsym(vk_sdk, "vkCmdClearAttachments");
+    if( vkCmdClearAttachments == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetRenderAreaGranularity in sdk");
+                        "Can't load vkCmdClearAttachments in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetStencilReference = (PFN_vkCmdSetStencilReference)dlsym(vk_sdk, "vkCmdSetStencilReference");
+    if( vkCmdSetStencilReference == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetStencilReference in sdk");
+        return NULL;
+    }
+
+
+    vkUnmapMemory = (PFN_vkUnmapMemory)dlsym(vk_sdk, "vkUnmapMemory");
+    if( vkUnmapMemory == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkUnmapMemory in sdk");
+        return NULL;
+    }
+
+
+    vkCreateBuffer = (PFN_vkCreateBuffer)dlsym(vk_sdk, "vkCreateBuffer");
+    if( vkCreateBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateBuffer in sdk");
+        return NULL;
+    }
+
+
+    vkCreateDevice = (PFN_vkCreateDevice)dlsym(vk_sdk, "vkCreateDevice");
+    if( vkCreateDevice == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateDevice in sdk");
+        return NULL;
+    }
+
+
+    vkCmdBindVertexBuffers = (PFN_vkCmdBindVertexBuffers)dlsym(vk_sdk, "vkCmdBindVertexBuffers");
+    if( vkCmdBindVertexBuffers == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdBindVertexBuffers in sdk");
+        return NULL;
+    }
+
+
+    vkInvalidateMappedMemoryRanges = (PFN_vkInvalidateMappedMemoryRanges)dlsym(vk_sdk, "vkInvalidateMappedMemoryRanges");
+    if( vkInvalidateMappedMemoryRanges == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkInvalidateMappedMemoryRanges in sdk");
+        return NULL;
+    }
+
+
+    vkCreateQueryPool = (PFN_vkCreateQueryPool)dlsym(vk_sdk, "vkCreateQueryPool");
+    if( vkCreateQueryPool == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateQueryPool in sdk");
         return NULL;
     }
 
@@ -5735,62 +5679,6 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkResetCommandPool = (PFN_vkResetCommandPool)dlsym(vk_sdk, "vkResetCommandPool");
-    if( vkResetCommandPool == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkResetCommandPool in sdk");
-        return NULL;
-    }
-
-
-    vkGetInstanceProcAddr = (PFN_vkGetInstanceProcAddr)dlsym(vk_sdk, "vkGetInstanceProcAddr");
-    if( vkGetInstanceProcAddr == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetInstanceProcAddr in sdk");
-        return NULL;
-    }
-
-
-    vkCreateFence = (PFN_vkCreateFence)dlsym(vk_sdk, "vkCreateFence");
-    if( vkCreateFence == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateFence in sdk");
-        return NULL;
-    }
-
-
-    vkCreateCommandPool = (PFN_vkCreateCommandPool)dlsym(vk_sdk, "vkCreateCommandPool");
-    if( vkCreateCommandPool == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCreateCommandPool in sdk");
-        return NULL;
-    }
-
-
-    vkCmdResolveImage = (PFN_vkCmdResolveImage)dlsym(vk_sdk, "vkCmdResolveImage");
-    if( vkCmdResolveImage == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdResolveImage in sdk");
-        return NULL;
-    }
-
-
-    vkDestroyBufferView = (PFN_vkDestroyBufferView)dlsym(vk_sdk, "vkDestroyBufferView");
-    if( vkDestroyBufferView == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyBufferView in sdk");
-        return NULL;
-    }
-
-
-    vkResetEvent = (PFN_vkResetEvent)dlsym(vk_sdk, "vkResetEvent");
-    if( vkResetEvent == NULL ) {
-        PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkResetEvent in sdk");
-        return NULL;
-    }
-
-
     vkGetImageMemoryRequirements = (PFN_vkGetImageMemoryRequirements)dlsym(vk_sdk, "vkGetImageMemoryRequirements");
     if( vkGetImageMemoryRequirements == NULL ) {
         PyErr_SetString(PyExc_ImportError,
@@ -5799,74 +5687,186 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     }
 
 
-    vkDestroySemaphore = (PFN_vkDestroySemaphore)dlsym(vk_sdk, "vkDestroySemaphore");
-    if( vkDestroySemaphore == NULL ) {
+    vkEnumerateInstanceLayerProperties = (PFN_vkEnumerateInstanceLayerProperties)dlsym(vk_sdk, "vkEnumerateInstanceLayerProperties");
+    if( vkEnumerateInstanceLayerProperties == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroySemaphore in sdk");
+                        "Can't load vkEnumerateInstanceLayerProperties in sdk");
         return NULL;
     }
 
 
-    vkCmdSetDepthBias = (PFN_vkCmdSetDepthBias)dlsym(vk_sdk, "vkCmdSetDepthBias");
-    if( vkCmdSetDepthBias == NULL ) {
+    vkDestroyCommandPool = (PFN_vkDestroyCommandPool)dlsym(vk_sdk, "vkDestroyCommandPool");
+    if( vkDestroyCommandPool == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetDepthBias in sdk");
+                        "Can't load vkDestroyCommandPool in sdk");
         return NULL;
     }
 
 
-    vkCmdUpdateBuffer = (PFN_vkCmdUpdateBuffer)dlsym(vk_sdk, "vkCmdUpdateBuffer");
-    if( vkCmdUpdateBuffer == NULL ) {
+    vkDestroyImageView = (PFN_vkDestroyImageView)dlsym(vk_sdk, "vkDestroyImageView");
+    if( vkDestroyImageView == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdUpdateBuffer in sdk");
+                        "Can't load vkDestroyImageView in sdk");
         return NULL;
     }
 
 
-    vkDestroyFence = (PFN_vkDestroyFence)dlsym(vk_sdk, "vkDestroyFence");
-    if( vkDestroyFence == NULL ) {
+    vkCmdFillBuffer = (PFN_vkCmdFillBuffer)dlsym(vk_sdk, "vkCmdFillBuffer");
+    if( vkCmdFillBuffer == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkDestroyFence in sdk");
+                        "Can't load vkCmdFillBuffer in sdk");
         return NULL;
     }
 
 
-    vkCmdBindPipeline = (PFN_vkCmdBindPipeline)dlsym(vk_sdk, "vkCmdBindPipeline");
-    if( vkCmdBindPipeline == NULL ) {
+    vkCmdPipelineBarrier = (PFN_vkCmdPipelineBarrier)dlsym(vk_sdk, "vkCmdPipelineBarrier");
+    if( vkCmdPipelineBarrier == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdBindPipeline in sdk");
+                        "Can't load vkCmdPipelineBarrier in sdk");
         return NULL;
     }
 
 
-    vkCmdSetStencilCompareMask = (PFN_vkCmdSetStencilCompareMask)dlsym(vk_sdk, "vkCmdSetStencilCompareMask");
-    if( vkCmdSetStencilCompareMask == NULL ) {
+    vkGetBufferMemoryRequirements = (PFN_vkGetBufferMemoryRequirements)dlsym(vk_sdk, "vkGetBufferMemoryRequirements");
+    if( vkGetBufferMemoryRequirements == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdSetStencilCompareMask in sdk");
+                        "Can't load vkGetBufferMemoryRequirements in sdk");
         return NULL;
     }
 
 
-    vkCmdEndQuery = (PFN_vkCmdEndQuery)dlsym(vk_sdk, "vkCmdEndQuery");
-    if( vkCmdEndQuery == NULL ) {
+    vkCmdClearColorImage = (PFN_vkCmdClearColorImage)dlsym(vk_sdk, "vkCmdClearColorImage");
+    if( vkCmdClearColorImage == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdEndQuery in sdk");
+                        "Can't load vkCmdClearColorImage in sdk");
         return NULL;
     }
 
 
-    vkCmdResetQueryPool = (PFN_vkCmdResetQueryPool)dlsym(vk_sdk, "vkCmdResetQueryPool");
-    if( vkCmdResetQueryPool == NULL ) {
+    vkEnumerateDeviceExtensionProperties = (PFN_vkEnumerateDeviceExtensionProperties)dlsym(vk_sdk, "vkEnumerateDeviceExtensionProperties");
+    if( vkEnumerateDeviceExtensionProperties == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkCmdResetQueryPool in sdk");
+                        "Can't load vkEnumerateDeviceExtensionProperties in sdk");
         return NULL;
     }
 
 
-    vkGetPipelineCacheData = (PFN_vkGetPipelineCacheData)dlsym(vk_sdk, "vkGetPipelineCacheData");
-    if( vkGetPipelineCacheData == NULL ) {
+    vkGetPhysicalDeviceProperties = (PFN_vkGetPhysicalDeviceProperties)dlsym(vk_sdk, "vkGetPhysicalDeviceProperties");
+    if( vkGetPhysicalDeviceProperties == NULL ) {
         PyErr_SetString(PyExc_ImportError,
-                        "Can't load vkGetPipelineCacheData in sdk");
+                        "Can't load vkGetPhysicalDeviceProperties in sdk");
+        return NULL;
+    }
+
+
+    vkFlushMappedMemoryRanges = (PFN_vkFlushMappedMemoryRanges)dlsym(vk_sdk, "vkFlushMappedMemoryRanges");
+    if( vkFlushMappedMemoryRanges == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkFlushMappedMemoryRanges in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyDescriptorPool = (PFN_vkDestroyDescriptorPool)dlsym(vk_sdk, "vkDestroyDescriptorPool");
+    if( vkDestroyDescriptorPool == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyDescriptorPool in sdk");
+        return NULL;
+    }
+
+
+    vkFreeCommandBuffers = (PFN_vkFreeCommandBuffers)dlsym(vk_sdk, "vkFreeCommandBuffers");
+    if( vkFreeCommandBuffers == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkFreeCommandBuffers in sdk");
+        return NULL;
+    }
+
+
+    vkCreateRenderPass = (PFN_vkCreateRenderPass)dlsym(vk_sdk, "vkCreateRenderPass");
+    if( vkCreateRenderPass == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCreateRenderPass in sdk");
+        return NULL;
+    }
+
+
+    vkEnumerateInstanceExtensionProperties = (PFN_vkEnumerateInstanceExtensionProperties)dlsym(vk_sdk, "vkEnumerateInstanceExtensionProperties");
+    if( vkEnumerateInstanceExtensionProperties == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkEnumerateInstanceExtensionProperties in sdk");
+        return NULL;
+    }
+
+
+    vkCmdCopyImageToBuffer = (PFN_vkCmdCopyImageToBuffer)dlsym(vk_sdk, "vkCmdCopyImageToBuffer");
+    if( vkCmdCopyImageToBuffer == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdCopyImageToBuffer in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyShaderModule = (PFN_vkDestroyShaderModule)dlsym(vk_sdk, "vkDestroyShaderModule");
+    if( vkDestroyShaderModule == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyShaderModule in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetLineWidth = (PFN_vkCmdSetLineWidth)dlsym(vk_sdk, "vkCmdSetLineWidth");
+    if( vkCmdSetLineWidth == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetLineWidth in sdk");
+        return NULL;
+    }
+
+
+    vkMapMemory = (PFN_vkMapMemory)dlsym(vk_sdk, "vkMapMemory");
+    if( vkMapMemory == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkMapMemory in sdk");
+        return NULL;
+    }
+
+
+    vkCmdSetStencilWriteMask = (PFN_vkCmdSetStencilWriteMask)dlsym(vk_sdk, "vkCmdSetStencilWriteMask");
+    if( vkCmdSetStencilWriteMask == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkCmdSetStencilWriteMask in sdk");
+        return NULL;
+    }
+
+
+    vkDestroyPipeline = (PFN_vkDestroyPipeline)dlsym(vk_sdk, "vkDestroyPipeline");
+    if( vkDestroyPipeline == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkDestroyPipeline in sdk");
+        return NULL;
+    }
+
+
+    vkUpdateDescriptorSets = (PFN_vkUpdateDescriptorSets)dlsym(vk_sdk, "vkUpdateDescriptorSets");
+    if( vkUpdateDescriptorSets == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkUpdateDescriptorSets in sdk");
+        return NULL;
+    }
+
+
+    vkEnumeratePhysicalDevices = (PFN_vkEnumeratePhysicalDevices)dlsym(vk_sdk, "vkEnumeratePhysicalDevices");
+    if( vkEnumeratePhysicalDevices == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkEnumeratePhysicalDevices in sdk");
+        return NULL;
+    }
+
+
+    vkFreeMemory = (PFN_vkFreeMemory)dlsym(vk_sdk, "vkFreeMemory");
+    if( vkFreeMemory == NULL ) {
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't load vkFreeMemory in sdk");
         return NULL;
     }
 
@@ -5875,121 +5875,9 @@ static PyObject * load_sdk(PyObject *self, PyObject *args) {
     return Py_None;
 }
 
-static PyObject* PyHandle_VkBuffer (PyObject *self, PyObject *args) {
-    VkBuffer* handle = malloc(sizeof(VkBuffer));
-    PyObject* value = PyCapsule_New(handle, "VkBuffer", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkPipelineLayout (PyObject *self, PyObject *args) {
-    VkPipelineLayout* handle = malloc(sizeof(VkPipelineLayout));
-    PyObject* value = PyCapsule_New(handle, "VkPipelineLayout", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkDevice (PyObject *self, PyObject *args) {
-    VkDevice* handle = malloc(sizeof(VkDevice));
-    PyObject* value = PyCapsule_New(handle, "VkDevice", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkSampler (PyObject *self, PyObject *args) {
-    VkSampler* handle = malloc(sizeof(VkSampler));
-    PyObject* value = PyCapsule_New(handle, "VkSampler", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkSemaphore (PyObject *self, PyObject *args) {
-    VkSemaphore* handle = malloc(sizeof(VkSemaphore));
-    PyObject* value = PyCapsule_New(handle, "VkSemaphore", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkQueue (PyObject *self, PyObject *args) {
-    VkQueue* handle = malloc(sizeof(VkQueue));
-    PyObject* value = PyCapsule_New(handle, "VkQueue", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkSurfaceKHR (PyObject *self, PyObject *args) {
-    VkSurfaceKHR* handle = malloc(sizeof(VkSurfaceKHR));
-    PyObject* value = PyCapsule_New(handle, "VkSurfaceKHR", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkImage (PyObject *self, PyObject *args) {
-    VkImage* handle = malloc(sizeof(VkImage));
-    PyObject* value = PyCapsule_New(handle, "VkImage", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkFramebuffer (PyObject *self, PyObject *args) {
-    VkFramebuffer* handle = malloc(sizeof(VkFramebuffer));
-    PyObject* value = PyCapsule_New(handle, "VkFramebuffer", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkCommandBuffer (PyObject *self, PyObject *args) {
-    VkCommandBuffer* handle = malloc(sizeof(VkCommandBuffer));
-    PyObject* value = PyCapsule_New(handle, "VkCommandBuffer", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkDescriptorSet (PyObject *self, PyObject *args) {
-    VkDescriptorSet* handle = malloc(sizeof(VkDescriptorSet));
-    PyObject* value = PyCapsule_New(handle, "VkDescriptorSet", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkFence (PyObject *self, PyObject *args) {
-    VkFence* handle = malloc(sizeof(VkFence));
-    PyObject* value = PyCapsule_New(handle, "VkFence", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkCommandPool (PyObject *self, PyObject *args) {
-    VkCommandPool* handle = malloc(sizeof(VkCommandPool));
-    PyObject* value = PyCapsule_New(handle, "VkCommandPool", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkBufferView (PyObject *self, PyObject *args) {
-    VkBufferView* handle = malloc(sizeof(VkBufferView));
-    PyObject* value = PyCapsule_New(handle, "VkBufferView", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkShaderModule (PyObject *self, PyObject *args) {
-    VkShaderModule* handle = malloc(sizeof(VkShaderModule));
-    PyObject* value = PyCapsule_New(handle, "VkShaderModule", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkPipeline (PyObject *self, PyObject *args) {
-    VkPipeline* handle = malloc(sizeof(VkPipeline));
-    PyObject* value = PyCapsule_New(handle, "VkPipeline", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkEvent (PyObject *self, PyObject *args) {
-    VkEvent* handle = malloc(sizeof(VkEvent));
-    PyObject* value = PyCapsule_New(handle, "VkEvent", NULL);
+static PyObject* PyHandle_VkInstance (PyObject *self, PyObject *args) {
+    VkInstance* handle = malloc(sizeof(VkInstance));
+    PyObject* value = PyCapsule_New(handle, "VkInstance", NULL);
     if (value == NULL) return NULL;
     return value;
 }
@@ -6001,37 +5889,16 @@ static PyObject* PyHandle_VkDisplayKHR (PyObject *self, PyObject *args) {
     return value;
 }
 
-static PyObject* PyHandle_VkImageView (PyObject *self, PyObject *args) {
-    VkImageView* handle = malloc(sizeof(VkImageView));
-    PyObject* value = PyCapsule_New(handle, "VkImageView", NULL);
+static PyObject* PyHandle_VkPipelineLayout (PyObject *self, PyObject *args) {
+    VkPipelineLayout* handle = malloc(sizeof(VkPipelineLayout));
+    PyObject* value = PyCapsule_New(handle, "VkPipelineLayout", NULL);
     if (value == NULL) return NULL;
     return value;
 }
 
-static PyObject* PyHandle_VkInstance (PyObject *self, PyObject *args) {
-    VkInstance* handle = malloc(sizeof(VkInstance));
-    PyObject* value = PyCapsule_New(handle, "VkInstance", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkPipelineCache (PyObject *self, PyObject *args) {
-    VkPipelineCache* handle = malloc(sizeof(VkPipelineCache));
-    PyObject* value = PyCapsule_New(handle, "VkPipelineCache", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkPhysicalDevice (PyObject *self, PyObject *args) {
-    VkPhysicalDevice* handle = malloc(sizeof(VkPhysicalDevice));
-    PyObject* value = PyCapsule_New(handle, "VkPhysicalDevice", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkRenderPass (PyObject *self, PyObject *args) {
-    VkRenderPass* handle = malloc(sizeof(VkRenderPass));
-    PyObject* value = PyCapsule_New(handle, "VkRenderPass", NULL);
+static PyObject* PyHandle_VkShaderModule (PyObject *self, PyObject *args) {
+    VkShaderModule* handle = malloc(sizeof(VkShaderModule));
+    PyObject* value = PyCapsule_New(handle, "VkShaderModule", NULL);
     if (value == NULL) return NULL;
     return value;
 }
@@ -6043,23 +5910,16 @@ static PyObject* PyHandle_VkDeviceMemory (PyObject *self, PyObject *args) {
     return value;
 }
 
-static PyObject* PyHandle_VkQueryPool (PyObject *self, PyObject *args) {
-    VkQueryPool* handle = malloc(sizeof(VkQueryPool));
-    PyObject* value = PyCapsule_New(handle, "VkQueryPool", NULL);
+static PyObject* PyHandle_VkFence (PyObject *self, PyObject *args) {
+    VkFence* handle = malloc(sizeof(VkFence));
+    PyObject* value = PyCapsule_New(handle, "VkFence", NULL);
     if (value == NULL) return NULL;
     return value;
 }
 
-static PyObject* PyHandle_VkSwapchainKHR (PyObject *self, PyObject *args) {
-    VkSwapchainKHR* handle = malloc(sizeof(VkSwapchainKHR));
-    PyObject* value = PyCapsule_New(handle, "VkSwapchainKHR", NULL);
-    if (value == NULL) return NULL;
-    return value;
-}
-
-static PyObject* PyHandle_VkDescriptorSetLayout (PyObject *self, PyObject *args) {
-    VkDescriptorSetLayout* handle = malloc(sizeof(VkDescriptorSetLayout));
-    PyObject* value = PyCapsule_New(handle, "VkDescriptorSetLayout", NULL);
+static PyObject* PyHandle_VkSurfaceKHR (PyObject *self, PyObject *args) {
+    VkSurfaceKHR* handle = malloc(sizeof(VkSurfaceKHR));
+    PyObject* value = PyCapsule_New(handle, "VkSurfaceKHR", NULL);
     if (value == NULL) return NULL;
     return value;
 }
@@ -6071,9 +5931,23 @@ static PyObject* PyHandle_VkDebugReportCallbackEXT (PyObject *self, PyObject *ar
     return value;
 }
 
-static PyObject* PyHandle_VkDescriptorPool (PyObject *self, PyObject *args) {
-    VkDescriptorPool* handle = malloc(sizeof(VkDescriptorPool));
-    PyObject* value = PyCapsule_New(handle, "VkDescriptorPool", NULL);
+static PyObject* PyHandle_VkPipelineCache (PyObject *self, PyObject *args) {
+    VkPipelineCache* handle = malloc(sizeof(VkPipelineCache));
+    PyObject* value = PyCapsule_New(handle, "VkPipelineCache", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkEvent (PyObject *self, PyObject *args) {
+    VkEvent* handle = malloc(sizeof(VkEvent));
+    PyObject* value = PyCapsule_New(handle, "VkEvent", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkDevice (PyObject *self, PyObject *args) {
+    VkDevice* handle = malloc(sizeof(VkDevice));
+    PyObject* value = PyCapsule_New(handle, "VkDevice", NULL);
     if (value == NULL) return NULL;
     return value;
 }
@@ -6081,6 +5955,132 @@ static PyObject* PyHandle_VkDescriptorPool (PyObject *self, PyObject *args) {
 static PyObject* PyHandle_VkDisplayModeKHR (PyObject *self, PyObject *args) {
     VkDisplayModeKHR* handle = malloc(sizeof(VkDisplayModeKHR));
     PyObject* value = PyCapsule_New(handle, "VkDisplayModeKHR", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkSampler (PyObject *self, PyObject *args) {
+    VkSampler* handle = malloc(sizeof(VkSampler));
+    PyObject* value = PyCapsule_New(handle, "VkSampler", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkCommandPool (PyObject *self, PyObject *args) {
+    VkCommandPool* handle = malloc(sizeof(VkCommandPool));
+    PyObject* value = PyCapsule_New(handle, "VkCommandPool", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkImageView (PyObject *self, PyObject *args) {
+    VkImageView* handle = malloc(sizeof(VkImageView));
+    PyObject* value = PyCapsule_New(handle, "VkImageView", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkDescriptorSet (PyObject *self, PyObject *args) {
+    VkDescriptorSet* handle = malloc(sizeof(VkDescriptorSet));
+    PyObject* value = PyCapsule_New(handle, "VkDescriptorSet", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkSemaphore (PyObject *self, PyObject *args) {
+    VkSemaphore* handle = malloc(sizeof(VkSemaphore));
+    PyObject* value = PyCapsule_New(handle, "VkSemaphore", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkDescriptorPool (PyObject *self, PyObject *args) {
+    VkDescriptorPool* handle = malloc(sizeof(VkDescriptorPool));
+    PyObject* value = PyCapsule_New(handle, "VkDescriptorPool", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkQueue (PyObject *self, PyObject *args) {
+    VkQueue* handle = malloc(sizeof(VkQueue));
+    PyObject* value = PyCapsule_New(handle, "VkQueue", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkQueryPool (PyObject *self, PyObject *args) {
+    VkQueryPool* handle = malloc(sizeof(VkQueryPool));
+    PyObject* value = PyCapsule_New(handle, "VkQueryPool", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkPhysicalDevice (PyObject *self, PyObject *args) {
+    VkPhysicalDevice* handle = malloc(sizeof(VkPhysicalDevice));
+    PyObject* value = PyCapsule_New(handle, "VkPhysicalDevice", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkBufferView (PyObject *self, PyObject *args) {
+    VkBufferView* handle = malloc(sizeof(VkBufferView));
+    PyObject* value = PyCapsule_New(handle, "VkBufferView", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkCommandBuffer (PyObject *self, PyObject *args) {
+    VkCommandBuffer* handle = malloc(sizeof(VkCommandBuffer));
+    PyObject* value = PyCapsule_New(handle, "VkCommandBuffer", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkRenderPass (PyObject *self, PyObject *args) {
+    VkRenderPass* handle = malloc(sizeof(VkRenderPass));
+    PyObject* value = PyCapsule_New(handle, "VkRenderPass", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkImage (PyObject *self, PyObject *args) {
+    VkImage* handle = malloc(sizeof(VkImage));
+    PyObject* value = PyCapsule_New(handle, "VkImage", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkSwapchainKHR (PyObject *self, PyObject *args) {
+    VkSwapchainKHR* handle = malloc(sizeof(VkSwapchainKHR));
+    PyObject* value = PyCapsule_New(handle, "VkSwapchainKHR", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkBuffer (PyObject *self, PyObject *args) {
+    VkBuffer* handle = malloc(sizeof(VkBuffer));
+    PyObject* value = PyCapsule_New(handle, "VkBuffer", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkFramebuffer (PyObject *self, PyObject *args) {
+    VkFramebuffer* handle = malloc(sizeof(VkFramebuffer));
+    PyObject* value = PyCapsule_New(handle, "VkFramebuffer", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkDescriptorSetLayout (PyObject *self, PyObject *args) {
+    VkDescriptorSetLayout* handle = malloc(sizeof(VkDescriptorSetLayout));
+    PyObject* value = PyCapsule_New(handle, "VkDescriptorSetLayout", NULL);
+    if (value == NULL) return NULL;
+    return value;
+}
+
+static PyObject* PyHandle_VkPipeline (PyObject *self, PyObject *args) {
+    VkPipeline* handle = malloc(sizeof(VkPipeline));
+    PyObject* value = PyCapsule_New(handle, "VkPipeline", NULL);
     if (value == NULL) return NULL;
     return value;
 }
@@ -7807,11 +7807,11 @@ PyVkApplicationInfo_init(PyVkApplicationInfo *self, PyObject *args, PyObject *kw
             (self->base)->pApplicationName = NULL;
         }
         else {
-            PyObject * tmp57996234 = PyUnicode_AsASCIIString(pApplicationName);
-            char* tmp84532866 = PyBytes_AsString(tmp57996234);
-            char* tmp35250143 = strdup(tmp84532866);
-            (self->base)->pApplicationName = tmp35250143;
-            Py_DECREF(tmp57996234);
+            PyObject * tmp28436222 = PyUnicode_AsASCIIString(pApplicationName);
+            char* tmp40970680 = PyBytes_AsString(tmp28436222);
+            char* tmp15438208 = strdup(tmp40970680);
+            (self->base)->pApplicationName = tmp15438208;
+            Py_DECREF(tmp28436222);
         }
 
     }
@@ -7826,11 +7826,11 @@ PyVkApplicationInfo_init(PyVkApplicationInfo *self, PyObject *args, PyObject *kw
             (self->base)->pEngineName = NULL;
         }
         else {
-            PyObject * tmp36774626 = PyUnicode_AsASCIIString(pEngineName);
-            char* tmp48722125 = PyBytes_AsString(tmp36774626);
-            char* tmp30875360 = strdup(tmp48722125);
-            (self->base)->pEngineName = tmp30875360;
-            Py_DECREF(tmp36774626);
+            PyObject * tmp7955610 = PyUnicode_AsASCIIString(pEngineName);
+            char* tmp84857774 = PyBytes_AsString(tmp7955610);
+            char* tmp99128742 = strdup(tmp84857774);
+            (self->base)->pEngineName = tmp99128742;
+            Py_DECREF(tmp7955610);
         }
 
     }
@@ -8001,10 +8001,10 @@ PyVkDeviceQueueCreateInfo_init(PyVkDeviceQueueCreateInfo *self, PyObject *args, 
 
     if (pQueuePriorities != NULL && pQueuePriorities != Py_None) {
 
-        float tmp59263143 = (float) PyFloat_AsDouble(pQueuePriorities);
-        float *tmp17000938 = malloc(sizeof(float));
-        memcpy(tmp17000938, &tmp59263143, sizeof(float));
-        (self->base)->pQueuePriorities = tmp17000938;
+        float tmp11555029 = (float) PyFloat_AsDouble(pQueuePriorities);
+        float *tmp15964794 = malloc(sizeof(float));
+        memcpy(tmp15964794, &tmp11555029, sizeof(float));
+        (self->base)->pQueuePriorities = tmp15964794;
 
     }
 
@@ -8150,11 +8150,11 @@ PyVkDeviceCreateInfo_init(PyVkDeviceCreateInfo *self, PyObject *args, PyObject *
 
     if (ppEnabledLayerNames != NULL && ppEnabledLayerNames != Py_None) {
 
-        int tmp73163417 = PyList_Size(ppEnabledLayerNames);
-        char** tmp29763923 = malloc(sizeof(char*)*tmp73163417 + 1);
-        int tmp28960753;
-        for (tmp28960753 = 0; tmp28960753 < tmp73163417; tmp28960753++) {
-            PyObject* item = PyList_GetItem(ppEnabledLayerNames, tmp28960753);
+        int tmp22311034 = PyList_Size(ppEnabledLayerNames);
+        char** tmp23712373 = malloc(sizeof(char*)*tmp22311034 + 1);
+        int tmp7535974;
+        for (tmp7535974 = 0; tmp7535974 < tmp22311034; tmp7535974++) {
+            PyObject* item = PyList_GetItem(ppEnabledLayerNames, tmp7535974);
             if (item == NULL) return -1;
 
             PyObject* ascii_str = PyUnicode_AsASCIIString(item);
@@ -8165,11 +8165,11 @@ PyVkDeviceCreateInfo_init(PyVkDeviceCreateInfo *self, PyObject *args, PyObject *
             }
 
             char* tmp2 = PyBytes_AsString(ascii_str);
-            tmp29763923[tmp28960753] = strdup(tmp2);
+            tmp23712373[tmp7535974] = strdup(tmp2);
             Py_DECREF(ascii_str);
         }
-        tmp29763923[tmp28960753] = NULL; // sentinel
-        (self->base)->ppEnabledLayerNames = tmp29763923;
+        tmp23712373[tmp7535974] = NULL; // sentinel
+        (self->base)->ppEnabledLayerNames = tmp23712373;
 
     }
 
@@ -8179,11 +8179,11 @@ PyVkDeviceCreateInfo_init(PyVkDeviceCreateInfo *self, PyObject *args, PyObject *
 
     if (ppEnabledExtensionNames != NULL && ppEnabledExtensionNames != Py_None) {
 
-        int tmp79872207 = PyList_Size(ppEnabledExtensionNames);
-        char** tmp36448124 = malloc(sizeof(char*)*tmp79872207 + 1);
-        int tmp46284961;
-        for (tmp46284961 = 0; tmp46284961 < tmp79872207; tmp46284961++) {
-            PyObject* item = PyList_GetItem(ppEnabledExtensionNames, tmp46284961);
+        int tmp54624373 = PyList_Size(ppEnabledExtensionNames);
+        char** tmp58057911 = malloc(sizeof(char*)*tmp54624373 + 1);
+        int tmp57598403;
+        for (tmp57598403 = 0; tmp57598403 < tmp54624373; tmp57598403++) {
+            PyObject* item = PyList_GetItem(ppEnabledExtensionNames, tmp57598403);
             if (item == NULL) return -1;
 
             PyObject* ascii_str = PyUnicode_AsASCIIString(item);
@@ -8194,11 +8194,11 @@ PyVkDeviceCreateInfo_init(PyVkDeviceCreateInfo *self, PyObject *args, PyObject *
             }
 
             char* tmp2 = PyBytes_AsString(ascii_str);
-            tmp36448124[tmp46284961] = strdup(tmp2);
+            tmp58057911[tmp57598403] = strdup(tmp2);
             Py_DECREF(ascii_str);
         }
-        tmp36448124[tmp46284961] = NULL; // sentinel
-        (self->base)->ppEnabledExtensionNames = tmp36448124;
+        tmp58057911[tmp57598403] = NULL; // sentinel
+        (self->base)->ppEnabledExtensionNames = tmp58057911;
 
     }
 
@@ -8336,11 +8336,11 @@ PyVkInstanceCreateInfo_init(PyVkInstanceCreateInfo *self, PyObject *args, PyObje
 
     if (ppEnabledLayerNames != NULL && ppEnabledLayerNames != Py_None) {
 
-        int tmp75063583 = PyList_Size(ppEnabledLayerNames);
-        char** tmp13941478 = malloc(sizeof(char*)*tmp75063583 + 1);
-        int tmp25843998;
-        for (tmp25843998 = 0; tmp25843998 < tmp75063583; tmp25843998++) {
-            PyObject* item = PyList_GetItem(ppEnabledLayerNames, tmp25843998);
+        int tmp85363769 = PyList_Size(ppEnabledLayerNames);
+        char** tmp47783836 = malloc(sizeof(char*)*tmp85363769 + 1);
+        int tmp4403748;
+        for (tmp4403748 = 0; tmp4403748 < tmp85363769; tmp4403748++) {
+            PyObject* item = PyList_GetItem(ppEnabledLayerNames, tmp4403748);
             if (item == NULL) return -1;
 
             PyObject* ascii_str = PyUnicode_AsASCIIString(item);
@@ -8351,11 +8351,11 @@ PyVkInstanceCreateInfo_init(PyVkInstanceCreateInfo *self, PyObject *args, PyObje
             }
 
             char* tmp2 = PyBytes_AsString(ascii_str);
-            tmp13941478[tmp25843998] = strdup(tmp2);
+            tmp47783836[tmp4403748] = strdup(tmp2);
             Py_DECREF(ascii_str);
         }
-        tmp13941478[tmp25843998] = NULL; // sentinel
-        (self->base)->ppEnabledLayerNames = tmp13941478;
+        tmp47783836[tmp4403748] = NULL; // sentinel
+        (self->base)->ppEnabledLayerNames = tmp47783836;
 
     }
 
@@ -8365,11 +8365,11 @@ PyVkInstanceCreateInfo_init(PyVkInstanceCreateInfo *self, PyObject *args, PyObje
 
     if (ppEnabledExtensionNames != NULL && ppEnabledExtensionNames != Py_None) {
 
-        int tmp56375682 = PyList_Size(ppEnabledExtensionNames);
-        char** tmp26898903 = malloc(sizeof(char*)*tmp56375682 + 1);
-        int tmp72075789;
-        for (tmp72075789 = 0; tmp72075789 < tmp56375682; tmp72075789++) {
-            PyObject* item = PyList_GetItem(ppEnabledExtensionNames, tmp72075789);
+        int tmp91592556 = PyList_Size(ppEnabledExtensionNames);
+        char** tmp39364199 = malloc(sizeof(char*)*tmp91592556 + 1);
+        int tmp62967168;
+        for (tmp62967168 = 0; tmp62967168 < tmp91592556; tmp62967168++) {
+            PyObject* item = PyList_GetItem(ppEnabledExtensionNames, tmp62967168);
             if (item == NULL) return -1;
 
             PyObject* ascii_str = PyUnicode_AsASCIIString(item);
@@ -8380,11 +8380,11 @@ PyVkInstanceCreateInfo_init(PyVkInstanceCreateInfo *self, PyObject *args, PyObje
             }
 
             char* tmp2 = PyBytes_AsString(ascii_str);
-            tmp26898903[tmp72075789] = strdup(tmp2);
+            tmp39364199[tmp62967168] = strdup(tmp2);
             Py_DECREF(ascii_str);
         }
-        tmp26898903[tmp72075789] = NULL; // sentinel
-        (self->base)->ppEnabledExtensionNames = tmp26898903;
+        tmp39364199[tmp62967168] = NULL; // sentinel
+        (self->base)->ppEnabledExtensionNames = tmp39364199;
 
     }
 
@@ -9442,10 +9442,10 @@ PyVkBufferCreateInfo_init(PyVkBufferCreateInfo *self, PyObject *args, PyObject *
 
     if (pQueueFamilyIndices != NULL && pQueueFamilyIndices != Py_None) {
 
-        uint32_t tmp13596251 = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
-        uint32_t *tmp34613881 = malloc(sizeof(uint32_t));
-        memcpy(tmp34613881, &tmp13596251, sizeof(uint32_t));
-        (self->base)->pQueueFamilyIndices = tmp34613881;
+        uint32_t tmp81685656 = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
+        uint32_t *tmp53418697 = malloc(sizeof(uint32_t));
+        memcpy(tmp53418697, &tmp81685656, sizeof(uint32_t));
+        (self->base)->pQueueFamilyIndices = tmp53418697;
 
     }
 
@@ -10265,10 +10265,10 @@ PyVkImageCreateInfo_init(PyVkImageCreateInfo *self, PyObject *args, PyObject *kw
 
     if (pQueueFamilyIndices != NULL && pQueueFamilyIndices != Py_None) {
 
-        uint32_t tmp98466228 = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
-        uint32_t *tmp24214345 = malloc(sizeof(uint32_t));
-        memcpy(tmp24214345, &tmp98466228, sizeof(uint32_t));
-        (self->base)->pQueueFamilyIndices = tmp24214345;
+        uint32_t tmp41090517 = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
+        uint32_t *tmp38660695 = malloc(sizeof(uint32_t));
+        memcpy(tmp38660695, &tmp41090517, sizeof(uint32_t));
+        (self->base)->pQueueFamilyIndices = tmp38660695;
 
     }
 
@@ -11120,11 +11120,11 @@ PyVkImageBlit_init(PyVkImageBlit *self, PyObject *args, PyObject *kwds) {
 
     if (srcOffsets != NULL && srcOffsets != Py_None) {
 
-        int tmp60902569 = PyList_Size(srcOffsets);
-        int tmp4428520;
-        for (tmp4428520 = 0; tmp4428520 < tmp60902569; tmp4428520++) {
-            PyObject* tmp = PyList_GetItem(srcOffsets, tmp4428520);
-            ((self->base)->srcOffsets)[tmp4428520] = *(((PyVkOffset3D*)tmp)->base);
+        int tmp8008510 = PyList_Size(srcOffsets);
+        int tmp9291511;
+        for (tmp9291511 = 0; tmp9291511 < tmp8008510; tmp9291511++) {
+            PyObject* tmp = PyList_GetItem(srcOffsets, tmp9291511);
+            ((self->base)->srcOffsets)[tmp9291511] = *(((PyVkOffset3D*)tmp)->base);
         }
 
     }
@@ -11137,11 +11137,11 @@ PyVkImageBlit_init(PyVkImageBlit *self, PyObject *args, PyObject *kwds) {
 
     if (dstOffsets != NULL && dstOffsets != Py_None) {
 
-        int tmp51458100 = PyList_Size(dstOffsets);
-        int tmp85870650;
-        for (tmp85870650 = 0; tmp85870650 < tmp51458100; tmp85870650++) {
-            PyObject* tmp = PyList_GetItem(dstOffsets, tmp85870650);
-            ((self->base)->dstOffsets)[tmp85870650] = *(((PyVkOffset3D*)tmp)->base);
+        int tmp79474670 = PyList_Size(dstOffsets);
+        int tmp31386756;
+        for (tmp31386756 = 0; tmp31386756 < tmp79474670; tmp31386756++) {
+            PyObject* tmp = PyList_GetItem(dstOffsets, tmp31386756);
+            ((self->base)->dstOffsets)[tmp31386756] = *(((PyVkOffset3D*)tmp)->base);
         }
 
     }
@@ -11402,10 +11402,10 @@ PyVkShaderModuleCreateInfo_init(PyVkShaderModuleCreateInfo *self, PyObject *args
 
     if (pCode != NULL && pCode != Py_None) {
 
-        uint32_t tmp64494363 = (uint32_t) PyLong_AsLong(pCode);
-        uint32_t *tmp79681840 = malloc(sizeof(uint32_t));
-        memcpy(tmp79681840, &tmp64494363, sizeof(uint32_t));
-        (self->base)->pCode = tmp79681840;
+        uint32_t tmp99330920 = (uint32_t) PyLong_AsLong(pCode);
+        uint32_t *tmp3015603 = malloc(sizeof(uint32_t));
+        memcpy(tmp3015603, &tmp99330920, sizeof(uint32_t));
+        (self->base)->pCode = tmp3015603;
 
     }
 
@@ -12073,11 +12073,11 @@ PyVkPipelineShaderStageCreateInfo_init(PyVkPipelineShaderStageCreateInfo *self, 
             (self->base)->pName = NULL;
         }
         else {
-            PyObject * tmp51205770 = PyUnicode_AsASCIIString(pName);
-            char* tmp45760456 = PyBytes_AsString(tmp51205770);
-            char* tmp83906270 = strdup(tmp45760456);
-            (self->base)->pName = tmp83906270;
-            Py_DECREF(tmp51205770);
+            PyObject * tmp67797596 = PyUnicode_AsASCIIString(pName);
+            char* tmp62253393 = PyBytes_AsString(tmp67797596);
+            char* tmp62233364 = strdup(tmp62253393);
+            (self->base)->pName = tmp62233364;
+            Py_DECREF(tmp67797596);
         }
 
     }
@@ -13171,12 +13171,12 @@ PyVkPipelineColorBlendStateCreateInfo_init(PyVkPipelineColorBlendStateCreateInfo
 
     if (blendConstants != NULL && blendConstants != Py_None) {
 
-        int tmp72485855 = PyList_Size(blendConstants);
-        int tmp84911269;
-        for (tmp84911269 = 0; tmp84911269 < tmp72485855; tmp84911269++) {
+        int tmp45919246 = PyList_Size(blendConstants);
+        int tmp40231093;
+        for (tmp40231093 = 0; tmp40231093 < tmp45919246; tmp40231093++) {
             float tmp = (float) PyFloat_AsDouble(
-                            PyList_GetItem(blendConstants, tmp84911269));
-            ((self->base)->blendConstants)[tmp84911269] = tmp;
+                            PyList_GetItem(blendConstants, tmp40231093));
+            ((self->base)->blendConstants)[tmp40231093] = tmp;
         }
 
     }
@@ -15004,10 +15004,10 @@ PyVkSubpassDescription_init(PyVkSubpassDescription *self, PyObject *args, PyObje
 
     if (pPreserveAttachments != NULL && pPreserveAttachments != Py_None) {
 
-        uint32_t tmp59736958 = (uint32_t) PyLong_AsLong(pPreserveAttachments);
-        uint32_t *tmp73382981 = malloc(sizeof(uint32_t));
-        memcpy(tmp73382981, &tmp59736958, sizeof(uint32_t));
-        (self->base)->pPreserveAttachments = tmp73382981;
+        uint32_t tmp36978582 = (uint32_t) PyLong_AsLong(pPreserveAttachments);
+        uint32_t *tmp87808393 = malloc(sizeof(uint32_t));
+        memcpy(tmp87808393, &tmp36978582, sizeof(uint32_t));
+        (self->base)->pPreserveAttachments = tmp87808393;
 
     }
 
@@ -17339,11 +17339,11 @@ PyVkDisplayPropertiesKHR_init(PyVkDisplayPropertiesKHR *self, PyObject *args, Py
             (self->base)->displayName = NULL;
         }
         else {
-            PyObject * tmp13338913 = PyUnicode_AsASCIIString(displayName);
-            char* tmp51654949 = PyBytes_AsString(tmp13338913);
-            char* tmp58920308 = strdup(tmp51654949);
-            (self->base)->displayName = tmp58920308;
-            Py_DECREF(tmp13338913);
+            PyObject * tmp9351061 = PyUnicode_AsASCIIString(displayName);
+            char* tmp3357879 = PyBytes_AsString(tmp9351061);
+            char* tmp66598769 = strdup(tmp3357879);
+            (self->base)->displayName = tmp66598769;
+            Py_DECREF(tmp9351061);
         }
 
     }
@@ -18698,10 +18698,10 @@ PyVkSwapchainCreateInfoKHR_init(PyVkSwapchainCreateInfoKHR *self, PyObject *args
 
     if (pQueueFamilyIndices != NULL && pQueueFamilyIndices != Py_None) {
 
-        uint32_t tmp85698720 = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
-        uint32_t *tmp81908026 = malloc(sizeof(uint32_t));
-        memcpy(tmp81908026, &tmp85698720, sizeof(uint32_t));
-        (self->base)->pQueueFamilyIndices = tmp81908026;
+        uint32_t tmp2466540 = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
+        uint32_t *tmp87851242 = malloc(sizeof(uint32_t));
+        memcpy(tmp87851242, &tmp2466540, sizeof(uint32_t));
+        (self->base)->pQueueFamilyIndices = tmp87851242;
 
     }
 
@@ -18841,10 +18841,10 @@ PyVkPresentInfoKHR_init(PyVkPresentInfoKHR *self, PyObject *args, PyObject *kwds
 
     if (pImageIndices != NULL && pImageIndices != Py_None) {
 
-        uint32_t tmp66994445 = (uint32_t) PyLong_AsLong(pImageIndices);
-        uint32_t *tmp51719402 = malloc(sizeof(uint32_t));
-        memcpy(tmp51719402, &tmp66994445, sizeof(uint32_t));
-        (self->base)->pImageIndices = tmp51719402;
+        uint32_t tmp73880038 = (uint32_t) PyLong_AsLong(pImageIndices);
+        uint32_t *tmp10844579 = malloc(sizeof(uint32_t));
+        memcpy(tmp10844579, &tmp73880038, sizeof(uint32_t));
+        (self->base)->pImageIndices = tmp10844579;
 
     }
 
@@ -18909,30 +18909,53 @@ static PyGetSetDef PyVkDebugReportCallbackCreateInfoEXT_getsetters[] = {
     {NULL}
 };
 
+static PyObject *python_debug_callback = NULL;
+static VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(
+    VkDebugReportFlagsEXT flags,
+    VkDebugReportObjectTypeEXT objType,
+    uint64_t obj,
+    size_t location,
+    int32_t code,
+    const char* layerPrefix,
+    const char* msg,
+    void* userData) {
+    PyObject_CallFunction(python_debug_callback, "iiKIisss", flags,
+                          objType, obj, location, code, layerPrefix, msg, NULL);
+    return VK_FALSE;
+}
+
 static int
-PyVkDebugReportCallbackCreateInfoEXT_init(PyVkDebugReportCallbackCreateInfoEXT *self, PyObject *args, PyObject *kwds) {
-    PyObject* flags = NULL;
-    PyObject* pfnCallback = NULL;
-    PyObject* pUserData = NULL;
-    static char *kwlist[] = {"flags","pfnCallback","pUserData",NULL};
-    if(!PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &flags, &pfnCallback, &pUserData)) return -1;
+PyVkDebugReportCallbackCreateInfoEXT_init(
+    PyVkDebugReportCallbackCreateInfoEXT *self, PyObject *args,
+    PyObject *kwds) {
+    int flags;
+    PyObject* tmp = NULL;
+    static char *kwlist[] = {"flags","pfnCallback",NULL};
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "iO", kwlist,
+                                    &flags, &tmp))
+        return -1;
 
-    (self->base)->sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
+    if (!PyCallable_Check(tmp)) {
+        PyErr_SetString(PyExc_TypeError,
+                        "pfnCallback must be callable");
+        return -1;
+    }
+    // Renew callback
+    Py_INCREF(tmp);
+    Py_XDECREF(python_debug_callback);
+    python_debug_callback = tmp;
 
+    (self->base)->sType =
+        VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
     (self->base)->pNext = NULL;
-
-    if (flags != NULL && flags != Py_None) {
-
-        (self->base)->flags = PyLong_AsLong(flags);
-
-    }
-
-    if (pUserData != NULL && pUserData != Py_None) {
-        (self->base)->pUserData = NULL;
-    }
+    (self->base)->pUserData = NULL;
+    (self->base)->flags = flags;
+    (self->base)->pfnCallback =
+        (PFN_vkDebugReportCallbackEXT)debug_callback;
 
     return 0;
 }
+
 static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType = {
     PyVarObject_HEAD_INIT(NULL, 0)
     "vulkan.VkDebugReportCallbackCreateInfoEXT", sizeof(PyVkDebugReportCallbackCreateInfoEXT), 0,
@@ -19081,11 +19104,11 @@ PyVkDebugMarkerObjectNameInfoEXT_init(PyVkDebugMarkerObjectNameInfoEXT *self, Py
             (self->base)->pObjectName = NULL;
         }
         else {
-            PyObject * tmp89479690 = PyUnicode_AsASCIIString(pObjectName);
-            char* tmp72118389 = PyBytes_AsString(tmp89479690);
-            char* tmp45278313 = strdup(tmp72118389);
-            (self->base)->pObjectName = tmp45278313;
-            Py_DECREF(tmp89479690);
+            PyObject * tmp55371937 = PyUnicode_AsASCIIString(pObjectName);
+            char* tmp71391170 = PyBytes_AsString(tmp55371937);
+            char* tmp98278862 = strdup(tmp71391170);
+            (self->base)->pObjectName = tmp98278862;
+            Py_DECREF(tmp55371937);
         }
 
     }
@@ -19290,23 +19313,23 @@ PyVkDebugMarkerMarkerInfoEXT_init(PyVkDebugMarkerMarkerInfoEXT *self, PyObject *
             (self->base)->pMarkerName = NULL;
         }
         else {
-            PyObject * tmp55768061 = PyUnicode_AsASCIIString(pMarkerName);
-            char* tmp80578605 = PyBytes_AsString(tmp55768061);
-            char* tmp51150498 = strdup(tmp80578605);
-            (self->base)->pMarkerName = tmp51150498;
-            Py_DECREF(tmp55768061);
+            PyObject * tmp27605399 = PyUnicode_AsASCIIString(pMarkerName);
+            char* tmp68892827 = PyBytes_AsString(tmp27605399);
+            char* tmp25640985 = strdup(tmp68892827);
+            (self->base)->pMarkerName = tmp25640985;
+            Py_DECREF(tmp27605399);
         }
 
     }
 
     if (color != NULL && color != Py_None) {
 
-        int tmp98856207 = PyList_Size(color);
-        int tmp63612034;
-        for (tmp63612034 = 0; tmp63612034 < tmp98856207; tmp63612034++) {
+        int tmp49883817 = PyList_Size(color);
+        int tmp60180697;
+        for (tmp60180697 = 0; tmp60180697 < tmp49883817; tmp60180697++) {
             float tmp = (float) PyFloat_AsDouble(
-                            PyList_GetItem(color, tmp63612034));
-            ((self->base)->color)[tmp63612034] = tmp;
+                            PyList_GetItem(color, tmp60180697));
+            ((self->base)->color)[tmp60180697] = tmp;
         }
 
     }
@@ -19917,10 +19940,10 @@ PyVkWin32KeyedMutexAcquireReleaseInfoNV_init(PyVkWin32KeyedMutexAcquireReleaseIn
 
     if (pAcquireTimeoutMilliseconds != NULL && pAcquireTimeoutMilliseconds != Py_None) {
 
-        uint32_t tmp20529459 = (uint32_t) PyLong_AsLong(pAcquireTimeoutMilliseconds);
-        uint32_t *tmp72409289 = malloc(sizeof(uint32_t));
-        memcpy(tmp72409289, &tmp20529459, sizeof(uint32_t));
-        (self->base)->pAcquireTimeoutMilliseconds = tmp72409289;
+        uint32_t tmp90784823 = (uint32_t) PyLong_AsLong(pAcquireTimeoutMilliseconds);
+        uint32_t *tmp28632812 = malloc(sizeof(uint32_t));
+        memcpy(tmp28632812, &tmp90784823, sizeof(uint32_t));
+        (self->base)->pAcquireTimeoutMilliseconds = tmp28632812;
 
     }
 
@@ -20011,12 +20034,12 @@ PyVkClearColorValue_init(PyVkClearColorValue *self, PyObject *args, PyObject *kw
 
     if (float32 != NULL && float32 != Py_None) {
 
-        int tmp27810081 = PyList_Size(float32);
-        int tmp80371316;
-        for (tmp80371316 = 0; tmp80371316 < tmp27810081; tmp80371316++) {
+        int tmp82698405 = PyList_Size(float32);
+        int tmp80663971;
+        for (tmp80663971 = 0; tmp80663971 < tmp82698405; tmp80663971++) {
             float tmp = (float) PyFloat_AsDouble(
-                            PyList_GetItem(float32, tmp80371316));
-            ((self->base)->float32)[tmp80371316] = tmp;
+                            PyList_GetItem(float32, tmp80663971));
+            ((self->base)->float32)[tmp80663971] = tmp;
         }
 
     }
@@ -22463,22 +22486,22 @@ static PyObject* PyvkDebugReportMessageEXT_call(PyObject *self, PyObject *args,
         return_struct.pLayerPrefix = NULL;
     }
     else {
-        PyObject * tmp24421332 = PyUnicode_AsASCIIString(pLayerPrefix);
-        char* tmp38397380 = PyBytes_AsString(tmp24421332);
-        char* tmp88497805 = strdup(tmp38397380);
-        return_struct.pLayerPrefix = tmp88497805;
-        Py_DECREF(tmp24421332);
+        PyObject * tmp13735925 = PyUnicode_AsASCIIString(pLayerPrefix);
+        char* tmp34399884 = PyBytes_AsString(tmp13735925);
+        char* tmp38671521 = strdup(tmp34399884);
+        return_struct.pLayerPrefix = tmp38671521;
+        Py_DECREF(tmp13735925);
     }
 
     if (pMessage == Py_None) {
         return_struct.pMessage = NULL;
     }
     else {
-        PyObject * tmp3422906 = PyUnicode_AsASCIIString(pMessage);
-        char* tmp93369476 = PyBytes_AsString(tmp3422906);
-        char* tmp24485444 = strdup(tmp93369476);
-        return_struct.pMessage = tmp24485444;
-        Py_DECREF(tmp3422906);
+        PyObject * tmp28378567 = PyUnicode_AsASCIIString(pMessage);
+        char* tmp93274991 = PyBytes_AsString(tmp28378567);
+        char* tmp82141014 = strdup(tmp93274991);
+        return_struct.pMessage = tmp82141014;
+        Py_DECREF(tmp28378567);
     }
 
     vkDebugReportMessageEXT(return_struct.instance,return_struct.flags,return_struct.objectType,return_struct.object,return_struct.location,return_struct.messageCode,return_struct.pLayerPrefix,return_struct.pMessage);
@@ -23127,7 +23150,8 @@ static PyObject* PyvkGetInstanceProcAddr(
 
     PFN_vkVoidFunction fun = vkGetInstanceProcAddr(*arg0, arg1);
     if (fun == NULL) {
-        PyErr_SetString(PyExc_ImportError, "error");
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't get address of extension function");
         return NULL;
     }
     PyObject* pointer = PyCapsule_New(fun, NULL, NULL);
@@ -23138,32 +23162,20 @@ static PyObject* PyvkGetInstanceProcAddr(
 
     PyObject* pyreturn = NULL;
 
-    if (strcmp(arg1, "vkCreateSharedSwapchainsKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSharedSwapchainsKHRType,
+    if (strcmp(arg1, "vkCreateDebugReportCallbackEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDebugReportCallbackEXTType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkQueuePresentKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkQueuePresentKHRType,
+    if (strcmp(arg1, "vkDestroySurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkCmdDebugMarkerInsertEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerInsertEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkDebugReportMessageEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDebugReportMessageEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCreateDisplayModeKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayModeKHRType,
+    if (strcmp(arg1, "vkGetDisplayPlaneSupportedDisplaysKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneSupportedDisplaysKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -23178,17 +23190,27 @@ static PyObject* PyvkGetInstanceProcAddr(
 
 #endif
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceDisplayPropertiesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceDisplayPropertiesKHRType,
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceSupportKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceSupportKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceFormatsKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceFormatsKHRType,
+    if (strcmp(arg1, "vkQueuePresentKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkQueuePresentKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
+
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceXlibPresentationSupportKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
@@ -23200,14 +23222,44 @@ static PyObject* PyvkGetInstanceProcAddr(
 
 #endif
 
+    if (strcmp(arg1, "vkCmdDebugMarkerEndEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerEndEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
     if (strcmp(arg1, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR") == 0) {
         pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceDisplayPlanePropertiesKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
+    if (strcmp(arg1, "vkCreateSwapchainKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSwapchainKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
     if (strcmp(arg1, "vkGetDisplayModePropertiesKHR") == 0) {
         pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayModePropertiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkDestroySwapchainKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySwapchainKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkDebugReportMessageEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDebugReportMessageEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkCreateSharedSwapchainsKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSharedSwapchainsKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -23222,23 +23274,31 @@ static PyObject* PyvkGetInstanceProcAddr(
 
 #endif
 
-    if (strcmp(arg1, "vkCmdDrawIndirectCountAMD") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndirectCountAMDType,
+#ifdef VK_USE_PLATFORM_XCB_KHR
+
+    if (strcmp(arg1, "vkCreateXcbSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXcbSurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType,
+#endif
+
+    if (strcmp(arg1, "vkDebugMarkerSetObjectNameEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectNameEXTType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkCmdDrawIndexedIndirectCountAMD") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndexedIndirectCountAMDType,
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+    if (strcmp(arg1, "vkCreateXlibSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXlibSurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
+
+#endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
@@ -23250,11 +23310,101 @@ static PyObject* PyvkGetInstanceProcAddr(
 
 #endif
 
-    if (strcmp(arg1, "vkDestroySurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySurfaceKHRType,
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceFormatsKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceFormatsKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceDisplayPropertiesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceDisplayPropertiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetDisplayPlaneCapabilitiesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneCapabilitiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceWaylandPresentationSupportKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
+
+    if (strcmp(arg1, "vkAcquireNextImageKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkAcquireNextImageKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkCmdDebugMarkerInsertEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerInsertEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetSwapchainImagesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetSwapchainImagesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkCreateDisplayModeKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayModeKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+    if (strcmp(arg1, "vkCreateWaylandSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateWaylandSurfaceKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
+
+    if (strcmp(arg1, "vkCmdDebugMarkerBeginEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerBeginEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfacePresentModesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfacePresentModesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#ifdef VK_USE_PLATFORM_ANDROID_KHR
+
+    if (strcmp(arg1, "vkCreateAndroidSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateAndroidSurfaceKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
 
 #ifdef VK_USE_PLATFORM_MIR_KHR
 
@@ -23276,70 +23426,8 @@ static PyObject* PyvkGetInstanceProcAddr(
 
 #endif
 
-#ifdef VK_USE_PLATFORM_ANDROID_KHR
-
-    if (strcmp(arg1, "vkCreateAndroidSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateAndroidSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkDebugMarkerSetObjectTagEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectTagEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkGetSwapchainImagesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetSwapchainImagesKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkGetDisplayPlaneSupportedDisplaysKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneSupportedDisplaysKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkDebugMarkerSetObjectNameEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectNameEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkDestroySwapchainKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySwapchainKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCreateSwapchainKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSwapchainKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCmdDebugMarkerEndEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerEndEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-    if (strcmp(arg1, "vkCreateWaylandSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateWaylandSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkCreateDebugReportCallbackEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDebugReportCallbackEXTType,
+    if (strcmp(arg1, "vkCreateDisplayPlaneSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayPlaneSurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -23350,84 +23438,20 @@ static PyObject* PyvkGetInstanceProcAddr(
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkCreateDisplayPlaneSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayPlaneSurfaceKHRType,
+    if (strcmp(arg1, "vkDebugMarkerSetObjectTagEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectTagEXTType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfacePresentModesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfacePresentModesKHRType,
+    if (strcmp(arg1, "vkCmdDrawIndexedIndirectCountAMD") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndexedIndirectCountAMDType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetDisplayPlaneCapabilitiesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneCapabilitiesKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-    if (strcmp(arg1, "vkCreateXlibSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXlibSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-#ifdef VK_USE_PLATFORM_XCB_KHR
-
-    if (strcmp(arg1, "vkCreateXcbSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXcbSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkAcquireNextImageKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkAcquireNextImageKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceXlibPresentationSupportKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCmdDebugMarkerBeginEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerBeginEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceWaylandPresentationSupportKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceSupportKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceSupportKHRType,
+    if (strcmp(arg1, "vkCmdDrawIndirectCountAMD") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndirectCountAMDType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -23459,7 +23483,8 @@ static PyObject* PyvkGetDeviceProcAddr(
 
     PFN_vkVoidFunction fun = vkGetDeviceProcAddr(*arg0, arg1);
     if (fun == NULL) {
-        PyErr_SetString(PyExc_ImportError, "error");
+        PyErr_SetString(PyExc_ImportError,
+                        "Can't get address of extension function");
         return NULL;
     }
     PyObject* pointer = PyCapsule_New(fun, NULL, NULL);
@@ -23470,32 +23495,20 @@ static PyObject* PyvkGetDeviceProcAddr(
 
     PyObject* pyreturn = NULL;
 
-    if (strcmp(arg1, "vkCreateSharedSwapchainsKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSharedSwapchainsKHRType,
+    if (strcmp(arg1, "vkCreateDebugReportCallbackEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDebugReportCallbackEXTType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkQueuePresentKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkQueuePresentKHRType,
+    if (strcmp(arg1, "vkDestroySurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkCmdDebugMarkerInsertEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerInsertEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkDebugReportMessageEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDebugReportMessageEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCreateDisplayModeKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayModeKHRType,
+    if (strcmp(arg1, "vkGetDisplayPlaneSupportedDisplaysKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneSupportedDisplaysKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -23510,17 +23523,27 @@ static PyObject* PyvkGetDeviceProcAddr(
 
 #endif
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceDisplayPropertiesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceDisplayPropertiesKHRType,
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceSupportKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceSupportKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceFormatsKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceFormatsKHRType,
+    if (strcmp(arg1, "vkQueuePresentKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkQueuePresentKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
+
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceXlibPresentationSupportKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
@@ -23532,14 +23555,44 @@ static PyObject* PyvkGetDeviceProcAddr(
 
 #endif
 
+    if (strcmp(arg1, "vkCmdDebugMarkerEndEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerEndEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
     if (strcmp(arg1, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR") == 0) {
         pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceDisplayPlanePropertiesKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
+    if (strcmp(arg1, "vkCreateSwapchainKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSwapchainKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
     if (strcmp(arg1, "vkGetDisplayModePropertiesKHR") == 0) {
         pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayModePropertiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkDestroySwapchainKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySwapchainKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkDebugReportMessageEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDebugReportMessageEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkCreateSharedSwapchainsKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSharedSwapchainsKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -23554,23 +23607,31 @@ static PyObject* PyvkGetDeviceProcAddr(
 
 #endif
 
-    if (strcmp(arg1, "vkCmdDrawIndirectCountAMD") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndirectCountAMDType,
+#ifdef VK_USE_PLATFORM_XCB_KHR
+
+    if (strcmp(arg1, "vkCreateXcbSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXcbSurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType,
+#endif
+
+    if (strcmp(arg1, "vkDebugMarkerSetObjectNameEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectNameEXTType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkCmdDrawIndexedIndirectCountAMD") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndexedIndirectCountAMDType,
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+    if (strcmp(arg1, "vkCreateXlibSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXlibSurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
+
+#endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
@@ -23582,11 +23643,101 @@ static PyObject* PyvkGetDeviceProcAddr(
 
 #endif
 
-    if (strcmp(arg1, "vkDestroySurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySurfaceKHRType,
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceFormatsKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceFormatsKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceDisplayPropertiesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceDisplayPropertiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetDisplayPlaneCapabilitiesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneCapabilitiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceWaylandPresentationSupportKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
+
+    if (strcmp(arg1, "vkAcquireNextImageKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkAcquireNextImageKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkCmdDebugMarkerInsertEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerInsertEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetSwapchainImagesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetSwapchainImagesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkCreateDisplayModeKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayModeKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+    if (strcmp(arg1, "vkCreateWaylandSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateWaylandSurfaceKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
+
+    if (strcmp(arg1, "vkCmdDebugMarkerBeginEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerBeginEXTType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+    if (strcmp(arg1, "vkGetPhysicalDeviceSurfacePresentModesKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfacePresentModesKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#ifdef VK_USE_PLATFORM_ANDROID_KHR
+
+    if (strcmp(arg1, "vkCreateAndroidSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateAndroidSurfaceKHRType,
+                                 call_args, NULL);
+        if (pyreturn == NULL) return NULL;
+    }
+
+#endif
 
 #ifdef VK_USE_PLATFORM_MIR_KHR
 
@@ -23608,70 +23759,8 @@ static PyObject* PyvkGetDeviceProcAddr(
 
 #endif
 
-#ifdef VK_USE_PLATFORM_ANDROID_KHR
-
-    if (strcmp(arg1, "vkCreateAndroidSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateAndroidSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkDebugMarkerSetObjectTagEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectTagEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkGetSwapchainImagesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetSwapchainImagesKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkGetDisplayPlaneSupportedDisplaysKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneSupportedDisplaysKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkDebugMarkerSetObjectNameEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectNameEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkDestroySwapchainKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkDestroySwapchainKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCreateSwapchainKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateSwapchainKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCmdDebugMarkerEndEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerEndEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-    if (strcmp(arg1, "vkCreateWaylandSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateWaylandSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkCreateDebugReportCallbackEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDebugReportCallbackEXTType,
+    if (strcmp(arg1, "vkCreateDisplayPlaneSurfaceKHR") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayPlaneSurfaceKHRType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -23682,84 +23771,20 @@ static PyObject* PyvkGetDeviceProcAddr(
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkCreateDisplayPlaneSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateDisplayPlaneSurfaceKHRType,
+    if (strcmp(arg1, "vkDebugMarkerSetObjectTagEXT") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkDebugMarkerSetObjectTagEXTType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfacePresentModesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfacePresentModesKHRType,
+    if (strcmp(arg1, "vkCmdDrawIndexedIndirectCountAMD") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndexedIndirectCountAMDType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
 
-    if (strcmp(arg1, "vkGetDisplayPlaneCapabilitiesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetDisplayPlaneCapabilitiesKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-    if (strcmp(arg1, "vkCreateXlibSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXlibSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-#ifdef VK_USE_PLATFORM_XCB_KHR
-
-    if (strcmp(arg1, "vkCreateXcbSurfaceKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCreateXcbSurfaceKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkAcquireNextImageKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkAcquireNextImageKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceXlibPresentationSupportKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-    if (strcmp(arg1, "vkCmdDebugMarkerBeginEXT") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDebugMarkerBeginEXTType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceWaylandPresentationSupportKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType,
-                                 call_args, NULL);
-        if (pyreturn == NULL) return NULL;
-    }
-
-#endif
-
-    if (strcmp(arg1, "vkGetPhysicalDeviceSurfaceSupportKHR") == 0) {
-        pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceSurfaceSupportKHRType,
+    if (strcmp(arg1, "vkCmdDrawIndirectCountAMD") == 0) {
+        pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndirectCountAMDType,
                                  call_args, NULL);
         if (pyreturn == NULL) return NULL;
     }
@@ -24168,11 +24193,11 @@ static PyObject* PyvkEnumerateInstanceExtensionProperties(PyObject *self, PyObje
         return_struct.pLayerName = NULL;
     }
     else {
-        PyObject * tmp27500391 = PyUnicode_AsASCIIString(pLayerName);
-        char* tmp61077266 = PyBytes_AsString(tmp27500391);
-        char* tmp78448075 = strdup(tmp61077266);
-        return_struct.pLayerName = tmp78448075;
-        Py_DECREF(tmp27500391);
+        PyObject * tmp2092509 = PyUnicode_AsASCIIString(pLayerName);
+        char* tmp8718185 = PyBytes_AsString(tmp2092509);
+        char* tmp64449380 = strdup(tmp8718185);
+        return_struct.pLayerName = tmp64449380;
+        Py_DECREF(tmp2092509);
     }
 
     uint32_t count;
@@ -24252,11 +24277,11 @@ static PyObject* PyvkEnumerateDeviceExtensionProperties(PyObject *self, PyObject
         return_struct.pLayerName = NULL;
     }
     else {
-        PyObject * tmp66733227 = PyUnicode_AsASCIIString(pLayerName);
-        char* tmp42689145 = PyBytes_AsString(tmp66733227);
-        char* tmp99017355 = strdup(tmp42689145);
-        return_struct.pLayerName = tmp99017355;
-        Py_DECREF(tmp66733227);
+        PyObject * tmp44954652 = PyUnicode_AsASCIIString(pLayerName);
+        char* tmp50453748 = PyBytes_AsString(tmp44954652);
+        char* tmp70710339 = strdup(tmp50453748);
+        return_struct.pLayerName = tmp70710339;
+        Py_DECREF(tmp44954652);
     }
 
     uint32_t count;
@@ -26941,10 +26966,10 @@ static PyObject* PyvkCmdBindDescriptorSets(PyObject *self, PyObject *args,
     return_struct.descriptorSetCount = (uint32_t) PyLong_AsLong(descriptorSetCount);
     return_struct.pDescriptorSets = PyCapsule_GetPointer(pDescriptorSets, "VkDescriptorSet");
     return_struct.dynamicOffsetCount = (uint32_t) PyLong_AsLong(dynamicOffsetCount);
-    uint32_t tmp38661073 = (uint32_t) PyLong_AsLong(pDynamicOffsets);
-    uint32_t *tmp23448787 = malloc(sizeof(uint32_t));
-    memcpy(tmp23448787, &tmp38661073, sizeof(uint32_t));
-    return_struct.pDynamicOffsets = tmp23448787;
+    uint32_t tmp75900997 = (uint32_t) PyLong_AsLong(pDynamicOffsets);
+    uint32_t *tmp99125093 = malloc(sizeof(uint32_t));
+    memcpy(tmp99125093, &tmp75900997, sizeof(uint32_t));
+    return_struct.pDynamicOffsets = tmp99125093;
 
     vkCmdBindDescriptorSets(return_struct.commandBuffer,return_struct.pipelineBindPoint,return_struct.layout,return_struct.firstSet,return_struct.descriptorSetCount,return_struct.pDescriptorSets,return_struct.dynamicOffsetCount,return_struct.pDynamicOffsets);
     PyObject* return_value = Py_None;
@@ -28216,36 +28241,36 @@ static PyMethodDef VulkanMethods[] = {
     {"VK_VERSION_MAJOR", (PyCFunction)PyVK_VERSION_MAJOR, METH_VARARGS, ""},
     {"VK_VERSION_MINOR", (PyCFunction)PyVK_VERSION_MINOR, METH_VARARGS, ""},
     {"VK_VERSION_PATCH", (PyCFunction)PyVK_VERSION_PATCH, METH_VARARGS, ""},
-    {"VkBuffer", PyHandle_VkBuffer, METH_NOARGS, "Handle"},
-    {"VkPipelineLayout", PyHandle_VkPipelineLayout, METH_NOARGS, "Handle"},
-    {"VkDevice", PyHandle_VkDevice, METH_NOARGS, "Handle"},
-    {"VkSampler", PyHandle_VkSampler, METH_NOARGS, "Handle"},
-    {"VkSemaphore", PyHandle_VkSemaphore, METH_NOARGS, "Handle"},
-    {"VkQueue", PyHandle_VkQueue, METH_NOARGS, "Handle"},
-    {"VkSurfaceKHR", PyHandle_VkSurfaceKHR, METH_NOARGS, "Handle"},
-    {"VkImage", PyHandle_VkImage, METH_NOARGS, "Handle"},
-    {"VkFramebuffer", PyHandle_VkFramebuffer, METH_NOARGS, "Handle"},
-    {"VkCommandBuffer", PyHandle_VkCommandBuffer, METH_NOARGS, "Handle"},
-    {"VkDescriptorSet", PyHandle_VkDescriptorSet, METH_NOARGS, "Handle"},
-    {"VkFence", PyHandle_VkFence, METH_NOARGS, "Handle"},
-    {"VkCommandPool", PyHandle_VkCommandPool, METH_NOARGS, "Handle"},
-    {"VkBufferView", PyHandle_VkBufferView, METH_NOARGS, "Handle"},
-    {"VkShaderModule", PyHandle_VkShaderModule, METH_NOARGS, "Handle"},
-    {"VkPipeline", PyHandle_VkPipeline, METH_NOARGS, "Handle"},
-    {"VkEvent", PyHandle_VkEvent, METH_NOARGS, "Handle"},
-    {"VkDisplayKHR", PyHandle_VkDisplayKHR, METH_NOARGS, "Handle"},
-    {"VkImageView", PyHandle_VkImageView, METH_NOARGS, "Handle"},
     {"VkInstance", PyHandle_VkInstance, METH_NOARGS, "Handle"},
-    {"VkPipelineCache", PyHandle_VkPipelineCache, METH_NOARGS, "Handle"},
-    {"VkPhysicalDevice", PyHandle_VkPhysicalDevice, METH_NOARGS, "Handle"},
-    {"VkRenderPass", PyHandle_VkRenderPass, METH_NOARGS, "Handle"},
+    {"VkDisplayKHR", PyHandle_VkDisplayKHR, METH_NOARGS, "Handle"},
+    {"VkPipelineLayout", PyHandle_VkPipelineLayout, METH_NOARGS, "Handle"},
+    {"VkShaderModule", PyHandle_VkShaderModule, METH_NOARGS, "Handle"},
     {"VkDeviceMemory", PyHandle_VkDeviceMemory, METH_NOARGS, "Handle"},
-    {"VkQueryPool", PyHandle_VkQueryPool, METH_NOARGS, "Handle"},
-    {"VkSwapchainKHR", PyHandle_VkSwapchainKHR, METH_NOARGS, "Handle"},
-    {"VkDescriptorSetLayout", PyHandle_VkDescriptorSetLayout, METH_NOARGS, "Handle"},
+    {"VkFence", PyHandle_VkFence, METH_NOARGS, "Handle"},
+    {"VkSurfaceKHR", PyHandle_VkSurfaceKHR, METH_NOARGS, "Handle"},
     {"VkDebugReportCallbackEXT", PyHandle_VkDebugReportCallbackEXT, METH_NOARGS, "Handle"},
-    {"VkDescriptorPool", PyHandle_VkDescriptorPool, METH_NOARGS, "Handle"},
+    {"VkPipelineCache", PyHandle_VkPipelineCache, METH_NOARGS, "Handle"},
+    {"VkEvent", PyHandle_VkEvent, METH_NOARGS, "Handle"},
+    {"VkDevice", PyHandle_VkDevice, METH_NOARGS, "Handle"},
     {"VkDisplayModeKHR", PyHandle_VkDisplayModeKHR, METH_NOARGS, "Handle"},
+    {"VkSampler", PyHandle_VkSampler, METH_NOARGS, "Handle"},
+    {"VkCommandPool", PyHandle_VkCommandPool, METH_NOARGS, "Handle"},
+    {"VkImageView", PyHandle_VkImageView, METH_NOARGS, "Handle"},
+    {"VkDescriptorSet", PyHandle_VkDescriptorSet, METH_NOARGS, "Handle"},
+    {"VkSemaphore", PyHandle_VkSemaphore, METH_NOARGS, "Handle"},
+    {"VkDescriptorPool", PyHandle_VkDescriptorPool, METH_NOARGS, "Handle"},
+    {"VkQueue", PyHandle_VkQueue, METH_NOARGS, "Handle"},
+    {"VkQueryPool", PyHandle_VkQueryPool, METH_NOARGS, "Handle"},
+    {"VkPhysicalDevice", PyHandle_VkPhysicalDevice, METH_NOARGS, "Handle"},
+    {"VkBufferView", PyHandle_VkBufferView, METH_NOARGS, "Handle"},
+    {"VkCommandBuffer", PyHandle_VkCommandBuffer, METH_NOARGS, "Handle"},
+    {"VkRenderPass", PyHandle_VkRenderPass, METH_NOARGS, "Handle"},
+    {"VkImage", PyHandle_VkImage, METH_NOARGS, "Handle"},
+    {"VkSwapchainKHR", PyHandle_VkSwapchainKHR, METH_NOARGS, "Handle"},
+    {"VkBuffer", PyHandle_VkBuffer, METH_NOARGS, "Handle"},
+    {"VkFramebuffer", PyHandle_VkFramebuffer, METH_NOARGS, "Handle"},
+    {"VkDescriptorSetLayout", PyHandle_VkDescriptorSetLayout, METH_NOARGS, "Handle"},
+    {"VkPipeline", PyHandle_VkPipeline, METH_NOARGS, "Handle"},
     {"vkCreateInstance", (PyCFunction) PyvkCreateInstance, METH_VARARGS | METH_KEYWORDS, ""},
     {"vkDestroyInstance", (PyCFunction) PyvkDestroyInstance, METH_VARARGS | METH_KEYWORDS, ""},
     {"vkEnumeratePhysicalDevices", (PyCFunction) PyvkEnumeratePhysicalDevices, METH_VARARGS | METH_KEYWORDS, ""},
@@ -29785,30 +29810,20 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     Py_INCREF(&PyVkClearValueType);
     PyModule_AddObject(module, "VkClearValue", (PyObject *)&PyVkClearValueType);
 
-    if (PyType_Ready(&PyvkCreateSharedSwapchainsKHRType) < 0)
+    if (PyType_Ready(&PyvkCreateDebugReportCallbackEXTType) < 0)
         return NULL;
-    Py_INCREF(&PyvkCreateSharedSwapchainsKHRType);
-    PyModule_AddObject(module, "vkCreateSharedSwapchainsKHR", (PyObject *)&PyvkCreateSharedSwapchainsKHRType);
+    Py_INCREF(&PyvkCreateDebugReportCallbackEXTType);
+    PyModule_AddObject(module, "vkCreateDebugReportCallbackEXT", (PyObject *)&PyvkCreateDebugReportCallbackEXTType);
 
-    if (PyType_Ready(&PyvkQueuePresentKHRType) < 0)
+    if (PyType_Ready(&PyvkDestroySurfaceKHRType) < 0)
         return NULL;
-    Py_INCREF(&PyvkQueuePresentKHRType);
-    PyModule_AddObject(module, "vkQueuePresentKHR", (PyObject *)&PyvkQueuePresentKHRType);
+    Py_INCREF(&PyvkDestroySurfaceKHRType);
+    PyModule_AddObject(module, "vkDestroySurfaceKHR", (PyObject *)&PyvkDestroySurfaceKHRType);
 
-    if (PyType_Ready(&PyvkCmdDebugMarkerInsertEXTType) < 0)
+    if (PyType_Ready(&PyvkGetDisplayPlaneSupportedDisplaysKHRType) < 0)
         return NULL;
-    Py_INCREF(&PyvkCmdDebugMarkerInsertEXTType);
-    PyModule_AddObject(module, "vkCmdDebugMarkerInsertEXT", (PyObject *)&PyvkCmdDebugMarkerInsertEXTType);
-
-    if (PyType_Ready(&PyvkDebugReportMessageEXTType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkDebugReportMessageEXTType);
-    PyModule_AddObject(module, "vkDebugReportMessageEXT", (PyObject *)&PyvkDebugReportMessageEXTType);
-
-    if (PyType_Ready(&PyvkCreateDisplayModeKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCreateDisplayModeKHRType);
-    PyModule_AddObject(module, "vkCreateDisplayModeKHR", (PyObject *)&PyvkCreateDisplayModeKHRType);
+    Py_INCREF(&PyvkGetDisplayPlaneSupportedDisplaysKHRType);
+    PyModule_AddObject(module, "vkGetDisplayPlaneSupportedDisplaysKHR", (PyObject *)&PyvkGetDisplayPlaneSupportedDisplaysKHRType);
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
@@ -29819,15 +29834,24 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
 
 #endif
 
-    if (PyType_Ready(&PyvkGetPhysicalDeviceDisplayPropertiesKHRType) < 0)
+    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceSupportKHRType) < 0)
         return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceDisplayPropertiesKHRType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceDisplayPropertiesKHR", (PyObject *)&PyvkGetPhysicalDeviceDisplayPropertiesKHRType);
+    Py_INCREF(&PyvkGetPhysicalDeviceSurfaceSupportKHRType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfaceSupportKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfaceSupportKHRType);
 
-    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceFormatsKHRType) < 0)
+    if (PyType_Ready(&PyvkQueuePresentKHRType) < 0)
         return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceSurfaceFormatsKHRType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfaceFormatsKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfaceFormatsKHRType);
+    Py_INCREF(&PyvkQueuePresentKHRType);
+    PyModule_AddObject(module, "vkQueuePresentKHR", (PyObject *)&PyvkQueuePresentKHRType);
+
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+    if (PyType_Ready(&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceXlibPresentationSupportKHR", (PyObject *)&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType);
+
+#endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
@@ -29838,15 +29862,40 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
 
 #endif
 
+    if (PyType_Ready(&PyvkCmdDebugMarkerEndEXTType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCmdDebugMarkerEndEXTType);
+    PyModule_AddObject(module, "vkCmdDebugMarkerEndEXT", (PyObject *)&PyvkCmdDebugMarkerEndEXTType);
+
     if (PyType_Ready(&PyvkGetPhysicalDeviceDisplayPlanePropertiesKHRType) < 0)
         return NULL;
     Py_INCREF(&PyvkGetPhysicalDeviceDisplayPlanePropertiesKHRType);
     PyModule_AddObject(module, "vkGetPhysicalDeviceDisplayPlanePropertiesKHR", (PyObject *)&PyvkGetPhysicalDeviceDisplayPlanePropertiesKHRType);
 
+    if (PyType_Ready(&PyvkCreateSwapchainKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCreateSwapchainKHRType);
+    PyModule_AddObject(module, "vkCreateSwapchainKHR", (PyObject *)&PyvkCreateSwapchainKHRType);
+
     if (PyType_Ready(&PyvkGetDisplayModePropertiesKHRType) < 0)
         return NULL;
     Py_INCREF(&PyvkGetDisplayModePropertiesKHRType);
     PyModule_AddObject(module, "vkGetDisplayModePropertiesKHR", (PyObject *)&PyvkGetDisplayModePropertiesKHRType);
+
+    if (PyType_Ready(&PyvkDestroySwapchainKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkDestroySwapchainKHRType);
+    PyModule_AddObject(module, "vkDestroySwapchainKHR", (PyObject *)&PyvkDestroySwapchainKHRType);
+
+    if (PyType_Ready(&PyvkDebugReportMessageEXTType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkDebugReportMessageEXTType);
+    PyModule_AddObject(module, "vkDebugReportMessageEXT", (PyObject *)&PyvkDebugReportMessageEXTType);
+
+    if (PyType_Ready(&PyvkCreateSharedSwapchainsKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCreateSharedSwapchainsKHRType);
+    PyModule_AddObject(module, "vkCreateSharedSwapchainsKHR", (PyObject *)&PyvkCreateSharedSwapchainsKHRType);
 
 #ifdef VK_USE_PLATFORM_XCB_KHR
 
@@ -29857,20 +29906,28 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
 
 #endif
 
-    if (PyType_Ready(&PyvkCmdDrawIndirectCountAMDType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCmdDrawIndirectCountAMDType);
-    PyModule_AddObject(module, "vkCmdDrawIndirectCountAMD", (PyObject *)&PyvkCmdDrawIndirectCountAMDType);
+#ifdef VK_USE_PLATFORM_XCB_KHR
 
-    if (PyType_Ready(&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType) < 0)
+    if (PyType_Ready(&PyvkCreateXcbSurfaceKHRType) < 0)
         return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV", (PyObject *)&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType);
+    Py_INCREF(&PyvkCreateXcbSurfaceKHRType);
+    PyModule_AddObject(module, "vkCreateXcbSurfaceKHR", (PyObject *)&PyvkCreateXcbSurfaceKHRType);
 
-    if (PyType_Ready(&PyvkCmdDrawIndexedIndirectCountAMDType) < 0)
+#endif
+
+    if (PyType_Ready(&PyvkDebugMarkerSetObjectNameEXTType) < 0)
         return NULL;
-    Py_INCREF(&PyvkCmdDrawIndexedIndirectCountAMDType);
-    PyModule_AddObject(module, "vkCmdDrawIndexedIndirectCountAMD", (PyObject *)&PyvkCmdDrawIndexedIndirectCountAMDType);
+    Py_INCREF(&PyvkDebugMarkerSetObjectNameEXTType);
+    PyModule_AddObject(module, "vkDebugMarkerSetObjectNameEXT", (PyObject *)&PyvkDebugMarkerSetObjectNameEXTType);
+
+#ifdef VK_USE_PLATFORM_XLIB_KHR
+
+    if (PyType_Ready(&PyvkCreateXlibSurfaceKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCreateXlibSurfaceKHRType);
+    PyModule_AddObject(module, "vkCreateXlibSurfaceKHR", (PyObject *)&PyvkCreateXlibSurfaceKHRType);
+
+#endif
 
 #ifdef VK_USE_PLATFORM_WIN32_KHR
 
@@ -29881,10 +29938,87 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
 
 #endif
 
-    if (PyType_Ready(&PyvkDestroySurfaceKHRType) < 0)
+    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceFormatsKHRType) < 0)
         return NULL;
-    Py_INCREF(&PyvkDestroySurfaceKHRType);
-    PyModule_AddObject(module, "vkDestroySurfaceKHR", (PyObject *)&PyvkDestroySurfaceKHRType);
+    Py_INCREF(&PyvkGetPhysicalDeviceSurfaceFormatsKHRType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfaceFormatsKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfaceFormatsKHRType);
+
+    if (PyType_Ready(&PyvkGetPhysicalDeviceDisplayPropertiesKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetPhysicalDeviceDisplayPropertiesKHRType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceDisplayPropertiesKHR", (PyObject *)&PyvkGetPhysicalDeviceDisplayPropertiesKHRType);
+
+    if (PyType_Ready(&PyvkGetDisplayPlaneCapabilitiesKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetDisplayPlaneCapabilitiesKHRType);
+    PyModule_AddObject(module, "vkGetDisplayPlaneCapabilitiesKHR", (PyObject *)&PyvkGetDisplayPlaneCapabilitiesKHRType);
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+    if (PyType_Ready(&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceWaylandPresentationSupportKHR", (PyObject *)&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType);
+
+#endif
+
+    if (PyType_Ready(&PyvkAcquireNextImageKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkAcquireNextImageKHRType);
+    PyModule_AddObject(module, "vkAcquireNextImageKHR", (PyObject *)&PyvkAcquireNextImageKHRType);
+
+    if (PyType_Ready(&PyvkCmdDebugMarkerInsertEXTType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCmdDebugMarkerInsertEXTType);
+    PyModule_AddObject(module, "vkCmdDebugMarkerInsertEXT", (PyObject *)&PyvkCmdDebugMarkerInsertEXTType);
+
+    if (PyType_Ready(&PyvkGetSwapchainImagesKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetSwapchainImagesKHRType);
+    PyModule_AddObject(module, "vkGetSwapchainImagesKHR", (PyObject *)&PyvkGetSwapchainImagesKHRType);
+
+    if (PyType_Ready(&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceExternalImageFormatPropertiesNV", (PyObject *)&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType);
+
+    if (PyType_Ready(&PyvkCreateDisplayModeKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCreateDisplayModeKHRType);
+    PyModule_AddObject(module, "vkCreateDisplayModeKHR", (PyObject *)&PyvkCreateDisplayModeKHRType);
+
+#ifdef VK_USE_PLATFORM_WAYLAND_KHR
+
+    if (PyType_Ready(&PyvkCreateWaylandSurfaceKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCreateWaylandSurfaceKHRType);
+    PyModule_AddObject(module, "vkCreateWaylandSurfaceKHR", (PyObject *)&PyvkCreateWaylandSurfaceKHRType);
+
+#endif
+
+    if (PyType_Ready(&PyvkCmdDebugMarkerBeginEXTType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCmdDebugMarkerBeginEXTType);
+    PyModule_AddObject(module, "vkCmdDebugMarkerBeginEXT", (PyObject *)&PyvkCmdDebugMarkerBeginEXTType);
+
+    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType);
+
+    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfacePresentModesKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkGetPhysicalDeviceSurfacePresentModesKHRType);
+    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfacePresentModesKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfacePresentModesKHRType);
+
+#ifdef VK_USE_PLATFORM_ANDROID_KHR
+
+    if (PyType_Ready(&PyvkCreateAndroidSurfaceKHRType) < 0)
+        return NULL;
+    Py_INCREF(&PyvkCreateAndroidSurfaceKHRType);
+    PyModule_AddObject(module, "vkCreateAndroidSurfaceKHR", (PyObject *)&PyvkCreateAndroidSurfaceKHRType);
+
+#endif
 
 #ifdef VK_USE_PLATFORM_MIR_KHR
 
@@ -29904,210 +30038,101 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
 
 #endif
 
-#ifdef VK_USE_PLATFORM_ANDROID_KHR
-
-    if (PyType_Ready(&PyvkCreateAndroidSurfaceKHRType) < 0)
+    if (PyType_Ready(&PyvkCreateDisplayPlaneSurfaceKHRType) < 0)
         return NULL;
-    Py_INCREF(&PyvkCreateAndroidSurfaceKHRType);
-    PyModule_AddObject(module, "vkCreateAndroidSurfaceKHR", (PyObject *)&PyvkCreateAndroidSurfaceKHRType);
-
-#endif
-
-    if (PyType_Ready(&PyvkDebugMarkerSetObjectTagEXTType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkDebugMarkerSetObjectTagEXTType);
-    PyModule_AddObject(module, "vkDebugMarkerSetObjectTagEXT", (PyObject *)&PyvkDebugMarkerSetObjectTagEXTType);
-
-    if (PyType_Ready(&PyvkGetSwapchainImagesKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkGetSwapchainImagesKHRType);
-    PyModule_AddObject(module, "vkGetSwapchainImagesKHR", (PyObject *)&PyvkGetSwapchainImagesKHRType);
-
-    if (PyType_Ready(&PyvkGetDisplayPlaneSupportedDisplaysKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkGetDisplayPlaneSupportedDisplaysKHRType);
-    PyModule_AddObject(module, "vkGetDisplayPlaneSupportedDisplaysKHR", (PyObject *)&PyvkGetDisplayPlaneSupportedDisplaysKHRType);
-
-    if (PyType_Ready(&PyvkDebugMarkerSetObjectNameEXTType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkDebugMarkerSetObjectNameEXTType);
-    PyModule_AddObject(module, "vkDebugMarkerSetObjectNameEXT", (PyObject *)&PyvkDebugMarkerSetObjectNameEXTType);
-
-    if (PyType_Ready(&PyvkDestroySwapchainKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkDestroySwapchainKHRType);
-    PyModule_AddObject(module, "vkDestroySwapchainKHR", (PyObject *)&PyvkDestroySwapchainKHRType);
-
-    if (PyType_Ready(&PyvkCreateSwapchainKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCreateSwapchainKHRType);
-    PyModule_AddObject(module, "vkCreateSwapchainKHR", (PyObject *)&PyvkCreateSwapchainKHRType);
-
-    if (PyType_Ready(&PyvkCmdDebugMarkerEndEXTType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCmdDebugMarkerEndEXTType);
-    PyModule_AddObject(module, "vkCmdDebugMarkerEndEXT", (PyObject *)&PyvkCmdDebugMarkerEndEXTType);
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-    if (PyType_Ready(&PyvkCreateWaylandSurfaceKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCreateWaylandSurfaceKHRType);
-    PyModule_AddObject(module, "vkCreateWaylandSurfaceKHR", (PyObject *)&PyvkCreateWaylandSurfaceKHRType);
-
-#endif
-
-    if (PyType_Ready(&PyvkCreateDebugReportCallbackEXTType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCreateDebugReportCallbackEXTType);
-    PyModule_AddObject(module, "vkCreateDebugReportCallbackEXT", (PyObject *)&PyvkCreateDebugReportCallbackEXTType);
+    Py_INCREF(&PyvkCreateDisplayPlaneSurfaceKHRType);
+    PyModule_AddObject(module, "vkCreateDisplayPlaneSurfaceKHR", (PyObject *)&PyvkCreateDisplayPlaneSurfaceKHRType);
 
     if (PyType_Ready(&PyvkDestroyDebugReportCallbackEXTType) < 0)
         return NULL;
     Py_INCREF(&PyvkDestroyDebugReportCallbackEXTType);
     PyModule_AddObject(module, "vkDestroyDebugReportCallbackEXT", (PyObject *)&PyvkDestroyDebugReportCallbackEXTType);
 
-    if (PyType_Ready(&PyvkCreateDisplayPlaneSurfaceKHRType) < 0)
+    if (PyType_Ready(&PyvkDebugMarkerSetObjectTagEXTType) < 0)
         return NULL;
-    Py_INCREF(&PyvkCreateDisplayPlaneSurfaceKHRType);
-    PyModule_AddObject(module, "vkCreateDisplayPlaneSurfaceKHR", (PyObject *)&PyvkCreateDisplayPlaneSurfaceKHRType);
+    Py_INCREF(&PyvkDebugMarkerSetObjectTagEXTType);
+    PyModule_AddObject(module, "vkDebugMarkerSetObjectTagEXT", (PyObject *)&PyvkDebugMarkerSetObjectTagEXTType);
 
-    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfacePresentModesKHRType) < 0)
+    if (PyType_Ready(&PyvkCmdDrawIndexedIndirectCountAMDType) < 0)
         return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceSurfacePresentModesKHRType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfacePresentModesKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfacePresentModesKHRType);
+    Py_INCREF(&PyvkCmdDrawIndexedIndirectCountAMDType);
+    PyModule_AddObject(module, "vkCmdDrawIndexedIndirectCountAMD", (PyObject *)&PyvkCmdDrawIndexedIndirectCountAMDType);
 
-    if (PyType_Ready(&PyvkGetDisplayPlaneCapabilitiesKHRType) < 0)
+    if (PyType_Ready(&PyvkCmdDrawIndirectCountAMDType) < 0)
         return NULL;
-    Py_INCREF(&PyvkGetDisplayPlaneCapabilitiesKHRType);
-    PyModule_AddObject(module, "vkGetDisplayPlaneCapabilitiesKHR", (PyObject *)&PyvkGetDisplayPlaneCapabilitiesKHRType);
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-    if (PyType_Ready(&PyvkCreateXlibSurfaceKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCreateXlibSurfaceKHRType);
-    PyModule_AddObject(module, "vkCreateXlibSurfaceKHR", (PyObject *)&PyvkCreateXlibSurfaceKHRType);
-
-#endif
-
-#ifdef VK_USE_PLATFORM_XCB_KHR
-
-    if (PyType_Ready(&PyvkCreateXcbSurfaceKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCreateXcbSurfaceKHRType);
-    PyModule_AddObject(module, "vkCreateXcbSurfaceKHR", (PyObject *)&PyvkCreateXcbSurfaceKHRType);
-
-#endif
-
-    if (PyType_Ready(&PyvkAcquireNextImageKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkAcquireNextImageKHRType);
-    PyModule_AddObject(module, "vkAcquireNextImageKHR", (PyObject *)&PyvkAcquireNextImageKHRType);
-
-#ifdef VK_USE_PLATFORM_XLIB_KHR
-
-    if (PyType_Ready(&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceXlibPresentationSupportKHR", (PyObject *)&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType);
-
-#endif
-
-    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType);
-
-    if (PyType_Ready(&PyvkCmdDebugMarkerBeginEXTType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkCmdDebugMarkerBeginEXTType);
-    PyModule_AddObject(module, "vkCmdDebugMarkerBeginEXT", (PyObject *)&PyvkCmdDebugMarkerBeginEXTType);
-
-#ifdef VK_USE_PLATFORM_WAYLAND_KHR
-
-    if (PyType_Ready(&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceWaylandPresentationSupportKHR", (PyObject *)&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType);
-
-#endif
-
-    if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceSupportKHRType) < 0)
-        return NULL;
-    Py_INCREF(&PyvkGetPhysicalDeviceSurfaceSupportKHRType);
-    PyModule_AddObject(module, "vkGetPhysicalDeviceSurfaceSupportKHR", (PyObject *)&PyvkGetPhysicalDeviceSurfaceSupportKHRType);
+    Py_INCREF(&PyvkCmdDrawIndirectCountAMDType);
+    PyModule_AddObject(module, "vkCmdDrawIndirectCountAMD", (PyObject *)&PyvkCmdDrawIndirectCountAMDType);
 
     VulkanError = PyErr_NewException("vulkan.VulkanError", NULL, NULL);
     Py_INCREF(VulkanError);
     PyModule_AddObject(module, "VulkanError", VulkanError);
 
-    VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
-    Py_INCREF(VkErrorFragmentedPool);
-    PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
-
-    VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
-    Py_INCREF(VkErrorDeviceLost);
-    PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
-
-    VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
-    Py_INCREF(VkTimeout);
-    PyModule_AddObject(module, "VkTimeout", VkTimeout);
-
-    VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
-    Py_INCREF(VkErrorInitializationFailed);
-    PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
-
-    VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
-    Py_INCREF(VkErrorOutOfDeviceMemory);
-    PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
-
-    VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
-    Py_INCREF(VkErrorOutOfHostMemory);
-    PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
-
-    VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
-    Py_INCREF(VkErrorExtensionNotPresent);
-    PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
-
-    VkNotReady = PyErr_NewException("vulkan.VkNotReady", VulkanError, NULL);
-    Py_INCREF(VkNotReady);
-    PyModule_AddObject(module, "VkNotReady", VkNotReady);
-
-    VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
-    Py_INCREF(VkEventSet);
-    PyModule_AddObject(module, "VkEventSet", VkEventSet);
-
     VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
     Py_INCREF(VkIncomplete);
     PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
-
-    VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
-    Py_INCREF(VkErrorMemoryMapFailed);
-    PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
-
-    VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
-    Py_INCREF(VkErrorIncompatibleDriver);
-    PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
-
-    VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
-    Py_INCREF(VkErrorFormatNotSupported);
-    PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
-
-    VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
-    Py_INCREF(VkErrorTooManyObjects);
-    PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
 
     VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
     Py_INCREF(VkErrorLayerNotPresent);
     PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
 
+    VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
+    Py_INCREF(VkTimeout);
+    PyModule_AddObject(module, "VkTimeout", VkTimeout);
+
+    VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
+    Py_INCREF(VkErrorIncompatibleDriver);
+    PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
+
+    VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
+    Py_INCREF(VkErrorTooManyObjects);
+    PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
+
+    VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
+    Py_INCREF(VkErrorInitializationFailed);
+    PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
+
+    VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
+    Py_INCREF(VkErrorExtensionNotPresent);
+    PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
+
     VkErrorFeatureNotPresent = PyErr_NewException("vulkan.VkErrorFeatureNotPresent", VulkanError, NULL);
     Py_INCREF(VkErrorFeatureNotPresent);
     PyModule_AddObject(module, "VkErrorFeatureNotPresent", VkErrorFeatureNotPresent);
 
+    VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
+    Py_INCREF(VkEventSet);
+    PyModule_AddObject(module, "VkEventSet", VkEventSet);
+
     VkEventReset = PyErr_NewException("vulkan.VkEventReset", VulkanError, NULL);
     Py_INCREF(VkEventReset);
     PyModule_AddObject(module, "VkEventReset", VkEventReset);
+
+    VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
+    Py_INCREF(VkErrorFormatNotSupported);
+    PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
+
+    VkNotReady = PyErr_NewException("vulkan.VkNotReady", VulkanError, NULL);
+    Py_INCREF(VkNotReady);
+    PyModule_AddObject(module, "VkNotReady", VkNotReady);
+
+    VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
+    Py_INCREF(VkErrorOutOfDeviceMemory);
+    PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
+
+    VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
+    Py_INCREF(VkErrorFragmentedPool);
+    PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
+
+    VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
+    Py_INCREF(VkErrorMemoryMapFailed);
+    PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
+
+    VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
+    Py_INCREF(VkErrorOutOfHostMemory);
+    PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
+
+    VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
+    Py_INCREF(VkErrorDeviceLost);
+    PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
     return module;
 }
