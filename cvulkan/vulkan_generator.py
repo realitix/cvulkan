@@ -978,8 +978,11 @@ def add_pyvk_function(command, pyfunction=None):
 
         result = '\nstruct {\n'
         for m in members:
+            pointer = ''
+            if m.get('#text', False) or m['type'] in handles:
+                pointer = '*'
             result += '\n{}{} {};\n'.format(
-                m['type'], '*' if m.get('#text', False) else '', m['name'])
+                m['type'], pointer, m['name'])
         result += '\n} return_struct = {};\n'
         return result
 
@@ -1001,6 +1004,11 @@ def add_pyvk_function(command, pyfunction=None):
                 member=member['name'],
                 member_struct='return_struct.%s' % member['name'])
         return result
+
+    def get_param(p):
+        if p['type'] in handles and not p.get('#text'):
+            return '*(return_struct.%s)' % p['name']
+        return 'return_struct.' + p['name']
 
     allocate_prefix = ('vkCreate', 'vkGet', 'vkEnumerate', 'vkAllocate',
                        'vkMap')
@@ -1039,7 +1047,7 @@ def add_pyvk_function(command, pyfunction=None):
         definition += '''
             void* value;
             if (raise(
-            vkMapMemory(return_struct.device, return_struct.memory,
+            vkMapMemory(*(return_struct.device), *(return_struct.memory),
                         return_struct.offset, return_struct.size,
                         return_struct.flags, &value)
             )) return NULL;
@@ -1052,7 +1060,7 @@ def add_pyvk_function(command, pyfunction=None):
             size_t* data_size = NULL;
             if (raise(
             vkGetPipelineCacheData(
-                return_struct.device, return_struct.pipelineCache,
+                *(return_struct.device), *(return_struct.pipelineCache),
                 data_size, value)
             )) return NULL;
             PyObject* return_value = PyMemoryView_FromMemory(value,
@@ -1060,8 +1068,9 @@ def add_pyvk_function(command, pyfunction=None):
         '''
     elif is_count:
         return_object = command['param'][-1]
-        param_func = ['return_struct.' + p['name']
-                      for p in command['param'][:-2]]
+        param_func = [get_param(p) for p in command['param'][:-2]]
+        # param_func = ['return_struct.' + p['name']
+        #              for p in command['param'][:-2]]
 
         # first call which count
         definition += '\nuint32_t count;'
@@ -1118,8 +1127,7 @@ def add_pyvk_function(command, pyfunction=None):
 
     elif is_allocate:
         return_object = command['param'][-1]
-        param_func = ['return_struct.' + p['name']
-                      for p in command['param'][:-1]]
+        param_func = [get_param(p) for p in command['param'][:-1]]
 
         # create object
         definition += '\n{0} *value = malloc(sizeof({0}));\n'.format(
@@ -1151,8 +1159,8 @@ def add_pyvk_function(command, pyfunction=None):
 
     else:
         definition += '\n%s(' % cname
-        param_func = ['return_struct.' + p['name']
-                      for p in command['param']]
+        param_func = [get_param(p) for p in command['param']]
+
         definition += ','.join(param_func)
         definition += ');\n'
         definition += 'PyObject* return_value = Py_None;\n'
