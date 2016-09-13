@@ -1,11 +1,9 @@
 from vulkan import *
 
 # Load sdk
-print("- load sdk")
 vkLoadSdk()
 
 # Create instance
-print("- create vkapplicationinfo")
 appInfo = VkApplicationInfo(
     pApplicationName="Hello Triangle",
     applicationVersion=VK_MAKE_VERSION(1, 0, 0),
@@ -13,17 +11,14 @@ appInfo = VkApplicationInfo(
     engineVersion=VK_MAKE_VERSION(1, 0, 0),
     apiVersion=VK_API_VERSION_1_0)
 
-print("- list extensions")
 extensions = vkEnumerateInstanceExtensionProperties(None)
 extensions = [e.extensionName for e in extensions]
-print("availables: %s" % extensions)
+print("availables extensions: %s" % extensions)
 
-print("- list layers")
 layers = vkEnumerateInstanceLayerProperties(None)
 layers = [l.layerName for l in layers]
-print("availables: %s" % layers)
+print("availables layers: %s" % layers)
 
-print("- create instance info")
 createInfo = VkInstanceCreateInfo(
     flags=0,
     pApplicationInfo=appInfo,
@@ -32,8 +27,12 @@ createInfo = VkInstanceCreateInfo(
     enabledLayerCount=len(layers),
     ppEnabledLayerNames=layers)
 
-print("- create instance")
 instance = vkCreateInstance(pCreateInfo=createInfo)
 
-print("- get vkCreateDebugReportCallback function")
 vkCreateDebugReportCallback = vkGetInstanceProcAddr(instance, "vkCreateDebugReportCallbackEXT")
+
+def debugCallback(*args):
+    print(args)
+
+debug_create = VkDebugReportCallbackCreateInfoEXT(flags = VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT, pfnCallback = debugCallback)
+callback = vkCreateDebugReportCallback(instance=instance, pCreateInfo=debug_create)
