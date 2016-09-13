@@ -960,7 +960,8 @@ def add_pyvk_functions():
         add_pyvk_function(command)
 
 
-def add_pyvk_function(command, pyfunction=None, call_name=''):
+def add_pyvk_function(command, pyfunction=None, null_return='NULL',
+                      call_name=''):
     def normalize_param(command):
         if not isinstance(command['param'], list):
             command['param'] = [command['param']]
@@ -1154,9 +1155,10 @@ def add_pyvk_function(command, pyfunction=None, call_name=''):
             definition += '''
                 PyObject* return_value =
                 PyObject_Call((PyObject *)&Py{0}Type,NULL, NULL);
+                if (return_value == NULL) return {1};
                 memcpy(((Py{0}*)return_value)->base,
                        value, sizeof({0}));
-            '''.format(return_object['type'])
+            '''.format(return_object['type'], null_return)
         else:
             definition += '''
                 PyObject* return_value = PyLong_FromLong(*value);
