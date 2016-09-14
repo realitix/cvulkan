@@ -19,14 +19,6 @@ DEFINE_HEADER = '''
 
 #define VK_NO_PROTOTYPES
 
-#if defined(ANDROID) || defined (__ANDROID__)
-  #define VK_USE_PLATFORM_ANDROID_KHR 1
-#elif defined(_WIN32)
-  #define VK_USE_PLATFORM_WIN32_KHR 1
-#elif defined(__linux__)
-  #define VK_USE_PLATFORM_XLIB_KHR 1
-#endif
-
 #ifdef __unix__
 
 #define LOAD_SDK() dlopen("libvulkan.so", RTLD_NOW);
@@ -409,10 +401,15 @@ def pyobject_to_val():
         '''.format(rand_name(), rand_name())
 
     pointerfloat_convert = '''
-        float {0} = (float) PyFloat_AsDouble({{member}});
-        float *{1} = malloc(sizeof(float));
-        memcpy({1}, &{0}, sizeof(float));
-        {{member_struct}} = {1};
+        int {0} = PyList_Size({{member}});
+        int {1};
+        float* float_array = malloc(sizeof(float)*{0});
+        for ({1} = 0; {1} < {0}; {1}++) {{{{
+            float tmp = (float) PyFloat_AsDouble(
+            PyList_GetItem({{member}}, {1}));
+            float_array[{1}] = tmp;
+        }}}}
+        {{member_struct}} = float_array;
         '''.format(rand_name(), rand_name())
 
     listuint32_convert = (
@@ -566,29 +563,27 @@ def val_to_pyobject(member):
         'Display *': 'Py_INCREF(Py_None);PyObject* value = Py_None;',
     }
 
-    signatures = [s for s in get_signatures() if s.startswith('VK')]
+    signatures = [s for s in get_signatures() if s.startswith('Vk')]
 
     for signature in signatures:
         vkname = signature.split()[0]
+        is_struct = vkname in [s['@name'] for s in structs]
+        is_union = vkname in [s['@name'] for s in unions]
+        is_handle = vkname in [s for s in handles]
 
-        # pointer
-        if signature.endswith('*'):
+        if is_struct or is_union:
             pass
-            mapping[signature] = '''
-                PyObject* value = PyObject_CallObject(
-                    (PyObject *) &Py{}, NULL);
-                value->base = {{}}->base;
-            '''.format(vkname)
-        # array
-        elif signature.endswith(']'):
+        elif is_handle:
             pass
-        # base
         else:
-            mapping[signature] = '''
-                PyObject* value = PyObject_CallObject(
-                    (PyObject *) &Py{}, NULL);
-                value->base = {{}}->base;
-            '''.format(vkname)
+            if signature.endswith('*'):
+                mapping[signature] = '''
+                    PyObject* value = PyLong_FromLong(*{});
+                '''
+            else:
+                mapping[signature] = '''
+                    PyObject* value = PyLong_FromLong({});
+                '''
 
     name = get_member_type_name(member)
     value = mapping.get(name, None)
@@ -873,8 +868,8 @@ def create_module():
 
 
 def add_vulkan_function_prototypes():
-    for command in vk_all_functions:
-        name = command
+    commands = [c for c in vk_all_functions if c not in vk_extension_functions]
+    for name in commands:
         name_pfn = 'PFN_{}'.format(name)
         with check_extension(name):
             out.write('''
@@ -904,7 +899,6 @@ def add_constants():
                 numVal = int(value, 0)
                 numVal = 1 << numVal
                 value = '0x%08x' % numVal
-                #constant['@value'] = '0x{}'.format(value)
                 constant['@value'] = value
             name = constant["@name"]
             value = constant["@value"]
@@ -1153,12 +1147,10 @@ def add_pyvk_function(command, pyfunction=None, null_return='NULL',
             '''.format(return_object['type'])
         elif return_object['type'] in [s['@name'] for s in structs]:
             definition += '''
-                PyObject* return_value =
-                PyObject_Call((PyObject *)&Py{0}Type,NULL, NULL);
-                if (return_value == NULL) return {1};
-                memcpy(((Py{0}*)return_value)->base,
-                       value, sizeof({0}));
-            '''.format(return_object['type'], null_return)
+                PyObject* return_value = _PyObject_New(&Py{0}Type);
+                if (return_value == NULL) return NULL;
+                ((Py{0}*)return_value)->base = value;
+            '''.format(return_object['type'])
         else:
             definition += '''
                 PyObject* return_value = PyLong_FromLong(*value);

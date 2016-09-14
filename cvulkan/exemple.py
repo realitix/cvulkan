@@ -1,8 +1,11 @@
 from vulkan import *
+import sdl2
+
 
 #----------
 # Load sdk
 vkLoadSdk()
+
 
 
 #----------
@@ -49,8 +52,47 @@ callback = vkCreateDebugReportCallback(instance=instance, pCreateInfo=debug_crea
 # Select device
 devices = vkEnumeratePhysicalDevices(instance)
 devices_features = {device: vkGetPhysicalDeviceFeatures(device) for device in devices}
-#devices_properties = {device: vkGetPhysicalDeviceProperties(device) for device in devices}
-#print("availables devices: %s\n" % [p.deviceName for p in devices_features.values()])
+devices_properties = {device: vkGetPhysicalDeviceProperties(device) for device in devices}
+device = devices[0]
+print("availables devices: %s" % [p.deviceName for p in devices_properties.values()])
+print("selected device: %s\n" % devices_properties[device].deviceName)
+
+
+#----------
+# Select queue family
+queue_families = vkGetPhysicalDeviceQueueFamilyProperties(device)
+print("%s available queue family" % len(queue_families))
+queue_family_indice = -1;
+for i, queue_family in enumerate(queue_families):
+    if queue_family.queueCount > 0 and queue_family.queueFlags & VK_QUEUE_GRAPHICS_BIT:
+        queue_family_indice = i
+        break
+print("indice of selected queue family: %s\n" % queue_family_indice)
+
+
+#----------
+# Create logical device
+queueCreateInfo = VkDeviceQueueCreateInfo(queueFamilyIndex=queue_family_indice, queueCount = 1, pQueuePriorities=[1], flags=0)
+device_create = VkDeviceCreateInfo(
+    pQueueCreateInfos=queueCreateInfo,
+    queueCreateInfoCount=1,
+    pEnabledFeatures=devices_features[device],
+    flags=0,
+    enabledLayerCount=len(layers),
+    ppEnabledLayerNames=layers,
+    enabledExtensionCount=0,
+    ppEnabledExtensionNames=[]
+)
+
+logical_device = vkCreateDevice(physicalDevice=device, pCreateInfo=device_create)
+graphic_queue = vkGetDeviceQueue(device=logical_device, queueFamilyIndex=queue_family_indice, queueIndex=0)
+print("Logical device and graphic queue successfully created\n")
+
+
+#----------
+# Init sdl2
+if sdl2.SDL_Init(sdl2.SDL_INIT_VIDEO) != 0:
+    print(sdl2.SDL_GetError())
 
 
 #----------
