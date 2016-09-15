@@ -45,7 +45,7 @@ macros = [(d, None) for d in enabled_defines]
 print("Extension compiled for : %s" % enabled_defines)
 
 vulkanmodule = Extension('vulkan',
-                         sources=['cvulkan/vulkanmodule.c'],
+                         sources=['cvulkan/vulkanmodule2.c'],
                          define_macros=macros)
 setup(
     name="cvulkan",

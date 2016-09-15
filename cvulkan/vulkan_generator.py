@@ -65,8 +65,9 @@ CUSTOM_COMMANDS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr')
 # Members which must always be null
 NULL_MEMBERS = ('pNext', 'pAllocator')
 
-# Members which must be filled automatically
-AUTO_MEMBERS = ('sType',)
+# Used for extension enum value generation
+extBase = 1000000000
+extBlockSize = 1000
 
 vulkan_plateform = None
 vulkan_h = None
@@ -276,7 +277,10 @@ def add_pyinit():
     add_constants()
     add_object_in_init()
     add_exceptions_in_init()
-    out.write("return module;\n}\n")
+    out.write('''
+        if (!init_import_sdk()) return NULL;
+        return module;
+    }''')
 
 
 def add_pyhandles():
@@ -352,7 +356,7 @@ def get_signatures():
     return names
 
 
-def pyobject_to_val():
+def pyobject_to_val(force_array=False):
     def rand_name():
         return 'tmp' + str(random.randrange(99999999))
 
@@ -464,9 +468,22 @@ def pyobject_to_val():
         if is_struct or is_union:
             # pointer
             if signature.endswith('*'):
-                mapping[signature] = '''
-                    {member_struct} = (((Py%s*){member})->base);
-                ''' % vkname
+                if force_array:
+                    mapping[signature] = '''
+                        int {0} = PyList_Size({{member}});
+                        int {1};
+                        {2}* {2}_array = malloc(sizeof({2})*{0});
+                        for ({1} = 0; {1} < {0}; {1}++) {{{{
+                            {2}_array[{1}] =
+                            *( ( (Py{2}*) PyList_GetItem({{member}}, {1}) )
+                                ->base);
+                        }}}}
+                        {{member_struct}} = {2}_array;
+                    '''.format(rand_name(), rand_name(), vkname)
+                else:
+                    mapping[signature] = '''
+                        {member_struct} = (((Py%s*){member})->base);
+                    ''' % vkname
             # array
             elif signature.endswith(']'):
                 convert = '''
@@ -571,7 +588,20 @@ def val_to_pyobject(member):
         is_union = vkname in [s['@name'] for s in unions]
         is_handle = vkname in [s for s in handles]
 
-        if is_struct or is_union:
+        if is_struct:
+            if signature.endswith('*') or signature.endswith('[]'):
+                mapping[signature] = '''
+                    PyObject* value = _PyObject_New(&Py{0}Type);
+                    if(!value) return NULL;
+                    ((Py{0}*)value)->base = {{}};
+                '''.format(vkname)
+            else:
+                mapping[signature] = '''
+                    PyObject* value = _PyObject_New(&Py{0}Type);
+                    if(!value) return NULL;
+                    ((Py{0}*)value)->base = &({{}});
+                '''.format(vkname)
+        elif is_union:
             pass
         elif is_handle:
             pass
@@ -593,8 +623,12 @@ def val_to_pyobject(member):
 
 
 def extracts_vars(members, return_error='-1'):
+    ''' This function extract all arguments to python objects
+
+    members must be a list of member's name
+    '''
     members = [m for m in members
-               if m not in NULL_MEMBERS and m not in AUTO_MEMBERS]
+               if m not in NULL_MEMBERS]
 
     if not members:
         return ''
@@ -615,6 +649,7 @@ def extracts_vars(members, return_error='-1'):
 
     result = 'PyArg_ParseTupleAndKeywords(args, kwds, "'
     result += 'O' * len(members)
+
     result += '", kwlist'
     for member in members:
         result += ', &{}'.format(member)
@@ -645,11 +680,12 @@ def get_debug_create_init():
          PyVkDebugReportCallbackCreateInfoEXT_init(
          PyVkDebugReportCallbackCreateInfoEXT *self, PyObject *args,
          PyObject *kwds) {
+             int sType;
              int flags;
              PyObject* tmp = NULL;
-             static char *kwlist[] = {"flags","pfnCallback",NULL};
-             if(!PyArg_ParseTupleAndKeywords(args, kwds, "iO", kwlist,
-                                             &flags, &tmp))
+             static char *kwlist[] = {"sType", "flags","pfnCallback",NULL};
+             if(!PyArg_ParseTupleAndKeywords(args, kwds, "iiO", kwlist,
+                                             &sType, &flags, &tmp))
                  return -1;
 
              if (!PyCallable_Check(tmp)) {
@@ -662,8 +698,7 @@ def get_debug_create_init():
              Py_XDECREF(python_debug_callback);
              python_debug_callback = tmp;
 
-             (self->base)->sType =
-                 VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT;
+             (self->base)->sType = sType;
              (self->base)->pNext = NULL;
              (self->base)->pUserData = NULL;
              (self->base)->flags = flags;
@@ -725,11 +760,12 @@ def add_pyobject():
             '''.format(s['@name'])
 
         if s['@name'] not in return_structs:
-            m = s['member']
-            definition += extracts_vars([t['name'] for t in m])
+            members = s['member']
+
+            definition += extracts_vars([m['name'] for m in members])
             if is_union:
-                definition += add_init_check_union(m) + '\n'
-            definition += add_init_py_to_val(m) + '\n'
+                definition += add_init_check_union(members) + '\n'
+            definition += add_init_py_to_val(members) + '\n'
 
         definition += 'return 0; }'
 
@@ -755,13 +791,9 @@ def add_pyobject():
                 result += '\n(self->base)->%s = NULL;\n' % member['name']
                 continue
 
-            if member['name'] in AUTO_MEMBERS:
-                result += '\n(self->base)->%s = %s;\n' % (member['name'],
-                                                          member['@values'])
-                continue
-
             name = get_member_type_name(member)
-            val = pyobject_to_val().get(name, None)
+            force_array = True if '@len' in member else False
+            val = pyobject_to_val(force_array).get(name, None)
             if not val:
                 continue
             result += '''
@@ -880,9 +912,13 @@ def add_vulkan_function_prototypes():
 def add_constants():
     result = []
 
-    def add_result(name, value):
-        result.append('PyModule_AddIntConstant(module, "{}", {})'.format(
-            name, value))
+    def add_result(name, value, string_constant = False):
+        if not string_constant:
+            result.append('PyModule_AddIntConstant(module, "{}", {})'.format(
+                name, value))
+        else:
+            result.append('PyModule_AddStringConstant(module, "{}", {})'.format(
+                name, value))
 
     # List enums
     for enum in vk_xml['registry']['enums']:
@@ -904,6 +940,29 @@ def add_constants():
             value = constant["@value"]
             add_result(name, value)
 
+    # List extension enums
+    for extension in vk_xml['registry']['extensions']['extension']:
+        extnumber = int(extension['@number'])
+
+        if type(extension['require']['enum']) is not list:
+            extension['require']['enum'] = [extension['require']['enum']]
+
+        for enum in extension['require']['enum']:
+            name = enum['@name']
+            string_constant = False
+            if '@value' in enum:
+                value = enum['@value']
+                if value.startswith('"'):
+                    string_constant = True
+            if '@bitpos' in enum:
+                value = enum['@bitpos']
+                numVal = int(value, 0)
+                numVal = 1 << numVal
+                value = '0x%08x' % numVal
+            if '@offset' in enum:
+                value = extBase + (extnumber - 1) * extBlockSize + int(enum['@offset'])
+            add_result(name, value, string_constant)
+
     # Custom constants
     add_result('VK_API_VERSION_1_0', 'VK_API_VERSION_1_0')
 
@@ -923,24 +982,23 @@ def add_initsdk():
                          if( {0} == NULL ) {{
                              PyErr_SetString(PyExc_ImportError,
                                              "Can't load {0} in sdk");
-                             return NULL;
+                             return 0;
                          }}
                          '''
                          .format(name, name_pfn))
 
     out.write('''
-        static PyObject * load_sdk(PyObject *self, PyObject *args) {
+        static int init_import_sdk(void) {
             void* vk_sdk = LOAD_SDK();
             if (vk_sdk == NULL) {
                 PyErr_SetString(PyExc_ImportError,
                                 "Can't find vulkan sdk");
-                return NULL;
+                return 0;
             }
 
             '''+'\n'.join(functions)+'''
 
-            Py_INCREF(Py_None);
-            return Py_None;
+            return 1;
         }
     ''')
 
@@ -980,6 +1038,9 @@ def add_pyvk_function(command, pyfunction=None, null_return='NULL',
             pointer = ''
             if m.get('#text', False) or m['type'] in handles:
                 pointer = '*'
+            if 'struct' in m.get('#text', ''):
+                m['type'] = 'struct ' + m['type']
+
             result += '\n{}{} {};\n'.format(
                 m['type'], pointer, m['name'])
         result += '\n} return_struct = {};\n'
@@ -1025,7 +1086,7 @@ def add_pyvk_function(command, pyfunction=None, null_return='NULL',
     is_allocate = any([cname.startswith(a) for a in allocate_prefix])
     is_count = is_allocate and count_param is not None
 
-    if cname in allocate_exception:
+    if cname in allocate_exception or ctype == 'VkBool32':
         is_allocate = is_count = False
 
     num_param = None
@@ -1038,8 +1099,8 @@ def add_pyvk_function(command, pyfunction=None, null_return='NULL',
         static PyObject* Py%s(PyObject *self, PyObject *args,
                               PyObject *kwds) {
         ''' % (pyfunction if pyfunction else cname))
-    var_names = [p['name'] for p in command['param']][:num_param]
-    definition += extracts_vars(var_names, return_error='NULL')
+    extract_params = [p['name'] for p in command['param']][:num_param]
+    definition += extracts_vars(extract_params, return_error='NULL')
     definition += add_return_struct(command['param'][:num_param])
     definition += add_py_to_val(command['param'][:num_param])
 
@@ -1099,30 +1160,37 @@ def add_pyvk_function(command, pyfunction=None, null_return='NULL',
         definition += '''
             PyObject* return_value = PyList_New(0);
             uint32_t i;
-            for (i=0; i<count; i++) {
-            '''
+            for (i=0; i<count; i++) {{
+                {0}* value = malloc(sizeof({0}));
+                memcpy(value, values + i, sizeof({0}));
+            '''.format(return_object['type'])
 
         if return_object['type'] in handles:
             definition += '''
-                PyObject* pyreturn = PyCapsule_New(values + i*sizeof({0})
+                PyObject* pyreturn = PyCapsule_New(value
                 , "{0}", NULL);
             '''.format(return_object['type'])
         elif return_object['type'] in enums:
             definition += '''
                 PyObject* pyreturn =
-                PyLong_FromLong((long) values + i*sizeof({0}));
+                PyLong_FromLong((long) *value);
             '''.format(return_object['type'])
         else:
             definition += '''
-                PyObject* pyreturn = PyObject_Call((PyObject *)&Py{0}Type,
+                PyObject* pyreturn = _PyObject_New(&Py{0}Type);
+                if(!pyreturn) return NULL;
+                ((Py{0}*)pyreturn)->base = value;
+
+                /*PyObject* pyreturn = PyObject_Call((PyObject *)&Py{0}Type,
                                                    NULL, NULL);
                 memcpy(((Py{0}*)pyreturn)->base,
-                       values + i, sizeof({0}));
+                       values + i, sizeof({0}));*/
             '''.format(return_object['type'])
 
         definition += '''
                 PyList_Append(return_value, pyreturn);
             }
+            free(values);
         '''
 
     elif is_allocate:
@@ -1156,12 +1224,24 @@ def add_pyvk_function(command, pyfunction=None, null_return='NULL',
                 PyObject* return_value = PyLong_FromLong(*value);
                 '''
     else:
-        definition += '\n%s(' % call_name
         param_func = [get_param(p) for p in command['param']]
+        param_func = ','.join(param_func)
 
-        definition += ','.join(param_func)
+        if ctype == 'VkBool32':
+            definition += '''
+                PyObject* return_value = PyBool_FromLong(
+            '''
+
+        definition += '\n%s(' % call_name
+        definition += param_func
+
+        if ctype == 'VkBool32':
+            definition += ')'
+
         definition += ');\n'
-        definition += 'PyObject* return_value = Py_None;\n'
+
+        if ctype != 'VkBool32':
+            definition += 'PyObject* return_value = Py_None;\n'
 
     definition += '''
         return return_value; }
@@ -1362,12 +1442,6 @@ def add_pymethod():
     """Add methods saw from python
     """
     functions = []
-
-    # Add load_sdk function
-    functions.append({'name': 'vkLoadSdk',
-                      'value': 'load_sdk',
-                      'arg': 'METH_NOARGS',
-                      'doc': '"Load SDK"'})
 
     # Add getProcAddr functions
     for name in ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr'):
