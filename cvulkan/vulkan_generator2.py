@@ -85,6 +85,13 @@ model['functions'] = [{
         'to_create': False -> this value must be created(count or allocate)
     }]
 }]
+
+## Extension functions
+Extension functions are loaded dynamically with vkGetInstanceProcAddr or
+vkGetDeviceProcAddr.
+To allow this, we create a new Type for each extension.
+This types take a function pointer as argument (PyCapsule).
+We make this type callable to be treated as a function although it's a type.
 model['extension_functions'] = like model['function']
 
 

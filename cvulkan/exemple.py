@@ -45,10 +45,10 @@ vkDestroyDebugReportCallbackEXT = vkGetInstanceProcAddr(
     instance,
     "vkDestroyDebugReportCallbackEXT")
 
-
 def debugCallback(*args):
     print(args)
 
+print('re')
 debug_create = VkDebugReportCallbackCreateInfoEXT(
     sType=VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
     flags=VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT,

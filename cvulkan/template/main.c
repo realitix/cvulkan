@@ -77,6 +77,7 @@ static int init_import_sdk(void) {
 // CREATE PYTHON FUNCTIONS
 // ---------------
 {% include 'functions.c' %}
+{% include 'extension_functions.c' %}
 
 
 // ---------------

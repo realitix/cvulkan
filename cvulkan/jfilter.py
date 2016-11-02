@@ -326,7 +326,8 @@ def c_to_python(member, cname, pyname):
         '''.format(pyname=pyname, cname=cname)
     if t('float [2]') or t('float [4]'):
         return list_convert('double', 'PyFloat_FromDouble')
-    if t('uint32_t [2]') or t('uint32_t [3]') or t('uint8_t []'):
+    if t('uint32_t [2]') or t('uint32_t [3]') or t('uint8_t []') or \
+       t('int32_t [4]') or t('uint32_t [4]'):
         return list_convert('long', 'PyLong_FromLong')
     if t('float *'):
         return '''

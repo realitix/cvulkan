@@ -106,7 +106,7 @@ static PyObject* Py{{name}}(PyObject *self, PyObject *args, PyObject *kwds) {
     PyObject* pyreturn = NULL;
 
     {% for fun in model.extension_functions %}
-        {% call check_define(fun.name) %}
+        {% call check_define(fun.define) %}
             if (strcmp(arg1, "{{fun.name}}") == 0) {
                 pyreturn = PyObject_Call((PyObject *)&Py{{fun.name}}Type, call_args, NULL);
                 if (pyreturn == NULL)
