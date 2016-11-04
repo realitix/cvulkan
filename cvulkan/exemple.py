@@ -151,21 +151,9 @@ device_create = VkDeviceCreateInfo(
     enabledExtensionCount=len(extensions),
     ppEnabledExtensionNames=extensions
 )
-#device_create = VkDeviceCreateInfo(
-#    sType=VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
-#    pQueueCreateInfos=queues_create,
-#    queueCreateInfoCount=len(queues_create),
-#    pEnabledFeatures=physical_devices_features[physical_device],
-#    flags=0,
-#    enabledLayerCount=0,
-#    ppEnabledLayerNames=[],
-#    enabledExtensionCount=0,
-#    ppEnabledExtensionNames=[]
-#)
-print('before')
+
 logical_device = vkCreateDevice(physicalDevice=physical_device,
                                 pCreateInfo=device_create)
-print('OK BABY')
 graphic_queue = vkGetDeviceQueue(
     device=logical_device,
     queueFamilyIndex=queue_family_graphic_index,
@@ -182,6 +170,8 @@ print("Logical device and graphic queue successfully created\n")
 vkGetPhysicalDeviceSurfaceCapabilitiesKHR = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceCapabilitiesKHR")
 vkGetPhysicalDeviceSurfaceFormatsKHR = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfaceFormatsKHR")
 vkGetPhysicalDeviceSurfacePresentModesKHR = vkGetInstanceProcAddr(instance, "vkGetPhysicalDeviceSurfacePresentModesKHR")
+vkCreateSwapchainKHR = vkGetInstanceProcAddr(instance, 'vkCreateSwapchainKHR')
+
 surface_capabilities = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice=physical_device, surface=surface)
 surface_formats = vkGetPhysicalDeviceSurfaceFormatsKHR(physicalDevice=physical_device, surface=surface)
 surface_present_modes = vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice=physical_device, surface=surface)
@@ -209,13 +199,13 @@ def get_swap_extent(capabilities):
     if capabilities.currentExtent.width != uint32_max:
         return capabilities.currentExtent
 
-    actualExtent = VkExtent2D(width=WIDTH, height=HEIGHT);
-    actualExtent.width = max(
+    width = max(
         capabilities.minImageExtent.width,
-        min(capabilities.maxImageExtent.width, actualExtent.width))
-    actualExtent.height = max(
+        min(capabilities.maxImageExtent.width, WIDTH))
+    height = max(
         capabilities.minImageExtent.height,
-        min(capabilities.maxImageExtent.height, actualExtent.height))
+        min(capabilities.maxImageExtent.height, HEIGHT))
+    actualExtent = VkExtent2D(width=width, height=height);
     return actualExtent
 
 
@@ -226,7 +216,7 @@ imageCount = surface_capabilities.minImageCount + 1;
 if surface_capabilities.maxImageCount > 0 and imageCount > surface_capabilities.maxImageCount:
     imageCount = surface_capabilities.maxImageCount
 
-print('selected format: %s' % selected_surface_format.format)
+print('selected format: %s' % surface_format.format)
 print('%s available swapchain present modes' % len(surface_present_modes))
 
 
@@ -241,6 +231,7 @@ if queue_family_graphic_index != queue_family_present_index:
 
 swapchain_create = VkSwapchainCreateInfoKHR(
     sType=VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR,
+    flags=0,
     surface=surface,
     minImageCount=imageCount,
     imageFormat=surface_format.format,
@@ -254,9 +245,10 @@ swapchain_create = VkSwapchainCreateInfoKHR(
     compositeAlpha=VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR,
     presentMode=present_mode,
     clipped=VK_TRUE,
-    oldSwapchain=VK_NULL_HANDLE)
+    oldSwapchain=None,
+    preTransform=surface_capabilities.currentTransform)
 
-swapchain = vkCreateSwapchainKHR(device, swapchain_create)
+swapchain = vkCreateSwapchainKHR(logical_device, swapchain_create)
 
 # ----------
 # Clean everything

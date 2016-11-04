@@ -124,7 +124,10 @@ def python_to_c(member, pyname, cname, return_value='NULL',
         '''
         return '''
         {ctype}* {cname} = NULL;
-        {{
+        if ({pyname} == Py_None) {{
+            {cname} = VK_NULL_HANDLE;
+        }}
+        else {{
             int size = PyList_Size({pyname});
             {cname} = malloc(sizeof({ctype}) * size);
             int i;
@@ -193,7 +196,7 @@ def python_to_c(member, pyname, cname, return_value='NULL',
     if t('float [2]') or t('float [4]') or t('float *'):
         return list_generic('float', 'PyFloat_AsDouble')
     if t('uint32_t [2]') or t('uint32_t [3]') or \
-       t('uint32_t [4]') or t('uint32_t const *'):
+       t('uint32_t [4]') or t('uint32_t *'):
         return list_generic('uint32_t', 'PyLong_AsLong')
     if t('int32_t [4]'):
         return list_generic('int32_t', 'PyLong_AsLong')
@@ -250,7 +253,7 @@ def python_to_c(member, pyname, cname, return_value='NULL',
             inv_deference = '*' if not deference else ''
             return '''
             {vkname}{inv_deference} {cname} = NULL;
-            {{
+            if ({pyname} != Py_None)  {{
                 {vkname}* handle_pointer = PyCapsule_GetPointer(
                     {pyname}, "{vkname}");
                 {cname} = {deference}handle_pointer;

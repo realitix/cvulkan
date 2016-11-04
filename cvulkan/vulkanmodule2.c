@@ -4303,93 +4303,93 @@ typedef struct VkValidationFlagsEXT {
 // ---------------
 static PyObject *VulkanError;
 
-    static PyObject *VkErrorOutOfHostMemory;
-
-    static PyObject *VkEventSet;
-
     static PyObject *VkErrorExtensionNotPresent;
 
-    static PyObject *VkErrorOutOfDeviceMemory;
-
-    static PyObject *VkIncomplete;
+    static PyObject *VkErrorMemoryMapFailed;
 
     static PyObject *VkEventReset;
 
-    static PyObject *VkErrorInitializationFailed;
-
-    static PyObject *VkErrorFormatNotSupported;
-
-    static PyObject *VkErrorDeviceLost;
-
     static PyObject *VkErrorIncompatibleDriver;
-
-    static PyObject *VkErrorFragmentedPool;
-
-    static PyObject *VkTimeout;
 
     static PyObject *VkNotReady;
 
-    static PyObject *VkErrorTooManyObjects;
+    static PyObject *VkEventSet;
+
+    static PyObject *VkErrorFormatNotSupported;
 
     static PyObject *VkErrorFeatureNotPresent;
 
+    static PyObject *VkErrorInitializationFailed;
+
+    static PyObject *VkErrorFragmentedPool;
+
+    static PyObject *VkErrorOutOfDeviceMemory;
+
+    static PyObject *VkErrorTooManyObjects;
+
+    static PyObject *VkErrorOutOfHostMemory;
+
+    static PyObject *VkIncomplete;
+
     static PyObject *VkErrorLayerNotPresent;
 
-    static PyObject *VkErrorMemoryMapFailed;
+    static PyObject *VkTimeout;
+
+    static PyObject *VkErrorDeviceLost;
 
 
 int raise(int value) {
     switch(value) {
         
-            case -1: PyErr_SetString(VkErrorOutOfHostMemory, "");
-                return 1;
-        
-            case 3: PyErr_SetString(VkEventSet, "");
-                return 1;
-        
             case -7: PyErr_SetString(VkErrorExtensionNotPresent, "");
                 return 1;
         
-            case -2: PyErr_SetString(VkErrorOutOfDeviceMemory, "");
-                return 1;
-        
-            case 5: PyErr_SetString(VkIncomplete, "");
+            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
                 return 1;
         
             case 4: PyErr_SetString(VkEventReset, "");
                 return 1;
         
-            case -3: PyErr_SetString(VkErrorInitializationFailed, "");
-                return 1;
-        
-            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
-                return 1;
-        
-            case -4: PyErr_SetString(VkErrorDeviceLost, "");
-                return 1;
-        
             case -9: PyErr_SetString(VkErrorIncompatibleDriver, "");
-                return 1;
-        
-            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
-                return 1;
-        
-            case 2: PyErr_SetString(VkTimeout, "");
                 return 1;
         
             case 1: PyErr_SetString(VkNotReady, "");
                 return 1;
         
-            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
+            case 3: PyErr_SetString(VkEventSet, "");
+                return 1;
+        
+            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
                 return 1;
         
             case -8: PyErr_SetString(VkErrorFeatureNotPresent, "");
                 return 1;
         
+            case -3: PyErr_SetString(VkErrorInitializationFailed, "");
+                return 1;
+        
+            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
+                return 1;
+        
+            case -2: PyErr_SetString(VkErrorOutOfDeviceMemory, "");
+                return 1;
+        
+            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
+                return 1;
+        
+            case -1: PyErr_SetString(VkErrorOutOfHostMemory, "");
+                return 1;
+        
+            case 5: PyErr_SetString(VkIncomplete, "");
+                return 1;
+        
             case -6: PyErr_SetString(VkErrorLayerNotPresent, "");
                 return 1;
         
-            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
+            case 2: PyErr_SetString(VkTimeout, "");
+                return 1;
+        
+            case -4: PyErr_SetString(VkErrorDeviceLost, "");
                 return 1;
         
        }
@@ -9823,7 +9823,10 @@ PyObject* pQueuePriorities = NULL;
                 
                     
         float* c_pQueuePriorities = NULL;
-        {
+        if (pQueuePriorities == Py_None) {
+            c_pQueuePriorities = VK_NULL_HANDLE;
+        }
+        else {
             int size = PyList_Size(pQueuePriorities);
             c_pQueuePriorities = malloc(sizeof(float) * size);
             int i;
@@ -11588,7 +11591,7 @@ PyObject* size = NULL;
                 
                     
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -11982,7 +11985,7 @@ PyObject* range = NULL;
                 
                     
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -12122,7 +12125,7 @@ PyObject* imageLayout = NULL;
                 
                     
             VkSampler c_sampler = NULL;
-            {
+            if (sampler != Py_None)  {
                 VkSampler* handle_pointer = PyCapsule_GetPointer(
                     sampler, "VkSampler");
                 c_sampler = *handle_pointer;
@@ -12136,7 +12139,7 @@ PyObject* imageLayout = NULL;
                 
                     
             VkImageView c_imageView = NULL;
-            {
+            if (imageView != Py_None)  {
                 VkImageView* handle_pointer = PyCapsule_GetPointer(
                     imageView, "VkImageView");
                 c_imageView = *handle_pointer;
@@ -12286,7 +12289,7 @@ PyObject* pTexelBufferView = NULL;
                 
                     
             VkDescriptorSet c_dstSet = NULL;
-            {
+            if (dstSet != Py_None)  {
                 VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
                     dstSet, "VkDescriptorSet");
                 c_dstSet = *handle_pointer;
@@ -12372,7 +12375,7 @@ PyObject* pTexelBufferView = NULL;
                 
                     
             VkBufferView* c_pTexelBufferView = NULL;
-            {
+            if (pTexelBufferView != Py_None)  {
                 VkBufferView* handle_pointer = PyCapsule_GetPointer(
                     pTexelBufferView, "VkBufferView");
                 c_pTexelBufferView = handle_pointer;
@@ -12610,7 +12613,7 @@ PyObject* descriptorCount = NULL;
                 
                     
             VkDescriptorSet c_srcSet = NULL;
-            {
+            if (srcSet != Py_None)  {
                 VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
                     srcSet, "VkDescriptorSet");
                 c_srcSet = *handle_pointer;
@@ -12642,7 +12645,7 @@ PyObject* descriptorCount = NULL;
                 
                     
             VkDescriptorSet c_dstSet = NULL;
-            {
+            if (dstSet != Py_None)  {
                 VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
                     dstSet, "VkDescriptorSet");
                 c_dstSet = *handle_pointer;
@@ -12931,12 +12934,20 @@ PyObject* pQueueFamilyIndices = NULL;
                 
                 
                     
-                    uint32_t* c_pQueueFamilyIndices = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
-                        memcpy(c_pQueueFamilyIndices, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pQueueFamilyIndices = NULL;
+        if (pQueueFamilyIndices == Py_None) {
+            c_pQueueFamilyIndices = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pQueueFamilyIndices);
+            c_pQueueFamilyIndices = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pQueueFamilyIndices, i));
+                memcpy(c_pQueueFamilyIndices + i, &r, sizeof(uint32_t));
+            }
+        }
                     (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
                 
             
@@ -13150,7 +13161,7 @@ PyObject* range = NULL;
                 
                     
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -14051,7 +14062,7 @@ PyObject* size = NULL;
                 
                     
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -14346,7 +14357,7 @@ PyObject* subresourceRange = NULL;
                 
                     
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -14697,12 +14708,20 @@ PyObject* initialLayout = NULL;
                 
                 
                     
-                    uint32_t* c_pQueueFamilyIndices = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
-                        memcpy(c_pQueueFamilyIndices, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pQueueFamilyIndices = NULL;
+        if (pQueueFamilyIndices == Py_None) {
+            c_pQueueFamilyIndices = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pQueueFamilyIndices);
+            c_pQueueFamilyIndices = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pQueueFamilyIndices, i));
+                memcpy(c_pQueueFamilyIndices + i, &r, sizeof(uint32_t));
+            }
+        }
                     (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
                 
             
@@ -15145,7 +15164,7 @@ PyObject* subresourceRange = NULL;
                 
                     
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -15533,7 +15552,7 @@ PyObject* flags = NULL;
                 
                     
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -15729,7 +15748,7 @@ PyObject* flags = NULL;
                 
                     
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -15917,7 +15936,7 @@ PyObject* pBinds = NULL;
                 
                     
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -16069,7 +16088,7 @@ PyObject* pBinds = NULL;
                 
                     
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -16221,7 +16240,7 @@ PyObject* pBinds = NULL;
                 
                     
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -16406,7 +16425,7 @@ PyObject* pSignalSemaphores = NULL;
                 
                     
             VkSemaphore* c_pWaitSemaphores = NULL;
-            {
+            if (pWaitSemaphores != Py_None)  {
                 VkSemaphore* handle_pointer = PyCapsule_GetPointer(
                     pWaitSemaphores, "VkSemaphore");
                 c_pWaitSemaphores = handle_pointer;
@@ -16510,7 +16529,7 @@ PyObject* pSignalSemaphores = NULL;
                 
                     
             VkSemaphore* c_pSignalSemaphores = NULL;
-            {
+            if (pSignalSemaphores != Py_None)  {
                 VkSemaphore* handle_pointer = PyCapsule_GetPointer(
                     pSignalSemaphores, "VkSemaphore");
                 c_pSignalSemaphores = handle_pointer;
@@ -17611,12 +17630,20 @@ PyObject* pCode = NULL;
                 
                 
                     
-                    uint32_t* c_pCode = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pCode);
-                        memcpy(c_pCode, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pCode = NULL;
+        if (pCode == Py_None) {
+            c_pCode = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pCode);
+            c_pCode = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pCode, i));
+                memcpy(c_pCode + i, &r, sizeof(uint32_t));
+            }
+        }
                     (self->base)->pCode = c_pCode;
                 
             
@@ -17801,7 +17828,7 @@ PyObject* pImmutableSamplers = NULL;
                 
                     
             VkSampler* c_pImmutableSamplers = NULL;
-            {
+            if (pImmutableSamplers != Py_None)  {
                 VkSampler* handle_pointer = PyCapsule_GetPointer(
                     pImmutableSamplers, "VkSampler");
                 c_pImmutableSamplers = handle_pointer;
@@ -18492,7 +18519,7 @@ PyObject* pSetLayouts = NULL;
                 
                     
             VkDescriptorPool c_descriptorPool = NULL;
-            {
+            if (descriptorPool != Py_None)  {
                 VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
                     descriptorPool, "VkDescriptorPool");
                 c_descriptorPool = *handle_pointer;
@@ -18515,7 +18542,7 @@ PyObject* pSetLayouts = NULL;
                 
                     
             VkDescriptorSetLayout* c_pSetLayouts = NULL;
-            {
+            if (pSetLayouts != Py_None)  {
                 VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
                     pSetLayouts, "VkDescriptorSetLayout");
                 c_pSetLayouts = handle_pointer;
@@ -19008,7 +19035,7 @@ PyObject* pSpecializationInfo = NULL;
                 
                     
             VkShaderModule c_module = NULL;
-            {
+            if (module != Py_None)  {
                 VkShaderModule* handle_pointer = PyCapsule_GetPointer(
                     module, "VkShaderModule");
                 c_module = *handle_pointer;
@@ -19251,7 +19278,7 @@ PyObject* basePipelineIndex = NULL;
                 
                     
             VkPipelineLayout c_layout = NULL;
-            {
+            if (layout != Py_None)  {
                 VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
                     layout, "VkPipelineLayout");
                 c_layout = *handle_pointer;
@@ -19265,7 +19292,7 @@ PyObject* basePipelineIndex = NULL;
                 
                     
             VkPipeline c_basePipelineHandle = NULL;
-            {
+            if (basePipelineHandle != Py_None)  {
                 VkPipeline* handle_pointer = PyCapsule_GetPointer(
                     basePipelineHandle, "VkPipeline");
                 c_basePipelineHandle = *handle_pointer;
@@ -21564,7 +21591,10 @@ PyObject* blendConstants = NULL;
                 
                     
         float* c_blendConstants = NULL;
-        {
+        if (blendConstants == Py_None) {
+            c_blendConstants = VK_NULL_HANDLE;
+        }
+        else {
             int size = PyList_Size(blendConstants);
             c_blendConstants = malloc(sizeof(float) * size);
             int i;
@@ -22683,7 +22713,7 @@ PyObject* basePipelineIndex = NULL;
                 
                     
             VkPipelineLayout c_layout = NULL;
-            {
+            if (layout != Py_None)  {
                 VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
                     layout, "VkPipelineLayout");
                 c_layout = *handle_pointer;
@@ -22697,7 +22727,7 @@ PyObject* basePipelineIndex = NULL;
                 
                     
             VkRenderPass c_renderPass = NULL;
-            {
+            if (renderPass != Py_None)  {
                 VkRenderPass* handle_pointer = PyCapsule_GetPointer(
                     renderPass, "VkRenderPass");
                 c_renderPass = *handle_pointer;
@@ -22720,7 +22750,7 @@ PyObject* basePipelineIndex = NULL;
                 
                     
             VkPipeline c_basePipelineHandle = NULL;
-            {
+            if (basePipelineHandle != Py_None)  {
                 VkPipeline* handle_pointer = PyCapsule_GetPointer(
                     basePipelineHandle, "VkPipeline");
                 c_basePipelineHandle = *handle_pointer;
@@ -23440,7 +23470,7 @@ PyObject* pPushConstantRanges = NULL;
                 
                     
             VkDescriptorSetLayout* c_pSetLayouts = NULL;
-            {
+            if (pSetLayouts != Py_None)  {
                 VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
                     pSetLayouts, "VkDescriptorSetLayout");
                 c_pSetLayouts = handle_pointer;
@@ -24302,7 +24332,7 @@ PyObject* commandBufferCount = NULL;
                 
                     
             VkCommandPool c_commandPool = NULL;
-            {
+            if (commandPool != Py_None)  {
                 VkCommandPool* handle_pointer = PyCapsule_GetPointer(
                     commandPool, "VkCommandPool");
                 c_commandPool = *handle_pointer;
@@ -24489,7 +24519,7 @@ PyObject* pipelineStatistics = NULL;
                 
                     
             VkRenderPass c_renderPass = NULL;
-            {
+            if (renderPass != Py_None)  {
                 VkRenderPass* handle_pointer = PyCapsule_GetPointer(
                     renderPass, "VkRenderPass");
                 c_renderPass = *handle_pointer;
@@ -24512,7 +24542,7 @@ PyObject* pipelineStatistics = NULL;
                 
                     
             VkFramebuffer c_framebuffer = NULL;
-            {
+            if (framebuffer != Py_None)  {
                 VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
                     framebuffer, "VkFramebuffer");
                 c_framebuffer = *handle_pointer;
@@ -24905,7 +24935,7 @@ PyObject* pClearValues = NULL;
                 
                     
             VkRenderPass c_renderPass = NULL;
-            {
+            if (renderPass != Py_None)  {
                 VkRenderPass* handle_pointer = PyCapsule_GetPointer(
                     renderPass, "VkRenderPass");
                 c_renderPass = *handle_pointer;
@@ -24919,7 +24949,7 @@ PyObject* pClearValues = NULL;
                 
                     
             VkFramebuffer c_framebuffer = NULL;
-            {
+            if (framebuffer != Py_None)  {
                 VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
                     framebuffer, "VkFramebuffer");
                 c_framebuffer = *handle_pointer;
@@ -25894,12 +25924,20 @@ PyObject* pPreserveAttachments = NULL;
                 
                 
                     
-                    uint32_t* c_pPreserveAttachments = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pPreserveAttachments);
-                        memcpy(c_pPreserveAttachments, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pPreserveAttachments = NULL;
+        if (pPreserveAttachments == Py_None) {
+            c_pPreserveAttachments = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pPreserveAttachments);
+            c_pPreserveAttachments = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pPreserveAttachments, i));
+                memcpy(c_pPreserveAttachments + i, &r, sizeof(uint32_t));
+            }
+        }
                     (self->base)->pPreserveAttachments = c_pPreserveAttachments;
                 
             
@@ -30238,7 +30276,7 @@ PyObject* layers = NULL;
                 
                     
             VkRenderPass c_renderPass = NULL;
-            {
+            if (renderPass != Py_None)  {
                 VkRenderPass* handle_pointer = PyCapsule_GetPointer(
                     renderPass, "VkRenderPass");
                 c_renderPass = *handle_pointer;
@@ -30261,7 +30299,7 @@ PyObject* layers = NULL;
                 
                     
             VkImageView* c_pAttachments = NULL;
-            {
+            if (pAttachments != Py_None)  {
                 VkImageView* handle_pointer = PyCapsule_GetPointer(
                     pAttachments, "VkImageView");
                 c_pAttachments = handle_pointer;
@@ -30999,7 +31037,7 @@ PyObject* pSignalSemaphores = NULL;
                 
                     
             VkSemaphore* c_pWaitSemaphores = NULL;
-            {
+            if (pWaitSemaphores != Py_None)  {
                 VkSemaphore* handle_pointer = PyCapsule_GetPointer(
                     pWaitSemaphores, "VkSemaphore");
                 c_pWaitSemaphores = handle_pointer;
@@ -31035,7 +31073,7 @@ PyObject* pSignalSemaphores = NULL;
                 
                     
             VkCommandBuffer* c_pCommandBuffers = NULL;
-            {
+            if (pCommandBuffers != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     pCommandBuffers, "VkCommandBuffer");
                 c_pCommandBuffers = handle_pointer;
@@ -31058,7 +31096,7 @@ PyObject* pSignalSemaphores = NULL;
                 
                     
             VkSemaphore* c_pSignalSemaphores = NULL;
-            {
+            if (pSignalSemaphores != Py_None)  {
                 VkSemaphore* handle_pointer = PyCapsule_GetPointer(
                     pSignalSemaphores, "VkSemaphore");
                 c_pSignalSemaphores = handle_pointer;
@@ -31257,7 +31295,7 @@ PyObject* persistentContent = NULL;
                 
                     
             VkDisplayKHR c_display = NULL;
-            {
+            if (display != Py_None)  {
                 VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
                     display, "VkDisplayKHR");
                 c_display = *handle_pointer;
@@ -31500,7 +31538,7 @@ PyObject* currentStackIndex = NULL;
                 
                     
             VkDisplayKHR c_currentDisplay = NULL;
-            {
+            if (currentDisplay != Py_None)  {
                 VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
                     currentDisplay, "VkDisplayKHR");
                 c_currentDisplay = *handle_pointer;
@@ -31735,7 +31773,7 @@ PyObject* parameters = NULL;
                 
                     
             VkDisplayModeKHR c_displayMode = NULL;
-            {
+            if (displayMode != Py_None)  {
                 VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
                     displayMode, "VkDisplayModeKHR");
                 c_displayMode = *handle_pointer;
@@ -32349,7 +32387,7 @@ PyObject* imageExtent = NULL;
                 
                     
             VkDisplayModeKHR c_displayMode = NULL;
-            {
+            if (displayMode != Py_None)  {
                 VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
                     displayMode, "VkDisplayModeKHR");
                 c_displayMode = *handle_pointer;
@@ -34358,7 +34396,7 @@ PyObject* oldSwapchain = NULL;
                 
                     
             VkSurfaceKHR c_surface = NULL;
-            {
+            if (surface != Py_None)  {
                 VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
                     surface, "VkSurfaceKHR");
                 c_surface = *handle_pointer;
@@ -34443,12 +34481,20 @@ PyObject* oldSwapchain = NULL;
                 
                 
                     
-                    uint32_t* c_pQueueFamilyIndices = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pQueueFamilyIndices);
-                        memcpy(c_pQueueFamilyIndices, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pQueueFamilyIndices = NULL;
+        if (pQueueFamilyIndices == Py_None) {
+            c_pQueueFamilyIndices = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pQueueFamilyIndices);
+            c_pQueueFamilyIndices = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pQueueFamilyIndices, i));
+                memcpy(c_pQueueFamilyIndices + i, &r, sizeof(uint32_t));
+            }
+        }
                     (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
                 
             
@@ -34493,7 +34539,7 @@ PyObject* oldSwapchain = NULL;
                 
                     
             VkSwapchainKHR c_oldSwapchain = NULL;
-            {
+            if (oldSwapchain != Py_None)  {
                 VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
                     oldSwapchain, "VkSwapchainKHR");
                 c_oldSwapchain = *handle_pointer;
@@ -34840,7 +34886,7 @@ PyObject* pResults = NULL;
                 
                     
             VkSemaphore* c_pWaitSemaphores = NULL;
-            {
+            if (pWaitSemaphores != Py_None)  {
                 VkSemaphore* handle_pointer = PyCapsule_GetPointer(
                     pWaitSemaphores, "VkSemaphore");
                 c_pWaitSemaphores = handle_pointer;
@@ -34863,7 +34909,7 @@ PyObject* pResults = NULL;
                 
                     
             VkSwapchainKHR* c_pSwapchains = NULL;
-            {
+            if (pSwapchains != Py_None)  {
                 VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
                     pSwapchains, "VkSwapchainKHR");
                 c_pSwapchains = handle_pointer;
@@ -34876,12 +34922,20 @@ PyObject* pResults = NULL;
                 
                 
                     
-                    uint32_t* c_pImageIndices = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pImageIndices);
-                        memcpy(c_pImageIndices, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pImageIndices = NULL;
+        if (pImageIndices == Py_None) {
+            c_pImageIndices = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pImageIndices);
+            c_pImageIndices = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pImageIndices, i));
+                memcpy(c_pImageIndices + i, &r, sizeof(uint32_t));
+            }
+        }
                     (self->base)->pImageIndices = c_pImageIndices;
                 
             
@@ -35827,7 +35881,10 @@ PyObject* color = NULL;
                 
                     
         float* c_color = NULL;
-        {
+        if (color == Py_None) {
+            c_color = VK_NULL_HANDLE;
+        }
+        else {
             int size = PyList_Size(color);
             c_color = malloc(sizeof(float) * size);
             int i;
@@ -36266,7 +36323,7 @@ PyObject* buffer = NULL;
                 
                     
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -36280,7 +36337,7 @@ PyObject* buffer = NULL;
                 
                     
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -37201,7 +37258,7 @@ PyObject* pReleaseKeys = NULL;
                 
                     
             VkDeviceMemory* c_pAcquireSyncs = NULL;
-            {
+            if (pAcquireSyncs != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     pAcquireSyncs, "VkDeviceMemory");
                 c_pAcquireSyncs = handle_pointer;
@@ -37227,12 +37284,20 @@ PyObject* pReleaseKeys = NULL;
                 
                 
                     
-                    uint32_t* c_pAcquireTimeoutMilliseconds = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pAcquireTimeoutMilliseconds);
-                        memcpy(c_pAcquireTimeoutMilliseconds, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pAcquireTimeoutMilliseconds = NULL;
+        if (pAcquireTimeoutMilliseconds == Py_None) {
+            c_pAcquireTimeoutMilliseconds = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pAcquireTimeoutMilliseconds);
+            c_pAcquireTimeoutMilliseconds = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pAcquireTimeoutMilliseconds, i));
+                memcpy(c_pAcquireTimeoutMilliseconds + i, &r, sizeof(uint32_t));
+            }
+        }
                     (self->base)->pAcquireTimeoutMilliseconds = c_pAcquireTimeoutMilliseconds;
                 
             
@@ -37250,7 +37315,7 @@ PyObject* pReleaseKeys = NULL;
                 
                     
             VkDeviceMemory* c_pReleaseSyncs = NULL;
-            {
+            if (pReleaseSyncs != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     pReleaseSyncs, "VkDeviceMemory");
                 c_pReleaseSyncs = handle_pointer;
@@ -37461,7 +37526,10 @@ PyObject* uint32 = NULL;
                 
                     
         float* c_float32 = NULL;
-        {
+        if (float32 == Py_None) {
+            c_float32 = VK_NULL_HANDLE;
+        }
+        else {
             int size = PyList_Size(float32);
             c_float32 = malloc(sizeof(float) * size);
             int i;
@@ -37481,7 +37549,10 @@ PyObject* uint32 = NULL;
                 
                     
         int32_t* c_int32 = NULL;
-        {
+        if (int32 == Py_None) {
+            c_int32 = VK_NULL_HANDLE;
+        }
+        else {
             int size = PyList_Size(int32);
             c_int32 = malloc(sizeof(int32_t) * size);
             int i;
@@ -37501,7 +37572,10 @@ PyObject* uint32 = NULL;
                 
                     
         uint32_t* c_uint32 = NULL;
-        {
+        if (uint32 == Py_None) {
+            c_uint32 = VK_NULL_HANDLE;
+        }
+        else {
             int size = PyList_Size(uint32);
             c_uint32 = malloc(sizeof(uint32_t) * size);
             int i;
@@ -40049,7 +40123,7 @@ void init_pytype_objects(void) {
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -40099,7 +40173,7 @@ void init_pytype_objects(void) {
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -40174,7 +40248,7 @@ void init_pytype_objects(void) {
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40231,7 +40305,7 @@ void init_pytype_objects(void) {
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40307,7 +40381,7 @@ void init_pytype_objects(void) {
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40364,7 +40438,7 @@ void init_pytype_objects(void) {
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40422,7 +40496,7 @@ PyObject* format = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40488,7 +40562,7 @@ PyObject* flags = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40567,7 +40641,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40628,7 +40702,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -40826,7 +40900,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40905,7 +40979,7 @@ PyObject* pLayerName = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -40999,7 +41073,7 @@ PyObject* queueIndex = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41064,7 +41138,7 @@ PyObject* fence = NULL;
     
         
             VkQueue c_queue = NULL;
-            {
+            if (queue != Py_None)  {
                 VkQueue* handle_pointer = PyCapsule_GetPointer(
                     queue, "VkQueue");
                 c_queue = *handle_pointer;
@@ -41081,7 +41155,7 @@ PyObject* fence = NULL;
     
         
             VkFence c_fence = NULL;
-            {
+            if (fence != Py_None)  {
                 VkFence* handle_pointer = PyCapsule_GetPointer(
                     fence, "VkFence");
                 c_fence = *handle_pointer;
@@ -41129,7 +41203,7 @@ PyObject* fence = NULL;
     
         
             VkQueue c_queue = NULL;
-            {
+            if (queue != Py_None)  {
                 VkQueue* handle_pointer = PyCapsule_GetPointer(
                     queue, "VkQueue");
                 c_queue = *handle_pointer;
@@ -41177,7 +41251,7 @@ PyObject* fence = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41226,7 +41300,7 @@ PyObject* pAllocateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41288,7 +41362,7 @@ PyObject* memory = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41297,7 +41371,7 @@ PyObject* memory = NULL;
     
         
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -41348,7 +41422,7 @@ PyObject* memory = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41357,7 +41431,7 @@ PyObject* memory = NULL;
     
         
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -41407,7 +41481,7 @@ PyObject* pMemoryRanges = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41465,7 +41539,7 @@ PyObject* pMemoryRanges = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41522,7 +41596,7 @@ PyObject* memory = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41531,7 +41605,7 @@ PyObject* memory = NULL;
     
         
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -41586,7 +41660,7 @@ PyObject* buffer = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41595,7 +41669,7 @@ PyObject* buffer = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -41655,7 +41729,7 @@ PyObject* memoryOffset = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41664,7 +41738,7 @@ PyObject* memoryOffset = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -41673,7 +41747,7 @@ PyObject* memoryOffset = NULL;
     
         
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -41726,7 +41800,7 @@ PyObject* image = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41735,7 +41809,7 @@ PyObject* image = NULL;
     
         
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -41795,7 +41869,7 @@ PyObject* memoryOffset = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41804,7 +41878,7 @@ PyObject* memoryOffset = NULL;
     
         
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -41813,7 +41887,7 @@ PyObject* memoryOffset = NULL;
     
         
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -41866,7 +41940,7 @@ PyObject* image = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -41875,7 +41949,7 @@ PyObject* image = NULL;
     
         
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -41956,7 +42030,7 @@ PyObject* tiling = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -42055,7 +42129,7 @@ PyObject* fence = NULL;
     
         
             VkQueue c_queue = NULL;
-            {
+            if (queue != Py_None)  {
                 VkQueue* handle_pointer = PyCapsule_GetPointer(
                     queue, "VkQueue");
                 c_queue = *handle_pointer;
@@ -42072,7 +42146,7 @@ PyObject* fence = NULL;
     
         
             VkFence c_fence = NULL;
-            {
+            if (fence != Py_None)  {
                 VkFence* handle_pointer = PyCapsule_GetPointer(
                     fence, "VkFence");
                 c_fence = *handle_pointer;
@@ -42121,7 +42195,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42183,7 +42257,7 @@ PyObject* fence = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42192,7 +42266,7 @@ PyObject* fence = NULL;
     
         
             VkFence c_fence = NULL;
-            {
+            if (fence != Py_None)  {
                 VkFence* handle_pointer = PyCapsule_GetPointer(
                     fence, "VkFence");
                 c_fence = *handle_pointer;
@@ -42244,7 +42318,7 @@ PyObject* pFences = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42257,7 +42331,7 @@ PyObject* pFences = NULL;
     
         
             VkFence* c_pFences = NULL;
-            {
+            if (pFences != Py_None)  {
                 VkFence* handle_pointer = PyCapsule_GetPointer(
                     pFences, "VkFence");
                 c_pFences = handle_pointer;
@@ -42306,7 +42380,7 @@ PyObject* fence = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42315,7 +42389,7 @@ PyObject* fence = NULL;
     
         
             VkFence c_fence = NULL;
-            {
+            if (fence != Py_None)  {
                 VkFence* handle_pointer = PyCapsule_GetPointer(
                     fence, "VkFence");
                 c_fence = *handle_pointer;
@@ -42367,7 +42441,7 @@ PyObject* timeout = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42380,7 +42454,7 @@ PyObject* timeout = NULL;
     
         
             VkFence* c_pFences = NULL;
-            {
+            if (pFences != Py_None)  {
                 VkFence* handle_pointer = PyCapsule_GetPointer(
                     pFences, "VkFence");
                 c_pFences = handle_pointer;
@@ -42437,7 +42511,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42499,7 +42573,7 @@ PyObject* semaphore = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42508,7 +42582,7 @@ PyObject* semaphore = NULL;
     
         
             VkSemaphore c_semaphore = NULL;
-            {
+            if (semaphore != Py_None)  {
                 VkSemaphore* handle_pointer = PyCapsule_GetPointer(
                     semaphore, "VkSemaphore");
                 c_semaphore = *handle_pointer;
@@ -42559,7 +42633,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42621,7 +42695,7 @@ PyObject* event = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42630,7 +42704,7 @@ PyObject* event = NULL;
     
         
             VkEvent c_event = NULL;
-            {
+            if (event != Py_None)  {
                 VkEvent* handle_pointer = PyCapsule_GetPointer(
                     event, "VkEvent");
                 c_event = *handle_pointer;
@@ -42681,7 +42755,7 @@ PyObject* event = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42690,7 +42764,7 @@ PyObject* event = NULL;
     
         
             VkEvent c_event = NULL;
-            {
+            if (event != Py_None)  {
                 VkEvent* handle_pointer = PyCapsule_GetPointer(
                     event, "VkEvent");
                 c_event = *handle_pointer;
@@ -42739,7 +42813,7 @@ PyObject* event = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42748,7 +42822,7 @@ PyObject* event = NULL;
     
         
             VkEvent c_event = NULL;
-            {
+            if (event != Py_None)  {
                 VkEvent* handle_pointer = PyCapsule_GetPointer(
                     event, "VkEvent");
                 c_event = *handle_pointer;
@@ -42797,7 +42871,7 @@ PyObject* event = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42806,7 +42880,7 @@ PyObject* event = NULL;
     
         
             VkEvent c_event = NULL;
-            {
+            if (event != Py_None)  {
                 VkEvent* handle_pointer = PyCapsule_GetPointer(
                     event, "VkEvent");
                 c_event = *handle_pointer;
@@ -42855,7 +42929,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42917,7 +42991,7 @@ PyObject* queryPool = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42926,7 +43000,7 @@ PyObject* queryPool = NULL;
     
         
             VkQueryPool c_queryPool = NULL;
-            {
+            if (queryPool != Py_None)  {
                 VkQueryPool* handle_pointer = PyCapsule_GetPointer(
                     queryPool, "VkQueryPool");
                 c_queryPool = *handle_pointer;
@@ -42983,7 +43057,7 @@ PyObject* flags = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -42992,7 +43066,7 @@ PyObject* flags = NULL;
     
         
             VkQueryPool c_queryPool = NULL;
-            {
+            if (queryPool != Py_None)  {
                 VkQueryPool* handle_pointer = PyCapsule_GetPointer(
                     queryPool, "VkQueryPool");
                 c_queryPool = *handle_pointer;
@@ -43063,7 +43137,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43125,7 +43199,7 @@ PyObject* buffer = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43134,7 +43208,7 @@ PyObject* buffer = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -43185,7 +43259,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43247,7 +43321,7 @@ PyObject* bufferView = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43256,7 +43330,7 @@ PyObject* bufferView = NULL;
     
         
             VkBufferView c_bufferView = NULL;
-            {
+            if (bufferView != Py_None)  {
                 VkBufferView* handle_pointer = PyCapsule_GetPointer(
                     bufferView, "VkBufferView");
                 c_bufferView = *handle_pointer;
@@ -43307,7 +43381,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43369,7 +43443,7 @@ PyObject* image = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43378,7 +43452,7 @@ PyObject* image = NULL;
     
         
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -43430,7 +43504,7 @@ PyObject* pSubresource = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43439,7 +43513,7 @@ PyObject* pSubresource = NULL;
     
         
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -43501,7 +43575,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43563,7 +43637,7 @@ PyObject* imageView = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43572,7 +43646,7 @@ PyObject* imageView = NULL;
     
         
             VkImageView c_imageView = NULL;
-            {
+            if (imageView != Py_None)  {
                 VkImageView* handle_pointer = PyCapsule_GetPointer(
                     imageView, "VkImageView");
                 c_imageView = *handle_pointer;
@@ -43623,7 +43697,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43685,7 +43759,7 @@ PyObject* shaderModule = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43694,7 +43768,7 @@ PyObject* shaderModule = NULL;
     
         
             VkShaderModule c_shaderModule = NULL;
-            {
+            if (shaderModule != Py_None)  {
                 VkShaderModule* handle_pointer = PyCapsule_GetPointer(
                     shaderModule, "VkShaderModule");
                 c_shaderModule = *handle_pointer;
@@ -43745,7 +43819,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43807,7 +43881,7 @@ PyObject* pipelineCache = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43816,7 +43890,7 @@ PyObject* pipelineCache = NULL;
     
         
             VkPipelineCache c_pipelineCache = NULL;
-            {
+            if (pipelineCache != Py_None)  {
                 VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
                     pipelineCache, "VkPipelineCache");
                 c_pipelineCache = *handle_pointer;
@@ -43869,7 +43943,7 @@ PyObject* pSrcCaches = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43878,7 +43952,7 @@ PyObject* pSrcCaches = NULL;
     
         
             VkPipelineCache c_dstCache = NULL;
-            {
+            if (dstCache != Py_None)  {
                 VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
                     dstCache, "VkPipelineCache");
                 c_dstCache = *handle_pointer;
@@ -43891,7 +43965,7 @@ PyObject* pSrcCaches = NULL;
     
         
             VkPipelineCache* c_pSrcCaches = NULL;
-            {
+            if (pSrcCaches != Py_None)  {
                 VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
                     pSrcCaches, "VkPipelineCache");
                 c_pSrcCaches = handle_pointer;
@@ -43942,7 +44016,7 @@ PyObject* pCreateInfos = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -43951,7 +44025,7 @@ PyObject* pCreateInfos = NULL;
     
         
             VkPipelineCache c_pipelineCache = NULL;
-            {
+            if (pipelineCache != Py_None)  {
                 VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
                     pipelineCache, "VkPipelineCache");
                 c_pipelineCache = *handle_pointer;
@@ -44019,7 +44093,7 @@ PyObject* pCreateInfos = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44028,7 +44102,7 @@ PyObject* pCreateInfos = NULL;
     
         
             VkPipelineCache c_pipelineCache = NULL;
-            {
+            if (pipelineCache != Py_None)  {
                 VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
                     pipelineCache, "VkPipelineCache");
                 c_pipelineCache = *handle_pointer;
@@ -44094,7 +44168,7 @@ PyObject* pipeline = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44103,7 +44177,7 @@ PyObject* pipeline = NULL;
     
         
             VkPipeline c_pipeline = NULL;
-            {
+            if (pipeline != Py_None)  {
                 VkPipeline* handle_pointer = PyCapsule_GetPointer(
                     pipeline, "VkPipeline");
                 c_pipeline = *handle_pointer;
@@ -44154,7 +44228,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44216,7 +44290,7 @@ PyObject* pipelineLayout = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44225,7 +44299,7 @@ PyObject* pipelineLayout = NULL;
     
         
             VkPipelineLayout c_pipelineLayout = NULL;
-            {
+            if (pipelineLayout != Py_None)  {
                 VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
                     pipelineLayout, "VkPipelineLayout");
                 c_pipelineLayout = *handle_pointer;
@@ -44276,7 +44350,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44338,7 +44412,7 @@ PyObject* sampler = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44347,7 +44421,7 @@ PyObject* sampler = NULL;
     
         
             VkSampler c_sampler = NULL;
-            {
+            if (sampler != Py_None)  {
                 VkSampler* handle_pointer = PyCapsule_GetPointer(
                     sampler, "VkSampler");
                 c_sampler = *handle_pointer;
@@ -44398,7 +44472,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44460,7 +44534,7 @@ PyObject* descriptorSetLayout = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44469,7 +44543,7 @@ PyObject* descriptorSetLayout = NULL;
     
         
             VkDescriptorSetLayout c_descriptorSetLayout = NULL;
-            {
+            if (descriptorSetLayout != Py_None)  {
                 VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
                     descriptorSetLayout, "VkDescriptorSetLayout");
                 c_descriptorSetLayout = *handle_pointer;
@@ -44520,7 +44594,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44582,7 +44656,7 @@ PyObject* descriptorPool = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44591,7 +44665,7 @@ PyObject* descriptorPool = NULL;
     
         
             VkDescriptorPool c_descriptorPool = NULL;
-            {
+            if (descriptorPool != Py_None)  {
                 VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
                     descriptorPool, "VkDescriptorPool");
                 c_descriptorPool = *handle_pointer;
@@ -44643,7 +44717,7 @@ PyObject* flags = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44652,7 +44726,7 @@ PyObject* flags = NULL;
     
         
             VkDescriptorPool c_descriptorPool = NULL;
-            {
+            if (descriptorPool != Py_None)  {
                 VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
                     descriptorPool, "VkDescriptorPool");
                 c_descriptorPool = *handle_pointer;
@@ -44705,7 +44779,7 @@ PyObject* pAllocateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44767,7 +44841,7 @@ PyObject* pDescriptorSets = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44776,7 +44850,7 @@ PyObject* pDescriptorSets = NULL;
     
         
             VkDescriptorPool c_descriptorPool = NULL;
-            {
+            if (descriptorPool != Py_None)  {
                 VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
                     descriptorPool, "VkDescriptorPool");
                 c_descriptorPool = *handle_pointer;
@@ -44789,7 +44863,7 @@ PyObject* pDescriptorSets = NULL;
     
         
             VkDescriptorSet* c_pDescriptorSets = NULL;
-            {
+            if (pDescriptorSets != Py_None)  {
                 VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
                     pDescriptorSets, "VkDescriptorSet");
                 c_pDescriptorSets = handle_pointer;
@@ -44841,7 +44915,7 @@ PyObject* pDescriptorCopies = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44906,7 +44980,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44968,7 +45042,7 @@ PyObject* framebuffer = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -44977,7 +45051,7 @@ PyObject* framebuffer = NULL;
     
         
             VkFramebuffer c_framebuffer = NULL;
-            {
+            if (framebuffer != Py_None)  {
                 VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
                     framebuffer, "VkFramebuffer");
                 c_framebuffer = *handle_pointer;
@@ -45028,7 +45102,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45090,7 +45164,7 @@ PyObject* renderPass = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45099,7 +45173,7 @@ PyObject* renderPass = NULL;
     
         
             VkRenderPass c_renderPass = NULL;
-            {
+            if (renderPass != Py_None)  {
                 VkRenderPass* handle_pointer = PyCapsule_GetPointer(
                     renderPass, "VkRenderPass");
                 c_renderPass = *handle_pointer;
@@ -45150,7 +45224,7 @@ PyObject* renderPass = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45159,7 +45233,7 @@ PyObject* renderPass = NULL;
     
         
             VkRenderPass c_renderPass = NULL;
-            {
+            if (renderPass != Py_None)  {
                 VkRenderPass* handle_pointer = PyCapsule_GetPointer(
                     renderPass, "VkRenderPass");
                 c_renderPass = *handle_pointer;
@@ -45217,7 +45291,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45279,7 +45353,7 @@ PyObject* commandPool = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45288,7 +45362,7 @@ PyObject* commandPool = NULL;
     
         
             VkCommandPool c_commandPool = NULL;
-            {
+            if (commandPool != Py_None)  {
                 VkCommandPool* handle_pointer = PyCapsule_GetPointer(
                     commandPool, "VkCommandPool");
                 c_commandPool = *handle_pointer;
@@ -45340,7 +45414,7 @@ PyObject* flags = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45349,7 +45423,7 @@ PyObject* flags = NULL;
     
         
             VkCommandPool c_commandPool = NULL;
-            {
+            if (commandPool != Py_None)  {
                 VkCommandPool* handle_pointer = PyCapsule_GetPointer(
                     commandPool, "VkCommandPool");
                 c_commandPool = *handle_pointer;
@@ -45402,7 +45476,7 @@ PyObject* pAllocateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45464,7 +45538,7 @@ PyObject* pCommandBuffers = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -45473,7 +45547,7 @@ PyObject* pCommandBuffers = NULL;
     
         
             VkCommandPool c_commandPool = NULL;
-            {
+            if (commandPool != Py_None)  {
                 VkCommandPool* handle_pointer = PyCapsule_GetPointer(
                     commandPool, "VkCommandPool");
                 c_commandPool = *handle_pointer;
@@ -45486,7 +45560,7 @@ PyObject* pCommandBuffers = NULL;
     
         
             VkCommandBuffer* c_pCommandBuffers = NULL;
-            {
+            if (pCommandBuffers != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     pCommandBuffers, "VkCommandBuffer");
                 c_pCommandBuffers = handle_pointer;
@@ -45535,7 +45609,7 @@ PyObject* pBeginInfo = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45587,7 +45661,7 @@ PyObject* pBeginInfo = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45636,7 +45710,7 @@ PyObject* flags = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45690,7 +45764,7 @@ PyObject* pipeline = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45703,7 +45777,7 @@ PyObject* pipeline = NULL;
     
         
             VkPipeline c_pipeline = NULL;
-            {
+            if (pipeline != Py_None)  {
                 VkPipeline* handle_pointer = PyCapsule_GetPointer(
                     pipeline, "VkPipeline");
                 c_pipeline = *handle_pointer;
@@ -45754,7 +45828,7 @@ PyObject* pViewports = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45817,7 +45891,7 @@ PyObject* pScissors = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45878,7 +45952,7 @@ PyObject* lineWidth = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45933,7 +46007,7 @@ PyObject* depthBiasSlopeFactor = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -45994,7 +46068,7 @@ PyObject* blendConstants = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46003,7 +46077,10 @@ PyObject* blendConstants = NULL;
     
         
         float* c_blendConstants = NULL;
-        {
+        if (blendConstants == Py_None) {
+            c_blendConstants = VK_NULL_HANDLE;
+        }
+        else {
             int size = PyList_Size(blendConstants);
             c_blendConstants = malloc(sizeof(float) * size);
             int i;
@@ -46057,7 +46134,7 @@ PyObject* maxDepthBounds = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46115,7 +46192,7 @@ PyObject* compareMask = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46173,7 +46250,7 @@ PyObject* writeMask = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46231,7 +46308,7 @@ PyObject* reference = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46294,7 +46371,7 @@ PyObject* pDynamicOffsets = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46307,7 +46384,7 @@ PyObject* pDynamicOffsets = NULL;
     
         
             VkPipelineLayout c_layout = NULL;
-            {
+            if (layout != Py_None)  {
                 VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
                     layout, "VkPipelineLayout");
                 c_layout = *handle_pointer;
@@ -46324,7 +46401,7 @@ PyObject* pDynamicOffsets = NULL;
     
         
             VkDescriptorSet* c_pDescriptorSets = NULL;
-            {
+            if (pDescriptorSets != Py_None)  {
                 VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
                     pDescriptorSets, "VkDescriptorSet");
                 c_pDescriptorSets = handle_pointer;
@@ -46336,12 +46413,20 @@ PyObject* pDynamicOffsets = NULL;
         
     
         
-                    uint32_t* c_pDynamicOffsets = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pDynamicOffsets);
-                        memcpy(c_pDynamicOffsets, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pDynamicOffsets = NULL;
+        if (pDynamicOffsets == Py_None) {
+            c_pDynamicOffsets = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pDynamicOffsets);
+            c_pDynamicOffsets = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pDynamicOffsets, i));
+                memcpy(c_pDynamicOffsets + i, &r, sizeof(uint32_t));
+            }
+        }
     
 
     
@@ -46387,7 +46472,7 @@ PyObject* indexType = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46396,7 +46481,7 @@ PyObject* indexType = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -46456,7 +46541,7 @@ PyObject* pOffsets = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46473,7 +46558,7 @@ PyObject* pOffsets = NULL;
     
         
             VkBuffer* c_pBuffers = NULL;
-            {
+            if (pBuffers != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     pBuffers, "VkBuffer");
                 c_pBuffers = handle_pointer;
@@ -46533,7 +46618,7 @@ PyObject* firstInstance = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46602,7 +46687,7 @@ PyObject* firstInstance = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46674,7 +46759,7 @@ PyObject* stride = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46683,7 +46768,7 @@ PyObject* stride = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -46747,7 +46832,7 @@ PyObject* stride = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46756,7 +46841,7 @@ PyObject* stride = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -46819,7 +46904,7 @@ PyObject* z = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46881,7 +46966,7 @@ PyObject* offset = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46890,7 +46975,7 @@ PyObject* offset = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -46946,7 +47031,7 @@ PyObject* pRegions = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -46955,7 +47040,7 @@ PyObject* pRegions = NULL;
     
         
             VkBuffer c_srcBuffer = NULL;
-            {
+            if (srcBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     srcBuffer, "VkBuffer");
                 c_srcBuffer = *handle_pointer;
@@ -46964,7 +47049,7 @@ PyObject* pRegions = NULL;
     
         
             VkBuffer c_dstBuffer = NULL;
-            {
+            if (dstBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     dstBuffer, "VkBuffer");
                 c_dstBuffer = *handle_pointer;
@@ -47026,7 +47111,7 @@ PyObject* pRegions = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47035,7 +47120,7 @@ PyObject* pRegions = NULL;
     
         
             VkImage c_srcImage = NULL;
-            {
+            if (srcImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     srcImage, "VkImage");
                 c_srcImage = *handle_pointer;
@@ -47048,7 +47133,7 @@ PyObject* pRegions = NULL;
     
         
             VkImage c_dstImage = NULL;
-            {
+            if (dstImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     dstImage, "VkImage");
                 c_dstImage = *handle_pointer;
@@ -47115,7 +47200,7 @@ PyObject* filter = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47124,7 +47209,7 @@ PyObject* filter = NULL;
     
         
             VkImage c_srcImage = NULL;
-            {
+            if (srcImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     srcImage, "VkImage");
                 c_srcImage = *handle_pointer;
@@ -47137,7 +47222,7 @@ PyObject* filter = NULL;
     
         
             VkImage c_dstImage = NULL;
-            {
+            if (dstImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     dstImage, "VkImage");
                 c_dstImage = *handle_pointer;
@@ -47206,7 +47291,7 @@ PyObject* pRegions = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47215,7 +47300,7 @@ PyObject* pRegions = NULL;
     
         
             VkBuffer c_srcBuffer = NULL;
-            {
+            if (srcBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     srcBuffer, "VkBuffer");
                 c_srcBuffer = *handle_pointer;
@@ -47224,7 +47309,7 @@ PyObject* pRegions = NULL;
     
         
             VkImage c_dstImage = NULL;
-            {
+            if (dstImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     dstImage, "VkImage");
                 c_dstImage = *handle_pointer;
@@ -47289,7 +47374,7 @@ PyObject* pRegions = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47298,7 +47383,7 @@ PyObject* pRegions = NULL;
     
         
             VkImage c_srcImage = NULL;
-            {
+            if (srcImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     srcImage, "VkImage");
                 c_srcImage = *handle_pointer;
@@ -47311,7 +47396,7 @@ PyObject* pRegions = NULL;
     
         
             VkBuffer c_dstBuffer = NULL;
-            {
+            if (dstBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     dstBuffer, "VkBuffer");
                 c_dstBuffer = *handle_pointer;
@@ -47371,7 +47456,7 @@ PyObject* pData = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47380,7 +47465,7 @@ PyObject* pData = NULL;
     
         
             VkBuffer c_dstBuffer = NULL;
-            {
+            if (dstBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     dstBuffer, "VkBuffer");
                 c_dstBuffer = *handle_pointer;
@@ -47442,7 +47527,7 @@ PyObject* data = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47451,7 +47536,7 @@ PyObject* data = NULL;
     
         
             VkBuffer c_dstBuffer = NULL;
-            {
+            if (dstBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     dstBuffer, "VkBuffer");
                 c_dstBuffer = *handle_pointer;
@@ -47516,7 +47601,7 @@ PyObject* pRanges = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47525,7 +47610,7 @@ PyObject* pRanges = NULL;
     
         
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -47594,7 +47679,7 @@ PyObject* pRanges = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47603,7 +47688,7 @@ PyObject* pRanges = NULL;
     
         
             VkImage c_image = NULL;
-            {
+            if (image != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     image, "VkImage");
                 c_image = *handle_pointer;
@@ -47671,7 +47756,7 @@ PyObject* pRects = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47741,7 +47826,7 @@ PyObject* pRegions = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47750,7 +47835,7 @@ PyObject* pRegions = NULL;
     
         
             VkImage c_srcImage = NULL;
-            {
+            if (srcImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     srcImage, "VkImage");
                 c_srcImage = *handle_pointer;
@@ -47763,7 +47848,7 @@ PyObject* pRegions = NULL;
     
         
             VkImage c_dstImage = NULL;
-            {
+            if (dstImage != Py_None)  {
                 VkImage* handle_pointer = PyCapsule_GetPointer(
                     dstImage, "VkImage");
                 c_dstImage = *handle_pointer;
@@ -47825,7 +47910,7 @@ PyObject* stageMask = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47834,7 +47919,7 @@ PyObject* stageMask = NULL;
     
         
             VkEvent c_event = NULL;
-            {
+            if (event != Py_None)  {
                 VkEvent* handle_pointer = PyCapsule_GetPointer(
                     event, "VkEvent");
                 c_event = *handle_pointer;
@@ -47888,7 +47973,7 @@ PyObject* stageMask = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47897,7 +47982,7 @@ PyObject* stageMask = NULL;
     
         
             VkEvent c_event = NULL;
-            {
+            if (event != Py_None)  {
                 VkEvent* handle_pointer = PyCapsule_GetPointer(
                     event, "VkEvent");
                 c_event = *handle_pointer;
@@ -47959,7 +48044,7 @@ PyObject* pImageMemoryBarriers = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -47972,7 +48057,7 @@ PyObject* pImageMemoryBarriers = NULL;
     
         
             VkEvent* c_pEvents = NULL;
-            {
+            if (pEvents != Py_None)  {
                 VkEvent* handle_pointer = PyCapsule_GetPointer(
                     pEvents, "VkEvent");
                 c_pEvents = handle_pointer;
@@ -48061,7 +48146,7 @@ PyObject* pImageMemoryBarriers = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48148,7 +48233,7 @@ PyObject* flags = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48157,7 +48242,7 @@ PyObject* flags = NULL;
     
         
             VkQueryPool c_queryPool = NULL;
-            {
+            if (queryPool != Py_None)  {
                 VkQueryPool* handle_pointer = PyCapsule_GetPointer(
                     queryPool, "VkQueryPool");
                 c_queryPool = *handle_pointer;
@@ -48215,7 +48300,7 @@ PyObject* query = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48224,7 +48309,7 @@ PyObject* query = NULL;
     
         
             VkQueryPool c_queryPool = NULL;
-            {
+            if (queryPool != Py_None)  {
                 VkQueryPool* handle_pointer = PyCapsule_GetPointer(
                     queryPool, "VkQueryPool");
                 c_queryPool = *handle_pointer;
@@ -48279,7 +48364,7 @@ PyObject* queryCount = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48288,7 +48373,7 @@ PyObject* queryCount = NULL;
     
         
             VkQueryPool c_queryPool = NULL;
-            {
+            if (queryPool != Py_None)  {
                 VkQueryPool* handle_pointer = PyCapsule_GetPointer(
                     queryPool, "VkQueryPool");
                 c_queryPool = *handle_pointer;
@@ -48347,7 +48432,7 @@ PyObject* query = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48360,7 +48445,7 @@ PyObject* query = NULL;
     
         
             VkQueryPool c_queryPool = NULL;
-            {
+            if (queryPool != Py_None)  {
                 VkQueryPool* handle_pointer = PyCapsule_GetPointer(
                     queryPool, "VkQueryPool");
                 c_queryPool = *handle_pointer;
@@ -48419,7 +48504,7 @@ PyObject* flags = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48428,7 +48513,7 @@ PyObject* flags = NULL;
     
         
             VkQueryPool c_queryPool = NULL;
-            {
+            if (queryPool != Py_None)  {
                 VkQueryPool* handle_pointer = PyCapsule_GetPointer(
                     queryPool, "VkQueryPool");
                 c_queryPool = *handle_pointer;
@@ -48445,7 +48530,7 @@ PyObject* flags = NULL;
     
         
             VkBuffer c_dstBuffer = NULL;
-            {
+            if (dstBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     dstBuffer, "VkBuffer");
                 c_dstBuffer = *handle_pointer;
@@ -48510,7 +48595,7 @@ PyObject* pValues = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48519,7 +48604,7 @@ PyObject* pValues = NULL;
     
         
             VkPipelineLayout c_layout = NULL;
-            {
+            if (layout != Py_None)  {
                 VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
                     layout, "VkPipelineLayout");
                 c_layout = *handle_pointer;
@@ -48583,7 +48668,7 @@ PyObject* contents = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48640,7 +48725,7 @@ PyObject* contents = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48692,7 +48777,7 @@ PyObject* contents = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48742,7 +48827,7 @@ PyObject* pCommandBuffers = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -48755,7 +48840,7 @@ PyObject* pCommandBuffers = NULL;
     
         
             VkCommandBuffer* c_pCommandBuffers = NULL;
-            {
+            if (pCommandBuffers != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     pCommandBuffers, "VkCommandBuffer");
                 c_pCommandBuffers = handle_pointer;
@@ -48832,7 +48917,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -48924,7 +49009,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -49033,7 +49118,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -49143,7 +49228,7 @@ PyObject* planeIndex = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -49254,7 +49339,7 @@ PyObject* display = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -49263,7 +49348,7 @@ PyObject* display = NULL;
     
         
             VkDisplayKHR c_display = NULL;
-            {
+            if (display != Py_None)  {
                 VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
                     display, "VkDisplayKHR");
                 c_display = *handle_pointer;
@@ -49374,7 +49459,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -49383,7 +49468,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDisplayKHR c_display = NULL;
-            {
+            if (display != Py_None)  {
                 VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
                     display, "VkDisplayKHR");
                 c_display = *handle_pointer;
@@ -49477,7 +49562,7 @@ PyObject* planeIndex = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -49486,7 +49571,7 @@ PyObject* planeIndex = NULL;
     
         
             VkDisplayModeKHR c_mode = NULL;
-            {
+            if (mode != Py_None)  {
                 VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
                     mode, "VkDisplayModeKHR");
                 c_mode = *handle_pointer;
@@ -49580,7 +49665,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -49674,7 +49759,7 @@ PyObject* pCreateInfos = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -49771,7 +49856,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -49865,7 +49950,7 @@ PyObject* connection = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -49956,7 +50041,7 @@ PyObject* surface = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -49965,7 +50050,7 @@ PyObject* surface = NULL;
     
         
             VkSurfaceKHR c_surface = NULL;
-            {
+            if (surface != Py_None)  {
                 VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
                     surface, "VkSurfaceKHR");
                 c_surface = *handle_pointer;
@@ -50048,7 +50133,7 @@ PyObject* surface = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -50061,7 +50146,7 @@ PyObject* surface = NULL;
     
         
             VkSurfaceKHR c_surface = NULL;
-            {
+            if (surface != Py_None)  {
                 VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
                     surface, "VkSurfaceKHR");
                 c_surface = *handle_pointer;
@@ -50148,7 +50233,7 @@ PyObject* surface = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -50157,7 +50242,7 @@ PyObject* surface = NULL;
     
         
             VkSurfaceKHR c_surface = NULL;
-            {
+            if (surface != Py_None)  {
                 VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
                     surface, "VkSurfaceKHR");
                 c_surface = *handle_pointer;
@@ -50247,7 +50332,7 @@ PyObject* surface = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -50256,7 +50341,7 @@ PyObject* surface = NULL;
     
         
             VkSurfaceKHR c_surface = NULL;
-            {
+            if (surface != Py_None)  {
                 VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
                     surface, "VkSurfaceKHR");
                 c_surface = *handle_pointer;
@@ -50366,7 +50451,7 @@ PyObject* surface = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -50375,7 +50460,7 @@ PyObject* surface = NULL;
     
         
             VkSurfaceKHR c_surface = NULL;
-            {
+            if (surface != Py_None)  {
                 VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
                     surface, "VkSurfaceKHR");
                 c_surface = *handle_pointer;
@@ -50482,7 +50567,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -50575,7 +50660,7 @@ PyObject* swapchain = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -50584,7 +50669,7 @@ PyObject* swapchain = NULL;
     
         
             VkSwapchainKHR c_swapchain = NULL;
-            {
+            if (swapchain != Py_None)  {
                 VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
                     swapchain, "VkSwapchainKHR");
                 c_swapchain = *handle_pointer;
@@ -50666,7 +50751,7 @@ PyObject* swapchain = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -50675,7 +50760,7 @@ PyObject* swapchain = NULL;
     
         
             VkSwapchainKHR c_swapchain = NULL;
-            {
+            if (swapchain != Py_None)  {
                 VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
                     swapchain, "VkSwapchainKHR");
                 c_swapchain = *handle_pointer;
@@ -50786,7 +50871,7 @@ PyObject* pImageIndex = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -50795,7 +50880,7 @@ PyObject* pImageIndex = NULL;
     
         
             VkSwapchainKHR c_swapchain = NULL;
-            {
+            if (swapchain != Py_None)  {
                 VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
                     swapchain, "VkSwapchainKHR");
                 c_swapchain = *handle_pointer;
@@ -50808,7 +50893,7 @@ PyObject* pImageIndex = NULL;
     
         
             VkSemaphore c_semaphore = NULL;
-            {
+            if (semaphore != Py_None)  {
                 VkSemaphore* handle_pointer = PyCapsule_GetPointer(
                     semaphore, "VkSemaphore");
                 c_semaphore = *handle_pointer;
@@ -50817,7 +50902,7 @@ PyObject* pImageIndex = NULL;
     
         
             VkFence c_fence = NULL;
-            {
+            if (fence != Py_None)  {
                 VkFence* handle_pointer = PyCapsule_GetPointer(
                     fence, "VkFence");
                 c_fence = *handle_pointer;
@@ -50825,12 +50910,20 @@ PyObject* pImageIndex = NULL;
             
     
         
-                    uint32_t* c_pImageIndex = malloc(sizeof(uint32_t));
-                    {
-                        uint32_t tmp = (uint32_t) PyLong_AsLong(pImageIndex);
-                        memcpy(c_pImageIndex, &tmp, sizeof(uint32_t));
-                    }
-                
+        uint32_t* c_pImageIndex = NULL;
+        if (pImageIndex == Py_None) {
+            c_pImageIndex = VK_NULL_HANDLE;
+        }
+        else {
+            int size = PyList_Size(pImageIndex);
+            c_pImageIndex = malloc(sizeof(uint32_t) * size);
+            int i;
+            for (i = 0; i < size; i++) {
+                uint32_t r = (uint32_t) PyLong_AsLong(
+                    PyList_GetItem(pImageIndex, i));
+                memcpy(c_pImageIndex + i, &r, sizeof(uint32_t));
+            }
+        }
     
 
     
@@ -50905,7 +50998,7 @@ PyObject* pPresentInfo = NULL;
     
         
             VkQueue c_queue = NULL;
-            {
+            if (queue != Py_None)  {
                 VkQueue* handle_pointer = PyCapsule_GetPointer(
                     queue, "VkQueue");
                 c_queue = *handle_pointer;
@@ -50989,7 +51082,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -51083,7 +51176,7 @@ PyObject* display = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -51171,7 +51264,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -51264,7 +51357,7 @@ PyObject* queueFamilyIndex = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -51347,7 +51440,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -51442,7 +51535,7 @@ PyObject* visualID = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -51533,7 +51626,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -51628,7 +51721,7 @@ PyObject* visual_id = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -51719,7 +51812,7 @@ PyObject* pCreateInfo = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -51812,7 +51905,7 @@ PyObject* callback = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -51821,7 +51914,7 @@ PyObject* callback = NULL;
     
         
             VkDebugReportCallbackEXT c_callback = NULL;
-            {
+            if (callback != Py_None)  {
                 VkDebugReportCallbackEXT* handle_pointer = PyCapsule_GetPointer(
                     callback, "VkDebugReportCallbackEXT");
                 c_callback = *handle_pointer;
@@ -51909,7 +52002,7 @@ PyObject* pMessage = NULL;
     
         
             VkInstance c_instance = NULL;
-            {
+            if (instance != Py_None)  {
                 VkInstance* handle_pointer = PyCapsule_GetPointer(
                     instance, "VkInstance");
                 c_instance = *handle_pointer;
@@ -52037,7 +52130,7 @@ PyObject* pNameInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -52121,7 +52214,7 @@ PyObject* pTagInfo = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -52205,7 +52298,7 @@ PyObject* pMarkerInfo = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -52288,7 +52381,7 @@ PyObject* pMarkerInfo = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -52368,7 +52461,7 @@ PyObject* pMarkerInfo = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -52457,7 +52550,7 @@ PyObject* externalHandleType = NULL;
     
         
             VkPhysicalDevice c_physicalDevice = NULL;
-            {
+            if (physicalDevice != Py_None)  {
                 VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
                     physicalDevice, "VkPhysicalDevice");
                 c_physicalDevice = *handle_pointer;
@@ -52572,7 +52665,7 @@ PyObject* handleType = NULL;
     
         
             VkDevice c_device = NULL;
-            {
+            if (device != Py_None)  {
                 VkDevice* handle_pointer = PyCapsule_GetPointer(
                     device, "VkDevice");
                 c_device = *handle_pointer;
@@ -52581,7 +52674,7 @@ PyObject* handleType = NULL;
     
         
             VkDeviceMemory c_memory = NULL;
-            {
+            if (memory != Py_None)  {
                 VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
                     memory, "VkDeviceMemory");
                 c_memory = *handle_pointer;
@@ -52677,7 +52770,7 @@ PyObject* stride = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -52686,7 +52779,7 @@ PyObject* stride = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -52699,7 +52792,7 @@ PyObject* stride = NULL;
     
         
             VkBuffer c_countBuffer = NULL;
-            {
+            if (countBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     countBuffer, "VkBuffer");
                 c_countBuffer = *handle_pointer;
@@ -52796,7 +52889,7 @@ PyObject* stride = NULL;
     
         
             VkCommandBuffer c_commandBuffer = NULL;
-            {
+            if (commandBuffer != Py_None)  {
                 VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
                     commandBuffer, "VkCommandBuffer");
                 c_commandBuffer = *handle_pointer;
@@ -52805,7 +52898,7 @@ PyObject* stride = NULL;
     
         
             VkBuffer c_buffer = NULL;
-            {
+            if (buffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     buffer, "VkBuffer");
                 c_buffer = *handle_pointer;
@@ -52818,7 +52911,7 @@ PyObject* stride = NULL;
     
         
             VkBuffer c_countBuffer = NULL;
-            {
+            if (countBuffer != Py_None)  {
                 VkBuffer* handle_pointer = PyCapsule_GetPointer(
                     countBuffer, "VkBuffer");
                 c_countBuffer = *handle_pointer;
@@ -52962,7 +53055,6 @@ static PyObject* PyvkGetInstanceProcAddr(PyObject *self, PyObject *args, PyObjec
 
     char* arg1 = PyBytes_AsString(tmp);
     if(arg1 == NULL) return NULL;
-    Py_DECREF(tmp);
 
     PFN_vkVoidFunction fun = vkGetInstanceProcAddr(*arg0, arg1);
     if (fun == NULL) {
@@ -53471,6 +53563,14 @@ static PyObject* PyvkGetInstanceProcAddr(PyObject *self, PyObject *args, PyObjec
 
     
 
+    if (pyreturn == NULL) {
+        char error[100];
+        sprintf(error, "Can't find python object for function %s", arg1);
+        PyErr_SetString(PyExc_ImportError, error);
+        return NULL;
+    }
+
+    Py_DECREF(tmp);
     Py_INCREF(pyreturn);
     return pyreturn;
 }
@@ -53492,7 +53592,6 @@ static PyObject* PyvkGetDeviceProcAddr(PyObject *self, PyObject *args, PyObject 
 
     char* arg1 = PyBytes_AsString(tmp);
     if(arg1 == NULL) return NULL;
-    Py_DECREF(tmp);
 
     PFN_vkVoidFunction fun = vkGetDeviceProcAddr(*arg0, arg1);
     if (fun == NULL) {
@@ -54001,6 +54100,14 @@ static PyObject* PyvkGetDeviceProcAddr(PyObject *self, PyObject *args, PyObject 
 
     
 
+    if (pyreturn == NULL) {
+        char error[100];
+        sprintf(error, "Can't find python object for function %s", arg1);
+        PyErr_SetString(PyExc_ImportError, error);
+        return NULL;
+    }
+
+    Py_DECREF(tmp);
     Py_INCREF(pyreturn);
     return pyreturn;
 }
@@ -60300,73 +60407,73 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     PyModule_AddObject(module, "VulkanError", VulkanError);
 
     
-        VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
-        Py_INCREF(VkErrorOutOfHostMemory);
-        PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
-    
-        VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
-        Py_INCREF(VkEventSet);
-        PyModule_AddObject(module, "VkEventSet", VkEventSet);
-    
         VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
         Py_INCREF(VkErrorExtensionNotPresent);
         PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
     
-        VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
-        Py_INCREF(VkErrorOutOfDeviceMemory);
-        PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
-    
-        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
-        Py_INCREF(VkIncomplete);
-        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
+        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
+        Py_INCREF(VkErrorMemoryMapFailed);
+        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
     
         VkEventReset = PyErr_NewException("vulkan.VkEventReset", VulkanError, NULL);
         Py_INCREF(VkEventReset);
         PyModule_AddObject(module, "VkEventReset", VkEventReset);
     
-        VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
-        Py_INCREF(VkErrorInitializationFailed);
-        PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
-    
-        VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
-        Py_INCREF(VkErrorFormatNotSupported);
-        PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
-    
-        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
-        Py_INCREF(VkErrorDeviceLost);
-        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
-    
         VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
         Py_INCREF(VkErrorIncompatibleDriver);
         PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
-    
-        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
-        Py_INCREF(VkErrorFragmentedPool);
-        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
-    
-        VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
-        Py_INCREF(VkTimeout);
-        PyModule_AddObject(module, "VkTimeout", VkTimeout);
     
         VkNotReady = PyErr_NewException("vulkan.VkNotReady", VulkanError, NULL);
         Py_INCREF(VkNotReady);
         PyModule_AddObject(module, "VkNotReady", VkNotReady);
     
-        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
-        Py_INCREF(VkErrorTooManyObjects);
-        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
+        VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
+        Py_INCREF(VkEventSet);
+        PyModule_AddObject(module, "VkEventSet", VkEventSet);
+    
+        VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
+        Py_INCREF(VkErrorFormatNotSupported);
+        PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
     
         VkErrorFeatureNotPresent = PyErr_NewException("vulkan.VkErrorFeatureNotPresent", VulkanError, NULL);
         Py_INCREF(VkErrorFeatureNotPresent);
         PyModule_AddObject(module, "VkErrorFeatureNotPresent", VkErrorFeatureNotPresent);
     
+        VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
+        Py_INCREF(VkErrorInitializationFailed);
+        PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
+    
+        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
+        Py_INCREF(VkErrorFragmentedPool);
+        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
+    
+        VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
+        Py_INCREF(VkErrorOutOfDeviceMemory);
+        PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
+    
+        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
+        Py_INCREF(VkErrorTooManyObjects);
+        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
+    
+        VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
+        Py_INCREF(VkErrorOutOfHostMemory);
+        PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
+    
+        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
+        Py_INCREF(VkIncomplete);
+        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
+    
         VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
         Py_INCREF(VkErrorLayerNotPresent);
         PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
     
-        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
-        Py_INCREF(VkErrorMemoryMapFailed);
-        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
+        VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
+        Py_INCREF(VkTimeout);
+        PyModule_AddObject(module, "VkTimeout", VkTimeout);
+    
+        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
+        Py_INCREF(VkErrorDeviceLost);
+        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
     
 
 

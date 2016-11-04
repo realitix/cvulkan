@@ -173,6 +173,7 @@ MAPPING_EXTENSION_DEFINE = {
 CUSTOM_FUNCTIONS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr',
                     'vkMapMemory', 'vkGetPipelineCacheData')
 CUSTOM_STRUCTS = ('VkDebugReportCallbackCreateInfoEXT',)
+CUSTOM_CONSTANTS = {'VK_NULL_HANDLE': 0}
 MACROS = ('VK_MAKE_VERSION', 'VK_VERSION_MAJOR', 'VK_VERSION_MINOR',
           'VK_VERSION_PATCH')
 NULL_MEMBERS = ('pNext', 'pAllocator', 'pUserData')
@@ -279,6 +280,11 @@ def model_constants(vk, model):
     add_constant({'@name': 'VK_API_VERSION_1_0',
                   '@value': 'VK_API_VERSION_1_0'})
 
+    #for key, value in CUSTOM_CONSTANTS.items():
+    #    model['constants'].append({'name': key,
+    #                               'value': value,
+    #                               'type': 'int'})
+
 
 def model_structs(vk, model):
     model['structs'] = []
@@ -313,6 +319,7 @@ def model_structs(vk, model):
             'return_only': True if struct.get('@returnedonly') else False,
             'union': True if struct in unions else False
         })
+
 
     model['custom_structs'] = CUSTOM_STRUCTS
 

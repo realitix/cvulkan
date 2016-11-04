@@ -90,7 +90,6 @@ static PyObject* Py{{name}}(PyObject *self, PyObject *args, PyObject *kwds) {
 
     char* arg1 = PyBytes_AsString(tmp);
     if(arg1 == NULL) return NULL;
-    Py_DECREF(tmp);
 
     PFN_vkVoidFunction fun = {{name}}(*arg0, arg1);
     if (fun == NULL) {
@@ -115,6 +114,14 @@ static PyObject* Py{{name}}(PyObject *self, PyObject *args, PyObject *kwds) {
         {% endcall %}
     {% endfor %}
 
+    if (pyreturn == NULL) {
+        char error[100];
+        sprintf(error, "Can't find python object for function %s", arg1);
+        PyErr_SetString(PyExc_ImportError, error);
+        return NULL;
+    }
+
+    Py_DECREF(tmp);
     Py_INCREF(pyreturn);
     return pyreturn;
 }
