@@ -53,7 +53,8 @@ model['structs'] = [{
         'type': 'type []',
         'raw_type': 'type' -> Type without #text
         'null': False,
-        'enum': MAX_ARRAY -> Size of array with fixed length
+        'enum': MAX_ARRAY -> Size of array with fixed length,
+        'force_array': False -> Used when a pointer is an array of VK types
     }]
 }]
 
@@ -100,6 +101,10 @@ Custom functions are written directly in C in the template.
 We create an array in the model to declare them in python.
 model['custom_functions'] = ['f1', 'f2']
 
+## Custom structs
+Custom functions are written directly in C in the template.
+We create an array in the model to declare them in python.
+model['custom_structs'] = ['f1', 'f2']
 
 ## Macros
 Macros are just custom functions.
@@ -167,9 +172,10 @@ MAPPING_EXTENSION_DEFINE = {
 
 CUSTOM_FUNCTIONS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr',
                     'vkMapMemory', 'vkGetPipelineCacheData')
+CUSTOM_STRUCTS = ('VkDebugReportCallbackCreateInfoEXT',)
 MACROS = ('VK_MAKE_VERSION', 'VK_VERSION_MAJOR', 'VK_VERSION_MINOR',
           'VK_VERSION_PATCH')
-NULL_MEMBERS = ('pNext', 'pAllocator')
+NULL_MEMBERS = ('pNext', 'pAllocator', 'pUserData')
 
 
 def get_source(url):
@@ -281,6 +287,10 @@ def model_structs(vk, model):
     unions = [u for u in vk['registry']['types']['type']
               if u.get('@category', None) == 'union']
     for struct in structs + unions:
+
+        if struct['@name'] in CUSTOM_STRUCTS:
+            continue
+
         members = []
         for member in struct['member']:
             type_name = member['type']
@@ -292,7 +302,8 @@ def model_structs(vk, model):
                 'type': type_name,
                 'raw_type': member['type'],
                 'enum': member.get('enum'),
-                'null': True if member['name'] in NULL_MEMBERS else False
+                'null': True if member['name'] in NULL_MEMBERS else False,
+                'force_array': True if '@len' in member else False
             })
 
         model['structs'].append({
@@ -302,6 +313,8 @@ def model_structs(vk, model):
             'return_only': True if struct.get('@returnedonly') else False,
             'union': True if struct in unions else False
         })
+
+    model['custom_structs'] = CUSTOM_STRUCTS
 
 
 def model_functions(vk, model):

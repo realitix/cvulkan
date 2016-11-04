@@ -35,7 +35,6 @@ createInfo = VkInstanceCreateInfo(
 
 instance = vkCreateInstance(pCreateInfo=createInfo)
 
-
 # ----------
 # Debug instance
 vkCreateDebugReportCallbackEXT = vkGetInstanceProcAddr(
@@ -48,7 +47,6 @@ vkDestroyDebugReportCallbackEXT = vkGetInstanceProcAddr(
 def debugCallback(*args):
     print(args)
 
-print('re')
 debug_create = VkDebugReportCallbackCreateInfoEXT(
     sType=VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT,
     flags=VK_DEBUG_REPORT_ERROR_BIT_EXT | VK_DEBUG_REPORT_WARNING_BIT_EXT,
@@ -92,6 +90,8 @@ surface = surface_mapping[wm_info.subsystem]()
 # ----------
 # Select physical device
 physical_devices = vkEnumeratePhysicalDevices(instance)
+
+
 physical_devices_features = {physical_device: vkGetPhysicalDeviceFeatures(physical_device)
                     for physical_device in physical_devices}
 physical_devices_properties = {physical_device: vkGetPhysicalDeviceProperties(physical_device)
@@ -106,7 +106,7 @@ print("selected device: %s\n" % physical_devices_properties[physical_device].dev
 # Select queue family
 vkGetPhysicalDeviceSurfaceSupportKHR = vkGetInstanceProcAddr(
     instance, 'vkGetPhysicalDeviceSurfaceSupportKHR')
-queue_families = vkGetPhysicalDeviceQueueFamilyProperties(physical_device)
+queue_families = vkGetPhysicalDeviceQueueFamilyProperties(physicalDevice=physical_device)
 print("%s available queue family" % len(queue_families))
 
 queue_family_graphic_index = -1
@@ -140,7 +140,6 @@ queues_create = [VkDeviceQueueCreateInfo(sType=VK_STRUCTURE_TYPE_DEVICE_QUEUE_CR
                                          flags=0)
                  for i in {queue_family_graphic_index,
                            queue_family_present_index}]
-
 device_create = VkDeviceCreateInfo(
     sType=VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
     pQueueCreateInfos=queues_create,
@@ -152,9 +151,21 @@ device_create = VkDeviceCreateInfo(
     enabledExtensionCount=len(extensions),
     ppEnabledExtensionNames=extensions
 )
-
+#device_create = VkDeviceCreateInfo(
+#    sType=VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO,
+#    pQueueCreateInfos=queues_create,
+#    queueCreateInfoCount=len(queues_create),
+#    pEnabledFeatures=physical_devices_features[physical_device],
+#    flags=0,
+#    enabledLayerCount=0,
+#    ppEnabledLayerNames=[],
+#    enabledExtensionCount=0,
+#    ppEnabledExtensionNames=[]
+#)
+print('before')
 logical_device = vkCreateDevice(physicalDevice=physical_device,
                                 pCreateInfo=device_create)
+print('OK BABY')
 graphic_queue = vkGetDeviceQueue(
     device=logical_device,
     queueFamilyIndex=queue_family_graphic_index,

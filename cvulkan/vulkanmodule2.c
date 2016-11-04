@@ -4303,93 +4303,93 @@ typedef struct VkValidationFlagsEXT {
 // ---------------
 static PyObject *VulkanError;
 
-    static PyObject *VkErrorFeatureNotPresent;
-
-    static PyObject *VkErrorExtensionNotPresent;
-
-    static PyObject *VkNotReady;
-
-    static PyObject *VkEventReset;
-
-    static PyObject *VkErrorDeviceLost;
-
-    static PyObject *VkIncomplete;
-
-    static PyObject *VkErrorFormatNotSupported;
-
     static PyObject *VkErrorOutOfHostMemory;
-
-    static PyObject *VkTimeout;
-
-    static PyObject *VkErrorLayerNotPresent;
-
-    static PyObject *VkErrorFragmentedPool;
-
-    static PyObject *VkErrorInitializationFailed;
-
-    static PyObject *VkErrorTooManyObjects;
-
-    static PyObject *VkErrorMemoryMapFailed;
-
-    static PyObject *VkErrorIncompatibleDriver;
 
     static PyObject *VkEventSet;
 
+    static PyObject *VkErrorExtensionNotPresent;
+
     static PyObject *VkErrorOutOfDeviceMemory;
+
+    static PyObject *VkIncomplete;
+
+    static PyObject *VkEventReset;
+
+    static PyObject *VkErrorInitializationFailed;
+
+    static PyObject *VkErrorFormatNotSupported;
+
+    static PyObject *VkErrorDeviceLost;
+
+    static PyObject *VkErrorIncompatibleDriver;
+
+    static PyObject *VkErrorFragmentedPool;
+
+    static PyObject *VkTimeout;
+
+    static PyObject *VkNotReady;
+
+    static PyObject *VkErrorTooManyObjects;
+
+    static PyObject *VkErrorFeatureNotPresent;
+
+    static PyObject *VkErrorLayerNotPresent;
+
+    static PyObject *VkErrorMemoryMapFailed;
 
 
 int raise(int value) {
     switch(value) {
         
-            case -8: PyErr_SetString(VkErrorFeatureNotPresent, "");
-                return 1;
-        
-            case -7: PyErr_SetString(VkErrorExtensionNotPresent, "");
-                return 1;
-        
-            case 1: PyErr_SetString(VkNotReady, "");
-                return 1;
-        
-            case 4: PyErr_SetString(VkEventReset, "");
-                return 1;
-        
-            case -4: PyErr_SetString(VkErrorDeviceLost, "");
-                return 1;
-        
-            case 5: PyErr_SetString(VkIncomplete, "");
-                return 1;
-        
-            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
-                return 1;
-        
             case -1: PyErr_SetString(VkErrorOutOfHostMemory, "");
-                return 1;
-        
-            case 2: PyErr_SetString(VkTimeout, "");
-                return 1;
-        
-            case -6: PyErr_SetString(VkErrorLayerNotPresent, "");
-                return 1;
-        
-            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
-                return 1;
-        
-            case -3: PyErr_SetString(VkErrorInitializationFailed, "");
-                return 1;
-        
-            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
-                return 1;
-        
-            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
-                return 1;
-        
-            case -9: PyErr_SetString(VkErrorIncompatibleDriver, "");
                 return 1;
         
             case 3: PyErr_SetString(VkEventSet, "");
                 return 1;
         
+            case -7: PyErr_SetString(VkErrorExtensionNotPresent, "");
+                return 1;
+        
             case -2: PyErr_SetString(VkErrorOutOfDeviceMemory, "");
+                return 1;
+        
+            case 5: PyErr_SetString(VkIncomplete, "");
+                return 1;
+        
+            case 4: PyErr_SetString(VkEventReset, "");
+                return 1;
+        
+            case -3: PyErr_SetString(VkErrorInitializationFailed, "");
+                return 1;
+        
+            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
+                return 1;
+        
+            case -4: PyErr_SetString(VkErrorDeviceLost, "");
+                return 1;
+        
+            case -9: PyErr_SetString(VkErrorIncompatibleDriver, "");
+                return 1;
+        
+            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
+                return 1;
+        
+            case 2: PyErr_SetString(VkTimeout, "");
+                return 1;
+        
+            case 1: PyErr_SetString(VkNotReady, "");
+                return 1;
+        
+            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
+                return 1;
+        
+            case -8: PyErr_SetString(VkErrorFeatureNotPresent, "");
+                return 1;
+        
+            case -6: PyErr_SetString(VkErrorLayerNotPresent, "");
+                return 1;
+        
+            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
                 return 1;
         
        }
@@ -6599,15 +6599,6 @@ int raise(int value) {
     
     
         
-        typedef struct { PyObject_HEAD VkDebugReportCallbackCreateInfoEXT *base; } PyVkDebugReportCallbackCreateInfoEXT;
-        static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
-    
-    
-
-
-    
-    
-        
         typedef struct { PyObject_HEAD VkValidationFlagsEXT *base; } PyVkValidationFlagsEXT;
         static PyTypeObject PyVkValidationFlagsEXTType;
     
@@ -6749,6 +6740,91 @@ int raise(int value) {
     
 
 
+
+
+// ---------------
+// DECLARE CUSTOM STRUCTS
+// ---------------
+typedef struct {
+    PyObject_HEAD VkDebugReportCallbackCreateInfoEXT *base;
+}
+PyVkDebugReportCallbackCreateInfoEXT;
+
+static void PyVkDebugReportCallbackCreateInfoEXT_del(PyVkDebugReportCallbackCreateInfoEXT* self) {
+    Py_TYPE(self)->tp_free((PyObject*)self);
+}
+
+static PyObject *
+PyVkDebugReportCallbackCreateInfoEXT_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
+{
+    PyVkDebugReportCallbackCreateInfoEXT *self;
+    self = (PyVkDebugReportCallbackCreateInfoEXT *)type->tp_alloc(type, 0);
+    if ( self != NULL) {
+        self->base = malloc(sizeof(VkDebugReportCallbackCreateInfoEXT));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkDebugReportCallbackCreateInfoEXT");
+            return NULL;
+        }
+    }
+
+    return (PyObject *)self;
+}
+
+static PyObject *python_debug_callback = NULL;
+static VKAPI_ATTR VkBool32 VKAPI_CALL debug_callback(
+    VkDebugReportFlagsEXT flags,
+    VkDebugReportObjectTypeEXT objType,
+    uint64_t obj,
+    size_t location,
+    int32_t code,
+    const char* layerPrefix,
+    const char* msg,
+    void* userData) {
+    PyObject_CallFunction(python_debug_callback, "iiKIisss", flags,
+                          objType, obj, location, code, layerPrefix, msg, NULL);
+    return VK_FALSE;
+}
+
+static int
+PyVkDebugReportCallbackCreateInfoEXT_init(
+    PyVkDebugReportCallbackCreateInfoEXT *self, PyObject *args,
+    PyObject *kwds) {
+    int sType;
+    int flags;
+    PyObject* tmp = NULL;
+    static char *kwlist[] = {"sType", "flags","pfnCallback",NULL};
+    if(!PyArg_ParseTupleAndKeywords(args, kwds, "iiO", kwlist,
+                                    &sType, &flags, &tmp))
+        return -1;
+
+    if (!PyCallable_Check(tmp)) {
+        PyErr_SetString(PyExc_TypeError,
+                        "pfnCallback must be callable");
+        return -1;
+    }
+    // Renew callback
+    Py_INCREF(tmp);
+    Py_XDECREF(python_debug_callback);
+    python_debug_callback = tmp;
+
+    (self->base)->sType = sType;
+    (self->base)->pNext = NULL;
+    (self->base)->pUserData = NULL;
+    (self->base)->flags = flags;
+    (self->base)->pfnCallback =
+        (PFN_vkDebugReportCallbackEXT)(&debug_callback);
+
+    return 0;
+}
+
+static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType = {
+    PyVarObject_HEAD_INIT(NULL, 0)
+    "vulkan.VkDebugReportCallbackCreateInfoEXT", sizeof(PyVkDebugReportCallbackCreateInfoEXT), 0,
+    (destructor)PyVkDebugReportCallbackCreateInfoEXT_del,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+    "VkDebugReportCallbackCreateInfoEXT object",0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,(initproc)PyVkDebugReportCallbackCreateInfoEXT_init,0,PyVkDebugReportCallbackCreateInfoEXT_new,
+};
 
 
 // ---------------
@@ -7557,6 +7633,32 @@ static int init_import_sdk(void) {
         vkCmdExecuteCommands = (PFN_vkCmdExecuteCommands)dlsym(vk_sdk, "vkCmdExecuteCommands");
         if (vkCmdExecuteCommands == NULL) {
             PyErr_SetString(PyExc_ImportError, "Can't load vkCmdExecuteCommands in sdk");
+            return 0;
+        }
+    
+
+    
+        vkGetInstanceProcAddr = (PFN_vkGetInstanceProcAddr)dlsym(vk_sdk, "vkGetInstanceProcAddr");
+        if (vkGetInstanceProcAddr == NULL) {
+            PyErr_SetString(PyExc_ImportError, "Can't load vkGetInstanceProcAddr in sdk");
+            return 0;
+        }
+    
+        vkGetDeviceProcAddr = (PFN_vkGetDeviceProcAddr)dlsym(vk_sdk, "vkGetDeviceProcAddr");
+        if (vkGetDeviceProcAddr == NULL) {
+            PyErr_SetString(PyExc_ImportError, "Can't load vkGetDeviceProcAddr in sdk");
+            return 0;
+        }
+    
+        vkMapMemory = (PFN_vkMapMemory)dlsym(vk_sdk, "vkMapMemory");
+        if (vkMapMemory == NULL) {
+            PyErr_SetString(PyExc_ImportError, "Can't load vkMapMemory in sdk");
+            return 0;
+        }
+    
+        vkGetPipelineCacheData = (PFN_vkGetPipelineCacheData)dlsym(vk_sdk, "vkGetPipelineCacheData");
+        if (vkGetPipelineCacheData == NULL) {
+            PyErr_SetString(PyExc_ImportError, "Can't load vkGetPipelineCacheData in sdk");
             return 0;
         }
     
@@ -9495,16 +9597,15 @@ PyObject* apiVersion = NULL;
     // ----------
     static int PyVkAllocationCallbacks_init(PyVkAllocationCallbacks *self, PyObject *args, PyObject *kwds) {
         
-            PyObject* pUserData = NULL;
-PyObject* pfnAllocation = NULL;
+            PyObject* pfnAllocation = NULL;
 PyObject* pfnReallocation = NULL;
 PyObject* pfnFree = NULL;
 PyObject* pfnInternalAllocation = NULL;
 PyObject* pfnInternalFree = NULL;
 
-            static char *kwlist[] = {"pUserData","pfnAllocation","pfnReallocation","pfnFree","pfnInternalAllocation","pfnInternalFree",NULL};
+            static char *kwlist[] = {"pfnAllocation","pfnReallocation","pfnFree","pfnInternalAllocation","pfnInternalFree",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &pUserData,&pfnAllocation,&pfnReallocation,&pfnFree,&pfnInternalAllocation,&pfnInternalFree))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &pfnAllocation,&pfnReallocation,&pfnFree,&pfnInternalAllocation,&pfnInternalFree))
         return 0;
     
 
@@ -9512,7 +9613,7 @@ PyObject* pfnInternalFree = NULL;
                 
                 
                 
-                    void* c_pUserData = NULL;
+                    void * c_pUserData = NULL;
                     (self->base)->pUserData = c_pUserData;
                 
             
@@ -9727,7 +9828,7 @@ PyObject* pQueuePriorities = NULL;
             c_pQueuePriorities = malloc(sizeof(float) * size);
             int i;
             for (i = 0; i < size; i++) {
-                int r = (float) PyFloat_AsDouble(
+                float r = (float) PyFloat_AsDouble(
                     PyList_GetItem(pQueuePriorities, i));
                 memcpy(c_pQueuePriorities + i, &r, sizeof(float));
             }
@@ -9930,7 +10031,16 @@ PyObject* pEnabledFeatures = NULL;
                 
                 
                     
-                VkDeviceQueueCreateInfo* c_pQueueCreateInfos = ((PyVkDeviceQueueCreateInfo*)pQueueCreateInfos)->base;
+                VkDeviceQueueCreateInfo* c_pQueueCreateInfos = NULL;
+                {
+                    int size = PyList_Size(pQueueCreateInfos);
+                    c_pQueueCreateInfos = malloc(sizeof(VkDeviceQueueCreateInfo));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pQueueCreateInfos[i] = *( (
+                            (PyVkDeviceQueueCreateInfo*) PyList_GetItem(pQueueCreateInfos, i) )->base);
+                    }
+                }
                 
                     (self->base)->pQueueCreateInfos = c_pQueueCreateInfos;
                 
@@ -12225,7 +12335,16 @@ PyObject* pTexelBufferView = NULL;
                 
                 
                     
-                VkDescriptorImageInfo* c_pImageInfo = ((PyVkDescriptorImageInfo*)pImageInfo)->base;
+                VkDescriptorImageInfo* c_pImageInfo = NULL;
+                {
+                    int size = PyList_Size(pImageInfo);
+                    c_pImageInfo = malloc(sizeof(VkDescriptorImageInfo));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pImageInfo[i] = *( (
+                            (PyVkDescriptorImageInfo*) PyList_GetItem(pImageInfo, i) )->base);
+                    }
+                }
                 
                     (self->base)->pImageInfo = c_pImageInfo;
                 
@@ -12234,7 +12353,16 @@ PyObject* pTexelBufferView = NULL;
                 
                 
                     
-                VkDescriptorBufferInfo* c_pBufferInfo = ((PyVkDescriptorBufferInfo*)pBufferInfo)->base;
+                VkDescriptorBufferInfo* c_pBufferInfo = NULL;
+                {
+                    int size = PyList_Size(pBufferInfo);
+                    c_pBufferInfo = malloc(sizeof(VkDescriptorBufferInfo));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pBufferInfo[i] = *( (
+                            (PyVkDescriptorBufferInfo*) PyList_GetItem(pBufferInfo, i) )->base);
+                    }
+                }
                 
                     (self->base)->pBufferInfo = c_pBufferInfo;
                 
@@ -15811,7 +15939,16 @@ PyObject* pBinds = NULL;
                 
                 
                     
-                VkSparseMemoryBind* c_pBinds = ((PyVkSparseMemoryBind*)pBinds)->base;
+                VkSparseMemoryBind* c_pBinds = NULL;
+                {
+                    int size = PyList_Size(pBinds);
+                    c_pBinds = malloc(sizeof(VkSparseMemoryBind));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pBinds[i] = *( (
+                            (PyVkSparseMemoryBind*) PyList_GetItem(pBinds, i) )->base);
+                    }
+                }
                 
                     (self->base)->pBinds = c_pBinds;
                 
@@ -15954,7 +16091,16 @@ PyObject* pBinds = NULL;
                 
                 
                     
-                VkSparseMemoryBind* c_pBinds = ((PyVkSparseMemoryBind*)pBinds)->base;
+                VkSparseMemoryBind* c_pBinds = NULL;
+                {
+                    int size = PyList_Size(pBinds);
+                    c_pBinds = malloc(sizeof(VkSparseMemoryBind));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pBinds[i] = *( (
+                            (PyVkSparseMemoryBind*) PyList_GetItem(pBinds, i) )->base);
+                    }
+                }
                 
                     (self->base)->pBinds = c_pBinds;
                 
@@ -16097,7 +16243,16 @@ PyObject* pBinds = NULL;
                 
                 
                     
-                VkSparseImageMemoryBind* c_pBinds = ((PyVkSparseImageMemoryBind*)pBinds)->base;
+                VkSparseImageMemoryBind* c_pBinds = NULL;
+                {
+                    int size = PyList_Size(pBinds);
+                    c_pBinds = malloc(sizeof(VkSparseImageMemoryBind));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pBinds[i] = *( (
+                            (PyVkSparseImageMemoryBind*) PyList_GetItem(pBinds, i) )->base);
+                    }
+                }
                 
                     (self->base)->pBinds = c_pBinds;
                 
@@ -16273,7 +16428,16 @@ PyObject* pSignalSemaphores = NULL;
                 
                 
                     
-                VkSparseBufferMemoryBindInfo* c_pBufferBinds = ((PyVkSparseBufferMemoryBindInfo*)pBufferBinds)->base;
+                VkSparseBufferMemoryBindInfo* c_pBufferBinds = NULL;
+                {
+                    int size = PyList_Size(pBufferBinds);
+                    c_pBufferBinds = malloc(sizeof(VkSparseBufferMemoryBindInfo));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pBufferBinds[i] = *( (
+                            (PyVkSparseBufferMemoryBindInfo*) PyList_GetItem(pBufferBinds, i) )->base);
+                    }
+                }
                 
                     (self->base)->pBufferBinds = c_pBufferBinds;
                 
@@ -16291,7 +16455,16 @@ PyObject* pSignalSemaphores = NULL;
                 
                 
                     
-                VkSparseImageOpaqueMemoryBindInfo* c_pImageOpaqueBinds = ((PyVkSparseImageOpaqueMemoryBindInfo*)pImageOpaqueBinds)->base;
+                VkSparseImageOpaqueMemoryBindInfo* c_pImageOpaqueBinds = NULL;
+                {
+                    int size = PyList_Size(pImageOpaqueBinds);
+                    c_pImageOpaqueBinds = malloc(sizeof(VkSparseImageOpaqueMemoryBindInfo));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pImageOpaqueBinds[i] = *( (
+                            (PyVkSparseImageOpaqueMemoryBindInfo*) PyList_GetItem(pImageOpaqueBinds, i) )->base);
+                    }
+                }
                 
                     (self->base)->pImageOpaqueBinds = c_pImageOpaqueBinds;
                 
@@ -16309,7 +16482,16 @@ PyObject* pSignalSemaphores = NULL;
                 
                 
                     
-                VkSparseImageMemoryBindInfo* c_pImageBinds = ((PyVkSparseImageMemoryBindInfo*)pImageBinds)->base;
+                VkSparseImageMemoryBindInfo* c_pImageBinds = NULL;
+                {
+                    int size = PyList_Size(pImageBinds);
+                    c_pImageBinds = malloc(sizeof(VkSparseImageMemoryBindInfo));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pImageBinds[i] = *( (
+                            (PyVkSparseImageMemoryBindInfo*) PyList_GetItem(pImageBinds, i) )->base);
+                    }
+                }
                 
                     (self->base)->pImageBinds = c_pImageBinds;
                 
@@ -17801,7 +17983,16 @@ PyObject* pBindings = NULL;
                 
                 
                     
-                VkDescriptorSetLayoutBinding* c_pBindings = ((PyVkDescriptorSetLayoutBinding*)pBindings)->base;
+                VkDescriptorSetLayoutBinding* c_pBindings = NULL;
+                {
+                    int size = PyList_Size(pBindings);
+                    c_pBindings = malloc(sizeof(VkDescriptorSetLayoutBinding));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pBindings[i] = *( (
+                            (PyVkDescriptorSetLayoutBinding*) PyList_GetItem(pBindings, i) )->base);
+                    }
+                }
                 
                     (self->base)->pBindings = c_pBindings;
                 
@@ -18111,7 +18302,16 @@ PyObject* pPoolSizes = NULL;
                 
                 
                     
-                VkDescriptorPoolSize* c_pPoolSizes = ((PyVkDescriptorPoolSize*)pPoolSizes)->base;
+                VkDescriptorPoolSize* c_pPoolSizes = NULL;
+                {
+                    int size = PyList_Size(pPoolSizes);
+                    c_pPoolSizes = malloc(sizeof(VkDescriptorPoolSize));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pPoolSizes[i] = *( (
+                            (PyVkDescriptorPoolSize*) PyList_GetItem(pPoolSizes, i) )->base);
+                    }
+                }
                 
                     (self->base)->pPoolSizes = c_pPoolSizes;
                 
@@ -18608,7 +18808,16 @@ PyObject* pData = NULL;
                 
                 
                     
-                VkSpecializationMapEntry* c_pMapEntries = ((PyVkSpecializationMapEntry*)pMapEntries)->base;
+                VkSpecializationMapEntry* c_pMapEntries = NULL;
+                {
+                    int size = PyList_Size(pMapEntries);
+                    c_pMapEntries = malloc(sizeof(VkSpecializationMapEntry));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pMapEntries[i] = *( (
+                            (PyVkSpecializationMapEntry*) PyList_GetItem(pMapEntries, i) )->base);
+                    }
+                }
                 
                     (self->base)->pMapEntries = c_pMapEntries;
                 
@@ -19575,7 +19784,16 @@ PyObject* pVertexAttributeDescriptions = NULL;
                 
                 
                     
-                VkVertexInputBindingDescription* c_pVertexBindingDescriptions = ((PyVkVertexInputBindingDescription*)pVertexBindingDescriptions)->base;
+                VkVertexInputBindingDescription* c_pVertexBindingDescriptions = NULL;
+                {
+                    int size = PyList_Size(pVertexBindingDescriptions);
+                    c_pVertexBindingDescriptions = malloc(sizeof(VkVertexInputBindingDescription));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pVertexBindingDescriptions[i] = *( (
+                            (PyVkVertexInputBindingDescription*) PyList_GetItem(pVertexBindingDescriptions, i) )->base);
+                    }
+                }
                 
                     (self->base)->pVertexBindingDescriptions = c_pVertexBindingDescriptions;
                 
@@ -19593,7 +19811,16 @@ PyObject* pVertexAttributeDescriptions = NULL;
                 
                 
                     
-                VkVertexInputAttributeDescription* c_pVertexAttributeDescriptions = ((PyVkVertexInputAttributeDescription*)pVertexAttributeDescriptions)->base;
+                VkVertexInputAttributeDescription* c_pVertexAttributeDescriptions = NULL;
+                {
+                    int size = PyList_Size(pVertexAttributeDescriptions);
+                    c_pVertexAttributeDescriptions = malloc(sizeof(VkVertexInputAttributeDescription));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pVertexAttributeDescriptions[i] = *( (
+                            (PyVkVertexInputAttributeDescription*) PyList_GetItem(pVertexAttributeDescriptions, i) )->base);
+                    }
+                }
                 
                     (self->base)->pVertexAttributeDescriptions = c_pVertexAttributeDescriptions;
                 
@@ -20150,7 +20377,16 @@ PyObject* pScissors = NULL;
                 
                 
                     
-                VkViewport* c_pViewports = ((PyVkViewport*)pViewports)->base;
+                VkViewport* c_pViewports = NULL;
+                {
+                    int size = PyList_Size(pViewports);
+                    c_pViewports = malloc(sizeof(VkViewport));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pViewports[i] = *( (
+                            (PyVkViewport*) PyList_GetItem(pViewports, i) )->base);
+                    }
+                }
                 
                     (self->base)->pViewports = c_pViewports;
                 
@@ -20168,7 +20404,16 @@ PyObject* pScissors = NULL;
                 
                 
                     
-                VkRect2D* c_pScissors = ((PyVkRect2D*)pScissors)->base;
+                VkRect2D* c_pScissors = NULL;
+                {
+                    int size = PyList_Size(pScissors);
+                    c_pScissors = malloc(sizeof(VkRect2D));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pScissors[i] = *( (
+                            (PyVkRect2D*) PyList_GetItem(pScissors, i) )->base);
+                    }
+                }
                 
                     (self->base)->pScissors = c_pScissors;
                 
@@ -21300,7 +21545,16 @@ PyObject* blendConstants = NULL;
                 
                 
                     
-                VkPipelineColorBlendAttachmentState* c_pAttachments = ((PyVkPipelineColorBlendAttachmentState*)pAttachments)->base;
+                VkPipelineColorBlendAttachmentState* c_pAttachments = NULL;
+                {
+                    int size = PyList_Size(pAttachments);
+                    c_pAttachments = malloc(sizeof(VkPipelineColorBlendAttachmentState));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pAttachments[i] = *( (
+                            (PyVkPipelineColorBlendAttachmentState*) PyList_GetItem(pAttachments, i) )->base);
+                    }
+                }
                 
                     (self->base)->pAttachments = c_pAttachments;
                 
@@ -21315,7 +21569,7 @@ PyObject* blendConstants = NULL;
             c_blendConstants = malloc(sizeof(float) * size);
             int i;
             for (i = 0; i < size; i++) {
-                int r = (float) PyFloat_AsDouble(
+                float r = (float) PyFloat_AsDouble(
                     PyList_GetItem(blendConstants, i));
                 memcpy(c_blendConstants + i, &r, sizeof(float));
             }
@@ -22329,7 +22583,16 @@ PyObject* basePipelineIndex = NULL;
                 
                 
                     
-                VkPipelineShaderStageCreateInfo* c_pStages = ((PyVkPipelineShaderStageCreateInfo*)pStages)->base;
+                VkPipelineShaderStageCreateInfo* c_pStages = NULL;
+                {
+                    int size = PyList_Size(pStages);
+                    c_pStages = malloc(sizeof(VkPipelineShaderStageCreateInfo));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pStages[i] = *( (
+                            (PyVkPipelineShaderStageCreateInfo*) PyList_GetItem(pStages, i) )->base);
+                    }
+                }
                 
                     (self->base)->pStages = c_pStages;
                 
@@ -23199,7 +23462,16 @@ PyObject* pPushConstantRanges = NULL;
                 
                 
                     
-                VkPushConstantRange* c_pPushConstantRanges = ((PyVkPushConstantRange*)pPushConstantRanges)->base;
+                VkPushConstantRange* c_pPushConstantRanges = NULL;
+                {
+                    int size = PyList_Size(pPushConstantRanges);
+                    c_pPushConstantRanges = malloc(sizeof(VkPushConstantRange));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pPushConstantRanges[i] = *( (
+                            (PyVkPushConstantRange*) PyList_GetItem(pPushConstantRanges, i) )->base);
+                    }
+                }
                 
                     (self->base)->pPushConstantRanges = c_pPushConstantRanges;
                 
@@ -24678,7 +24950,16 @@ PyObject* pClearValues = NULL;
                 
                 
                     
-                VkClearValue* c_pClearValues = ((PyVkClearValue*)pClearValues)->base;
+                VkClearValue* c_pClearValues = NULL;
+                {
+                    int size = PyList_Size(pClearValues);
+                    c_pClearValues = malloc(sizeof(VkClearValue));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pClearValues[i] = *( (
+                            (PyVkClearValue*) PyList_GetItem(pClearValues, i) )->base);
+                    }
+                }
                 
                     (self->base)->pClearValues = c_pClearValues;
                 
@@ -25532,7 +25813,16 @@ PyObject* pPreserveAttachments = NULL;
                 
                 
                     
-                VkAttachmentReference* c_pInputAttachments = ((PyVkAttachmentReference*)pInputAttachments)->base;
+                VkAttachmentReference* c_pInputAttachments = NULL;
+                {
+                    int size = PyList_Size(pInputAttachments);
+                    c_pInputAttachments = malloc(sizeof(VkAttachmentReference));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pInputAttachments[i] = *( (
+                            (PyVkAttachmentReference*) PyList_GetItem(pInputAttachments, i) )->base);
+                    }
+                }
                 
                     (self->base)->pInputAttachments = c_pInputAttachments;
                 
@@ -25550,7 +25840,16 @@ PyObject* pPreserveAttachments = NULL;
                 
                 
                     
-                VkAttachmentReference* c_pColorAttachments = ((PyVkAttachmentReference*)pColorAttachments)->base;
+                VkAttachmentReference* c_pColorAttachments = NULL;
+                {
+                    int size = PyList_Size(pColorAttachments);
+                    c_pColorAttachments = malloc(sizeof(VkAttachmentReference));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pColorAttachments[i] = *( (
+                            (PyVkAttachmentReference*) PyList_GetItem(pColorAttachments, i) )->base);
+                    }
+                }
                 
                     (self->base)->pColorAttachments = c_pColorAttachments;
                 
@@ -25559,7 +25858,16 @@ PyObject* pPreserveAttachments = NULL;
                 
                 
                     
-                VkAttachmentReference* c_pResolveAttachments = ((PyVkAttachmentReference*)pResolveAttachments)->base;
+                VkAttachmentReference* c_pResolveAttachments = NULL;
+                {
+                    int size = PyList_Size(pResolveAttachments);
+                    c_pResolveAttachments = malloc(sizeof(VkAttachmentReference));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pResolveAttachments[i] = *( (
+                            (PyVkAttachmentReference*) PyList_GetItem(pResolveAttachments, i) )->base);
+                    }
+                }
                 
                     (self->base)->pResolveAttachments = c_pResolveAttachments;
                 
@@ -26082,7 +26390,16 @@ PyObject* pDependencies = NULL;
                 
                 
                     
-                VkAttachmentDescription* c_pAttachments = ((PyVkAttachmentDescription*)pAttachments)->base;
+                VkAttachmentDescription* c_pAttachments = NULL;
+                {
+                    int size = PyList_Size(pAttachments);
+                    c_pAttachments = malloc(sizeof(VkAttachmentDescription));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pAttachments[i] = *( (
+                            (PyVkAttachmentDescription*) PyList_GetItem(pAttachments, i) )->base);
+                    }
+                }
                 
                     (self->base)->pAttachments = c_pAttachments;
                 
@@ -26100,7 +26417,16 @@ PyObject* pDependencies = NULL;
                 
                 
                     
-                VkSubpassDescription* c_pSubpasses = ((PyVkSubpassDescription*)pSubpasses)->base;
+                VkSubpassDescription* c_pSubpasses = NULL;
+                {
+                    int size = PyList_Size(pSubpasses);
+                    c_pSubpasses = malloc(sizeof(VkSubpassDescription));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pSubpasses[i] = *( (
+                            (PyVkSubpassDescription*) PyList_GetItem(pSubpasses, i) )->base);
+                    }
+                }
                 
                     (self->base)->pSubpasses = c_pSubpasses;
                 
@@ -26118,7 +26444,16 @@ PyObject* pDependencies = NULL;
                 
                 
                     
-                VkSubpassDependency* c_pDependencies = ((PyVkSubpassDependency*)pDependencies)->base;
+                VkSubpassDependency* c_pDependencies = NULL;
+                {
+                    int size = PyList_Size(pDependencies);
+                    c_pDependencies = malloc(sizeof(VkSubpassDependency));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        c_pDependencies[i] = *( (
+                            (PyVkSubpassDependency*) PyList_GetItem(pDependencies, i) )->base);
+                    }
+                }
                 
                     (self->base)->pDependencies = c_pDependencies;
                 
@@ -34697,179 +35032,6 @@ PyObject* pResults = NULL;
     // ----------
     // New
     // ----------
-    static PyObject * PyVkDebugReportCallbackCreateInfoEXT_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
-        PyVkDebugReportCallbackCreateInfoEXT *self = (PyVkDebugReportCallbackCreateInfoEXT *)type->tp_alloc(type, 0);
-        if (self == NULL) return NULL;
-        self->base = malloc(sizeof(VkDebugReportCallbackCreateInfoEXT));
-        if (self->base == NULL) {
-            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkDebugReportCallbackCreateInfoEXT");
-            return NULL;
-        }
-
-        return (PyObject *)self;
-    }
-
-
-    // ----------
-    // Del
-    // ---------
-    static void PyVkDebugReportCallbackCreateInfoEXT_del(PyVkDebugReportCallbackCreateInfoEXT* self) {
-        Py_TYPE(self)->tp_free((PyObject*)self);
-    }
-
-
-    // ----------
-    // Init
-    // ----------
-    static int PyVkDebugReportCallbackCreateInfoEXT_init(PyVkDebugReportCallbackCreateInfoEXT *self, PyObject *args, PyObject *kwds) {
-        
-            PyObject* sType = NULL;
-PyObject* flags = NULL;
-PyObject* pfnCallback = NULL;
-PyObject* pUserData = NULL;
-
-            static char *kwlist[] = {"sType","flags","pfnCallback","pUserData",NULL};
-            
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&pfnCallback,&pUserData))
-        return 0;
-    
-
-            
-                
-                
-                
-                    
-                    VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
-                    
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
-                    
-                    VkDebugReportFlagsEXT c_flags = (VkDebugReportFlagsEXT) PyLong_AsLong(flags);
-                    
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
-            
-                
-                
-                
-                    void* c_pUserData = NULL;
-                    (self->base)->pUserData = c_pUserData;
-                
-            
-        
-
-        return 0;
-    }
-
-
-    // ----------
-    // Get
-    // ----------
-    
-        static PyObject* PyVkDebugReportCallbackCreateInfoEXT_getsType(PyVkDebugReportCallbackCreateInfoEXT *self, void *closure) {
-            
-            
-                
-            PyObject* pyvalue = PyLong_FromLong(((self->base)->sType));
-            
-                Py_INCREF(pyvalue);
-                return pyvalue;
-            
-        }
-    
-        static PyObject* PyVkDebugReportCallbackCreateInfoEXT_getpNext(PyVkDebugReportCallbackCreateInfoEXT *self, void *closure) {
-            
-            
-                
-        Py_INCREF(Py_None);
-        PyObject* pyvalue = Py_None;
-        
-                Py_INCREF(pyvalue);
-                return pyvalue;
-            
-        }
-    
-        static PyObject* PyVkDebugReportCallbackCreateInfoEXT_getflags(PyVkDebugReportCallbackCreateInfoEXT *self, void *closure) {
-            
-            
-                
-            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
-            
-                Py_INCREF(pyvalue);
-                return pyvalue;
-            
-        }
-    
-        static PyObject* PyVkDebugReportCallbackCreateInfoEXT_getpfnCallback(PyVkDebugReportCallbackCreateInfoEXT *self, void *closure) {
-            
-            
-                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
-                return NULL;
-            
-        }
-    
-        static PyObject* PyVkDebugReportCallbackCreateInfoEXT_getpUserData(PyVkDebugReportCallbackCreateInfoEXT *self, void *closure) {
-            
-            
-                
-        Py_INCREF(Py_None);
-        PyObject* pyvalue = Py_None;
-        
-                Py_INCREF(pyvalue);
-                return pyvalue;
-            
-        }
-    
-
-
-    // ----------
-    // PyGetSetDef
-    // ----------
-    static PyGetSetDef PyVkDebugReportCallbackCreateInfoEXT_getsetters[] = {
-        
-            {"sType", (getter)PyVkDebugReportCallbackCreateInfoEXT_getsType, NULL, "", NULL},
-        
-            {"pNext", (getter)PyVkDebugReportCallbackCreateInfoEXT_getpNext, NULL, "", NULL},
-        
-            {"flags", (getter)PyVkDebugReportCallbackCreateInfoEXT_getflags, NULL, "", NULL},
-        
-            {"pfnCallback", (getter)PyVkDebugReportCallbackCreateInfoEXT_getpfnCallback, NULL, "", NULL},
-        
-            {"pUserData", (getter)PyVkDebugReportCallbackCreateInfoEXT_getpUserData, NULL, "", NULL},
-        
-        {NULL}
-    };
-
-
-
-
-    
-    
-
-
-    
-    
-        
-
-
-    // ----------
-    // New
-    // ----------
     static PyObject * PyVkValidationFlagsEXT_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
         PyVkValidationFlagsEXT *self = (PyVkValidationFlagsEXT *)type->tp_alloc(type, 0);
         if (self == NULL) return NULL;
@@ -35670,7 +35832,7 @@ PyObject* color = NULL;
             c_color = malloc(sizeof(float) * size);
             int i;
             for (i = 0; i < size; i++) {
-                int r = (float) PyFloat_AsDouble(
+                float r = (float) PyFloat_AsDouble(
                     PyList_GetItem(color, i));
                 memcpy(c_color + i, &r, sizeof(float));
             }
@@ -37304,7 +37466,7 @@ PyObject* uint32 = NULL;
             c_float32 = malloc(sizeof(float) * size);
             int i;
             for (i = 0; i < size; i++) {
-                int r = (float) PyFloat_AsDouble(
+                float r = (float) PyFloat_AsDouble(
                     PyList_GetItem(float32, i));
                 memcpy(c_float32 + i, &r, sizeof(float));
             }
@@ -37324,7 +37486,7 @@ PyObject* uint32 = NULL;
             c_int32 = malloc(sizeof(int32_t) * size);
             int i;
             for (i = 0; i < size; i++) {
-                int r = (int32_t) PyLong_AsLong(
+                int32_t r = (int32_t) PyLong_AsLong(
                     PyList_GetItem(int32, i));
                 memcpy(c_int32 + i, &r, sizeof(int32_t));
             }
@@ -37344,7 +37506,7 @@ PyObject* uint32 = NULL;
             c_uint32 = malloc(sizeof(uint32_t) * size);
             int i;
             for (i = 0; i < size; i++) {
-                int r = (uint32_t) PyLong_AsLong(
+                uint32_t r = (uint32_t) PyLong_AsLong(
                     PyList_GetItem(uint32, i));
                 memcpy(c_uint32 + i, &r, sizeof(uint32_t));
             }
@@ -39544,22 +39706,6 @@ void init_pytype_objects(void) {
                 "VkPresentInfoKHR object",0,0,0,0,0,0,0,0,
                 PyVkPresentInfoKHR_getsetters,0,0,0,0,0,
                 (initproc)PyVkPresentInfoKHR_init,0,PyVkPresentInfoKHR_new,
-            };
-        
-    
-
-    
-        
-    
-        
-            PyVkDebugReportCallbackCreateInfoEXTType = (PyTypeObject) {
-                PyVarObject_HEAD_INIT(NULL, 0)
-                "vulkan.VkDebugReportCallbackCreateInfoEXT", sizeof(PyVkDebugReportCallbackCreateInfoEXT), 0,
-                (destructor)PyVkDebugReportCallbackCreateInfoEXT_del,
-                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
-                "VkDebugReportCallbackCreateInfoEXT object",0,0,0,0,0,0,0,0,
-                PyVkDebugReportCallbackCreateInfoEXT_getsetters,0,0,0,0,0,
-                (initproc)PyVkDebugReportCallbackCreateInfoEXT_init,0,PyVkDebugReportCallbackCreateInfoEXT_new,
             };
         
     
@@ -45862,7 +46008,7 @@ PyObject* blendConstants = NULL;
             c_blendConstants = malloc(sizeof(float) * size);
             int i;
             for (i = 0; i < size; i++) {
-                int r = (float) PyFloat_AsDouble(
+                float r = (float) PyFloat_AsDouble(
                     PyList_GetItem(blendConstants, i));
                 memcpy(c_blendConstants + i, &r, sizeof(float));
             }
@@ -59545,17 +59691,6 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     
     
         
-        if (PyType_Ready(&PyVkDebugReportCallbackCreateInfoEXTType) < 0)
-            return NULL;
-        Py_INCREF(&PyVkDebugReportCallbackCreateInfoEXTType);
-        PyModule_AddObject(module, "VkDebugReportCallbackCreateInfoEXT", (PyObject *)&PyVkDebugReportCallbackCreateInfoEXTType);
-    
-    
-
-    
-    
-    
-        
         if (PyType_Ready(&PyVkValidationFlagsEXTType) < 0)
             return NULL;
         Py_INCREF(&PyVkValidationFlagsEXTType);
@@ -59732,6 +59867,432 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
 
 
     // ----------
+    // TYPES FOR CUSTOM STRUCTS
+    // ----------
+    
+        if (PyType_Ready(&PyVkDebugReportCallbackCreateInfoEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkDebugReportCallbackCreateInfoEXTType);
+        PyModule_AddObject(module, "VkDebugReportCallbackCreateInfoEXT", (PyObject *)&PyVkDebugReportCallbackCreateInfoEXTType);
+    
+
+    // ----------
+    // TYPES FOR EXTENSION FUNCTIONS
+    // ----------
+    
+    
+     #ifdef VK_USE_PLATFORM_ANDROID_KHR 
+        
+        if (PyType_Ready(&PyvkCreateAndroidSurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateAndroidSurfaceKHRType);
+    
+     #endif 
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceDisplayPropertiesKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceDisplayPropertiesKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceDisplayPlanePropertiesKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceDisplayPlanePropertiesKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetDisplayPlaneSupportedDisplaysKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetDisplayPlaneSupportedDisplaysKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetDisplayModePropertiesKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetDisplayModePropertiesKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCreateDisplayModeKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateDisplayModeKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetDisplayPlaneCapabilitiesKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetDisplayPlaneCapabilitiesKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCreateDisplayPlaneSurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateDisplayPlaneSurfaceKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCreateSharedSwapchainsKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateSharedSwapchainsKHRType);
+    
+    
+
+    
+    
+     #ifdef VK_USE_PLATFORM_MIR_KHR 
+        
+        if (PyType_Ready(&PyvkCreateMirSurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateMirSurfaceKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_MIR_KHR 
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceMirPresentationSupportKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceMirPresentationSupportKHRType);
+    
+     #endif 
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDestroySurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDestroySurfaceKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceSupportKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceSurfaceSupportKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceSurfaceCapabilitiesKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceSurfaceFormatsKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceSurfaceFormatsKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceSurfacePresentModesKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceSurfacePresentModesKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCreateSwapchainKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateSwapchainKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDestroySwapchainKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDestroySwapchainKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetSwapchainImagesKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetSwapchainImagesKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkAcquireNextImageKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkAcquireNextImageKHRType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkQueuePresentKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkQueuePresentKHRType);
+    
+    
+
+    
+    
+     #ifdef VK_USE_PLATFORM_WAYLAND_KHR 
+        
+        if (PyType_Ready(&PyvkCreateWaylandSurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateWaylandSurfaceKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_WAYLAND_KHR 
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceWaylandPresentationSupportKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_WIN32_KHR 
+        
+        if (PyType_Ready(&PyvkCreateWin32SurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateWin32SurfaceKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_WIN32_KHR 
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceWin32PresentationSupportKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceWin32PresentationSupportKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_XLIB_KHR 
+        
+        if (PyType_Ready(&PyvkCreateXlibSurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateXlibSurfaceKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_XLIB_KHR 
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceXlibPresentationSupportKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_XCB_KHR 
+        
+        if (PyType_Ready(&PyvkCreateXcbSurfaceKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateXcbSurfaceKHRType);
+    
+     #endif 
+
+    
+    
+     #ifdef VK_USE_PLATFORM_XCB_KHR 
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceXcbPresentationSupportKHRType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceXcbPresentationSupportKHRType);
+    
+     #endif 
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCreateDebugReportCallbackEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateDebugReportCallbackEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDestroyDebugReportCallbackEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDestroyDebugReportCallbackEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDebugReportMessageEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDebugReportMessageEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDebugMarkerSetObjectNameEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDebugMarkerSetObjectNameEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDebugMarkerSetObjectTagEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDebugMarkerSetObjectTagEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCmdDebugMarkerBeginEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCmdDebugMarkerBeginEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCmdDebugMarkerEndEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCmdDebugMarkerEndEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCmdDebugMarkerInsertEXTType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCmdDebugMarkerInsertEXTType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceExternalImageFormatPropertiesNVType);
+    
+    
+
+    
+    
+     #ifdef VK_USE_PLATFORM_WIN32_KHR 
+        
+        if (PyType_Ready(&PyvkGetMemoryWin32HandleNVType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetMemoryWin32HandleNVType);
+    
+     #endif 
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCmdDrawIndirectCountAMDType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCmdDrawIndirectCountAMDType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCmdDrawIndexedIndirectCountAMDType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCmdDrawIndexedIndirectCountAMDType);
+    
+    
+
+    
+
+
+    // ----------
     // EXCEPTIONS
     // ----------
     VulkanError = PyErr_NewException("vulkan.VulkanError", NULL, NULL);
@@ -59739,73 +60300,73 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     PyModule_AddObject(module, "VulkanError", VulkanError);
 
     
-        VkErrorFeatureNotPresent = PyErr_NewException("vulkan.VkErrorFeatureNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorFeatureNotPresent);
-        PyModule_AddObject(module, "VkErrorFeatureNotPresent", VkErrorFeatureNotPresent);
-    
-        VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorExtensionNotPresent);
-        PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
-    
-        VkNotReady = PyErr_NewException("vulkan.VkNotReady", VulkanError, NULL);
-        Py_INCREF(VkNotReady);
-        PyModule_AddObject(module, "VkNotReady", VkNotReady);
-    
-        VkEventReset = PyErr_NewException("vulkan.VkEventReset", VulkanError, NULL);
-        Py_INCREF(VkEventReset);
-        PyModule_AddObject(module, "VkEventReset", VkEventReset);
-    
-        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
-        Py_INCREF(VkErrorDeviceLost);
-        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
-    
-        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
-        Py_INCREF(VkIncomplete);
-        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
-    
-        VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
-        Py_INCREF(VkErrorFormatNotSupported);
-        PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
-    
         VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
         Py_INCREF(VkErrorOutOfHostMemory);
         PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
-    
-        VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
-        Py_INCREF(VkTimeout);
-        PyModule_AddObject(module, "VkTimeout", VkTimeout);
-    
-        VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorLayerNotPresent);
-        PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
-    
-        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
-        Py_INCREF(VkErrorFragmentedPool);
-        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
-    
-        VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
-        Py_INCREF(VkErrorInitializationFailed);
-        PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
-    
-        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
-        Py_INCREF(VkErrorTooManyObjects);
-        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
-    
-        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
-        Py_INCREF(VkErrorMemoryMapFailed);
-        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
-    
-        VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
-        Py_INCREF(VkErrorIncompatibleDriver);
-        PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
     
         VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
         Py_INCREF(VkEventSet);
         PyModule_AddObject(module, "VkEventSet", VkEventSet);
     
+        VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorExtensionNotPresent);
+        PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
+    
         VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
         Py_INCREF(VkErrorOutOfDeviceMemory);
         PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
+    
+        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
+        Py_INCREF(VkIncomplete);
+        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
+    
+        VkEventReset = PyErr_NewException("vulkan.VkEventReset", VulkanError, NULL);
+        Py_INCREF(VkEventReset);
+        PyModule_AddObject(module, "VkEventReset", VkEventReset);
+    
+        VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
+        Py_INCREF(VkErrorInitializationFailed);
+        PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
+    
+        VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
+        Py_INCREF(VkErrorFormatNotSupported);
+        PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
+    
+        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
+        Py_INCREF(VkErrorDeviceLost);
+        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
+    
+        VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
+        Py_INCREF(VkErrorIncompatibleDriver);
+        PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
+    
+        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
+        Py_INCREF(VkErrorFragmentedPool);
+        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
+    
+        VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
+        Py_INCREF(VkTimeout);
+        PyModule_AddObject(module, "VkTimeout", VkTimeout);
+    
+        VkNotReady = PyErr_NewException("vulkan.VkNotReady", VulkanError, NULL);
+        Py_INCREF(VkNotReady);
+        PyModule_AddObject(module, "VkNotReady", VkNotReady);
+    
+        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
+        Py_INCREF(VkErrorTooManyObjects);
+        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
+    
+        VkErrorFeatureNotPresent = PyErr_NewException("vulkan.VkErrorFeatureNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorFeatureNotPresent);
+        PyModule_AddObject(module, "VkErrorFeatureNotPresent", VkErrorFeatureNotPresent);
+    
+        VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorLayerNotPresent);
+        PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
+    
+        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
+        Py_INCREF(VkErrorMemoryMapFailed);
+        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
     
 
 

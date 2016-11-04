@@ -129,7 +129,7 @@ def python_to_c(member, pyname, cname, return_value='NULL',
             {cname} = malloc(sizeof({ctype}) * size);
             int i;
             for (i = 0; i < size; i++) {{
-                int r = ({ctype}) {py_function}(
+                {ctype} r = ({ctype}) {py_function}(
                     PyList_GetItem({pyname}, i));
                 memcpy({cname} + i, &r, sizeof({ctype}));
             }}
@@ -223,7 +223,7 @@ def python_to_c(member, pyname, cname, return_value='NULL',
 
         if signature['is_struct'] or signature['is_union']:
             # pointer
-            if raw_signature.endswith('*') and force_array \
+            if (raw_signature.endswith('*') and force_array) \
                or raw_signature.endswith(']'):
                 return '''
                 {vkname}* {cname} = NULL;

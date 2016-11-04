@@ -37,7 +37,7 @@
 
             {% for m in s.members %}
                 {% set cname = 'c_' ~ m.name %}
-                {% set jr = m|python_to_c(m.name, cname, '-1') %}
+                {% set jr = m|python_to_c(m.name, cname, '-1', force_array=m.force_array) %}
                 {% if jr %}
                     {{jr}}
                     {{cname|copy_in_object(m)}}

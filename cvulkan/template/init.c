@@ -21,12 +21,34 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     // TYPES
     // ----------
     init_pytype_objects();
-    {% for s in model['structs'] %}
+    {% for s in model.structs %}
     {% call check_define(s.define) %}
         if (PyType_Ready(&Py{{s.name}}Type) < 0)
             return NULL;
         Py_INCREF(&Py{{s.name}}Type);
         PyModule_AddObject(module, "{{s.name}}", (PyObject *)&Py{{s.name}}Type);
+    {% endcall %}
+    {% endfor %}
+
+
+    // ----------
+    // TYPES FOR CUSTOM STRUCTS
+    // ----------
+    {% for s in model.custom_structs %}
+        if (PyType_Ready(&Py{{s}}Type) < 0)
+            return NULL;
+        Py_INCREF(&Py{{s}}Type);
+        PyModule_AddObject(module, "{{s}}", (PyObject *)&Py{{s}}Type);
+    {% endfor %}
+
+    // ----------
+    // TYPES FOR EXTENSION FUNCTIONS
+    // ----------
+    {% for f in model.extension_functions %}
+    {% call check_define(f.define) %}
+        if (PyType_Ready(&Py{{f.name}}Type) < 0)
+            return NULL;
+        Py_INCREF(&Py{{f.name}}Type);
     {% endcall %}
     {% endfor %}
 

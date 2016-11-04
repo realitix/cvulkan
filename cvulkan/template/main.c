@@ -46,6 +46,12 @@ int raise(int value) {
 
 
 // ---------------
+// DECLARE CUSTOM STRUCTS
+// ---------------
+{% include 'custom_structs.c' %}
+
+
+// ---------------
 // CREATE SDK LOADER FUNCTION
 // ---------------
 static int init_import_sdk(void) {
@@ -59,6 +65,14 @@ static int init_import_sdk(void) {
         {{f.name}} = (PFN_{{f.name}})dlsym(vk_sdk, "{{f.name}}");
         if ({{f.name}} == NULL) {
             PyErr_SetString(PyExc_ImportError, "Can't load {{f.name}} in sdk");
+            return 0;
+        }
+    {% endfor %}
+
+    {% for f in model.custom_functions %}
+        {{f}} = (PFN_{{f}})dlsym(vk_sdk, "{{f}}");
+        if ({{f}} == NULL) {
+            PyErr_SetString(PyExc_ImportError, "Can't load {{f}} in sdk");
             return 0;
         }
     {% endfor %}
