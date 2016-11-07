@@ -4303,63 +4303,60 @@ typedef struct VkValidationFlagsEXT {
 // ---------------
 static PyObject *VulkanError;
 
-    static PyObject *VkErrorExtensionNotPresent;
+    static PyObject *VkErrorLayerNotPresent;
 
-    static PyObject *VkErrorMemoryMapFailed;
-
-    static PyObject *VkEventReset;
-
-    static PyObject *VkErrorIncompatibleDriver;
+    static PyObject *VkErrorTooManyObjects;
 
     static PyObject *VkNotReady;
 
-    static PyObject *VkEventSet;
-
     static PyObject *VkErrorFormatNotSupported;
+
+    static PyObject *VkEventReset;
+
+    static PyObject *VkErrorDeviceLost;
 
     static PyObject *VkErrorFeatureNotPresent;
 
     static PyObject *VkErrorInitializationFailed;
 
-    static PyObject *VkErrorFragmentedPool;
-
-    static PyObject *VkErrorOutOfDeviceMemory;
-
-    static PyObject *VkErrorTooManyObjects;
-
-    static PyObject *VkErrorOutOfHostMemory;
-
-    static PyObject *VkIncomplete;
-
-    static PyObject *VkErrorLayerNotPresent;
+    static PyObject *VkEventSet;
 
     static PyObject *VkTimeout;
 
-    static PyObject *VkErrorDeviceLost;
+    static PyObject *VkErrorOutOfHostMemory;
+
+    static PyObject *VkErrorMemoryMapFailed;
+
+    static PyObject *VkErrorFragmentedPool;
+
+    static PyObject *VkErrorIncompatibleDriver;
+
+    static PyObject *VkIncomplete;
+
+    static PyObject *VkErrorOutOfDeviceMemory;
+
+    static PyObject *VkErrorExtensionNotPresent;
 
 
 int raise(int value) {
     switch(value) {
         
-            case -7: PyErr_SetString(VkErrorExtensionNotPresent, "");
+            case -6: PyErr_SetString(VkErrorLayerNotPresent, "");
                 return 1;
         
-            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
-                return 1;
-        
-            case 4: PyErr_SetString(VkEventReset, "");
-                return 1;
-        
-            case -9: PyErr_SetString(VkErrorIncompatibleDriver, "");
+            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
                 return 1;
         
             case 1: PyErr_SetString(VkNotReady, "");
                 return 1;
         
-            case 3: PyErr_SetString(VkEventSet, "");
+            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
                 return 1;
         
-            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
+            case 4: PyErr_SetString(VkEventReset, "");
+                return 1;
+        
+            case -4: PyErr_SetString(VkErrorDeviceLost, "");
                 return 1;
         
             case -8: PyErr_SetString(VkErrorFeatureNotPresent, "");
@@ -4368,28 +4365,31 @@ int raise(int value) {
             case -3: PyErr_SetString(VkErrorInitializationFailed, "");
                 return 1;
         
-            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
-                return 1;
-        
-            case -2: PyErr_SetString(VkErrorOutOfDeviceMemory, "");
-                return 1;
-        
-            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
-                return 1;
-        
-            case -1: PyErr_SetString(VkErrorOutOfHostMemory, "");
-                return 1;
-        
-            case 5: PyErr_SetString(VkIncomplete, "");
-                return 1;
-        
-            case -6: PyErr_SetString(VkErrorLayerNotPresent, "");
+            case 3: PyErr_SetString(VkEventSet, "");
                 return 1;
         
             case 2: PyErr_SetString(VkTimeout, "");
                 return 1;
         
-            case -4: PyErr_SetString(VkErrorDeviceLost, "");
+            case -1: PyErr_SetString(VkErrorOutOfHostMemory, "");
+                return 1;
+        
+            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
+                return 1;
+        
+            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
+                return 1;
+        
+            case -9: PyErr_SetString(VkErrorIncompatibleDriver, "");
+                return 1;
+        
+            case 5: PyErr_SetString(VkIncomplete, "");
+                return 1;
+        
+            case -2: PyErr_SetString(VkErrorOutOfDeviceMemory, "");
+                return 1;
+        
+            case -7: PyErr_SetString(VkErrorExtensionNotPresent, "");
                 return 1;
         
        }
@@ -7710,28 +7710,33 @@ PyObject* y = NULL;
 
             static char *kwlist[] = {"x","y",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &x,&y))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &x,&y))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             int32_t c_x = (int32_t) PyLong_AsLong(x);
         
-                    (self->base)->x = c_x;
-                
-            
-                
-                
-                
+                        (self->base)->x = c_x;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             int32_t c_y = (int32_t) PyLong_AsLong(y);
         
-                    (self->base)->y = c_y;
-                
+                        (self->base)->y = c_y;
+                    
+            
             
         
 
@@ -7826,37 +7831,44 @@ PyObject* z = NULL;
 
             static char *kwlist[] = {"x","y","z",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &x,&y,&z))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &x,&y,&z))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             int32_t c_x = (int32_t) PyLong_AsLong(x);
         
-                    (self->base)->x = c_x;
-                
-            
-                
-                
-                
+                        (self->base)->x = c_x;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             int32_t c_y = (int32_t) PyLong_AsLong(y);
         
-                    (self->base)->y = c_y;
-                
-            
-                
-                
-                
+                        (self->base)->y = c_y;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             int32_t c_z = (int32_t) PyLong_AsLong(z);
         
-                    (self->base)->z = c_z;
-                
+                        (self->base)->z = c_z;
+                    
+            
             
         
 
@@ -7963,28 +7975,33 @@ PyObject* height = NULL;
 
             static char *kwlist[] = {"width","height",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &width,&height))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &width,&height))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_width = (uint32_t) PyLong_AsLong(width);
         
-                    (self->base)->width = c_width;
-                
-            
-                
-                
-                
+                        (self->base)->width = c_width;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_height = (uint32_t) PyLong_AsLong(height);
         
-                    (self->base)->height = c_height;
-                
+                        (self->base)->height = c_height;
+                    
+            
             
         
 
@@ -8079,37 +8096,44 @@ PyObject* depth = NULL;
 
             static char *kwlist[] = {"width","height","depth",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &width,&height,&depth))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &width,&height,&depth))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_width = (uint32_t) PyLong_AsLong(width);
         
-                    (self->base)->width = c_width;
-                
-            
-                
-                
-                
+                        (self->base)->width = c_width;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_height = (uint32_t) PyLong_AsLong(height);
         
-                    (self->base)->height = c_height;
-                
-            
-                
-                
-                
+                        (self->base)->height = c_height;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_depth = (uint32_t) PyLong_AsLong(depth);
         
-                    (self->base)->depth = c_depth;
-                
+                        (self->base)->depth = c_depth;
+                    
+            
             
         
 
@@ -8220,64 +8244,77 @@ PyObject* maxDepth = NULL;
 
             static char *kwlist[] = {"x","y","width","height","minDepth","maxDepth",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &x,&y,&width,&height,&minDepth,&maxDepth))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &x,&y,&width,&height,&minDepth,&maxDepth))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             float c_x = (float) PyFloat_AsDouble(x);
         
-                    (self->base)->x = c_x;
-                
-            
-                
-                
-                
+                        (self->base)->x = c_x;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_y = (float) PyFloat_AsDouble(y);
         
-                    (self->base)->y = c_y;
-                
-            
-                
-                
-                
+                        (self->base)->y = c_y;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_width = (float) PyFloat_AsDouble(width);
         
-                    (self->base)->width = c_width;
-                
-            
-                
-                
-                
+                        (self->base)->width = c_width;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_height = (float) PyFloat_AsDouble(height);
         
-                    (self->base)->height = c_height;
-                
-            
-                
-                
-                
+                        (self->base)->height = c_height;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_minDepth = (float) PyFloat_AsDouble(minDepth);
         
-                    (self->base)->minDepth = c_minDepth;
-                
-            
-                
-                
-                
+                        (self->base)->minDepth = c_minDepth;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_maxDepth = (float) PyFloat_AsDouble(maxDepth);
         
-                    (self->base)->maxDepth = c_maxDepth;
-                
+                        (self->base)->maxDepth = c_maxDepth;
+                    
+            
             
         
 
@@ -8423,28 +8460,33 @@ PyObject* extent = NULL;
 
             static char *kwlist[] = {"offset","extent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &offset,&extent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &offset,&extent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkOffset2D c_offset = *(((PyVkOffset2D*)offset)->base);
                 
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_extent = *(((PyVkExtent2D*)extent)->base);
                 
-                    (self->base)->extent = c_extent;
-                
+                        (self->base)->extent = c_extent;
+                    
+            
             
         
 
@@ -8544,28 +8586,33 @@ PyObject* extent = NULL;
 
             static char *kwlist[] = {"offset","extent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &offset,&extent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &offset,&extent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkOffset3D c_offset = *(((PyVkOffset3D*)offset)->base);
                 
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent3D c_extent = *(((PyVkExtent3D*)extent)->base);
                 
-                    (self->base)->extent = c_extent;
-                
+                        (self->base)->extent = c_extent;
+                    
+            
             
         
 
@@ -8666,37 +8713,44 @@ PyObject* layerCount = NULL;
 
             static char *kwlist[] = {"rect","baseArrayLayer","layerCount",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &rect,&baseArrayLayer,&layerCount))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &rect,&baseArrayLayer,&layerCount))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkRect2D c_rect = *(((PyVkRect2D*)rect)->base);
                 
-                    (self->base)->rect = c_rect;
-                
-            
-                
-                
-                
+                        (self->base)->rect = c_rect;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_baseArrayLayer = (uint32_t) PyLong_AsLong(baseArrayLayer);
         
-                    (self->base)->baseArrayLayer = c_baseArrayLayer;
-                
-            
-                
-                
-                
+                        (self->base)->baseArrayLayer = c_baseArrayLayer;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_layerCount = (uint32_t) PyLong_AsLong(layerCount);
         
-                    (self->base)->layerCount = c_layerCount;
-                
+                        (self->base)->layerCount = c_layerCount;
+                    
+            
             
         
 
@@ -8808,46 +8862,55 @@ PyObject* a = NULL;
 
             static char *kwlist[] = {"r","g","b","a",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &r,&g,&b,&a))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &r,&g,&b,&a))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkComponentSwizzle c_r = (VkComponentSwizzle) PyLong_AsLong(r);
                     
-                    (self->base)->r = c_r;
-                
-            
-                
-                
-                
+                        (self->base)->r = c_r;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkComponentSwizzle c_g = (VkComponentSwizzle) PyLong_AsLong(g);
                     
-                    (self->base)->g = c_g;
-                
-            
-                
-                
-                
+                        (self->base)->g = c_g;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkComponentSwizzle c_b = (VkComponentSwizzle) PyLong_AsLong(b);
                     
-                    (self->base)->b = c_b;
-                
-            
-                
-                
-                
+                        (self->base)->b = c_b;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkComponentSwizzle c_a = (VkComponentSwizzle) PyLong_AsLong(a);
                     
-                    (self->base)->a = c_a;
-                
+                        (self->base)->a = c_a;
+                    
+            
             
         
 
@@ -9358,31 +9421,37 @@ PyObject* apiVersion = NULL;
 
             static char *kwlist[] = {"sType","pApplicationName","applicationVersion","pEngineName","engineVersion","apiVersion",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&pApplicationName,&applicationVersion,&pEngineName,&engineVersion,&apiVersion))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&pApplicationName,&applicationVersion,&pEngineName,&engineVersion,&apiVersion))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
         char* c_pApplicationName = NULL;
         if (pApplicationName != Py_None)
         {
@@ -9395,22 +9464,26 @@ PyObject* apiVersion = NULL;
             c_pApplicationName = strdup(tmp1);
             Py_DECREF(tmp0);
         }
-                    (self->base)->pApplicationName = c_pApplicationName;
-                
-            
-                
-                
-                
+                        (self->base)->pApplicationName = c_pApplicationName;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_applicationVersion = (uint32_t) PyLong_AsLong(applicationVersion);
         
-                    (self->base)->applicationVersion = c_applicationVersion;
-                
-            
-                
-                
-                
+                        (self->base)->applicationVersion = c_applicationVersion;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         char* c_pEngineName = NULL;
         if (pEngineName != Py_None)
         {
@@ -9423,26 +9496,31 @@ PyObject* apiVersion = NULL;
             c_pEngineName = strdup(tmp1);
             Py_DECREF(tmp0);
         }
-                    (self->base)->pEngineName = c_pEngineName;
-                
-            
-                
-                
-                
+                        (self->base)->pEngineName = c_pEngineName;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_engineVersion = (uint32_t) PyLong_AsLong(engineVersion);
         
-                    (self->base)->engineVersion = c_engineVersion;
-                
-            
-                
-                
-                
+                        (self->base)->engineVersion = c_engineVersion;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_apiVersion = (uint32_t) PyLong_AsLong(apiVersion);
         
-                    (self->base)->apiVersion = c_apiVersion;
-                
+                        (self->base)->apiVersion = c_apiVersion;
+                    
+            
             
         
 
@@ -9605,37 +9683,50 @@ PyObject* pfnInternalFree = NULL;
 
             static char *kwlist[] = {"pfnAllocation","pfnReallocation","pfnFree","pfnInternalAllocation","pfnInternalFree",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &pfnAllocation,&pfnReallocation,&pfnFree,&pfnInternalAllocation,&pfnInternalFree))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &pfnAllocation,&pfnReallocation,&pfnFree,&pfnInternalAllocation,&pfnInternalFree))
         return 0;
     
 
             
-                
-                
-                
-                    void * c_pUserData = NULL;
-                    (self->base)->pUserData = c_pUserData;
-                
             
-                
-                
-                
+                    
+                    
+                    
+                        void * c_pUserData = NULL;
+                        (self->base)->pUserData = c_pUserData;
+                    
             
-                
-                
-                
             
-                
-                
-                
             
-                
-                
-                
+                    
+                    
+                    
             
-                
-                
-                
+            
+            
+                    
+                    
+                    
+            
+            
+            
+                    
+                    
+                    
+            
+            
+            
+                    
+                    
+                    
+            
+            
+            
+                    
+                    
+                    
+            
             
         
 
@@ -9770,61 +9861,76 @@ PyObject* pQueuePriorities = NULL;
 
             static char *kwlist[] = {"sType","flags","queueFamilyIndex","queueCount","pQueuePriorities",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &sType,&flags,&queueFamilyIndex,&queueCount,&pQueuePriorities))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &sType,&flags,&queueFamilyIndex,&queueCount,&pQueuePriorities))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceQueueCreateFlags c_flags = (VkDeviceQueueCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queueFamilyIndex = (uint32_t) PyLong_AsLong(queueFamilyIndex);
         
-                    (self->base)->queueFamilyIndex = c_queueFamilyIndex;
-                
-            
-                
-                
-                
+                        (self->base)->queueFamilyIndex = c_queueFamilyIndex;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queueCount = (uint32_t) PyLong_AsLong(queueCount);
         
-                    (self->base)->queueCount = c_queueCount;
-                
-            
-                
-                
-                
+                        (self->base)->queueCount = c_queueCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         float* c_pQueuePriorities = NULL;
         if (pQueuePriorities == Py_None) {
             c_pQueuePriorities = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pQueuePriorities)) {
+            c_pQueuePriorities = (float*) PyBytes_AsString(pQueuePriorities);
         }
         else {
             int size = PyList_Size(pQueuePriorities);
@@ -9836,8 +9942,9 @@ PyObject* pQueuePriorities = NULL;
                 memcpy(c_pQueuePriorities + i, &r, sizeof(float));
             }
         }
-                    (self->base)->pQueuePriorities = c_pQueuePriorities;
-                
+                        (self->base)->pQueuePriorities = c_pQueuePriorities;
+                    
+            
             
         
 
@@ -9991,53 +10098,63 @@ PyObject* pEnabledFeatures = NULL;
 
             static char *kwlist[] = {"sType","flags","queueCreateInfoCount","pQueueCreateInfos","enabledLayerCount","ppEnabledLayerNames","enabledExtensionCount","ppEnabledExtensionNames","pEnabledFeatures",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOO", kwlist, &sType,&flags,&queueCreateInfoCount,&pQueueCreateInfos,&enabledLayerCount,&ppEnabledLayerNames,&enabledExtensionCount,&ppEnabledExtensionNames,&pEnabledFeatures))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOO", kwlist, &sType,&flags,&queueCreateInfoCount,&pQueueCreateInfos,&enabledLayerCount,&ppEnabledLayerNames,&enabledExtensionCount,&ppEnabledExtensionNames,&pEnabledFeatures))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceCreateFlags c_flags = (VkDeviceCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queueCreateInfoCount = (uint32_t) PyLong_AsLong(queueCreateInfoCount);
         
-                    (self->base)->queueCreateInfoCount = c_queueCreateInfoCount;
-                
-            
-                
-                
-                
+                        (self->base)->queueCreateInfoCount = c_queueCreateInfoCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkDeviceQueueCreateInfo* c_pQueueCreateInfos = NULL;
-                {
+                if (pQueueCreateInfos != Py_None) {
                     int size = PyList_Size(pQueueCreateInfos);
-                    c_pQueueCreateInfos = malloc(sizeof(VkDeviceQueueCreateInfo));
+                    c_pQueueCreateInfos = malloc(size * sizeof(VkDeviceQueueCreateInfo));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pQueueCreateInfos[i] = *( (
@@ -10045,22 +10162,26 @@ PyObject* pEnabledFeatures = NULL;
                     }
                 }
                 
-                    (self->base)->pQueueCreateInfos = c_pQueueCreateInfos;
-                
-            
-                
-                
-                
+                        (self->base)->pQueueCreateInfos = c_pQueueCreateInfos;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_enabledLayerCount = (uint32_t) PyLong_AsLong(enabledLayerCount);
         
-                    (self->base)->enabledLayerCount = c_enabledLayerCount;
-                
-            
-                
-                
-                
+                        (self->base)->enabledLayerCount = c_enabledLayerCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         char** c_ppEnabledLayerNames = NULL;
         {
             int size = PyList_Size(ppEnabledLayerNames);
@@ -10082,22 +10203,26 @@ PyObject* pEnabledFeatures = NULL;
                 Py_DECREF(ascii_str);
             }
         }
-                    (self->base)->ppEnabledLayerNames = c_ppEnabledLayerNames;
-                
-            
-                
-                
-                
+                        (self->base)->ppEnabledLayerNames = c_ppEnabledLayerNames;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_enabledExtensionCount = (uint32_t) PyLong_AsLong(enabledExtensionCount);
         
-                    (self->base)->enabledExtensionCount = c_enabledExtensionCount;
-                
-            
-                
-                
-                
+                        (self->base)->enabledExtensionCount = c_enabledExtensionCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         char** c_ppEnabledExtensionNames = NULL;
         {
             int size = PyList_Size(ppEnabledExtensionNames);
@@ -10119,17 +10244,23 @@ PyObject* pEnabledFeatures = NULL;
                 Py_DECREF(ascii_str);
             }
         }
-                    (self->base)->ppEnabledExtensionNames = c_ppEnabledExtensionNames;
-                
-            
-                
-                
-                
+                        (self->base)->ppEnabledExtensionNames = c_ppEnabledExtensionNames;
                     
-                VkPhysicalDeviceFeatures* c_pEnabledFeatures = ((PyVkPhysicalDeviceFeatures*)pEnabledFeatures)->base;
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPhysicalDeviceFeatures* c_pEnabledFeatures = NULL;
+                if (pEnabledFeatures != Py_None) {
+                    c_pEnabledFeatures = ((PyVkPhysicalDeviceFeatures*)pEnabledFeatures)->base;
+                }
                 
-                    (self->base)->pEnabledFeatures = c_pEnabledFeatures;
-                
+                        (self->base)->pEnabledFeatures = c_pEnabledFeatures;
+                    
+            
             
         
 
@@ -10355,58 +10486,73 @@ PyObject* ppEnabledExtensionNames = NULL;
 
             static char *kwlist[] = {"sType","flags","pApplicationInfo","enabledLayerCount","ppEnabledLayerNames","enabledExtensionCount","ppEnabledExtensionNames",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &sType,&flags,&pApplicationInfo,&enabledLayerCount,&ppEnabledLayerNames,&enabledExtensionCount,&ppEnabledExtensionNames))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &sType,&flags,&pApplicationInfo,&enabledLayerCount,&ppEnabledLayerNames,&enabledExtensionCount,&ppEnabledExtensionNames))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkInstanceCreateFlags c_flags = (VkInstanceCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-                VkApplicationInfo* c_pApplicationInfo = ((PyVkApplicationInfo*)pApplicationInfo)->base;
-                
-                    (self->base)->pApplicationInfo = c_pApplicationInfo;
-                
             
-                
-                
-                
+            
+            
                     
+                    
+                    
+                        
+                VkApplicationInfo* c_pApplicationInfo = NULL;
+                if (pApplicationInfo != Py_None) {
+                    c_pApplicationInfo = ((PyVkApplicationInfo*)pApplicationInfo)->base;
+                }
+                
+                        (self->base)->pApplicationInfo = c_pApplicationInfo;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_enabledLayerCount = (uint32_t) PyLong_AsLong(enabledLayerCount);
         
-                    (self->base)->enabledLayerCount = c_enabledLayerCount;
-                
-            
-                
-                
-                
+                        (self->base)->enabledLayerCount = c_enabledLayerCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         char** c_ppEnabledLayerNames = NULL;
         {
             int size = PyList_Size(ppEnabledLayerNames);
@@ -10428,22 +10574,26 @@ PyObject* ppEnabledExtensionNames = NULL;
                 Py_DECREF(ascii_str);
             }
         }
-                    (self->base)->ppEnabledLayerNames = c_ppEnabledLayerNames;
-                
-            
-                
-                
-                
+                        (self->base)->ppEnabledLayerNames = c_ppEnabledLayerNames;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_enabledExtensionCount = (uint32_t) PyLong_AsLong(enabledExtensionCount);
         
-                    (self->base)->enabledExtensionCount = c_enabledExtensionCount;
-                
-            
-                
-                
-                
+                        (self->base)->enabledExtensionCount = c_enabledExtensionCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         char** c_ppEnabledExtensionNames = NULL;
         {
             int size = PyList_Size(ppEnabledExtensionNames);
@@ -10465,8 +10615,9 @@ PyObject* ppEnabledExtensionNames = NULL;
                 Py_DECREF(ascii_str);
             }
         }
-                    (self->base)->ppEnabledExtensionNames = c_ppEnabledExtensionNames;
-                
+                        (self->base)->ppEnabledExtensionNames = c_ppEnabledExtensionNames;
+                    
+            
             
         
 
@@ -10904,44 +11055,53 @@ PyObject* memoryTypeIndex = NULL;
 
             static char *kwlist[] = {"sType","allocationSize","memoryTypeIndex",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&allocationSize,&memoryTypeIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&allocationSize,&memoryTypeIndex))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_allocationSize = (VkDeviceSize) PyLong_AsLong(allocationSize);
                     
-                    (self->base)->allocationSize = c_allocationSize;
-                
-            
-                
-                
-                
+                        (self->base)->allocationSize = c_allocationSize;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_memoryTypeIndex = (uint32_t) PyLong_AsLong(memoryTypeIndex);
         
-                    (self->base)->memoryTypeIndex = c_memoryTypeIndex;
-                
+                        (self->base)->memoryTypeIndex = c_memoryTypeIndex;
+                    
+            
             
         
 
@@ -11565,58 +11725,69 @@ PyObject* size = NULL;
 
             static char *kwlist[] = {"sType","memory","offset","size",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&memory,&offset,&size))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&memory,&offset,&size))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
             
-                    (self->base)->memory = c_memory;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
+            
+                        (self->base)->memory = c_memory;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_offset = (VkDeviceSize) PyLong_AsLong(offset);
                     
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_size = (VkDeviceSize) PyLong_AsLong(size);
                     
-                    (self->base)->size = c_size;
-                
+                        (self->base)->size = c_size;
+                    
+            
             
         
 
@@ -11975,42 +12146,49 @@ PyObject* range = NULL;
 
             static char *kwlist[] = {"buffer","offset","range",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &buffer,&offset,&range))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &buffer,&offset,&range))
         return 0;
     
 
             
-                
-                
-                
-                    
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
             
-                    (self->base)->buffer = c_buffer;
-                
-            
-                
-                
-                
                     
+                    
+                    
+                        
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
+            
+                        (self->base)->buffer = c_buffer;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_offset = (VkDeviceSize) PyLong_AsLong(offset);
                     
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_range = (VkDeviceSize) PyLong_AsLong(range);
                     
-                    (self->base)->range = c_range;
-                
+                        (self->base)->range = c_range;
+                    
+            
             
         
 
@@ -12115,47 +12293,54 @@ PyObject* imageLayout = NULL;
 
             static char *kwlist[] = {"sampler","imageView","imageLayout",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sampler,&imageView,&imageLayout))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sampler,&imageView,&imageLayout))
         return 0;
     
 
             
-                
-                
-                
+            
                     
-            VkSampler c_sampler = NULL;
-            if (sampler != Py_None)  {
-                VkSampler* handle_pointer = PyCapsule_GetPointer(
-                    sampler, "VkSampler");
-                c_sampler = *handle_pointer;
-            }
-            
-                    (self->base)->sampler = c_sampler;
-                
-            
-                
-                
-                
                     
-            VkImageView c_imageView = NULL;
-            if (imageView != Py_None)  {
-                VkImageView* handle_pointer = PyCapsule_GetPointer(
-                    imageView, "VkImageView");
-                c_imageView = *handle_pointer;
-            }
-            
-                    (self->base)->imageView = c_imageView;
-                
-            
-                
-                
-                
                     
+                        
+                VkSampler c_sampler = VK_NULL_HANDLE;
+                if (sampler != Py_None)  {
+                    VkSampler* handle_pointer = PyCapsule_GetPointer(
+                        sampler, "VkSampler");
+                    c_sampler = *handle_pointer;
+                }
+            
+                        (self->base)->sampler = c_sampler;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkImageView c_imageView = VK_NULL_HANDLE;
+                if (imageView != Py_None)  {
+                    VkImageView* handle_pointer = PyCapsule_GetPointer(
+                        imageView, "VkImageView");
+                    c_imageView = *handle_pointer;
+                }
+            
+                        (self->base)->imageView = c_imageView;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageLayout c_imageLayout = (VkImageLayout) PyLong_AsLong(imageLayout);
                     
-                    (self->base)->imageLayout = c_imageLayout;
-                
+                        (self->base)->imageLayout = c_imageLayout;
+                    
+            
             
         
 
@@ -12263,85 +12448,101 @@ PyObject* pTexelBufferView = NULL;
 
             static char *kwlist[] = {"sType","dstSet","dstBinding","dstArrayElement","descriptorCount","descriptorType","pImageInfo","pBufferInfo","pTexelBufferView",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOO", kwlist, &sType,&dstSet,&dstBinding,&dstArrayElement,&descriptorCount,&descriptorType,&pImageInfo,&pBufferInfo,&pTexelBufferView))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOO", kwlist, &sType,&dstSet,&dstBinding,&dstArrayElement,&descriptorCount,&descriptorType,&pImageInfo,&pBufferInfo,&pTexelBufferView))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkDescriptorSet c_dstSet = NULL;
-            if (dstSet != Py_None)  {
-                VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
-                    dstSet, "VkDescriptorSet");
-                c_dstSet = *handle_pointer;
-            }
             
-                    (self->base)->dstSet = c_dstSet;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkDescriptorSet c_dstSet = VK_NULL_HANDLE;
+                if (dstSet != Py_None)  {
+                    VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
+                        dstSet, "VkDescriptorSet");
+                    c_dstSet = *handle_pointer;
+                }
+            
+                        (self->base)->dstSet = c_dstSet;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dstBinding = (uint32_t) PyLong_AsLong(dstBinding);
         
-                    (self->base)->dstBinding = c_dstBinding;
-                
-            
-                
-                
-                
+                        (self->base)->dstBinding = c_dstBinding;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dstArrayElement = (uint32_t) PyLong_AsLong(dstArrayElement);
         
-                    (self->base)->dstArrayElement = c_dstArrayElement;
-                
-            
-                
-                
-                
+                        (self->base)->dstArrayElement = c_dstArrayElement;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_descriptorCount = (uint32_t) PyLong_AsLong(descriptorCount);
         
-                    (self->base)->descriptorCount = c_descriptorCount;
-                
-            
-                
-                
-                
+                        (self->base)->descriptorCount = c_descriptorCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDescriptorType c_descriptorType = (VkDescriptorType) PyLong_AsLong(descriptorType);
                     
-                    (self->base)->descriptorType = c_descriptorType;
-                
-            
-                
-                
-                
+                        (self->base)->descriptorType = c_descriptorType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkDescriptorImageInfo* c_pImageInfo = NULL;
-                {
+                if (pImageInfo != Py_None) {
                     int size = PyList_Size(pImageInfo);
-                    c_pImageInfo = malloc(sizeof(VkDescriptorImageInfo));
+                    c_pImageInfo = malloc(size * sizeof(VkDescriptorImageInfo));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pImageInfo[i] = *( (
@@ -12349,17 +12550,19 @@ PyObject* pTexelBufferView = NULL;
                     }
                 }
                 
-                    (self->base)->pImageInfo = c_pImageInfo;
-                
-            
-                
-                
-                
+                        (self->base)->pImageInfo = c_pImageInfo;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkDescriptorBufferInfo* c_pBufferInfo = NULL;
-                {
+                if (pBufferInfo != Py_None) {
                     int size = PyList_Size(pBufferInfo);
-                    c_pBufferInfo = malloc(sizeof(VkDescriptorBufferInfo));
+                    c_pBufferInfo = malloc(size * sizeof(VkDescriptorBufferInfo));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pBufferInfo[i] = *( (
@@ -12367,22 +12570,30 @@ PyObject* pTexelBufferView = NULL;
                     }
                 }
                 
-                    (self->base)->pBufferInfo = c_pBufferInfo;
-                
-            
-                
-                
-                
+                        (self->base)->pBufferInfo = c_pBufferInfo;
                     
-            VkBufferView* c_pTexelBufferView = NULL;
-            if (pTexelBufferView != Py_None)  {
-                VkBufferView* handle_pointer = PyCapsule_GetPointer(
-                    pTexelBufferView, "VkBufferView");
-                c_pTexelBufferView = handle_pointer;
-            }
             
-                    (self->base)->pTexelBufferView = c_pTexelBufferView;
-                
+            
+            
+                    
+                    
+                    
+                        
+                VkBufferView* c_pTexelBufferView = VK_NULL_HANDLE;
+                if (pTexelBufferView != Py_None)  {
+                    int size = PyList_Size(pTexelBufferView);
+                    c_pTexelBufferView = malloc(size * sizeof(VkBufferView));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkBufferView* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pTexelBufferView, i), "VkBufferView");
+                        c_pTexelBufferView[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pTexelBufferView = c_pTexelBufferView;
+                    
+            
             
         
 
@@ -12587,99 +12798,118 @@ PyObject* descriptorCount = NULL;
 
             static char *kwlist[] = {"sType","srcSet","srcBinding","srcArrayElement","dstSet","dstBinding","dstArrayElement","descriptorCount",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &sType,&srcSet,&srcBinding,&srcArrayElement,&dstSet,&dstBinding,&dstArrayElement,&descriptorCount))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &sType,&srcSet,&srcBinding,&srcArrayElement,&dstSet,&dstBinding,&dstArrayElement,&descriptorCount))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkDescriptorSet c_srcSet = NULL;
-            if (srcSet != Py_None)  {
-                VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
-                    srcSet, "VkDescriptorSet");
-                c_srcSet = *handle_pointer;
-            }
             
-                    (self->base)->srcSet = c_srcSet;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkDescriptorSet c_srcSet = VK_NULL_HANDLE;
+                if (srcSet != Py_None)  {
+                    VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
+                        srcSet, "VkDescriptorSet");
+                    c_srcSet = *handle_pointer;
+                }
+            
+                        (self->base)->srcSet = c_srcSet;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_srcBinding = (uint32_t) PyLong_AsLong(srcBinding);
         
-                    (self->base)->srcBinding = c_srcBinding;
-                
-            
-                
-                
-                
+                        (self->base)->srcBinding = c_srcBinding;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_srcArrayElement = (uint32_t) PyLong_AsLong(srcArrayElement);
         
-                    (self->base)->srcArrayElement = c_srcArrayElement;
-                
-            
-                
-                
-                
+                        (self->base)->srcArrayElement = c_srcArrayElement;
                     
-            VkDescriptorSet c_dstSet = NULL;
-            if (dstSet != Py_None)  {
-                VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
-                    dstSet, "VkDescriptorSet");
-                c_dstSet = *handle_pointer;
-            }
             
-                    (self->base)->dstSet = c_dstSet;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkDescriptorSet c_dstSet = VK_NULL_HANDLE;
+                if (dstSet != Py_None)  {
+                    VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
+                        dstSet, "VkDescriptorSet");
+                    c_dstSet = *handle_pointer;
+                }
+            
+                        (self->base)->dstSet = c_dstSet;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dstBinding = (uint32_t) PyLong_AsLong(dstBinding);
         
-                    (self->base)->dstBinding = c_dstBinding;
-                
-            
-                
-                
-                
+                        (self->base)->dstBinding = c_dstBinding;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dstArrayElement = (uint32_t) PyLong_AsLong(dstArrayElement);
         
-                    (self->base)->dstArrayElement = c_dstArrayElement;
-                
-            
-                
-                
-                
+                        (self->base)->dstArrayElement = c_dstArrayElement;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_descriptorCount = (uint32_t) PyLong_AsLong(descriptorCount);
         
-                    (self->base)->descriptorCount = c_descriptorCount;
-                
+                        (self->base)->descriptorCount = c_descriptorCount;
+                    
+            
             
         
 
@@ -12864,79 +13094,98 @@ PyObject* pQueueFamilyIndices = NULL;
 
             static char *kwlist[] = {"sType","flags","size","usage","sharingMode","queueFamilyIndexCount","pQueueFamilyIndices",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &sType,&flags,&size,&usage,&sharingMode,&queueFamilyIndexCount,&pQueueFamilyIndices))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &sType,&flags,&size,&usage,&sharingMode,&queueFamilyIndexCount,&pQueueFamilyIndices))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBufferCreateFlags c_flags = (VkBufferCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_size = (VkDeviceSize) PyLong_AsLong(size);
                     
-                    (self->base)->size = c_size;
-                
-            
-                
-                
-                
+                        (self->base)->size = c_size;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBufferUsageFlags c_usage = (VkBufferUsageFlags) PyLong_AsLong(usage);
                     
-                    (self->base)->usage = c_usage;
-                
-            
-                
-                
-                
+                        (self->base)->usage = c_usage;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSharingMode c_sharingMode = (VkSharingMode) PyLong_AsLong(sharingMode);
                     
-                    (self->base)->sharingMode = c_sharingMode;
-                
-            
-                
-                
-                
+                        (self->base)->sharingMode = c_sharingMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queueFamilyIndexCount = (uint32_t) PyLong_AsLong(queueFamilyIndexCount);
         
-                    (self->base)->queueFamilyIndexCount = c_queueFamilyIndexCount;
-                
-            
-                
-                
-                
+                        (self->base)->queueFamilyIndexCount = c_queueFamilyIndexCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         uint32_t* c_pQueueFamilyIndices = NULL;
         if (pQueueFamilyIndices == Py_None) {
             c_pQueueFamilyIndices = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pQueueFamilyIndices)) {
+            c_pQueueFamilyIndices = (uint32_t*) PyBytes_AsString(pQueueFamilyIndices);
         }
         else {
             int size = PyList_Size(pQueueFamilyIndices);
@@ -12948,8 +13197,9 @@ PyObject* pQueueFamilyIndices = NULL;
                 memcpy(c_pQueueFamilyIndices + i, &r, sizeof(uint32_t));
             }
         }
-                    (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
-                
+                        (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
+                    
+            
             
         
 
@@ -13126,76 +13376,91 @@ PyObject* range = NULL;
 
             static char *kwlist[] = {"sType","flags","buffer","format","offset","range",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&flags,&buffer,&format,&offset,&range))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&flags,&buffer,&format,&offset,&range))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBufferViewCreateFlags c_flags = (VkBufferViewCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
             
-                    (self->base)->buffer = c_buffer;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
+            
+                        (self->base)->buffer = c_buffer;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFormat c_format = (VkFormat) PyLong_AsLong(format);
                     
-                    (self->base)->format = c_format;
-                
-            
-                
-                
-                
+                        (self->base)->format = c_format;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_offset = (VkDeviceSize) PyLong_AsLong(offset);
                     
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_range = (VkDeviceSize) PyLong_AsLong(range);
                     
-                    (self->base)->range = c_range;
-                
+                        (self->base)->range = c_range;
+                    
+            
             
         
 
@@ -13353,37 +13618,44 @@ PyObject* arrayLayer = NULL;
 
             static char *kwlist[] = {"aspectMask","mipLevel","arrayLayer",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &aspectMask,&mipLevel,&arrayLayer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &aspectMask,&mipLevel,&arrayLayer))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkImageAspectFlags c_aspectMask = (VkImageAspectFlags) PyLong_AsLong(aspectMask);
                     
-                    (self->base)->aspectMask = c_aspectMask;
-                
-            
-                
-                
-                
+                        (self->base)->aspectMask = c_aspectMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_mipLevel = (uint32_t) PyLong_AsLong(mipLevel);
         
-                    (self->base)->mipLevel = c_mipLevel;
-                
-            
-                
-                
-                
+                        (self->base)->mipLevel = c_mipLevel;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_arrayLayer = (uint32_t) PyLong_AsLong(arrayLayer);
         
-                    (self->base)->arrayLayer = c_arrayLayer;
-                
+                        (self->base)->arrayLayer = c_arrayLayer;
+                    
+            
             
         
 
@@ -13492,46 +13764,55 @@ PyObject* layerCount = NULL;
 
             static char *kwlist[] = {"aspectMask","mipLevel","baseArrayLayer","layerCount",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &aspectMask,&mipLevel,&baseArrayLayer,&layerCount))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &aspectMask,&mipLevel,&baseArrayLayer,&layerCount))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkImageAspectFlags c_aspectMask = (VkImageAspectFlags) PyLong_AsLong(aspectMask);
                     
-                    (self->base)->aspectMask = c_aspectMask;
-                
-            
-                
-                
-                
+                        (self->base)->aspectMask = c_aspectMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_mipLevel = (uint32_t) PyLong_AsLong(mipLevel);
         
-                    (self->base)->mipLevel = c_mipLevel;
-                
-            
-                
-                
-                
+                        (self->base)->mipLevel = c_mipLevel;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_baseArrayLayer = (uint32_t) PyLong_AsLong(baseArrayLayer);
         
-                    (self->base)->baseArrayLayer = c_baseArrayLayer;
-                
-            
-                
-                
-                
+                        (self->base)->baseArrayLayer = c_baseArrayLayer;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_layerCount = (uint32_t) PyLong_AsLong(layerCount);
         
-                    (self->base)->layerCount = c_layerCount;
-                
+                        (self->base)->layerCount = c_layerCount;
+                    
+            
             
         
 
@@ -13654,55 +13935,66 @@ PyObject* layerCount = NULL;
 
             static char *kwlist[] = {"aspectMask","baseMipLevel","levelCount","baseArrayLayer","layerCount",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &aspectMask,&baseMipLevel,&levelCount,&baseArrayLayer,&layerCount))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &aspectMask,&baseMipLevel,&levelCount,&baseArrayLayer,&layerCount))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkImageAspectFlags c_aspectMask = (VkImageAspectFlags) PyLong_AsLong(aspectMask);
                     
-                    (self->base)->aspectMask = c_aspectMask;
-                
-            
-                
-                
-                
+                        (self->base)->aspectMask = c_aspectMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_baseMipLevel = (uint32_t) PyLong_AsLong(baseMipLevel);
         
-                    (self->base)->baseMipLevel = c_baseMipLevel;
-                
-            
-                
-                
-                
+                        (self->base)->baseMipLevel = c_baseMipLevel;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_levelCount = (uint32_t) PyLong_AsLong(levelCount);
         
-                    (self->base)->levelCount = c_levelCount;
-                
-            
-                
-                
-                
+                        (self->base)->levelCount = c_levelCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_baseArrayLayer = (uint32_t) PyLong_AsLong(baseArrayLayer);
         
-                    (self->base)->baseArrayLayer = c_baseArrayLayer;
-                
-            
-                
-                
-                
+                        (self->base)->baseArrayLayer = c_baseArrayLayer;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_layerCount = (uint32_t) PyLong_AsLong(layerCount);
         
-                    (self->base)->layerCount = c_layerCount;
-                
+                        (self->base)->layerCount = c_layerCount;
+                    
+            
             
         
 
@@ -13836,44 +14128,53 @@ PyObject* dstAccessMask = NULL;
 
             static char *kwlist[] = {"sType","srcAccessMask","dstAccessMask",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&srcAccessMask,&dstAccessMask))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&srcAccessMask,&dstAccessMask))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_srcAccessMask = (VkAccessFlags) PyLong_AsLong(srcAccessMask);
                     
-                    (self->base)->srcAccessMask = c_srcAccessMask;
-                
-            
-                
-                
-                
+                        (self->base)->srcAccessMask = c_srcAccessMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_dstAccessMask = (VkAccessFlags) PyLong_AsLong(dstAccessMask);
                     
-                    (self->base)->dstAccessMask = c_dstAccessMask;
-                
+                        (self->base)->dstAccessMask = c_dstAccessMask;
+                    
+            
             
         
 
@@ -14000,94 +14301,113 @@ PyObject* size = NULL;
 
             static char *kwlist[] = {"sType","srcAccessMask","dstAccessMask","srcQueueFamilyIndex","dstQueueFamilyIndex","buffer","offset","size",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &sType,&srcAccessMask,&dstAccessMask,&srcQueueFamilyIndex,&dstQueueFamilyIndex,&buffer,&offset,&size))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &sType,&srcAccessMask,&dstAccessMask,&srcQueueFamilyIndex,&dstQueueFamilyIndex,&buffer,&offset,&size))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_srcAccessMask = (VkAccessFlags) PyLong_AsLong(srcAccessMask);
                     
-                    (self->base)->srcAccessMask = c_srcAccessMask;
-                
-            
-                
-                
-                
+                        (self->base)->srcAccessMask = c_srcAccessMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_dstAccessMask = (VkAccessFlags) PyLong_AsLong(dstAccessMask);
                     
-                    (self->base)->dstAccessMask = c_dstAccessMask;
-                
-            
-                
-                
-                
+                        (self->base)->dstAccessMask = c_dstAccessMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_srcQueueFamilyIndex = (uint32_t) PyLong_AsLong(srcQueueFamilyIndex);
         
-                    (self->base)->srcQueueFamilyIndex = c_srcQueueFamilyIndex;
-                
-            
-                
-                
-                
+                        (self->base)->srcQueueFamilyIndex = c_srcQueueFamilyIndex;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dstQueueFamilyIndex = (uint32_t) PyLong_AsLong(dstQueueFamilyIndex);
         
-                    (self->base)->dstQueueFamilyIndex = c_dstQueueFamilyIndex;
-                
-            
-                
-                
-                
+                        (self->base)->dstQueueFamilyIndex = c_dstQueueFamilyIndex;
                     
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
             
-                    (self->base)->buffer = c_buffer;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
+            
+                        (self->base)->buffer = c_buffer;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_offset = (VkDeviceSize) PyLong_AsLong(offset);
                     
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_size = (VkDeviceSize) PyLong_AsLong(size);
                     
-                    (self->base)->size = c_size;
-                
+                        (self->base)->size = c_size;
+                    
+            
             
         
 
@@ -14277,103 +14597,124 @@ PyObject* subresourceRange = NULL;
 
             static char *kwlist[] = {"sType","srcAccessMask","dstAccessMask","oldLayout","newLayout","srcQueueFamilyIndex","dstQueueFamilyIndex","image","subresourceRange",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOO", kwlist, &sType,&srcAccessMask,&dstAccessMask,&oldLayout,&newLayout,&srcQueueFamilyIndex,&dstQueueFamilyIndex,&image,&subresourceRange))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOO", kwlist, &sType,&srcAccessMask,&dstAccessMask,&oldLayout,&newLayout,&srcQueueFamilyIndex,&dstQueueFamilyIndex,&image,&subresourceRange))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_srcAccessMask = (VkAccessFlags) PyLong_AsLong(srcAccessMask);
                     
-                    (self->base)->srcAccessMask = c_srcAccessMask;
-                
-            
-                
-                
-                
+                        (self->base)->srcAccessMask = c_srcAccessMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_dstAccessMask = (VkAccessFlags) PyLong_AsLong(dstAccessMask);
                     
-                    (self->base)->dstAccessMask = c_dstAccessMask;
-                
-            
-                
-                
-                
+                        (self->base)->dstAccessMask = c_dstAccessMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageLayout c_oldLayout = (VkImageLayout) PyLong_AsLong(oldLayout);
                     
-                    (self->base)->oldLayout = c_oldLayout;
-                
-            
-                
-                
-                
+                        (self->base)->oldLayout = c_oldLayout;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageLayout c_newLayout = (VkImageLayout) PyLong_AsLong(newLayout);
                     
-                    (self->base)->newLayout = c_newLayout;
-                
-            
-                
-                
-                
+                        (self->base)->newLayout = c_newLayout;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_srcQueueFamilyIndex = (uint32_t) PyLong_AsLong(srcQueueFamilyIndex);
         
-                    (self->base)->srcQueueFamilyIndex = c_srcQueueFamilyIndex;
-                
-            
-                
-                
-                
+                        (self->base)->srcQueueFamilyIndex = c_srcQueueFamilyIndex;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dstQueueFamilyIndex = (uint32_t) PyLong_AsLong(dstQueueFamilyIndex);
         
-                    (self->base)->dstQueueFamilyIndex = c_dstQueueFamilyIndex;
-                
-            
-                
-                
-                
+                        (self->base)->dstQueueFamilyIndex = c_dstQueueFamilyIndex;
                     
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
             
-                    (self->base)->image = c_image;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
+            
+                        (self->base)->image = c_image;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkImageSubresourceRange c_subresourceRange = *(((PyVkImageSubresourceRange*)subresourceRange)->base);
                 
-                    (self->base)->subresourceRange = c_subresourceRange;
-                
+                        (self->base)->subresourceRange = c_subresourceRange;
+                    
+            
             
         
 
@@ -14584,133 +14925,164 @@ PyObject* initialLayout = NULL;
 
             static char *kwlist[] = {"sType","flags","imageType","format","extent","mipLevels","arrayLayers","samples","tiling","usage","sharingMode","queueFamilyIndexCount","pQueueFamilyIndices","initialLayout",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOOOOO", kwlist, &sType,&flags,&imageType,&format,&extent,&mipLevels,&arrayLayers,&samples,&tiling,&usage,&sharingMode,&queueFamilyIndexCount,&pQueueFamilyIndices,&initialLayout))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOOOOO", kwlist, &sType,&flags,&imageType,&format,&extent,&mipLevels,&arrayLayers,&samples,&tiling,&usage,&sharingMode,&queueFamilyIndexCount,&pQueueFamilyIndices,&initialLayout))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageCreateFlags c_flags = (VkImageCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageType c_imageType = (VkImageType) PyLong_AsLong(imageType);
                     
-                    (self->base)->imageType = c_imageType;
-                
-            
-                
-                
-                
+                        (self->base)->imageType = c_imageType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFormat c_format = (VkFormat) PyLong_AsLong(format);
                     
-                    (self->base)->format = c_format;
-                
-            
-                
-                
-                
+                        (self->base)->format = c_format;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent3D c_extent = *(((PyVkExtent3D*)extent)->base);
                 
-                    (self->base)->extent = c_extent;
-                
-            
-                
-                
-                
+                        (self->base)->extent = c_extent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_mipLevels = (uint32_t) PyLong_AsLong(mipLevels);
         
-                    (self->base)->mipLevels = c_mipLevels;
-                
-            
-                
-                
-                
+                        (self->base)->mipLevels = c_mipLevels;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_arrayLayers = (uint32_t) PyLong_AsLong(arrayLayers);
         
-                    (self->base)->arrayLayers = c_arrayLayers;
-                
-            
-                
-                
-                
+                        (self->base)->arrayLayers = c_arrayLayers;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSampleCountFlagBits c_samples = (VkSampleCountFlagBits) PyLong_AsLong(samples);
                     
-                    (self->base)->samples = c_samples;
-                
-            
-                
-                
-                
+                        (self->base)->samples = c_samples;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageTiling c_tiling = (VkImageTiling) PyLong_AsLong(tiling);
                     
-                    (self->base)->tiling = c_tiling;
-                
-            
-                
-                
-                
+                        (self->base)->tiling = c_tiling;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageUsageFlags c_usage = (VkImageUsageFlags) PyLong_AsLong(usage);
                     
-                    (self->base)->usage = c_usage;
-                
-            
-                
-                
-                
+                        (self->base)->usage = c_usage;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSharingMode c_sharingMode = (VkSharingMode) PyLong_AsLong(sharingMode);
                     
-                    (self->base)->sharingMode = c_sharingMode;
-                
-            
-                
-                
-                
+                        (self->base)->sharingMode = c_sharingMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queueFamilyIndexCount = (uint32_t) PyLong_AsLong(queueFamilyIndexCount);
         
-                    (self->base)->queueFamilyIndexCount = c_queueFamilyIndexCount;
-                
-            
-                
-                
-                
+                        (self->base)->queueFamilyIndexCount = c_queueFamilyIndexCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         uint32_t* c_pQueueFamilyIndices = NULL;
         if (pQueueFamilyIndices == Py_None) {
             c_pQueueFamilyIndices = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pQueueFamilyIndices)) {
+            c_pQueueFamilyIndices = (uint32_t*) PyBytes_AsString(pQueueFamilyIndices);
         }
         else {
             int size = PyList_Size(pQueueFamilyIndices);
@@ -14722,17 +15094,20 @@ PyObject* initialLayout = NULL;
                 memcpy(c_pQueueFamilyIndices + i, &r, sizeof(uint32_t));
             }
         }
-                    (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
-                
-            
-                
-                
-                
+                        (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageLayout c_initialLayout = (VkImageLayout) PyLong_AsLong(initialLayout);
                     
-                    (self->base)->initialLayout = c_initialLayout;
-                
+                        (self->base)->initialLayout = c_initialLayout;
+                    
+            
             
         
 
@@ -15129,85 +15504,102 @@ PyObject* subresourceRange = NULL;
 
             static char *kwlist[] = {"sType","flags","image","viewType","format","components","subresourceRange",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &sType,&flags,&image,&viewType,&format,&components,&subresourceRange))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &sType,&flags,&image,&viewType,&format,&components,&subresourceRange))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageViewCreateFlags c_flags = (VkImageViewCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
             
-                    (self->base)->image = c_image;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
+            
+                        (self->base)->image = c_image;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageViewType c_viewType = (VkImageViewType) PyLong_AsLong(viewType);
                     
-                    (self->base)->viewType = c_viewType;
-                
-            
-                
-                
-                
+                        (self->base)->viewType = c_viewType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFormat c_format = (VkFormat) PyLong_AsLong(format);
                     
-                    (self->base)->format = c_format;
-                
-            
-                
-                
-                
+                        (self->base)->format = c_format;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkComponentMapping c_components = *(((PyVkComponentMapping*)components)->base);
                 
-                    (self->base)->components = c_components;
-                
-            
-                
-                
-                
+                        (self->base)->components = c_components;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkImageSubresourceRange c_subresourceRange = *(((PyVkImageSubresourceRange*)subresourceRange)->base);
                 
-                    (self->base)->subresourceRange = c_subresourceRange;
-                
+                        (self->base)->subresourceRange = c_subresourceRange;
+                    
+            
             
         
 
@@ -15384,37 +15776,44 @@ PyObject* size = NULL;
 
             static char *kwlist[] = {"srcOffset","dstOffset","size",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &srcOffset,&dstOffset,&size))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &srcOffset,&dstOffset,&size))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkDeviceSize c_srcOffset = (VkDeviceSize) PyLong_AsLong(srcOffset);
                     
-                    (self->base)->srcOffset = c_srcOffset;
-                
-            
-                
-                
-                
+                        (self->base)->srcOffset = c_srcOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_dstOffset = (VkDeviceSize) PyLong_AsLong(dstOffset);
                     
-                    (self->base)->dstOffset = c_dstOffset;
-                
-            
-                
-                
-                
+                        (self->base)->dstOffset = c_dstOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_size = (VkDeviceSize) PyLong_AsLong(size);
                     
-                    (self->base)->size = c_size;
-                
+                        (self->base)->size = c_size;
+                    
+            
             
         
 
@@ -15524,60 +15923,71 @@ PyObject* flags = NULL;
 
             static char *kwlist[] = {"resourceOffset","size","memory","memoryOffset","flags",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &resourceOffset,&size,&memory,&memoryOffset,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &resourceOffset,&size,&memory,&memoryOffset,&flags))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkDeviceSize c_resourceOffset = (VkDeviceSize) PyLong_AsLong(resourceOffset);
                     
-                    (self->base)->resourceOffset = c_resourceOffset;
-                
-            
-                
-                
-                
+                        (self->base)->resourceOffset = c_resourceOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_size = (VkDeviceSize) PyLong_AsLong(size);
                     
-                    (self->base)->size = c_size;
-                
-            
-                
-                
-                
+                        (self->base)->size = c_size;
                     
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
             
-                    (self->base)->memory = c_memory;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
+            
+                        (self->base)->memory = c_memory;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_memoryOffset = (VkDeviceSize) PyLong_AsLong(memoryOffset);
                     
-                    (self->base)->memoryOffset = c_memoryOffset;
-                
-            
-                
-                
-                
+                        (self->base)->memoryOffset = c_memoryOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSparseMemoryBindFlags c_flags = (VkSparseMemoryBindFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
+                        (self->base)->flags = c_flags;
+                    
+            
             
         
 
@@ -15711,69 +16121,82 @@ PyObject* flags = NULL;
 
             static char *kwlist[] = {"subresource","offset","extent","memory","memoryOffset","flags",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &subresource,&offset,&extent,&memory,&memoryOffset,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &subresource,&offset,&extent,&memory,&memoryOffset,&flags))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkImageSubresource c_subresource = *(((PyVkImageSubresource*)subresource)->base);
                 
-                    (self->base)->subresource = c_subresource;
-                
-            
-                
-                
-                
+                        (self->base)->subresource = c_subresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D c_offset = *(((PyVkOffset3D*)offset)->base);
                 
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent3D c_extent = *(((PyVkExtent3D*)extent)->base);
                 
-                    (self->base)->extent = c_extent;
-                
-            
-                
-                
-                
+                        (self->base)->extent = c_extent;
                     
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
             
-                    (self->base)->memory = c_memory;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
+            
+                        (self->base)->memory = c_memory;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDeviceSize c_memoryOffset = (VkDeviceSize) PyLong_AsLong(memoryOffset);
                     
-                    (self->base)->memoryOffset = c_memoryOffset;
-                
-            
-                
-                
-                
+                        (self->base)->memoryOffset = c_memoryOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSparseMemoryBindFlags c_flags = (VkSparseMemoryBindFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
+                        (self->base)->flags = c_flags;
+                    
+            
             
         
 
@@ -15926,42 +16349,48 @@ PyObject* pBinds = NULL;
 
             static char *kwlist[] = {"buffer","bindCount","pBinds",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &buffer,&bindCount,&pBinds))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &buffer,&bindCount,&pBinds))
         return 0;
     
 
             
-                
-                
-                
-                    
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
             
-                    (self->base)->buffer = c_buffer;
-                
-            
-                
-                
-                
                     
+                    
+                    
+                        
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
+            
+                        (self->base)->buffer = c_buffer;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_bindCount = (uint32_t) PyLong_AsLong(bindCount);
         
-                    (self->base)->bindCount = c_bindCount;
-                
-            
-                
-                
-                
+                        (self->base)->bindCount = c_bindCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSparseMemoryBind* c_pBinds = NULL;
-                {
+                if (pBinds != Py_None) {
                     int size = PyList_Size(pBinds);
-                    c_pBinds = malloc(sizeof(VkSparseMemoryBind));
+                    c_pBinds = malloc(size * sizeof(VkSparseMemoryBind));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pBinds[i] = *( (
@@ -15969,8 +16398,9 @@ PyObject* pBinds = NULL;
                     }
                 }
                 
-                    (self->base)->pBinds = c_pBinds;
-                
+                        (self->base)->pBinds = c_pBinds;
+                    
+            
             
         
 
@@ -16078,42 +16508,48 @@ PyObject* pBinds = NULL;
 
             static char *kwlist[] = {"image","bindCount","pBinds",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &image,&bindCount,&pBinds))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &image,&bindCount,&pBinds))
         return 0;
     
 
             
-                
-                
-                
-                    
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
             
-                    (self->base)->image = c_image;
-                
-            
-                
-                
-                
                     
+                    
+                    
+                        
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
+            
+                        (self->base)->image = c_image;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_bindCount = (uint32_t) PyLong_AsLong(bindCount);
         
-                    (self->base)->bindCount = c_bindCount;
-                
-            
-                
-                
-                
+                        (self->base)->bindCount = c_bindCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSparseMemoryBind* c_pBinds = NULL;
-                {
+                if (pBinds != Py_None) {
                     int size = PyList_Size(pBinds);
-                    c_pBinds = malloc(sizeof(VkSparseMemoryBind));
+                    c_pBinds = malloc(size * sizeof(VkSparseMemoryBind));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pBinds[i] = *( (
@@ -16121,8 +16557,9 @@ PyObject* pBinds = NULL;
                     }
                 }
                 
-                    (self->base)->pBinds = c_pBinds;
-                
+                        (self->base)->pBinds = c_pBinds;
+                    
+            
             
         
 
@@ -16230,42 +16667,48 @@ PyObject* pBinds = NULL;
 
             static char *kwlist[] = {"image","bindCount","pBinds",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &image,&bindCount,&pBinds))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &image,&bindCount,&pBinds))
         return 0;
     
 
             
-                
-                
-                
-                    
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
             
-                    (self->base)->image = c_image;
-                
-            
-                
-                
-                
                     
+                    
+                    
+                        
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
+            
+                        (self->base)->image = c_image;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_bindCount = (uint32_t) PyLong_AsLong(bindCount);
         
-                    (self->base)->bindCount = c_bindCount;
-                
-            
-                
-                
-                
+                        (self->base)->bindCount = c_bindCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSparseImageMemoryBind* c_pBinds = NULL;
-                {
+                if (pBinds != Py_None) {
                     int size = PyList_Size(pBinds);
-                    c_pBinds = malloc(sizeof(VkSparseImageMemoryBind));
+                    c_pBinds = malloc(size * sizeof(VkSparseImageMemoryBind));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pBinds[i] = *( (
@@ -16273,8 +16716,9 @@ PyObject* pBinds = NULL;
                     }
                 }
                 
-                    (self->base)->pBinds = c_pBinds;
-                
+                        (self->base)->pBinds = c_pBinds;
+                    
+            
             
         
 
@@ -16390,67 +16834,84 @@ PyObject* pSignalSemaphores = NULL;
 
             static char *kwlist[] = {"sType","waitSemaphoreCount","pWaitSemaphores","bufferBindCount","pBufferBinds","imageOpaqueBindCount","pImageOpaqueBinds","imageBindCount","pImageBinds","signalSemaphoreCount","pSignalSemaphores",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOO", kwlist, &sType,&waitSemaphoreCount,&pWaitSemaphores,&bufferBindCount,&pBufferBinds,&imageOpaqueBindCount,&pImageOpaqueBinds,&imageBindCount,&pImageBinds,&signalSemaphoreCount,&pSignalSemaphores))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOO", kwlist, &sType,&waitSemaphoreCount,&pWaitSemaphores,&bufferBindCount,&pBufferBinds,&imageOpaqueBindCount,&pImageOpaqueBinds,&imageBindCount,&pImageBinds,&signalSemaphoreCount,&pSignalSemaphores))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_waitSemaphoreCount = (uint32_t) PyLong_AsLong(waitSemaphoreCount);
         
-                    (self->base)->waitSemaphoreCount = c_waitSemaphoreCount;
-                
-            
-                
-                
-                
+                        (self->base)->waitSemaphoreCount = c_waitSemaphoreCount;
                     
-            VkSemaphore* c_pWaitSemaphores = NULL;
-            if (pWaitSemaphores != Py_None)  {
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(
-                    pWaitSemaphores, "VkSemaphore");
-                c_pWaitSemaphores = handle_pointer;
-            }
             
-                    (self->base)->pWaitSemaphores = c_pWaitSemaphores;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkSemaphore* c_pWaitSemaphores = VK_NULL_HANDLE;
+                if (pWaitSemaphores != Py_None)  {
+                    int size = PyList_Size(pWaitSemaphores);
+                    c_pWaitSemaphores = malloc(size * sizeof(VkSemaphore));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkSemaphore* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pWaitSemaphores, i), "VkSemaphore");
+                        c_pWaitSemaphores[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pWaitSemaphores = c_pWaitSemaphores;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_bufferBindCount = (uint32_t) PyLong_AsLong(bufferBindCount);
         
-                    (self->base)->bufferBindCount = c_bufferBindCount;
-                
-            
-                
-                
-                
+                        (self->base)->bufferBindCount = c_bufferBindCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSparseBufferMemoryBindInfo* c_pBufferBinds = NULL;
-                {
+                if (pBufferBinds != Py_None) {
                     int size = PyList_Size(pBufferBinds);
-                    c_pBufferBinds = malloc(sizeof(VkSparseBufferMemoryBindInfo));
+                    c_pBufferBinds = malloc(size * sizeof(VkSparseBufferMemoryBindInfo));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pBufferBinds[i] = *( (
@@ -16458,26 +16919,30 @@ PyObject* pSignalSemaphores = NULL;
                     }
                 }
                 
-                    (self->base)->pBufferBinds = c_pBufferBinds;
-                
-            
-                
-                
-                
+                        (self->base)->pBufferBinds = c_pBufferBinds;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_imageOpaqueBindCount = (uint32_t) PyLong_AsLong(imageOpaqueBindCount);
         
-                    (self->base)->imageOpaqueBindCount = c_imageOpaqueBindCount;
-                
-            
-                
-                
-                
+                        (self->base)->imageOpaqueBindCount = c_imageOpaqueBindCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSparseImageOpaqueMemoryBindInfo* c_pImageOpaqueBinds = NULL;
-                {
+                if (pImageOpaqueBinds != Py_None) {
                     int size = PyList_Size(pImageOpaqueBinds);
-                    c_pImageOpaqueBinds = malloc(sizeof(VkSparseImageOpaqueMemoryBindInfo));
+                    c_pImageOpaqueBinds = malloc(size * sizeof(VkSparseImageOpaqueMemoryBindInfo));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pImageOpaqueBinds[i] = *( (
@@ -16485,26 +16950,30 @@ PyObject* pSignalSemaphores = NULL;
                     }
                 }
                 
-                    (self->base)->pImageOpaqueBinds = c_pImageOpaqueBinds;
-                
-            
-                
-                
-                
+                        (self->base)->pImageOpaqueBinds = c_pImageOpaqueBinds;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_imageBindCount = (uint32_t) PyLong_AsLong(imageBindCount);
         
-                    (self->base)->imageBindCount = c_imageBindCount;
-                
-            
-                
-                
-                
+                        (self->base)->imageBindCount = c_imageBindCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSparseImageMemoryBindInfo* c_pImageBinds = NULL;
-                {
+                if (pImageBinds != Py_None) {
                     int size = PyList_Size(pImageBinds);
-                    c_pImageBinds = malloc(sizeof(VkSparseImageMemoryBindInfo));
+                    c_pImageBinds = malloc(size * sizeof(VkSparseImageMemoryBindInfo));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pImageBinds[i] = *( (
@@ -16512,31 +16981,41 @@ PyObject* pSignalSemaphores = NULL;
                     }
                 }
                 
-                    (self->base)->pImageBinds = c_pImageBinds;
-                
-            
-                
-                
-                
+                        (self->base)->pImageBinds = c_pImageBinds;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_signalSemaphoreCount = (uint32_t) PyLong_AsLong(signalSemaphoreCount);
         
-                    (self->base)->signalSemaphoreCount = c_signalSemaphoreCount;
-                
-            
-                
-                
-                
+                        (self->base)->signalSemaphoreCount = c_signalSemaphoreCount;
                     
-            VkSemaphore* c_pSignalSemaphores = NULL;
-            if (pSignalSemaphores != Py_None)  {
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(
-                    pSignalSemaphores, "VkSemaphore");
-                c_pSignalSemaphores = handle_pointer;
-            }
             
-                    (self->base)->pSignalSemaphores = c_pSignalSemaphores;
-                
+            
+            
+                    
+                    
+                    
+                        
+                VkSemaphore* c_pSignalSemaphores = VK_NULL_HANDLE;
+                if (pSignalSemaphores != Py_None)  {
+                    int size = PyList_Size(pSignalSemaphores);
+                    c_pSignalSemaphores = malloc(size * sizeof(VkSemaphore));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkSemaphore* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pSignalSemaphores, i), "VkSemaphore");
+                        c_pSignalSemaphores[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pSignalSemaphores = c_pSignalSemaphores;
+                    
+            
             
         
 
@@ -16767,55 +17246,66 @@ PyObject* extent = NULL;
 
             static char *kwlist[] = {"srcSubresource","srcOffset","dstSubresource","dstOffset","extent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &srcSubresource,&srcOffset,&dstSubresource,&dstOffset,&extent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &srcSubresource,&srcOffset,&dstSubresource,&dstOffset,&extent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkImageSubresourceLayers c_srcSubresource = *(((PyVkImageSubresourceLayers*)srcSubresource)->base);
                 
-                    (self->base)->srcSubresource = c_srcSubresource;
-                
-            
-                
-                
-                
+                        (self->base)->srcSubresource = c_srcSubresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D c_srcOffset = *(((PyVkOffset3D*)srcOffset)->base);
                 
-                    (self->base)->srcOffset = c_srcOffset;
-                
-            
-                
-                
-                
+                        (self->base)->srcOffset = c_srcOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkImageSubresourceLayers c_dstSubresource = *(((PyVkImageSubresourceLayers*)dstSubresource)->base);
                 
-                    (self->base)->dstSubresource = c_dstSubresource;
-                
-            
-                
-                
-                
+                        (self->base)->dstSubresource = c_dstSubresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D c_dstOffset = *(((PyVkOffset3D*)dstOffset)->base);
                 
-                    (self->base)->dstOffset = c_dstOffset;
-                
-            
-                
-                
-                
+                        (self->base)->dstOffset = c_dstOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent3D c_extent = *(((PyVkExtent3D*)extent)->base);
                 
-                    (self->base)->extent = c_extent;
-                
+                        (self->base)->extent = c_extent;
+                    
+            
             
         
 
@@ -16965,28 +17455,32 @@ PyObject* dstOffsets = NULL;
 
             static char *kwlist[] = {"srcSubresource","srcOffsets","dstSubresource","dstOffsets",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &srcSubresource,&srcOffsets,&dstSubresource,&dstOffsets))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &srcSubresource,&srcOffsets,&dstSubresource,&dstOffsets))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkImageSubresourceLayers c_srcSubresource = *(((PyVkImageSubresourceLayers*)srcSubresource)->base);
                 
-                    (self->base)->srcSubresource = c_srcSubresource;
-                
-            
-                
-                
-                
+                        (self->base)->srcSubresource = c_srcSubresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D* c_srcOffsets = NULL;
-                {
+                if (srcOffsets != Py_None) {
                     int size = PyList_Size(srcOffsets);
-                    c_srcOffsets = malloc(sizeof(VkOffset3D));
+                    c_srcOffsets = malloc(size * sizeof(VkOffset3D));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_srcOffsets[i] = *( (
@@ -16994,28 +17488,32 @@ PyObject* dstOffsets = NULL;
                     }
                 }
                 
-                    
+                        
         memcpy((self->base)->srcOffsets, c_srcOffsets, 2 * sizeof(VkOffset3D));
         
-                
-            
-                
-                
-                
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkImageSubresourceLayers c_dstSubresource = *(((PyVkImageSubresourceLayers*)dstSubresource)->base);
                 
-                    (self->base)->dstSubresource = c_dstSubresource;
-                
-            
-                
-                
-                
+                        (self->base)->dstSubresource = c_dstSubresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D* c_dstOffsets = NULL;
-                {
+                if (dstOffsets != Py_None) {
                     int size = PyList_Size(dstOffsets);
-                    c_dstOffsets = malloc(sizeof(VkOffset3D));
+                    c_dstOffsets = malloc(size * sizeof(VkOffset3D));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_dstOffsets[i] = *( (
@@ -17023,10 +17521,11 @@ PyObject* dstOffsets = NULL;
                     }
                 }
                 
-                    
+                        
         memcpy((self->base)->dstOffsets, c_dstOffsets, 2 * sizeof(VkOffset3D));
         
-                
+                    
+            
             
         
 
@@ -17174,64 +17673,77 @@ PyObject* imageExtent = NULL;
 
             static char *kwlist[] = {"bufferOffset","bufferRowLength","bufferImageHeight","imageSubresource","imageOffset","imageExtent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &bufferOffset,&bufferRowLength,&bufferImageHeight,&imageSubresource,&imageOffset,&imageExtent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &bufferOffset,&bufferRowLength,&bufferImageHeight,&imageSubresource,&imageOffset,&imageExtent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkDeviceSize c_bufferOffset = (VkDeviceSize) PyLong_AsLong(bufferOffset);
                     
-                    (self->base)->bufferOffset = c_bufferOffset;
-                
-            
-                
-                
-                
+                        (self->base)->bufferOffset = c_bufferOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_bufferRowLength = (uint32_t) PyLong_AsLong(bufferRowLength);
         
-                    (self->base)->bufferRowLength = c_bufferRowLength;
-                
-            
-                
-                
-                
+                        (self->base)->bufferRowLength = c_bufferRowLength;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_bufferImageHeight = (uint32_t) PyLong_AsLong(bufferImageHeight);
         
-                    (self->base)->bufferImageHeight = c_bufferImageHeight;
-                
-            
-                
-                
-                
+                        (self->base)->bufferImageHeight = c_bufferImageHeight;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkImageSubresourceLayers c_imageSubresource = *(((PyVkImageSubresourceLayers*)imageSubresource)->base);
                 
-                    (self->base)->imageSubresource = c_imageSubresource;
-                
-            
-                
-                
-                
+                        (self->base)->imageSubresource = c_imageSubresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D c_imageOffset = *(((PyVkOffset3D*)imageOffset)->base);
                 
-                    (self->base)->imageOffset = c_imageOffset;
-                
-            
-                
-                
-                
+                        (self->base)->imageOffset = c_imageOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent3D c_imageExtent = *(((PyVkExtent3D*)imageExtent)->base);
                 
-                    (self->base)->imageExtent = c_imageExtent;
-                
+                        (self->base)->imageExtent = c_imageExtent;
+                    
+            
             
         
 
@@ -17389,55 +17901,66 @@ PyObject* extent = NULL;
 
             static char *kwlist[] = {"srcSubresource","srcOffset","dstSubresource","dstOffset","extent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &srcSubresource,&srcOffset,&dstSubresource,&dstOffset,&extent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &srcSubresource,&srcOffset,&dstSubresource,&dstOffset,&extent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkImageSubresourceLayers c_srcSubresource = *(((PyVkImageSubresourceLayers*)srcSubresource)->base);
                 
-                    (self->base)->srcSubresource = c_srcSubresource;
-                
-            
-                
-                
-                
+                        (self->base)->srcSubresource = c_srcSubresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D c_srcOffset = *(((PyVkOffset3D*)srcOffset)->base);
                 
-                    (self->base)->srcOffset = c_srcOffset;
-                
-            
-                
-                
-                
+                        (self->base)->srcOffset = c_srcOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkImageSubresourceLayers c_dstSubresource = *(((PyVkImageSubresourceLayers*)dstSubresource)->base);
                 
-                    (self->base)->dstSubresource = c_dstSubresource;
-                
-            
-                
-                
-                
+                        (self->base)->dstSubresource = c_dstSubresource;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset3D c_dstOffset = *(((PyVkOffset3D*)dstOffset)->base);
                 
-                    (self->base)->dstOffset = c_dstOffset;
-                
-            
-                
-                
-                
+                        (self->base)->dstOffset = c_dstOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent3D c_extent = *(((PyVkExtent3D*)extent)->base);
                 
-                    (self->base)->extent = c_extent;
-                
+                        (self->base)->extent = c_extent;
+                    
+            
             
         
 
@@ -17587,52 +18110,65 @@ PyObject* pCode = NULL;
 
             static char *kwlist[] = {"sType","flags","codeSize","pCode",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&codeSize,&pCode))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&codeSize,&pCode))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkShaderModuleCreateFlags c_flags = (VkShaderModuleCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             size_t c_codeSize = (size_t) PyLong_AsLong(codeSize);
         
-                    (self->base)->codeSize = c_codeSize;
-                
-            
-                
-                
-                
+                        (self->base)->codeSize = c_codeSize;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         uint32_t* c_pCode = NULL;
         if (pCode == Py_None) {
             c_pCode = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pCode)) {
+            c_pCode = (uint32_t*) PyBytes_AsString(pCode);
         }
         else {
             int size = PyList_Size(pCode);
@@ -17644,8 +18180,9 @@ PyObject* pCode = NULL;
                 memcpy(c_pCode + i, &r, sizeof(uint32_t));
             }
         }
-                    (self->base)->pCode = c_pCode;
-                
+                        (self->base)->pCode = c_pCode;
+                    
+            
             
         
 
@@ -17782,60 +18319,76 @@ PyObject* pImmutableSamplers = NULL;
 
             static char *kwlist[] = {"binding","descriptorType","descriptorCount","stageFlags","pImmutableSamplers",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &binding,&descriptorType,&descriptorCount,&stageFlags,&pImmutableSamplers))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &binding,&descriptorType,&descriptorCount,&stageFlags,&pImmutableSamplers))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_binding = (uint32_t) PyLong_AsLong(binding);
         
-                    (self->base)->binding = c_binding;
-                
-            
-                
-                
-                
+                        (self->base)->binding = c_binding;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDescriptorType c_descriptorType = (VkDescriptorType) PyLong_AsLong(descriptorType);
                     
-                    (self->base)->descriptorType = c_descriptorType;
-                
-            
-                
-                
-                
+                        (self->base)->descriptorType = c_descriptorType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_descriptorCount = (uint32_t) PyLong_AsLong(descriptorCount);
         
-                    (self->base)->descriptorCount = c_descriptorCount;
-                
-            
-                
-                
-                
+                        (self->base)->descriptorCount = c_descriptorCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkShaderStageFlags c_stageFlags = (VkShaderStageFlags) PyLong_AsLong(stageFlags);
                     
-                    (self->base)->stageFlags = c_stageFlags;
-                
-            
-                
-                
-                
+                        (self->base)->stageFlags = c_stageFlags;
                     
-            VkSampler* c_pImmutableSamplers = NULL;
-            if (pImmutableSamplers != Py_None)  {
-                VkSampler* handle_pointer = PyCapsule_GetPointer(
-                    pImmutableSamplers, "VkSampler");
-                c_pImmutableSamplers = handle_pointer;
-            }
             
-                    (self->base)->pImmutableSamplers = c_pImmutableSamplers;
-                
+            
+            
+                    
+                    
+                    
+                        
+                VkSampler* c_pImmutableSamplers = VK_NULL_HANDLE;
+                if (pImmutableSamplers != Py_None)  {
+                    int size = PyList_Size(pImmutableSamplers);
+                    c_pImmutableSamplers = malloc(size * sizeof(VkSampler));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkSampler* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pImmutableSamplers, i), "VkSampler");
+                        c_pImmutableSamplers[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pImmutableSamplers = c_pImmutableSamplers;
+                    
+            
             
         
 
@@ -17967,53 +18520,63 @@ PyObject* pBindings = NULL;
 
             static char *kwlist[] = {"sType","flags","bindingCount","pBindings",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&bindingCount,&pBindings))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&bindingCount,&pBindings))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDescriptorSetLayoutCreateFlags c_flags = (VkDescriptorSetLayoutCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_bindingCount = (uint32_t) PyLong_AsLong(bindingCount);
         
-                    (self->base)->bindingCount = c_bindingCount;
-                
-            
-                
-                
-                
+                        (self->base)->bindingCount = c_bindingCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkDescriptorSetLayoutBinding* c_pBindings = NULL;
-                {
+                if (pBindings != Py_None) {
                     int size = PyList_Size(pBindings);
-                    c_pBindings = malloc(sizeof(VkDescriptorSetLayoutBinding));
+                    c_pBindings = malloc(size * sizeof(VkDescriptorSetLayoutBinding));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pBindings[i] = *( (
@@ -18021,8 +18584,9 @@ PyObject* pBindings = NULL;
                     }
                 }
                 
-                    (self->base)->pBindings = c_pBindings;
-                
+                        (self->base)->pBindings = c_pBindings;
+                    
+            
             
         
 
@@ -18159,28 +18723,33 @@ PyObject* descriptorCount = NULL;
 
             static char *kwlist[] = {"type","descriptorCount",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &type,&descriptorCount))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &type,&descriptorCount))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkDescriptorType c_type = (VkDescriptorType) PyLong_AsLong(type);
                     
-                    (self->base)->type = c_type;
-                
-            
-                
-                
-                
+                        (self->base)->type = c_type;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_descriptorCount = (uint32_t) PyLong_AsLong(descriptorCount);
         
-                    (self->base)->descriptorCount = c_descriptorCount;
-                
+                        (self->base)->descriptorCount = c_descriptorCount;
+                    
+            
             
         
 
@@ -18277,62 +18846,74 @@ PyObject* pPoolSizes = NULL;
 
             static char *kwlist[] = {"sType","flags","maxSets","poolSizeCount","pPoolSizes",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &sType,&flags,&maxSets,&poolSizeCount,&pPoolSizes))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &sType,&flags,&maxSets,&poolSizeCount,&pPoolSizes))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDescriptorPoolCreateFlags c_flags = (VkDescriptorPoolCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_maxSets = (uint32_t) PyLong_AsLong(maxSets);
         
-                    (self->base)->maxSets = c_maxSets;
-                
-            
-                
-                
-                
+                        (self->base)->maxSets = c_maxSets;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_poolSizeCount = (uint32_t) PyLong_AsLong(poolSizeCount);
         
-                    (self->base)->poolSizeCount = c_poolSizeCount;
-                
-            
-                
-                
-                
+                        (self->base)->poolSizeCount = c_poolSizeCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkDescriptorPoolSize* c_pPoolSizes = NULL;
-                {
+                if (pPoolSizes != Py_None) {
                     int size = PyList_Size(pPoolSizes);
-                    c_pPoolSizes = malloc(sizeof(VkDescriptorPoolSize));
+                    c_pPoolSizes = malloc(size * sizeof(VkDescriptorPoolSize));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pPoolSizes[i] = *( (
@@ -18340,8 +18921,9 @@ PyObject* pPoolSizes = NULL;
                     }
                 }
                 
-                    (self->base)->pPoolSizes = c_pPoolSizes;
-                
+                        (self->base)->pPoolSizes = c_pPoolSizes;
+                    
+            
             
         
 
@@ -18493,63 +19075,79 @@ PyObject* pSetLayouts = NULL;
 
             static char *kwlist[] = {"sType","descriptorPool","descriptorSetCount","pSetLayouts",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&descriptorPool,&descriptorSetCount,&pSetLayouts))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&descriptorPool,&descriptorSetCount,&pSetLayouts))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkDescriptorPool c_descriptorPool = NULL;
-            if (descriptorPool != Py_None)  {
-                VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
-                    descriptorPool, "VkDescriptorPool");
-                c_descriptorPool = *handle_pointer;
-            }
             
-                    (self->base)->descriptorPool = c_descriptorPool;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkDescriptorPool c_descriptorPool = VK_NULL_HANDLE;
+                if (descriptorPool != Py_None)  {
+                    VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
+                        descriptorPool, "VkDescriptorPool");
+                    c_descriptorPool = *handle_pointer;
+                }
+            
+                        (self->base)->descriptorPool = c_descriptorPool;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_descriptorSetCount = (uint32_t) PyLong_AsLong(descriptorSetCount);
         
-                    (self->base)->descriptorSetCount = c_descriptorSetCount;
-                
-            
-                
-                
-                
+                        (self->base)->descriptorSetCount = c_descriptorSetCount;
                     
-            VkDescriptorSetLayout* c_pSetLayouts = NULL;
-            if (pSetLayouts != Py_None)  {
-                VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
-                    pSetLayouts, "VkDescriptorSetLayout");
-                c_pSetLayouts = handle_pointer;
-            }
             
-                    (self->base)->pSetLayouts = c_pSetLayouts;
-                
+            
+            
+                    
+                    
+                    
+                        
+                VkDescriptorSetLayout* c_pSetLayouts = VK_NULL_HANDLE;
+                if (pSetLayouts != Py_None)  {
+                    int size = PyList_Size(pSetLayouts);
+                    c_pSetLayouts = malloc(size * sizeof(VkDescriptorSetLayout));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pSetLayouts, i), "VkDescriptorSetLayout");
+                        c_pSetLayouts[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pSetLayouts = c_pSetLayouts;
+                    
+            
             
         
 
@@ -18678,37 +19276,44 @@ PyObject* size = NULL;
 
             static char *kwlist[] = {"constantID","offset","size",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &constantID,&offset,&size))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &constantID,&offset,&size))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_constantID = (uint32_t) PyLong_AsLong(constantID);
         
-                    (self->base)->constantID = c_constantID;
-                
-            
-                
-                
-                
+                        (self->base)->constantID = c_constantID;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_offset = (uint32_t) PyLong_AsLong(offset);
         
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             size_t c_size = (size_t) PyLong_AsLong(size);
         
-                    (self->base)->size = c_size;
-                
+                        (self->base)->size = c_size;
+                    
+            
             
         
 
@@ -18817,28 +19422,32 @@ PyObject* pData = NULL;
 
             static char *kwlist[] = {"mapEntryCount","pMapEntries","dataSize","pData",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &mapEntryCount,&pMapEntries,&dataSize,&pData))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &mapEntryCount,&pMapEntries,&dataSize,&pData))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_mapEntryCount = (uint32_t) PyLong_AsLong(mapEntryCount);
         
-                    (self->base)->mapEntryCount = c_mapEntryCount;
-                
-            
-                
-                
-                
+                        (self->base)->mapEntryCount = c_mapEntryCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSpecializationMapEntry* c_pMapEntries = NULL;
-                {
+                if (pMapEntries != Py_None) {
                     int size = PyList_Size(pMapEntries);
-                    c_pMapEntries = malloc(sizeof(VkSpecializationMapEntry));
+                    c_pMapEntries = malloc(size * sizeof(VkSpecializationMapEntry));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pMapEntries[i] = *( (
@@ -18846,24 +19455,29 @@ PyObject* pData = NULL;
                     }
                 }
                 
-                    (self->base)->pMapEntries = c_pMapEntries;
-                
-            
-                
-                
-                
+                        (self->base)->pMapEntries = c_pMapEntries;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             size_t c_dataSize = (size_t) PyLong_AsLong(dataSize);
         
-                    (self->base)->dataSize = c_dataSize;
-                
+                        (self->base)->dataSize = c_dataSize;
+                    
             
-                
-                
-                
-                    void* c_pData = NULL;
-                    (self->base)->pData = c_pData;
-                
+            
+            
+                    
+                    
+                    
+                        void* c_pData = NULL;
+                        (self->base)->pData = c_pData;
+                    
+            
             
         
 
@@ -18991,63 +19605,75 @@ PyObject* pSpecializationInfo = NULL;
 
             static char *kwlist[] = {"sType","flags","stage","module","pName","pSpecializationInfo",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&flags,&stage,&module,&pName,&pSpecializationInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&flags,&stage,&module,&pName,&pSpecializationInfo))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineShaderStageCreateFlags c_flags = (VkPipelineShaderStageCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkShaderStageFlagBits c_stage = (VkShaderStageFlagBits) PyLong_AsLong(stage);
                     
-                    (self->base)->stage = c_stage;
-                
-            
-                
-                
-                
+                        (self->base)->stage = c_stage;
                     
-            VkShaderModule c_module = NULL;
-            if (module != Py_None)  {
-                VkShaderModule* handle_pointer = PyCapsule_GetPointer(
-                    module, "VkShaderModule");
-                c_module = *handle_pointer;
-            }
             
-                    (self->base)->module = c_module;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkShaderModule c_module = VK_NULL_HANDLE;
+                if (module != Py_None)  {
+                    VkShaderModule* handle_pointer = PyCapsule_GetPointer(
+                        module, "VkShaderModule");
+                    c_module = *handle_pointer;
+                }
+            
+                        (self->base)->module = c_module;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
         char* c_pName = NULL;
         if (pName != Py_None)
         {
@@ -19060,17 +19686,23 @@ PyObject* pSpecializationInfo = NULL;
             c_pName = strdup(tmp1);
             Py_DECREF(tmp0);
         }
-                    (self->base)->pName = c_pName;
-                
-            
-                
-                
-                
+                        (self->base)->pName = c_pName;
                     
-                VkSpecializationInfo* c_pSpecializationInfo = ((PyVkSpecializationInfo*)pSpecializationInfo)->base;
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkSpecializationInfo* c_pSpecializationInfo = NULL;
+                if (pSpecializationInfo != Py_None) {
+                    c_pSpecializationInfo = ((PyVkSpecializationInfo*)pSpecializationInfo)->base;
+                }
                 
-                    (self->base)->pSpecializationInfo = c_pSpecializationInfo;
-                
+                        (self->base)->pSpecializationInfo = c_pSpecializationInfo;
+                    
+            
             
         
 
@@ -19234,81 +19866,96 @@ PyObject* basePipelineIndex = NULL;
 
             static char *kwlist[] = {"sType","flags","stage","layout","basePipelineHandle","basePipelineIndex",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&flags,&stage,&layout,&basePipelineHandle,&basePipelineIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&flags,&stage,&layout,&basePipelineHandle,&basePipelineIndex))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineCreateFlags c_flags = (VkPipelineCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkPipelineShaderStageCreateInfo c_stage = *(((PyVkPipelineShaderStageCreateInfo*)stage)->base);
                 
-                    (self->base)->stage = c_stage;
-                
-            
-                
-                
-                
+                        (self->base)->stage = c_stage;
                     
-            VkPipelineLayout c_layout = NULL;
-            if (layout != Py_None)  {
-                VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
-                    layout, "VkPipelineLayout");
-                c_layout = *handle_pointer;
-            }
             
-                    (self->base)->layout = c_layout;
-                
             
-                
-                
-                
+            
                     
-            VkPipeline c_basePipelineHandle = NULL;
-            if (basePipelineHandle != Py_None)  {
-                VkPipeline* handle_pointer = PyCapsule_GetPointer(
-                    basePipelineHandle, "VkPipeline");
-                c_basePipelineHandle = *handle_pointer;
-            }
-            
-                    (self->base)->basePipelineHandle = c_basePipelineHandle;
-                
-            
-                
-                
-                
                     
+                    
+                        
+                VkPipelineLayout c_layout = VK_NULL_HANDLE;
+                if (layout != Py_None)  {
+                    VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
+                        layout, "VkPipelineLayout");
+                    c_layout = *handle_pointer;
+                }
+            
+                        (self->base)->layout = c_layout;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipeline c_basePipelineHandle = VK_NULL_HANDLE;
+                if (basePipelineHandle != Py_None)  {
+                    VkPipeline* handle_pointer = PyCapsule_GetPointer(
+                        basePipelineHandle, "VkPipeline");
+                    c_basePipelineHandle = *handle_pointer;
+                }
+            
+                        (self->base)->basePipelineHandle = c_basePipelineHandle;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             int32_t c_basePipelineIndex = (int32_t) PyLong_AsLong(basePipelineIndex);
         
-                    (self->base)->basePipelineIndex = c_basePipelineIndex;
-                
+                        (self->base)->basePipelineIndex = c_basePipelineIndex;
+                    
+            
             
         
 
@@ -19466,37 +20113,44 @@ PyObject* inputRate = NULL;
 
             static char *kwlist[] = {"binding","stride","inputRate",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &binding,&stride,&inputRate))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &binding,&stride,&inputRate))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_binding = (uint32_t) PyLong_AsLong(binding);
         
-                    (self->base)->binding = c_binding;
-                
-            
-                
-                
-                
+                        (self->base)->binding = c_binding;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_stride = (uint32_t) PyLong_AsLong(stride);
         
-                    (self->base)->stride = c_stride;
-                
-            
-                
-                
-                
+                        (self->base)->stride = c_stride;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkVertexInputRate c_inputRate = (VkVertexInputRate) PyLong_AsLong(inputRate);
                     
-                    (self->base)->inputRate = c_inputRate;
-                
+                        (self->base)->inputRate = c_inputRate;
+                    
+            
             
         
 
@@ -19605,46 +20259,55 @@ PyObject* offset = NULL;
 
             static char *kwlist[] = {"location","binding","format","offset",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &location,&binding,&format,&offset))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &location,&binding,&format,&offset))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_location = (uint32_t) PyLong_AsLong(location);
         
-                    (self->base)->location = c_location;
-                
-            
-                
-                
-                
+                        (self->base)->location = c_location;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_binding = (uint32_t) PyLong_AsLong(binding);
         
-                    (self->base)->binding = c_binding;
-                
-            
-                
-                
-                
+                        (self->base)->binding = c_binding;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFormat c_format = (VkFormat) PyLong_AsLong(format);
                     
-                    (self->base)->format = c_format;
-                
-            
-                
-                
-                
+                        (self->base)->format = c_format;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_offset = (uint32_t) PyLong_AsLong(offset);
         
-                    (self->base)->offset = c_offset;
-                
+                        (self->base)->offset = c_offset;
+                    
+            
             
         
 
@@ -19768,53 +20431,63 @@ PyObject* pVertexAttributeDescriptions = NULL;
 
             static char *kwlist[] = {"sType","flags","vertexBindingDescriptionCount","pVertexBindingDescriptions","vertexAttributeDescriptionCount","pVertexAttributeDescriptions",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&flags,&vertexBindingDescriptionCount,&pVertexBindingDescriptions,&vertexAttributeDescriptionCount,&pVertexAttributeDescriptions))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&flags,&vertexBindingDescriptionCount,&pVertexBindingDescriptions,&vertexAttributeDescriptionCount,&pVertexAttributeDescriptions))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineVertexInputStateCreateFlags c_flags = (VkPipelineVertexInputStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_vertexBindingDescriptionCount = (uint32_t) PyLong_AsLong(vertexBindingDescriptionCount);
         
-                    (self->base)->vertexBindingDescriptionCount = c_vertexBindingDescriptionCount;
-                
-            
-                
-                
-                
+                        (self->base)->vertexBindingDescriptionCount = c_vertexBindingDescriptionCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkVertexInputBindingDescription* c_pVertexBindingDescriptions = NULL;
-                {
+                if (pVertexBindingDescriptions != Py_None) {
                     int size = PyList_Size(pVertexBindingDescriptions);
-                    c_pVertexBindingDescriptions = malloc(sizeof(VkVertexInputBindingDescription));
+                    c_pVertexBindingDescriptions = malloc(size * sizeof(VkVertexInputBindingDescription));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pVertexBindingDescriptions[i] = *( (
@@ -19822,26 +20495,30 @@ PyObject* pVertexAttributeDescriptions = NULL;
                     }
                 }
                 
-                    (self->base)->pVertexBindingDescriptions = c_pVertexBindingDescriptions;
-                
-            
-                
-                
-                
+                        (self->base)->pVertexBindingDescriptions = c_pVertexBindingDescriptions;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_vertexAttributeDescriptionCount = (uint32_t) PyLong_AsLong(vertexAttributeDescriptionCount);
         
-                    (self->base)->vertexAttributeDescriptionCount = c_vertexAttributeDescriptionCount;
-                
-            
-                
-                
-                
+                        (self->base)->vertexAttributeDescriptionCount = c_vertexAttributeDescriptionCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkVertexInputAttributeDescription* c_pVertexAttributeDescriptions = NULL;
-                {
+                if (pVertexAttributeDescriptions != Py_None) {
                     int size = PyList_Size(pVertexAttributeDescriptions);
-                    c_pVertexAttributeDescriptions = malloc(sizeof(VkVertexInputAttributeDescription));
+                    c_pVertexAttributeDescriptions = malloc(size * sizeof(VkVertexInputAttributeDescription));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pVertexAttributeDescriptions[i] = *( (
@@ -19849,8 +20526,9 @@ PyObject* pVertexAttributeDescriptions = NULL;
                     }
                 }
                 
-                    (self->base)->pVertexAttributeDescriptions = c_pVertexAttributeDescriptions;
-                
+                        (self->base)->pVertexAttributeDescriptions = c_pVertexAttributeDescriptions;
+                    
+            
             
         
 
@@ -20018,53 +20696,64 @@ PyObject* primitiveRestartEnable = NULL;
 
             static char *kwlist[] = {"sType","flags","topology","primitiveRestartEnable",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&topology,&primitiveRestartEnable))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&topology,&primitiveRestartEnable))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineInputAssemblyStateCreateFlags c_flags = (VkPipelineInputAssemblyStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPrimitiveTopology c_topology = (VkPrimitiveTopology) PyLong_AsLong(topology);
                     
-                    (self->base)->topology = c_topology;
-                
-            
-                
-                
-                
+                        (self->base)->topology = c_topology;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_primitiveRestartEnable = (VkBool32) PyLong_AsLong(primitiveRestartEnable);
                     
-                    (self->base)->primitiveRestartEnable = c_primitiveRestartEnable;
-                
+                        (self->base)->primitiveRestartEnable = c_primitiveRestartEnable;
+                    
+            
             
         
 
@@ -20199,44 +20888,53 @@ PyObject* patchControlPoints = NULL;
 
             static char *kwlist[] = {"sType","flags","patchControlPoints",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&flags,&patchControlPoints))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&flags,&patchControlPoints))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineTessellationStateCreateFlags c_flags = (VkPipelineTessellationStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_patchControlPoints = (uint32_t) PyLong_AsLong(patchControlPoints);
         
-                    (self->base)->patchControlPoints = c_patchControlPoints;
-                
+                        (self->base)->patchControlPoints = c_patchControlPoints;
+                    
+            
             
         
 
@@ -20361,53 +21059,63 @@ PyObject* pScissors = NULL;
 
             static char *kwlist[] = {"sType","flags","viewportCount","pViewports","scissorCount","pScissors",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&flags,&viewportCount,&pViewports,&scissorCount,&pScissors))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&flags,&viewportCount,&pViewports,&scissorCount,&pScissors))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineViewportStateCreateFlags c_flags = (VkPipelineViewportStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_viewportCount = (uint32_t) PyLong_AsLong(viewportCount);
         
-                    (self->base)->viewportCount = c_viewportCount;
-                
-            
-                
-                
-                
+                        (self->base)->viewportCount = c_viewportCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkViewport* c_pViewports = NULL;
-                {
+                if (pViewports != Py_None) {
                     int size = PyList_Size(pViewports);
-                    c_pViewports = malloc(sizeof(VkViewport));
+                    c_pViewports = malloc(size * sizeof(VkViewport));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pViewports[i] = *( (
@@ -20415,26 +21123,30 @@ PyObject* pScissors = NULL;
                     }
                 }
                 
-                    (self->base)->pViewports = c_pViewports;
-                
-            
-                
-                
-                
+                        (self->base)->pViewports = c_pViewports;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_scissorCount = (uint32_t) PyLong_AsLong(scissorCount);
         
-                    (self->base)->scissorCount = c_scissorCount;
-                
-            
-                
-                
-                
+                        (self->base)->scissorCount = c_scissorCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkRect2D* c_pScissors = NULL;
-                {
+                if (pScissors != Py_None) {
                     int size = PyList_Size(pScissors);
-                    c_pScissors = malloc(sizeof(VkRect2D));
+                    c_pScissors = malloc(size * sizeof(VkRect2D));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pScissors[i] = *( (
@@ -20442,8 +21154,9 @@ PyObject* pScissors = NULL;
                     }
                 }
                 
-                    (self->base)->pScissors = c_pScissors;
-                
+                        (self->base)->pScissors = c_pScissors;
+                    
+            
             
         
 
@@ -20619,125 +21332,152 @@ PyObject* lineWidth = NULL;
 
             static char *kwlist[] = {"sType","flags","depthClampEnable","rasterizerDiscardEnable","polygonMode","cullMode","frontFace","depthBiasEnable","depthBiasConstantFactor","depthBiasClamp","depthBiasSlopeFactor","lineWidth",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOOO", kwlist, &sType,&flags,&depthClampEnable,&rasterizerDiscardEnable,&polygonMode,&cullMode,&frontFace,&depthBiasEnable,&depthBiasConstantFactor,&depthBiasClamp,&depthBiasSlopeFactor,&lineWidth))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOOO", kwlist, &sType,&flags,&depthClampEnable,&rasterizerDiscardEnable,&polygonMode,&cullMode,&frontFace,&depthBiasEnable,&depthBiasConstantFactor,&depthBiasClamp,&depthBiasSlopeFactor,&lineWidth))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineRasterizationStateCreateFlags c_flags = (VkPipelineRasterizationStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthClampEnable = (VkBool32) PyLong_AsLong(depthClampEnable);
                     
-                    (self->base)->depthClampEnable = c_depthClampEnable;
-                
-            
-                
-                
-                
+                        (self->base)->depthClampEnable = c_depthClampEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_rasterizerDiscardEnable = (VkBool32) PyLong_AsLong(rasterizerDiscardEnable);
                     
-                    (self->base)->rasterizerDiscardEnable = c_rasterizerDiscardEnable;
-                
-            
-                
-                
-                
+                        (self->base)->rasterizerDiscardEnable = c_rasterizerDiscardEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPolygonMode c_polygonMode = (VkPolygonMode) PyLong_AsLong(polygonMode);
                     
-                    (self->base)->polygonMode = c_polygonMode;
-                
-            
-                
-                
-                
+                        (self->base)->polygonMode = c_polygonMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCullModeFlags c_cullMode = (VkCullModeFlags) PyLong_AsLong(cullMode);
                     
-                    (self->base)->cullMode = c_cullMode;
-                
-            
-                
-                
-                
+                        (self->base)->cullMode = c_cullMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFrontFace c_frontFace = (VkFrontFace) PyLong_AsLong(frontFace);
                     
-                    (self->base)->frontFace = c_frontFace;
-                
-            
-                
-                
-                
+                        (self->base)->frontFace = c_frontFace;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthBiasEnable = (VkBool32) PyLong_AsLong(depthBiasEnable);
                     
-                    (self->base)->depthBiasEnable = c_depthBiasEnable;
-                
-            
-                
-                
-                
+                        (self->base)->depthBiasEnable = c_depthBiasEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_depthBiasConstantFactor = (float) PyFloat_AsDouble(depthBiasConstantFactor);
         
-                    (self->base)->depthBiasConstantFactor = c_depthBiasConstantFactor;
-                
-            
-                
-                
-                
+                        (self->base)->depthBiasConstantFactor = c_depthBiasConstantFactor;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_depthBiasClamp = (float) PyFloat_AsDouble(depthBiasClamp);
         
-                    (self->base)->depthBiasClamp = c_depthBiasClamp;
-                
-            
-                
-                
-                
+                        (self->base)->depthBiasClamp = c_depthBiasClamp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_depthBiasSlopeFactor = (float) PyFloat_AsDouble(depthBiasSlopeFactor);
         
-                    (self->base)->depthBiasSlopeFactor = c_depthBiasSlopeFactor;
-                
-            
-                
-                
-                
+                        (self->base)->depthBiasSlopeFactor = c_depthBiasSlopeFactor;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_lineWidth = (float) PyFloat_AsDouble(lineWidth);
         
-                    (self->base)->lineWidth = c_lineWidth;
-                
+                        (self->base)->lineWidth = c_lineWidth;
+                    
+            
             
         
 
@@ -20981,93 +21721,118 @@ PyObject* alphaToOneEnable = NULL;
 
             static char *kwlist[] = {"sType","flags","rasterizationSamples","sampleShadingEnable","minSampleShading","pSampleMask","alphaToCoverageEnable","alphaToOneEnable",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &sType,&flags,&rasterizationSamples,&sampleShadingEnable,&minSampleShading,&pSampleMask,&alphaToCoverageEnable,&alphaToOneEnable))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &sType,&flags,&rasterizationSamples,&sampleShadingEnable,&minSampleShading,&pSampleMask,&alphaToCoverageEnable,&alphaToOneEnable))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineMultisampleStateCreateFlags c_flags = (VkPipelineMultisampleStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSampleCountFlagBits c_rasterizationSamples = (VkSampleCountFlagBits) PyLong_AsLong(rasterizationSamples);
                     
-                    (self->base)->rasterizationSamples = c_rasterizationSamples;
-                
-            
-                
-                
-                
+                        (self->base)->rasterizationSamples = c_rasterizationSamples;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sampleShadingEnable = (VkBool32) PyLong_AsLong(sampleShadingEnable);
                     
-                    (self->base)->sampleShadingEnable = c_sampleShadingEnable;
-                
-            
-                
-                
-                
+                        (self->base)->sampleShadingEnable = c_sampleShadingEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_minSampleShading = (float) PyFloat_AsDouble(minSampleShading);
         
-                    (self->base)->minSampleShading = c_minSampleShading;
-                
-            
-                
-                
-                
+                        (self->base)->minSampleShading = c_minSampleShading;
                     
-                    VkSampleMask* c_pSampleMask = malloc(sizeof(VkSampleMask));
-                    {
-                        VkSampleMask tmp = (VkSampleMask) PyLong_AsLong(pSampleMask);
-                        memcpy(c_pSampleMask, &tmp, sizeof(VkSampleMask));
+            
+            
+            
+                    
+                    
+                    
+                        
+                    VkSampleMask* c_pSampleMask = NULL;
+                    if (pSampleMask != Py_None) {
+                        int size = PyList_Size(pSampleMask);
+                        c_pSampleMask = malloc(size * sizeof(VkSampleMask));
+                        int i;
+                        for (i = 0; i < size; i++) {
+                            VkSampleMask tmp = (VkSampleMask) PyLong_AsLong(
+                                PyList_GetItem(pSampleMask, i));
+                            c_pSampleMask[i] = tmp;
+                        }
                     }
                 
-                    (self->base)->pSampleMask = c_pSampleMask;
-                
-            
-                
-                
-                
+                        (self->base)->pSampleMask = c_pSampleMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_alphaToCoverageEnable = (VkBool32) PyLong_AsLong(alphaToCoverageEnable);
                     
-                    (self->base)->alphaToCoverageEnable = c_alphaToCoverageEnable;
-                
-            
-                
-                
-                
+                        (self->base)->alphaToCoverageEnable = c_alphaToCoverageEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_alphaToOneEnable = (VkBool32) PyLong_AsLong(alphaToOneEnable);
                     
-                    (self->base)->alphaToOneEnable = c_alphaToOneEnable;
-                
+                        (self->base)->alphaToOneEnable = c_alphaToOneEnable;
+                    
+            
             
         
 
@@ -21259,82 +22024,99 @@ PyObject* colorWriteMask = NULL;
 
             static char *kwlist[] = {"blendEnable","srcColorBlendFactor","dstColorBlendFactor","colorBlendOp","srcAlphaBlendFactor","dstAlphaBlendFactor","alphaBlendOp","colorWriteMask",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &blendEnable,&srcColorBlendFactor,&dstColorBlendFactor,&colorBlendOp,&srcAlphaBlendFactor,&dstAlphaBlendFactor,&alphaBlendOp,&colorWriteMask))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &blendEnable,&srcColorBlendFactor,&dstColorBlendFactor,&colorBlendOp,&srcAlphaBlendFactor,&dstAlphaBlendFactor,&alphaBlendOp,&colorWriteMask))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkBool32 c_blendEnable = (VkBool32) PyLong_AsLong(blendEnable);
                     
-                    (self->base)->blendEnable = c_blendEnable;
-                
-            
-                
-                
-                
+                        (self->base)->blendEnable = c_blendEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBlendFactor c_srcColorBlendFactor = (VkBlendFactor) PyLong_AsLong(srcColorBlendFactor);
                     
-                    (self->base)->srcColorBlendFactor = c_srcColorBlendFactor;
-                
-            
-                
-                
-                
+                        (self->base)->srcColorBlendFactor = c_srcColorBlendFactor;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBlendFactor c_dstColorBlendFactor = (VkBlendFactor) PyLong_AsLong(dstColorBlendFactor);
                     
-                    (self->base)->dstColorBlendFactor = c_dstColorBlendFactor;
-                
-            
-                
-                
-                
+                        (self->base)->dstColorBlendFactor = c_dstColorBlendFactor;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBlendOp c_colorBlendOp = (VkBlendOp) PyLong_AsLong(colorBlendOp);
                     
-                    (self->base)->colorBlendOp = c_colorBlendOp;
-                
-            
-                
-                
-                
+                        (self->base)->colorBlendOp = c_colorBlendOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBlendFactor c_srcAlphaBlendFactor = (VkBlendFactor) PyLong_AsLong(srcAlphaBlendFactor);
                     
-                    (self->base)->srcAlphaBlendFactor = c_srcAlphaBlendFactor;
-                
-            
-                
-                
-                
+                        (self->base)->srcAlphaBlendFactor = c_srcAlphaBlendFactor;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBlendFactor c_dstAlphaBlendFactor = (VkBlendFactor) PyLong_AsLong(dstAlphaBlendFactor);
                     
-                    (self->base)->dstAlphaBlendFactor = c_dstAlphaBlendFactor;
-                
-            
-                
-                
-                
+                        (self->base)->dstAlphaBlendFactor = c_dstAlphaBlendFactor;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBlendOp c_alphaBlendOp = (VkBlendOp) PyLong_AsLong(alphaBlendOp);
                     
-                    (self->base)->alphaBlendOp = c_alphaBlendOp;
-                
-            
-                
-                
-                
+                        (self->base)->alphaBlendOp = c_alphaBlendOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkColorComponentFlags c_colorWriteMask = (VkColorComponentFlags) PyLong_AsLong(colorWriteMask);
                     
-                    (self->base)->colorWriteMask = c_colorWriteMask;
-                
+                        (self->base)->colorWriteMask = c_colorWriteMask;
+                    
+            
             
         
 
@@ -21511,71 +22293,85 @@ PyObject* blendConstants = NULL;
 
             static char *kwlist[] = {"sType","flags","logicOpEnable","logicOp","attachmentCount","pAttachments","blendConstants",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &sType,&flags,&logicOpEnable,&logicOp,&attachmentCount,&pAttachments,&blendConstants))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &sType,&flags,&logicOpEnable,&logicOp,&attachmentCount,&pAttachments,&blendConstants))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineColorBlendStateCreateFlags c_flags = (VkPipelineColorBlendStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_logicOpEnable = (VkBool32) PyLong_AsLong(logicOpEnable);
                     
-                    (self->base)->logicOpEnable = c_logicOpEnable;
-                
-            
-                
-                
-                
+                        (self->base)->logicOpEnable = c_logicOpEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkLogicOp c_logicOp = (VkLogicOp) PyLong_AsLong(logicOp);
                     
-                    (self->base)->logicOp = c_logicOp;
-                
-            
-                
-                
-                
+                        (self->base)->logicOp = c_logicOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_attachmentCount = (uint32_t) PyLong_AsLong(attachmentCount);
         
-                    (self->base)->attachmentCount = c_attachmentCount;
-                
-            
-                
-                
-                
+                        (self->base)->attachmentCount = c_attachmentCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkPipelineColorBlendAttachmentState* c_pAttachments = NULL;
-                {
+                if (pAttachments != Py_None) {
                     int size = PyList_Size(pAttachments);
-                    c_pAttachments = malloc(sizeof(VkPipelineColorBlendAttachmentState));
+                    c_pAttachments = malloc(size * sizeof(VkPipelineColorBlendAttachmentState));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pAttachments[i] = *( (
@@ -21583,16 +22379,21 @@ PyObject* blendConstants = NULL;
                     }
                 }
                 
-                    (self->base)->pAttachments = c_pAttachments;
-                
-            
-                
-                
-                
+                        (self->base)->pAttachments = c_pAttachments;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         float* c_blendConstants = NULL;
         if (blendConstants == Py_None) {
             c_blendConstants = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(blendConstants)) {
+            c_blendConstants = (float*) PyBytes_AsString(blendConstants);
         }
         else {
             int size = PyList_Size(blendConstants);
@@ -21604,10 +22405,11 @@ PyObject* blendConstants = NULL;
                 memcpy(c_blendConstants + i, &r, sizeof(float));
             }
         }
-                    
+                        
         memcpy((self->base)->blendConstants, c_blendConstants, 4 * sizeof(float));
         
-                
+                    
+            
             
         
 
@@ -21791,57 +22593,74 @@ PyObject* pDynamicStates = NULL;
 
             static char *kwlist[] = {"sType","flags","dynamicStateCount","pDynamicStates",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&dynamicStateCount,&pDynamicStates))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&dynamicStateCount,&pDynamicStates))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineDynamicStateCreateFlags c_flags = (VkPipelineDynamicStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dynamicStateCount = (uint32_t) PyLong_AsLong(dynamicStateCount);
         
-                    (self->base)->dynamicStateCount = c_dynamicStateCount;
-                
-            
-                
-                
-                
+                        (self->base)->dynamicStateCount = c_dynamicStateCount;
                     
-                    VkDynamicState* c_pDynamicStates = malloc(sizeof(VkDynamicState));
-                    {
-                        VkDynamicState tmp = (VkDynamicState) PyLong_AsLong(pDynamicStates);
-                        memcpy(c_pDynamicStates, &tmp, sizeof(VkDynamicState));
+            
+            
+            
+                    
+                    
+                    
+                        
+                    VkDynamicState* c_pDynamicStates = NULL;
+                    if (pDynamicStates != Py_None) {
+                        int size = PyList_Size(pDynamicStates);
+                        c_pDynamicStates = malloc(size * sizeof(VkDynamicState));
+                        int i;
+                        for (i = 0; i < size; i++) {
+                            VkDynamicState tmp = (VkDynamicState) PyLong_AsLong(
+                                PyList_GetItem(pDynamicStates, i));
+                            c_pDynamicStates[i] = tmp;
+                        }
                     }
                 
-                    (self->base)->pDynamicStates = c_pDynamicStates;
-                
+                        (self->base)->pDynamicStates = c_pDynamicStates;
+                    
+            
             
         
 
@@ -21980,73 +22799,88 @@ PyObject* reference = NULL;
 
             static char *kwlist[] = {"failOp","passOp","depthFailOp","compareOp","compareMask","writeMask","reference",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &failOp,&passOp,&depthFailOp,&compareOp,&compareMask,&writeMask,&reference))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &failOp,&passOp,&depthFailOp,&compareOp,&compareMask,&writeMask,&reference))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStencilOp c_failOp = (VkStencilOp) PyLong_AsLong(failOp);
                     
-                    (self->base)->failOp = c_failOp;
-                
-            
-                
-                
-                
+                        (self->base)->failOp = c_failOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkStencilOp c_passOp = (VkStencilOp) PyLong_AsLong(passOp);
                     
-                    (self->base)->passOp = c_passOp;
-                
-            
-                
-                
-                
+                        (self->base)->passOp = c_passOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkStencilOp c_depthFailOp = (VkStencilOp) PyLong_AsLong(depthFailOp);
                     
-                    (self->base)->depthFailOp = c_depthFailOp;
-                
-            
-                
-                
-                
+                        (self->base)->depthFailOp = c_depthFailOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCompareOp c_compareOp = (VkCompareOp) PyLong_AsLong(compareOp);
                     
-                    (self->base)->compareOp = c_compareOp;
-                
-            
-                
-                
-                
+                        (self->base)->compareOp = c_compareOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_compareMask = (uint32_t) PyLong_AsLong(compareMask);
         
-                    (self->base)->compareMask = c_compareMask;
-                
-            
-                
-                
-                
+                        (self->base)->compareMask = c_compareMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_writeMask = (uint32_t) PyLong_AsLong(writeMask);
         
-                    (self->base)->writeMask = c_writeMask;
-                
-            
-                
-                
-                
+                        (self->base)->writeMask = c_writeMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_reference = (uint32_t) PyLong_AsLong(reference);
         
-                    (self->base)->reference = c_reference;
-                
+                        (self->base)->reference = c_reference;
+                    
+            
             
         
 
@@ -22214,116 +23048,141 @@ PyObject* maxDepthBounds = NULL;
 
             static char *kwlist[] = {"sType","flags","depthTestEnable","depthWriteEnable","depthCompareOp","depthBoundsTestEnable","stencilTestEnable","front","back","minDepthBounds","maxDepthBounds",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOO", kwlist, &sType,&flags,&depthTestEnable,&depthWriteEnable,&depthCompareOp,&depthBoundsTestEnable,&stencilTestEnable,&front,&back,&minDepthBounds,&maxDepthBounds))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOO", kwlist, &sType,&flags,&depthTestEnable,&depthWriteEnable,&depthCompareOp,&depthBoundsTestEnable,&stencilTestEnable,&front,&back,&minDepthBounds,&maxDepthBounds))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineDepthStencilStateCreateFlags c_flags = (VkPipelineDepthStencilStateCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthTestEnable = (VkBool32) PyLong_AsLong(depthTestEnable);
                     
-                    (self->base)->depthTestEnable = c_depthTestEnable;
-                
-            
-                
-                
-                
+                        (self->base)->depthTestEnable = c_depthTestEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthWriteEnable = (VkBool32) PyLong_AsLong(depthWriteEnable);
                     
-                    (self->base)->depthWriteEnable = c_depthWriteEnable;
-                
-            
-                
-                
-                
+                        (self->base)->depthWriteEnable = c_depthWriteEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCompareOp c_depthCompareOp = (VkCompareOp) PyLong_AsLong(depthCompareOp);
                     
-                    (self->base)->depthCompareOp = c_depthCompareOp;
-                
-            
-                
-                
-                
+                        (self->base)->depthCompareOp = c_depthCompareOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthBoundsTestEnable = (VkBool32) PyLong_AsLong(depthBoundsTestEnable);
                     
-                    (self->base)->depthBoundsTestEnable = c_depthBoundsTestEnable;
-                
-            
-                
-                
-                
+                        (self->base)->depthBoundsTestEnable = c_depthBoundsTestEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_stencilTestEnable = (VkBool32) PyLong_AsLong(stencilTestEnable);
                     
-                    (self->base)->stencilTestEnable = c_stencilTestEnable;
-                
-            
-                
-                
-                
+                        (self->base)->stencilTestEnable = c_stencilTestEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkStencilOpState c_front = *(((PyVkStencilOpState*)front)->base);
                 
-                    (self->base)->front = c_front;
-                
-            
-                
-                
-                
+                        (self->base)->front = c_front;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkStencilOpState c_back = *(((PyVkStencilOpState*)back)->base);
                 
-                    (self->base)->back = c_back;
-                
-            
-                
-                
-                
+                        (self->base)->back = c_back;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_minDepthBounds = (float) PyFloat_AsDouble(minDepthBounds);
         
-                    (self->base)->minDepthBounds = c_minDepthBounds;
-                
-            
-                
-                
-                
+                        (self->base)->minDepthBounds = c_minDepthBounds;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_maxDepthBounds = (float) PyFloat_AsDouble(maxDepthBounds);
         
-                    (self->base)->maxDepthBounds = c_maxDepthBounds;
-                
+                        (self->base)->maxDepthBounds = c_maxDepthBounds;
+                    
+            
             
         
 
@@ -22570,53 +23429,63 @@ PyObject* basePipelineIndex = NULL;
 
             static char *kwlist[] = {"sType","flags","stageCount","pStages","pVertexInputState","pInputAssemblyState","pTessellationState","pViewportState","pRasterizationState","pMultisampleState","pDepthStencilState","pColorBlendState","pDynamicState","layout","renderPass","subpass","basePipelineHandle","basePipelineIndex",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOOOOOOOOO", kwlist, &sType,&flags,&stageCount,&pStages,&pVertexInputState,&pInputAssemblyState,&pTessellationState,&pViewportState,&pRasterizationState,&pMultisampleState,&pDepthStencilState,&pColorBlendState,&pDynamicState,&layout,&renderPass,&subpass,&basePipelineHandle,&basePipelineIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOOOOOOOOO", kwlist, &sType,&flags,&stageCount,&pStages,&pVertexInputState,&pInputAssemblyState,&pTessellationState,&pViewportState,&pRasterizationState,&pMultisampleState,&pDepthStencilState,&pColorBlendState,&pDynamicState,&layout,&renderPass,&subpass,&basePipelineHandle,&basePipelineIndex))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineCreateFlags c_flags = (VkPipelineCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_stageCount = (uint32_t) PyLong_AsLong(stageCount);
         
-                    (self->base)->stageCount = c_stageCount;
-                
-            
-                
-                
-                
+                        (self->base)->stageCount = c_stageCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkPipelineShaderStageCreateInfo* c_pStages = NULL;
-                {
+                if (pStages != Py_None) {
                     int size = PyList_Size(pStages);
-                    c_pStages = malloc(sizeof(VkPipelineShaderStageCreateInfo));
+                    c_pStages = malloc(size * sizeof(VkPipelineShaderStageCreateInfo));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pStages[i] = *( (
@@ -22624,149 +23493,205 @@ PyObject* basePipelineIndex = NULL;
                     }
                 }
                 
-                    (self->base)->pStages = c_pStages;
-                
-            
-                
-                
-                
+                        (self->base)->pStages = c_pStages;
                     
-                VkPipelineVertexInputStateCreateInfo* c_pVertexInputState = ((PyVkPipelineVertexInputStateCreateInfo*)pVertexInputState)->base;
-                
-                    (self->base)->pVertexInputState = c_pVertexInputState;
-                
             
-                
-                
-                
+            
+            
                     
-                VkPipelineInputAssemblyStateCreateInfo* c_pInputAssemblyState = ((PyVkPipelineInputAssemblyStateCreateInfo*)pInputAssemblyState)->base;
-                
-                    (self->base)->pInputAssemblyState = c_pInputAssemblyState;
-                
-            
-                
-                
-                
                     
-                VkPipelineTessellationStateCreateInfo* c_pTessellationState = ((PyVkPipelineTessellationStateCreateInfo*)pTessellationState)->base;
-                
-                    (self->base)->pTessellationState = c_pTessellationState;
-                
-            
-                
-                
-                
                     
-                VkPipelineViewportStateCreateInfo* c_pViewportState = ((PyVkPipelineViewportStateCreateInfo*)pViewportState)->base;
+                        
+                VkPipelineVertexInputStateCreateInfo* c_pVertexInputState = NULL;
+                if (pVertexInputState != Py_None) {
+                    c_pVertexInputState = ((PyVkPipelineVertexInputStateCreateInfo*)pVertexInputState)->base;
+                }
                 
-                    (self->base)->pViewportState = c_pViewportState;
-                
-            
-                
-                
-                
+                        (self->base)->pVertexInputState = c_pVertexInputState;
                     
-                VkPipelineRasterizationStateCreateInfo* c_pRasterizationState = ((PyVkPipelineRasterizationStateCreateInfo*)pRasterizationState)->base;
-                
-                    (self->base)->pRasterizationState = c_pRasterizationState;
-                
             
-                
-                
-                
+            
+            
                     
-                VkPipelineMultisampleStateCreateInfo* c_pMultisampleState = ((PyVkPipelineMultisampleStateCreateInfo*)pMultisampleState)->base;
-                
-                    (self->base)->pMultisampleState = c_pMultisampleState;
-                
-            
-                
-                
-                
                     
-                VkPipelineDepthStencilStateCreateInfo* c_pDepthStencilState = ((PyVkPipelineDepthStencilStateCreateInfo*)pDepthStencilState)->base;
-                
-                    (self->base)->pDepthStencilState = c_pDepthStencilState;
-                
-            
-                
-                
-                
                     
-                VkPipelineColorBlendStateCreateInfo* c_pColorBlendState = ((PyVkPipelineColorBlendStateCreateInfo*)pColorBlendState)->base;
+                        
+                VkPipelineInputAssemblyStateCreateInfo* c_pInputAssemblyState = NULL;
+                if (pInputAssemblyState != Py_None) {
+                    c_pInputAssemblyState = ((PyVkPipelineInputAssemblyStateCreateInfo*)pInputAssemblyState)->base;
+                }
                 
-                    (self->base)->pColorBlendState = c_pColorBlendState;
-                
-            
-                
-                
-                
+                        (self->base)->pInputAssemblyState = c_pInputAssemblyState;
                     
-                VkPipelineDynamicStateCreateInfo* c_pDynamicState = ((PyVkPipelineDynamicStateCreateInfo*)pDynamicState)->base;
-                
-                    (self->base)->pDynamicState = c_pDynamicState;
-                
             
-                
-                
-                
+            
+            
                     
-            VkPipelineLayout c_layout = NULL;
-            if (layout != Py_None)  {
-                VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
-                    layout, "VkPipelineLayout");
-                c_layout = *handle_pointer;
-            }
-            
-                    (self->base)->layout = c_layout;
-                
-            
-                
-                
-                
                     
-            VkRenderPass c_renderPass = NULL;
-            if (renderPass != Py_None)  {
-                VkRenderPass* handle_pointer = PyCapsule_GetPointer(
-                    renderPass, "VkRenderPass");
-                c_renderPass = *handle_pointer;
-            }
-            
-                    (self->base)->renderPass = c_renderPass;
-                
-            
-                
-                
-                
                     
+                        
+                VkPipelineTessellationStateCreateInfo* c_pTessellationState = NULL;
+                if (pTessellationState != Py_None) {
+                    c_pTessellationState = ((PyVkPipelineTessellationStateCreateInfo*)pTessellationState)->base;
+                }
+                
+                        (self->base)->pTessellationState = c_pTessellationState;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipelineViewportStateCreateInfo* c_pViewportState = NULL;
+                if (pViewportState != Py_None) {
+                    c_pViewportState = ((PyVkPipelineViewportStateCreateInfo*)pViewportState)->base;
+                }
+                
+                        (self->base)->pViewportState = c_pViewportState;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipelineRasterizationStateCreateInfo* c_pRasterizationState = NULL;
+                if (pRasterizationState != Py_None) {
+                    c_pRasterizationState = ((PyVkPipelineRasterizationStateCreateInfo*)pRasterizationState)->base;
+                }
+                
+                        (self->base)->pRasterizationState = c_pRasterizationState;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipelineMultisampleStateCreateInfo* c_pMultisampleState = NULL;
+                if (pMultisampleState != Py_None) {
+                    c_pMultisampleState = ((PyVkPipelineMultisampleStateCreateInfo*)pMultisampleState)->base;
+                }
+                
+                        (self->base)->pMultisampleState = c_pMultisampleState;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipelineDepthStencilStateCreateInfo* c_pDepthStencilState = NULL;
+                if (pDepthStencilState != Py_None) {
+                    c_pDepthStencilState = ((PyVkPipelineDepthStencilStateCreateInfo*)pDepthStencilState)->base;
+                }
+                
+                        (self->base)->pDepthStencilState = c_pDepthStencilState;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipelineColorBlendStateCreateInfo* c_pColorBlendState = NULL;
+                if (pColorBlendState != Py_None) {
+                    c_pColorBlendState = ((PyVkPipelineColorBlendStateCreateInfo*)pColorBlendState)->base;
+                }
+                
+                        (self->base)->pColorBlendState = c_pColorBlendState;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipelineDynamicStateCreateInfo* c_pDynamicState = NULL;
+                if (pDynamicState != Py_None) {
+                    c_pDynamicState = ((PyVkPipelineDynamicStateCreateInfo*)pDynamicState)->base;
+                }
+                
+                        (self->base)->pDynamicState = c_pDynamicState;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkPipelineLayout c_layout = VK_NULL_HANDLE;
+                if (layout != Py_None)  {
+                    VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
+                        layout, "VkPipelineLayout");
+                    c_layout = *handle_pointer;
+                }
+            
+                        (self->base)->layout = c_layout;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkRenderPass c_renderPass = VK_NULL_HANDLE;
+                if (renderPass != Py_None)  {
+                    VkRenderPass* handle_pointer = PyCapsule_GetPointer(
+                        renderPass, "VkRenderPass");
+                    c_renderPass = *handle_pointer;
+                }
+            
+                        (self->base)->renderPass = c_renderPass;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_subpass = (uint32_t) PyLong_AsLong(subpass);
         
-                    (self->base)->subpass = c_subpass;
-                
-            
-                
-                
-                
+                        (self->base)->subpass = c_subpass;
                     
-            VkPipeline c_basePipelineHandle = NULL;
-            if (basePipelineHandle != Py_None)  {
-                VkPipeline* handle_pointer = PyCapsule_GetPointer(
-                    basePipelineHandle, "VkPipeline");
-                c_basePipelineHandle = *handle_pointer;
-            }
             
-                    (self->base)->basePipelineHandle = c_basePipelineHandle;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkPipeline c_basePipelineHandle = VK_NULL_HANDLE;
+                if (basePipelineHandle != Py_None)  {
+                    VkPipeline* handle_pointer = PyCapsule_GetPointer(
+                        basePipelineHandle, "VkPipeline");
+                    c_basePipelineHandle = *handle_pointer;
+                }
+            
+                        (self->base)->basePipelineHandle = c_basePipelineHandle;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             int32_t c_basePipelineIndex = (int32_t) PyLong_AsLong(basePipelineIndex);
         
-                    (self->base)->basePipelineIndex = c_basePipelineIndex;
-                
+                        (self->base)->basePipelineIndex = c_basePipelineIndex;
+                    
+            
             
         
 
@@ -23105,51 +24030,62 @@ PyObject* pInitialData = NULL;
 
             static char *kwlist[] = {"sType","flags","initialDataSize","pInitialData",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&initialDataSize,&pInitialData))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&initialDataSize,&pInitialData))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineCacheCreateFlags c_flags = (VkPipelineCacheCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             size_t c_initialDataSize = (size_t) PyLong_AsLong(initialDataSize);
         
-                    (self->base)->initialDataSize = c_initialDataSize;
-                
+                        (self->base)->initialDataSize = c_initialDataSize;
+                    
             
-                
-                
-                
-                    void* c_pInitialData = NULL;
-                    (self->base)->pInitialData = c_pInitialData;
-                
+            
+            
+                    
+                    
+                    
+                        void* c_pInitialData = NULL;
+                        (self->base)->pInitialData = c_pInitialData;
+                    
+            
             
         
 
@@ -23285,37 +24221,44 @@ PyObject* size = NULL;
 
             static char *kwlist[] = {"stageFlags","offset","size",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &stageFlags,&offset,&size))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &stageFlags,&offset,&size))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkShaderStageFlags c_stageFlags = (VkShaderStageFlags) PyLong_AsLong(stageFlags);
                     
-                    (self->base)->stageFlags = c_stageFlags;
-                
-            
-                
-                
-                
+                        (self->base)->stageFlags = c_stageFlags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_offset = (uint32_t) PyLong_AsLong(offset);
         
-                    (self->base)->offset = c_offset;
-                
-            
-                
-                
-                
+                        (self->base)->offset = c_offset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_size = (uint32_t) PyLong_AsLong(size);
         
-                    (self->base)->size = c_size;
-                
+                        (self->base)->size = c_size;
+                    
+            
             
         
 
@@ -23426,76 +24369,95 @@ PyObject* pPushConstantRanges = NULL;
 
             static char *kwlist[] = {"sType","flags","setLayoutCount","pSetLayouts","pushConstantRangeCount","pPushConstantRanges",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&flags,&setLayoutCount,&pSetLayouts,&pushConstantRangeCount,&pPushConstantRanges))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&flags,&setLayoutCount,&pSetLayouts,&pushConstantRangeCount,&pPushConstantRanges))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineLayoutCreateFlags c_flags = (VkPipelineLayoutCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_setLayoutCount = (uint32_t) PyLong_AsLong(setLayoutCount);
         
-                    (self->base)->setLayoutCount = c_setLayoutCount;
-                
-            
-                
-                
-                
+                        (self->base)->setLayoutCount = c_setLayoutCount;
                     
-            VkDescriptorSetLayout* c_pSetLayouts = NULL;
-            if (pSetLayouts != Py_None)  {
-                VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
-                    pSetLayouts, "VkDescriptorSetLayout");
-                c_pSetLayouts = handle_pointer;
-            }
             
-                    (self->base)->pSetLayouts = c_pSetLayouts;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkDescriptorSetLayout* c_pSetLayouts = VK_NULL_HANDLE;
+                if (pSetLayouts != Py_None)  {
+                    int size = PyList_Size(pSetLayouts);
+                    c_pSetLayouts = malloc(size * sizeof(VkDescriptorSetLayout));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pSetLayouts, i), "VkDescriptorSetLayout");
+                        c_pSetLayouts[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pSetLayouts = c_pSetLayouts;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_pushConstantRangeCount = (uint32_t) PyLong_AsLong(pushConstantRangeCount);
         
-                    (self->base)->pushConstantRangeCount = c_pushConstantRangeCount;
-                
-            
-                
-                
-                
+                        (self->base)->pushConstantRangeCount = c_pushConstantRangeCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkPushConstantRange* c_pPushConstantRanges = NULL;
-                {
+                if (pPushConstantRanges != Py_None) {
                     int size = PyList_Size(pPushConstantRanges);
-                    c_pPushConstantRanges = malloc(sizeof(VkPushConstantRange));
+                    c_pPushConstantRanges = malloc(size * sizeof(VkPushConstantRange));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pPushConstantRanges[i] = *( (
@@ -23503,8 +24465,9 @@ PyObject* pPushConstantRanges = NULL;
                     }
                 }
                 
-                    (self->base)->pPushConstantRanges = c_pPushConstantRanges;
-                
+                        (self->base)->pPushConstantRanges = c_pPushConstantRanges;
+                    
+            
             
         
 
@@ -23679,170 +24642,207 @@ PyObject* unnormalizedCoordinates = NULL;
 
             static char *kwlist[] = {"sType","flags","magFilter","minFilter","mipmapMode","addressModeU","addressModeV","addressModeW","mipLodBias","anisotropyEnable","maxAnisotropy","compareEnable","compareOp","minLod","maxLod","borderColor","unnormalizedCoordinates",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOOOOOOOO", kwlist, &sType,&flags,&magFilter,&minFilter,&mipmapMode,&addressModeU,&addressModeV,&addressModeW,&mipLodBias,&anisotropyEnable,&maxAnisotropy,&compareEnable,&compareOp,&minLod,&maxLod,&borderColor,&unnormalizedCoordinates))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOOOOOOOO", kwlist, &sType,&flags,&magFilter,&minFilter,&mipmapMode,&addressModeU,&addressModeV,&addressModeW,&mipLodBias,&anisotropyEnable,&maxAnisotropy,&compareEnable,&compareOp,&minLod,&maxLod,&borderColor,&unnormalizedCoordinates))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSamplerCreateFlags c_flags = (VkSamplerCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFilter c_magFilter = (VkFilter) PyLong_AsLong(magFilter);
                     
-                    (self->base)->magFilter = c_magFilter;
-                
-            
-                
-                
-                
+                        (self->base)->magFilter = c_magFilter;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFilter c_minFilter = (VkFilter) PyLong_AsLong(minFilter);
                     
-                    (self->base)->minFilter = c_minFilter;
-                
-            
-                
-                
-                
+                        (self->base)->minFilter = c_minFilter;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSamplerMipmapMode c_mipmapMode = (VkSamplerMipmapMode) PyLong_AsLong(mipmapMode);
                     
-                    (self->base)->mipmapMode = c_mipmapMode;
-                
-            
-                
-                
-                
+                        (self->base)->mipmapMode = c_mipmapMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSamplerAddressMode c_addressModeU = (VkSamplerAddressMode) PyLong_AsLong(addressModeU);
                     
-                    (self->base)->addressModeU = c_addressModeU;
-                
-            
-                
-                
-                
+                        (self->base)->addressModeU = c_addressModeU;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSamplerAddressMode c_addressModeV = (VkSamplerAddressMode) PyLong_AsLong(addressModeV);
                     
-                    (self->base)->addressModeV = c_addressModeV;
-                
-            
-                
-                
-                
+                        (self->base)->addressModeV = c_addressModeV;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSamplerAddressMode c_addressModeW = (VkSamplerAddressMode) PyLong_AsLong(addressModeW);
                     
-                    (self->base)->addressModeW = c_addressModeW;
-                
-            
-                
-                
-                
+                        (self->base)->addressModeW = c_addressModeW;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_mipLodBias = (float) PyFloat_AsDouble(mipLodBias);
         
-                    (self->base)->mipLodBias = c_mipLodBias;
-                
-            
-                
-                
-                
+                        (self->base)->mipLodBias = c_mipLodBias;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_anisotropyEnable = (VkBool32) PyLong_AsLong(anisotropyEnable);
                     
-                    (self->base)->anisotropyEnable = c_anisotropyEnable;
-                
-            
-                
-                
-                
+                        (self->base)->anisotropyEnable = c_anisotropyEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_maxAnisotropy = (float) PyFloat_AsDouble(maxAnisotropy);
         
-                    (self->base)->maxAnisotropy = c_maxAnisotropy;
-                
-            
-                
-                
-                
+                        (self->base)->maxAnisotropy = c_maxAnisotropy;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_compareEnable = (VkBool32) PyLong_AsLong(compareEnable);
                     
-                    (self->base)->compareEnable = c_compareEnable;
-                
-            
-                
-                
-                
+                        (self->base)->compareEnable = c_compareEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCompareOp c_compareOp = (VkCompareOp) PyLong_AsLong(compareOp);
                     
-                    (self->base)->compareOp = c_compareOp;
-                
-            
-                
-                
-                
+                        (self->base)->compareOp = c_compareOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_minLod = (float) PyFloat_AsDouble(minLod);
         
-                    (self->base)->minLod = c_minLod;
-                
-            
-                
-                
-                
+                        (self->base)->minLod = c_minLod;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_maxLod = (float) PyFloat_AsDouble(maxLod);
         
-                    (self->base)->maxLod = c_maxLod;
-                
-            
-                
-                
-                
+                        (self->base)->maxLod = c_maxLod;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBorderColor c_borderColor = (VkBorderColor) PyLong_AsLong(borderColor);
                     
-                    (self->base)->borderColor = c_borderColor;
-                
-            
-                
-                
-                
+                        (self->base)->borderColor = c_borderColor;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_unnormalizedCoordinates = (VkBool32) PyLong_AsLong(unnormalizedCoordinates);
                     
-                    (self->base)->unnormalizedCoordinates = c_unnormalizedCoordinates;
-                
+                        (self->base)->unnormalizedCoordinates = c_unnormalizedCoordinates;
+                    
+            
             
         
 
@@ -24146,44 +25146,53 @@ PyObject* queueFamilyIndex = NULL;
 
             static char *kwlist[] = {"sType","flags","queueFamilyIndex",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&flags,&queueFamilyIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&flags,&queueFamilyIndex))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCommandPoolCreateFlags c_flags = (VkCommandPoolCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queueFamilyIndex = (uint32_t) PyLong_AsLong(queueFamilyIndex);
         
-                    (self->base)->queueFamilyIndex = c_queueFamilyIndex;
-                
+                        (self->base)->queueFamilyIndex = c_queueFamilyIndex;
+                    
+            
             
         
 
@@ -24306,58 +25315,69 @@ PyObject* commandBufferCount = NULL;
 
             static char *kwlist[] = {"sType","commandPool","level","commandBufferCount",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&commandPool,&level,&commandBufferCount))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&commandPool,&level,&commandBufferCount))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkCommandPool c_commandPool = NULL;
-            if (commandPool != Py_None)  {
-                VkCommandPool* handle_pointer = PyCapsule_GetPointer(
-                    commandPool, "VkCommandPool");
-                c_commandPool = *handle_pointer;
-            }
             
-                    (self->base)->commandPool = c_commandPool;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkCommandPool c_commandPool = VK_NULL_HANDLE;
+                if (commandPool != Py_None)  {
+                    VkCommandPool* handle_pointer = PyCapsule_GetPointer(
+                        commandPool, "VkCommandPool");
+                    c_commandPool = *handle_pointer;
+                }
+            
+                        (self->base)->commandPool = c_commandPool;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCommandBufferLevel c_level = (VkCommandBufferLevel) PyLong_AsLong(level);
                     
-                    (self->base)->level = c_level;
-                
-            
-                
-                
-                
+                        (self->base)->level = c_level;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_commandBufferCount = (uint32_t) PyLong_AsLong(commandBufferCount);
         
-                    (self->base)->commandBufferCount = c_commandBufferCount;
-                
+                        (self->base)->commandBufferCount = c_commandBufferCount;
+                    
+            
             
         
 
@@ -24493,90 +25513,107 @@ PyObject* pipelineStatistics = NULL;
 
             static char *kwlist[] = {"sType","renderPass","subpass","framebuffer","occlusionQueryEnable","queryFlags","pipelineStatistics",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &sType,&renderPass,&subpass,&framebuffer,&occlusionQueryEnable,&queryFlags,&pipelineStatistics))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &sType,&renderPass,&subpass,&framebuffer,&occlusionQueryEnable,&queryFlags,&pipelineStatistics))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkRenderPass c_renderPass = NULL;
-            if (renderPass != Py_None)  {
-                VkRenderPass* handle_pointer = PyCapsule_GetPointer(
-                    renderPass, "VkRenderPass");
-                c_renderPass = *handle_pointer;
-            }
             
-                    (self->base)->renderPass = c_renderPass;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkRenderPass c_renderPass = VK_NULL_HANDLE;
+                if (renderPass != Py_None)  {
+                    VkRenderPass* handle_pointer = PyCapsule_GetPointer(
+                        renderPass, "VkRenderPass");
+                    c_renderPass = *handle_pointer;
+                }
+            
+                        (self->base)->renderPass = c_renderPass;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_subpass = (uint32_t) PyLong_AsLong(subpass);
         
-                    (self->base)->subpass = c_subpass;
-                
-            
-                
-                
-                
+                        (self->base)->subpass = c_subpass;
                     
-            VkFramebuffer c_framebuffer = NULL;
-            if (framebuffer != Py_None)  {
-                VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
-                    framebuffer, "VkFramebuffer");
-                c_framebuffer = *handle_pointer;
-            }
             
-                    (self->base)->framebuffer = c_framebuffer;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkFramebuffer c_framebuffer = VK_NULL_HANDLE;
+                if (framebuffer != Py_None)  {
+                    VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
+                        framebuffer, "VkFramebuffer");
+                    c_framebuffer = *handle_pointer;
+                }
+            
+                        (self->base)->framebuffer = c_framebuffer;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_occlusionQueryEnable = (VkBool32) PyLong_AsLong(occlusionQueryEnable);
                     
-                    (self->base)->occlusionQueryEnable = c_occlusionQueryEnable;
-                
-            
-                
-                
-                
+                        (self->base)->occlusionQueryEnable = c_occlusionQueryEnable;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkQueryControlFlags c_queryFlags = (VkQueryControlFlags) PyLong_AsLong(queryFlags);
                     
-                    (self->base)->queryFlags = c_queryFlags;
-                
-            
-                
-                
-                
+                        (self->base)->queryFlags = c_queryFlags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkQueryPipelineStatisticFlags c_pipelineStatistics = (VkQueryPipelineStatisticFlags) PyLong_AsLong(pipelineStatistics);
                     
-                    (self->base)->pipelineStatistics = c_pipelineStatistics;
-                
+                        (self->base)->pipelineStatistics = c_pipelineStatistics;
+                    
+            
             
         
 
@@ -24744,44 +25781,56 @@ PyObject* pInheritanceInfo = NULL;
 
             static char *kwlist[] = {"sType","flags","pInheritanceInfo",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&flags,&pInheritanceInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&flags,&pInheritanceInfo))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCommandBufferUsageFlags c_flags = (VkCommandBufferUsageFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-                VkCommandBufferInheritanceInfo* c_pInheritanceInfo = ((PyVkCommandBufferInheritanceInfo*)pInheritanceInfo)->base;
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkCommandBufferInheritanceInfo* c_pInheritanceInfo = NULL;
+                if (pInheritanceInfo != Py_None) {
+                    c_pInheritanceInfo = ((PyVkCommandBufferInheritanceInfo*)pInheritanceInfo)->base;
+                }
                 
-                    (self->base)->pInheritanceInfo = c_pInheritanceInfo;
-                
+                        (self->base)->pInheritanceInfo = c_pInheritanceInfo;
+                    
+            
             
         
 
@@ -24909,81 +25958,95 @@ PyObject* pClearValues = NULL;
 
             static char *kwlist[] = {"sType","renderPass","framebuffer","renderArea","clearValueCount","pClearValues",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&renderPass,&framebuffer,&renderArea,&clearValueCount,&pClearValues))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&renderPass,&framebuffer,&renderArea,&clearValueCount,&pClearValues))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkRenderPass c_renderPass = NULL;
-            if (renderPass != Py_None)  {
-                VkRenderPass* handle_pointer = PyCapsule_GetPointer(
-                    renderPass, "VkRenderPass");
-                c_renderPass = *handle_pointer;
-            }
             
-                    (self->base)->renderPass = c_renderPass;
-                
             
-                
-                
-                
+            
                     
-            VkFramebuffer c_framebuffer = NULL;
-            if (framebuffer != Py_None)  {
-                VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
-                    framebuffer, "VkFramebuffer");
-                c_framebuffer = *handle_pointer;
-            }
-            
-                    (self->base)->framebuffer = c_framebuffer;
-                
-            
-                
-                
-                
                     
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkRenderPass c_renderPass = VK_NULL_HANDLE;
+                if (renderPass != Py_None)  {
+                    VkRenderPass* handle_pointer = PyCapsule_GetPointer(
+                        renderPass, "VkRenderPass");
+                    c_renderPass = *handle_pointer;
+                }
+            
+                        (self->base)->renderPass = c_renderPass;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkFramebuffer c_framebuffer = VK_NULL_HANDLE;
+                if (framebuffer != Py_None)  {
+                    VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
+                        framebuffer, "VkFramebuffer");
+                    c_framebuffer = *handle_pointer;
+                }
+            
+                        (self->base)->framebuffer = c_framebuffer;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkRect2D c_renderArea = *(((PyVkRect2D*)renderArea)->base);
                 
-                    (self->base)->renderArea = c_renderArea;
-                
-            
-                
-                
-                
+                        (self->base)->renderArea = c_renderArea;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_clearValueCount = (uint32_t) PyLong_AsLong(clearValueCount);
         
-                    (self->base)->clearValueCount = c_clearValueCount;
-                
-            
-                
-                
-                
+                        (self->base)->clearValueCount = c_clearValueCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkClearValue* c_pClearValues = NULL;
-                {
+                if (pClearValues != Py_None) {
                     int size = PyList_Size(pClearValues);
-                    c_pClearValues = malloc(sizeof(VkClearValue));
+                    c_pClearValues = malloc(size * sizeof(VkClearValue));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pClearValues[i] = *( (
@@ -24991,8 +26054,9 @@ PyObject* pClearValues = NULL;
                     }
                 }
                 
-                    (self->base)->pClearValues = c_pClearValues;
-                
+                        (self->base)->pClearValues = c_pClearValues;
+                    
+            
             
         
 
@@ -25152,28 +26216,33 @@ PyObject* stencil = NULL;
 
             static char *kwlist[] = {"depth","stencil",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &depth,&stencil))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &depth,&stencil))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             float c_depth = (float) PyFloat_AsDouble(depth);
         
-                    (self->base)->depth = c_depth;
-                
-            
-                
-                
-                
+                        (self->base)->depth = c_depth;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_stencil = (uint32_t) PyLong_AsLong(stencil);
         
-                    (self->base)->stencil = c_stencil;
-                
+                        (self->base)->stencil = c_stencil;
+                    
+            
             
         
 
@@ -25268,37 +26337,44 @@ PyObject* clearValue = NULL;
 
             static char *kwlist[] = {"aspectMask","colorAttachment","clearValue",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &aspectMask,&colorAttachment,&clearValue))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &aspectMask,&colorAttachment,&clearValue))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkImageAspectFlags c_aspectMask = (VkImageAspectFlags) PyLong_AsLong(aspectMask);
                     
-                    (self->base)->aspectMask = c_aspectMask;
-                
-            
-                
-                
-                
+                        (self->base)->aspectMask = c_aspectMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_colorAttachment = (uint32_t) PyLong_AsLong(colorAttachment);
         
-                    (self->base)->colorAttachment = c_colorAttachment;
-                
-            
-                
-                
-                
+                        (self->base)->colorAttachment = c_colorAttachment;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkClearValue c_clearValue = *(((PyVkClearValue*)clearValue)->base);
                 
-                    (self->base)->clearValue = c_clearValue;
-                
+                        (self->base)->clearValue = c_clearValue;
+                    
+            
             
         
 
@@ -25415,91 +26491,110 @@ PyObject* finalLayout = NULL;
 
             static char *kwlist[] = {"flags","format","samples","loadOp","storeOp","stencilLoadOp","stencilStoreOp","initialLayout","finalLayout",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOO", kwlist, &flags,&format,&samples,&loadOp,&storeOp,&stencilLoadOp,&stencilStoreOp,&initialLayout,&finalLayout))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOO", kwlist, &flags,&format,&samples,&loadOp,&storeOp,&stencilLoadOp,&stencilStoreOp,&initialLayout,&finalLayout))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkAttachmentDescriptionFlags c_flags = (VkAttachmentDescriptionFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFormat c_format = (VkFormat) PyLong_AsLong(format);
                     
-                    (self->base)->format = c_format;
-                
-            
-                
-                
-                
+                        (self->base)->format = c_format;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSampleCountFlagBits c_samples = (VkSampleCountFlagBits) PyLong_AsLong(samples);
                     
-                    (self->base)->samples = c_samples;
-                
-            
-                
-                
-                
+                        (self->base)->samples = c_samples;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAttachmentLoadOp c_loadOp = (VkAttachmentLoadOp) PyLong_AsLong(loadOp);
                     
-                    (self->base)->loadOp = c_loadOp;
-                
-            
-                
-                
-                
+                        (self->base)->loadOp = c_loadOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAttachmentStoreOp c_storeOp = (VkAttachmentStoreOp) PyLong_AsLong(storeOp);
                     
-                    (self->base)->storeOp = c_storeOp;
-                
-            
-                
-                
-                
+                        (self->base)->storeOp = c_storeOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAttachmentLoadOp c_stencilLoadOp = (VkAttachmentLoadOp) PyLong_AsLong(stencilLoadOp);
                     
-                    (self->base)->stencilLoadOp = c_stencilLoadOp;
-                
-            
-                
-                
-                
+                        (self->base)->stencilLoadOp = c_stencilLoadOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAttachmentStoreOp c_stencilStoreOp = (VkAttachmentStoreOp) PyLong_AsLong(stencilStoreOp);
                     
-                    (self->base)->stencilStoreOp = c_stencilStoreOp;
-                
-            
-                
-                
-                
+                        (self->base)->stencilStoreOp = c_stencilStoreOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageLayout c_initialLayout = (VkImageLayout) PyLong_AsLong(initialLayout);
                     
-                    (self->base)->initialLayout = c_initialLayout;
-                
-            
-                
-                
-                
+                        (self->base)->initialLayout = c_initialLayout;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageLayout c_finalLayout = (VkImageLayout) PyLong_AsLong(finalLayout);
                     
-                    (self->base)->finalLayout = c_finalLayout;
-                
+                        (self->base)->finalLayout = c_finalLayout;
+                    
+            
             
         
 
@@ -25684,28 +26779,33 @@ PyObject* layout = NULL;
 
             static char *kwlist[] = {"attachment","layout",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &attachment,&layout))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &attachment,&layout))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_attachment = (uint32_t) PyLong_AsLong(attachment);
         
-                    (self->base)->attachment = c_attachment;
-                
-            
-                
-                
-                
+                        (self->base)->attachment = c_attachment;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageLayout c_layout = (VkImageLayout) PyLong_AsLong(layout);
                     
-                    (self->base)->layout = c_layout;
-                
+                        (self->base)->layout = c_layout;
+                    
+            
             
         
 
@@ -25807,46 +26907,54 @@ PyObject* pPreserveAttachments = NULL;
 
             static char *kwlist[] = {"flags","pipelineBindPoint","inputAttachmentCount","pInputAttachments","colorAttachmentCount","pColorAttachments","pResolveAttachments","pDepthStencilAttachment","preserveAttachmentCount","pPreserveAttachments",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOO", kwlist, &flags,&pipelineBindPoint,&inputAttachmentCount,&pInputAttachments,&colorAttachmentCount,&pColorAttachments,&pResolveAttachments,&pDepthStencilAttachment,&preserveAttachmentCount,&pPreserveAttachments))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOO", kwlist, &flags,&pipelineBindPoint,&inputAttachmentCount,&pInputAttachments,&colorAttachmentCount,&pColorAttachments,&pResolveAttachments,&pDepthStencilAttachment,&preserveAttachmentCount,&pPreserveAttachments))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkSubpassDescriptionFlags c_flags = (VkSubpassDescriptionFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineBindPoint c_pipelineBindPoint = (VkPipelineBindPoint) PyLong_AsLong(pipelineBindPoint);
                     
-                    (self->base)->pipelineBindPoint = c_pipelineBindPoint;
-                
-            
-                
-                
-                
+                        (self->base)->pipelineBindPoint = c_pipelineBindPoint;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_inputAttachmentCount = (uint32_t) PyLong_AsLong(inputAttachmentCount);
         
-                    (self->base)->inputAttachmentCount = c_inputAttachmentCount;
-                
-            
-                
-                
-                
+                        (self->base)->inputAttachmentCount = c_inputAttachmentCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkAttachmentReference* c_pInputAttachments = NULL;
-                {
+                if (pInputAttachments != Py_None) {
                     int size = PyList_Size(pInputAttachments);
-                    c_pInputAttachments = malloc(sizeof(VkAttachmentReference));
+                    c_pInputAttachments = malloc(size * sizeof(VkAttachmentReference));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pInputAttachments[i] = *( (
@@ -25854,26 +26962,30 @@ PyObject* pPreserveAttachments = NULL;
                     }
                 }
                 
-                    (self->base)->pInputAttachments = c_pInputAttachments;
-                
-            
-                
-                
-                
+                        (self->base)->pInputAttachments = c_pInputAttachments;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_colorAttachmentCount = (uint32_t) PyLong_AsLong(colorAttachmentCount);
         
-                    (self->base)->colorAttachmentCount = c_colorAttachmentCount;
-                
-            
-                
-                
-                
+                        (self->base)->colorAttachmentCount = c_colorAttachmentCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkAttachmentReference* c_pColorAttachments = NULL;
-                {
+                if (pColorAttachments != Py_None) {
                     int size = PyList_Size(pColorAttachments);
-                    c_pColorAttachments = malloc(sizeof(VkAttachmentReference));
+                    c_pColorAttachments = malloc(size * sizeof(VkAttachmentReference));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pColorAttachments[i] = *( (
@@ -25881,17 +26993,19 @@ PyObject* pPreserveAttachments = NULL;
                     }
                 }
                 
-                    (self->base)->pColorAttachments = c_pColorAttachments;
-                
-            
-                
-                
-                
+                        (self->base)->pColorAttachments = c_pColorAttachments;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkAttachmentReference* c_pResolveAttachments = NULL;
-                {
+                if (pResolveAttachments != Py_None) {
                     int size = PyList_Size(pResolveAttachments);
-                    c_pResolveAttachments = malloc(sizeof(VkAttachmentReference));
+                    c_pResolveAttachments = malloc(size * sizeof(VkAttachmentReference));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pResolveAttachments[i] = *( (
@@ -25899,34 +27013,46 @@ PyObject* pPreserveAttachments = NULL;
                     }
                 }
                 
-                    (self->base)->pResolveAttachments = c_pResolveAttachments;
-                
-            
-                
-                
-                
+                        (self->base)->pResolveAttachments = c_pResolveAttachments;
                     
-                VkAttachmentReference* c_pDepthStencilAttachment = ((PyVkAttachmentReference*)pDepthStencilAttachment)->base;
-                
-                    (self->base)->pDepthStencilAttachment = c_pDepthStencilAttachment;
-                
             
-                
-                
-                
+            
+            
                     
+                    
+                    
+                        
+                VkAttachmentReference* c_pDepthStencilAttachment = NULL;
+                if (pDepthStencilAttachment != Py_None) {
+                    c_pDepthStencilAttachment = ((PyVkAttachmentReference*)pDepthStencilAttachment)->base;
+                }
+                
+                        (self->base)->pDepthStencilAttachment = c_pDepthStencilAttachment;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_preserveAttachmentCount = (uint32_t) PyLong_AsLong(preserveAttachmentCount);
         
-                    (self->base)->preserveAttachmentCount = c_preserveAttachmentCount;
-                
-            
-                
-                
-                
+                        (self->base)->preserveAttachmentCount = c_preserveAttachmentCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         uint32_t* c_pPreserveAttachments = NULL;
         if (pPreserveAttachments == Py_None) {
             c_pPreserveAttachments = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pPreserveAttachments)) {
+            c_pPreserveAttachments = (uint32_t*) PyBytes_AsString(pPreserveAttachments);
         }
         else {
             int size = PyList_Size(pPreserveAttachments);
@@ -25938,8 +27064,9 @@ PyObject* pPreserveAttachments = NULL;
                 memcpy(c_pPreserveAttachments + i, &r, sizeof(uint32_t));
             }
         }
-                    (self->base)->pPreserveAttachments = c_pPreserveAttachments;
-                
+                        (self->base)->pPreserveAttachments = c_pPreserveAttachments;
+                    
+            
             
         
 
@@ -26154,73 +27281,88 @@ PyObject* dependencyFlags = NULL;
 
             static char *kwlist[] = {"srcSubpass","dstSubpass","srcStageMask","dstStageMask","srcAccessMask","dstAccessMask","dependencyFlags",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &srcSubpass,&dstSubpass,&srcStageMask,&dstStageMask,&srcAccessMask,&dstAccessMask,&dependencyFlags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &srcSubpass,&dstSubpass,&srcStageMask,&dstStageMask,&srcAccessMask,&dstAccessMask,&dependencyFlags))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_srcSubpass = (uint32_t) PyLong_AsLong(srcSubpass);
         
-                    (self->base)->srcSubpass = c_srcSubpass;
-                
-            
-                
-                
-                
+                        (self->base)->srcSubpass = c_srcSubpass;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dstSubpass = (uint32_t) PyLong_AsLong(dstSubpass);
         
-                    (self->base)->dstSubpass = c_dstSubpass;
-                
-            
-                
-                
-                
+                        (self->base)->dstSubpass = c_dstSubpass;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineStageFlags c_srcStageMask = (VkPipelineStageFlags) PyLong_AsLong(srcStageMask);
                     
-                    (self->base)->srcStageMask = c_srcStageMask;
-                
-            
-                
-                
-                
+                        (self->base)->srcStageMask = c_srcStageMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPipelineStageFlags c_dstStageMask = (VkPipelineStageFlags) PyLong_AsLong(dstStageMask);
                     
-                    (self->base)->dstStageMask = c_dstStageMask;
-                
-            
-                
-                
-                
+                        (self->base)->dstStageMask = c_dstStageMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_srcAccessMask = (VkAccessFlags) PyLong_AsLong(srcAccessMask);
                     
-                    (self->base)->srcAccessMask = c_srcAccessMask;
-                
-            
-                
-                
-                
+                        (self->base)->srcAccessMask = c_srcAccessMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAccessFlags c_dstAccessMask = (VkAccessFlags) PyLong_AsLong(dstAccessMask);
                     
-                    (self->base)->dstAccessMask = c_dstAccessMask;
-                
-            
-                
-                
-                
+                        (self->base)->dstAccessMask = c_dstAccessMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDependencyFlags c_dependencyFlags = (VkDependencyFlags) PyLong_AsLong(dependencyFlags);
                     
-                    (self->base)->dependencyFlags = c_dependencyFlags;
-                
+                        (self->base)->dependencyFlags = c_dependencyFlags;
+                    
+            
             
         
 
@@ -26385,53 +27527,63 @@ PyObject* pDependencies = NULL;
 
             static char *kwlist[] = {"sType","flags","attachmentCount","pAttachments","subpassCount","pSubpasses","dependencyCount","pDependencies",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &sType,&flags,&attachmentCount,&pAttachments,&subpassCount,&pSubpasses,&dependencyCount,&pDependencies))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &sType,&flags,&attachmentCount,&pAttachments,&subpassCount,&pSubpasses,&dependencyCount,&pDependencies))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkRenderPassCreateFlags c_flags = (VkRenderPassCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_attachmentCount = (uint32_t) PyLong_AsLong(attachmentCount);
         
-                    (self->base)->attachmentCount = c_attachmentCount;
-                
-            
-                
-                
-                
+                        (self->base)->attachmentCount = c_attachmentCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkAttachmentDescription* c_pAttachments = NULL;
-                {
+                if (pAttachments != Py_None) {
                     int size = PyList_Size(pAttachments);
-                    c_pAttachments = malloc(sizeof(VkAttachmentDescription));
+                    c_pAttachments = malloc(size * sizeof(VkAttachmentDescription));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pAttachments[i] = *( (
@@ -26439,26 +27591,30 @@ PyObject* pDependencies = NULL;
                     }
                 }
                 
-                    (self->base)->pAttachments = c_pAttachments;
-                
-            
-                
-                
-                
+                        (self->base)->pAttachments = c_pAttachments;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_subpassCount = (uint32_t) PyLong_AsLong(subpassCount);
         
-                    (self->base)->subpassCount = c_subpassCount;
-                
-            
-                
-                
-                
+                        (self->base)->subpassCount = c_subpassCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSubpassDescription* c_pSubpasses = NULL;
-                {
+                if (pSubpasses != Py_None) {
                     int size = PyList_Size(pSubpasses);
-                    c_pSubpasses = malloc(sizeof(VkSubpassDescription));
+                    c_pSubpasses = malloc(size * sizeof(VkSubpassDescription));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pSubpasses[i] = *( (
@@ -26466,26 +27622,30 @@ PyObject* pDependencies = NULL;
                     }
                 }
                 
-                    (self->base)->pSubpasses = c_pSubpasses;
-                
-            
-                
-                
-                
+                        (self->base)->pSubpasses = c_pSubpasses;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_dependencyCount = (uint32_t) PyLong_AsLong(dependencyCount);
         
-                    (self->base)->dependencyCount = c_dependencyCount;
-                
-            
-                
-                
-                
+                        (self->base)->dependencyCount = c_dependencyCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkSubpassDependency* c_pDependencies = NULL;
-                {
+                if (pDependencies != Py_None) {
                     int size = PyList_Size(pDependencies);
-                    c_pDependencies = malloc(sizeof(VkSubpassDependency));
+                    c_pDependencies = malloc(size * sizeof(VkSubpassDependency));
                     int i;
                     for (i = 0; i < size; i++) {
                         c_pDependencies[i] = *( (
@@ -26493,8 +27653,9 @@ PyObject* pDependencies = NULL;
                     }
                 }
                 
-                    (self->base)->pDependencies = c_pDependencies;
-                
+                        (self->base)->pDependencies = c_pDependencies;
+                    
+            
             
         
 
@@ -26689,35 +27850,42 @@ PyObject* flags = NULL;
 
             static char *kwlist[] = {"sType","flags",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&flags))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkEventCreateFlags c_flags = (VkEventCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
+                        (self->base)->flags = c_flags;
+                    
+            
             
         
 
@@ -26825,35 +27993,42 @@ PyObject* flags = NULL;
 
             static char *kwlist[] = {"sType","flags",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&flags))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFenceCreateFlags c_flags = (VkFenceCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
+                        (self->base)->flags = c_flags;
+                    
+            
             
         
 
@@ -27014,505 +28189,616 @@ PyObject* inheritedQueries = NULL;
 
             static char *kwlist[] = {"robustBufferAccess","fullDrawIndexUint32","imageCubeArray","independentBlend","geometryShader","tessellationShader","sampleRateShading","dualSrcBlend","logicOp","multiDrawIndirect","drawIndirectFirstInstance","depthClamp","depthBiasClamp","fillModeNonSolid","depthBounds","wideLines","largePoints","alphaToOne","multiViewport","samplerAnisotropy","textureCompressionETC2","textureCompressionASTC_LDR","textureCompressionBC","occlusionQueryPrecise","pipelineStatisticsQuery","vertexPipelineStoresAndAtomics","fragmentStoresAndAtomics","shaderTessellationAndGeometryPointSize","shaderImageGatherExtended","shaderStorageImageExtendedFormats","shaderStorageImageMultisample","shaderStorageImageReadWithoutFormat","shaderStorageImageWriteWithoutFormat","shaderUniformBufferArrayDynamicIndexing","shaderSampledImageArrayDynamicIndexing","shaderStorageBufferArrayDynamicIndexing","shaderStorageImageArrayDynamicIndexing","shaderClipDistance","shaderCullDistance","shaderFloat64","shaderInt64","shaderInt16","shaderResourceResidency","shaderResourceMinLod","sparseBinding","sparseResidencyBuffer","sparseResidencyImage2D","sparseResidencyImage3D","sparseResidency2Samples","sparseResidency4Samples","sparseResidency8Samples","sparseResidency16Samples","sparseResidencyAliased","variableMultisampleRate","inheritedQueries",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", kwlist, &robustBufferAccess,&fullDrawIndexUint32,&imageCubeArray,&independentBlend,&geometryShader,&tessellationShader,&sampleRateShading,&dualSrcBlend,&logicOp,&multiDrawIndirect,&drawIndirectFirstInstance,&depthClamp,&depthBiasClamp,&fillModeNonSolid,&depthBounds,&wideLines,&largePoints,&alphaToOne,&multiViewport,&samplerAnisotropy,&textureCompressionETC2,&textureCompressionASTC_LDR,&textureCompressionBC,&occlusionQueryPrecise,&pipelineStatisticsQuery,&vertexPipelineStoresAndAtomics,&fragmentStoresAndAtomics,&shaderTessellationAndGeometryPointSize,&shaderImageGatherExtended,&shaderStorageImageExtendedFormats,&shaderStorageImageMultisample,&shaderStorageImageReadWithoutFormat,&shaderStorageImageWriteWithoutFormat,&shaderUniformBufferArrayDynamicIndexing,&shaderSampledImageArrayDynamicIndexing,&shaderStorageBufferArrayDynamicIndexing,&shaderStorageImageArrayDynamicIndexing,&shaderClipDistance,&shaderCullDistance,&shaderFloat64,&shaderInt64,&shaderInt16,&shaderResourceResidency,&shaderResourceMinLod,&sparseBinding,&sparseResidencyBuffer,&sparseResidencyImage2D,&sparseResidencyImage3D,&sparseResidency2Samples,&sparseResidency4Samples,&sparseResidency8Samples,&sparseResidency16Samples,&sparseResidencyAliased,&variableMultisampleRate,&inheritedQueries))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", kwlist, &robustBufferAccess,&fullDrawIndexUint32,&imageCubeArray,&independentBlend,&geometryShader,&tessellationShader,&sampleRateShading,&dualSrcBlend,&logicOp,&multiDrawIndirect,&drawIndirectFirstInstance,&depthClamp,&depthBiasClamp,&fillModeNonSolid,&depthBounds,&wideLines,&largePoints,&alphaToOne,&multiViewport,&samplerAnisotropy,&textureCompressionETC2,&textureCompressionASTC_LDR,&textureCompressionBC,&occlusionQueryPrecise,&pipelineStatisticsQuery,&vertexPipelineStoresAndAtomics,&fragmentStoresAndAtomics,&shaderTessellationAndGeometryPointSize,&shaderImageGatherExtended,&shaderStorageImageExtendedFormats,&shaderStorageImageMultisample,&shaderStorageImageReadWithoutFormat,&shaderStorageImageWriteWithoutFormat,&shaderUniformBufferArrayDynamicIndexing,&shaderSampledImageArrayDynamicIndexing,&shaderStorageBufferArrayDynamicIndexing,&shaderStorageImageArrayDynamicIndexing,&shaderClipDistance,&shaderCullDistance,&shaderFloat64,&shaderInt64,&shaderInt16,&shaderResourceResidency,&shaderResourceMinLod,&sparseBinding,&sparseResidencyBuffer,&sparseResidencyImage2D,&sparseResidencyImage3D,&sparseResidency2Samples,&sparseResidency4Samples,&sparseResidency8Samples,&sparseResidency16Samples,&sparseResidencyAliased,&variableMultisampleRate,&inheritedQueries))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkBool32 c_robustBufferAccess = (VkBool32) PyLong_AsLong(robustBufferAccess);
                     
-                    (self->base)->robustBufferAccess = c_robustBufferAccess;
-                
-            
-                
-                
-                
+                        (self->base)->robustBufferAccess = c_robustBufferAccess;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_fullDrawIndexUint32 = (VkBool32) PyLong_AsLong(fullDrawIndexUint32);
                     
-                    (self->base)->fullDrawIndexUint32 = c_fullDrawIndexUint32;
-                
-            
-                
-                
-                
+                        (self->base)->fullDrawIndexUint32 = c_fullDrawIndexUint32;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_imageCubeArray = (VkBool32) PyLong_AsLong(imageCubeArray);
                     
-                    (self->base)->imageCubeArray = c_imageCubeArray;
-                
-            
-                
-                
-                
+                        (self->base)->imageCubeArray = c_imageCubeArray;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_independentBlend = (VkBool32) PyLong_AsLong(independentBlend);
                     
-                    (self->base)->independentBlend = c_independentBlend;
-                
-            
-                
-                
-                
+                        (self->base)->independentBlend = c_independentBlend;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_geometryShader = (VkBool32) PyLong_AsLong(geometryShader);
                     
-                    (self->base)->geometryShader = c_geometryShader;
-                
-            
-                
-                
-                
+                        (self->base)->geometryShader = c_geometryShader;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_tessellationShader = (VkBool32) PyLong_AsLong(tessellationShader);
                     
-                    (self->base)->tessellationShader = c_tessellationShader;
-                
-            
-                
-                
-                
+                        (self->base)->tessellationShader = c_tessellationShader;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sampleRateShading = (VkBool32) PyLong_AsLong(sampleRateShading);
                     
-                    (self->base)->sampleRateShading = c_sampleRateShading;
-                
-            
-                
-                
-                
+                        (self->base)->sampleRateShading = c_sampleRateShading;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_dualSrcBlend = (VkBool32) PyLong_AsLong(dualSrcBlend);
                     
-                    (self->base)->dualSrcBlend = c_dualSrcBlend;
-                
-            
-                
-                
-                
+                        (self->base)->dualSrcBlend = c_dualSrcBlend;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_logicOp = (VkBool32) PyLong_AsLong(logicOp);
                     
-                    (self->base)->logicOp = c_logicOp;
-                
-            
-                
-                
-                
+                        (self->base)->logicOp = c_logicOp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_multiDrawIndirect = (VkBool32) PyLong_AsLong(multiDrawIndirect);
                     
-                    (self->base)->multiDrawIndirect = c_multiDrawIndirect;
-                
-            
-                
-                
-                
+                        (self->base)->multiDrawIndirect = c_multiDrawIndirect;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_drawIndirectFirstInstance = (VkBool32) PyLong_AsLong(drawIndirectFirstInstance);
                     
-                    (self->base)->drawIndirectFirstInstance = c_drawIndirectFirstInstance;
-                
-            
-                
-                
-                
+                        (self->base)->drawIndirectFirstInstance = c_drawIndirectFirstInstance;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthClamp = (VkBool32) PyLong_AsLong(depthClamp);
                     
-                    (self->base)->depthClamp = c_depthClamp;
-                
-            
-                
-                
-                
+                        (self->base)->depthClamp = c_depthClamp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthBiasClamp = (VkBool32) PyLong_AsLong(depthBiasClamp);
                     
-                    (self->base)->depthBiasClamp = c_depthBiasClamp;
-                
-            
-                
-                
-                
+                        (self->base)->depthBiasClamp = c_depthBiasClamp;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_fillModeNonSolid = (VkBool32) PyLong_AsLong(fillModeNonSolid);
                     
-                    (self->base)->fillModeNonSolid = c_fillModeNonSolid;
-                
-            
-                
-                
-                
+                        (self->base)->fillModeNonSolid = c_fillModeNonSolid;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_depthBounds = (VkBool32) PyLong_AsLong(depthBounds);
                     
-                    (self->base)->depthBounds = c_depthBounds;
-                
-            
-                
-                
-                
+                        (self->base)->depthBounds = c_depthBounds;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_wideLines = (VkBool32) PyLong_AsLong(wideLines);
                     
-                    (self->base)->wideLines = c_wideLines;
-                
-            
-                
-                
-                
+                        (self->base)->wideLines = c_wideLines;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_largePoints = (VkBool32) PyLong_AsLong(largePoints);
                     
-                    (self->base)->largePoints = c_largePoints;
-                
-            
-                
-                
-                
+                        (self->base)->largePoints = c_largePoints;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_alphaToOne = (VkBool32) PyLong_AsLong(alphaToOne);
                     
-                    (self->base)->alphaToOne = c_alphaToOne;
-                
-            
-                
-                
-                
+                        (self->base)->alphaToOne = c_alphaToOne;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_multiViewport = (VkBool32) PyLong_AsLong(multiViewport);
                     
-                    (self->base)->multiViewport = c_multiViewport;
-                
-            
-                
-                
-                
+                        (self->base)->multiViewport = c_multiViewport;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_samplerAnisotropy = (VkBool32) PyLong_AsLong(samplerAnisotropy);
                     
-                    (self->base)->samplerAnisotropy = c_samplerAnisotropy;
-                
-            
-                
-                
-                
+                        (self->base)->samplerAnisotropy = c_samplerAnisotropy;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_textureCompressionETC2 = (VkBool32) PyLong_AsLong(textureCompressionETC2);
                     
-                    (self->base)->textureCompressionETC2 = c_textureCompressionETC2;
-                
-            
-                
-                
-                
+                        (self->base)->textureCompressionETC2 = c_textureCompressionETC2;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_textureCompressionASTC_LDR = (VkBool32) PyLong_AsLong(textureCompressionASTC_LDR);
                     
-                    (self->base)->textureCompressionASTC_LDR = c_textureCompressionASTC_LDR;
-                
-            
-                
-                
-                
+                        (self->base)->textureCompressionASTC_LDR = c_textureCompressionASTC_LDR;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_textureCompressionBC = (VkBool32) PyLong_AsLong(textureCompressionBC);
                     
-                    (self->base)->textureCompressionBC = c_textureCompressionBC;
-                
-            
-                
-                
-                
+                        (self->base)->textureCompressionBC = c_textureCompressionBC;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_occlusionQueryPrecise = (VkBool32) PyLong_AsLong(occlusionQueryPrecise);
                     
-                    (self->base)->occlusionQueryPrecise = c_occlusionQueryPrecise;
-                
-            
-                
-                
-                
+                        (self->base)->occlusionQueryPrecise = c_occlusionQueryPrecise;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_pipelineStatisticsQuery = (VkBool32) PyLong_AsLong(pipelineStatisticsQuery);
                     
-                    (self->base)->pipelineStatisticsQuery = c_pipelineStatisticsQuery;
-                
-            
-                
-                
-                
+                        (self->base)->pipelineStatisticsQuery = c_pipelineStatisticsQuery;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_vertexPipelineStoresAndAtomics = (VkBool32) PyLong_AsLong(vertexPipelineStoresAndAtomics);
                     
-                    (self->base)->vertexPipelineStoresAndAtomics = c_vertexPipelineStoresAndAtomics;
-                
-            
-                
-                
-                
+                        (self->base)->vertexPipelineStoresAndAtomics = c_vertexPipelineStoresAndAtomics;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_fragmentStoresAndAtomics = (VkBool32) PyLong_AsLong(fragmentStoresAndAtomics);
                     
-                    (self->base)->fragmentStoresAndAtomics = c_fragmentStoresAndAtomics;
-                
-            
-                
-                
-                
+                        (self->base)->fragmentStoresAndAtomics = c_fragmentStoresAndAtomics;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderTessellationAndGeometryPointSize = (VkBool32) PyLong_AsLong(shaderTessellationAndGeometryPointSize);
                     
-                    (self->base)->shaderTessellationAndGeometryPointSize = c_shaderTessellationAndGeometryPointSize;
-                
-            
-                
-                
-                
+                        (self->base)->shaderTessellationAndGeometryPointSize = c_shaderTessellationAndGeometryPointSize;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderImageGatherExtended = (VkBool32) PyLong_AsLong(shaderImageGatherExtended);
                     
-                    (self->base)->shaderImageGatherExtended = c_shaderImageGatherExtended;
-                
-            
-                
-                
-                
+                        (self->base)->shaderImageGatherExtended = c_shaderImageGatherExtended;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderStorageImageExtendedFormats = (VkBool32) PyLong_AsLong(shaderStorageImageExtendedFormats);
                     
-                    (self->base)->shaderStorageImageExtendedFormats = c_shaderStorageImageExtendedFormats;
-                
-            
-                
-                
-                
+                        (self->base)->shaderStorageImageExtendedFormats = c_shaderStorageImageExtendedFormats;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderStorageImageMultisample = (VkBool32) PyLong_AsLong(shaderStorageImageMultisample);
                     
-                    (self->base)->shaderStorageImageMultisample = c_shaderStorageImageMultisample;
-                
-            
-                
-                
-                
+                        (self->base)->shaderStorageImageMultisample = c_shaderStorageImageMultisample;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderStorageImageReadWithoutFormat = (VkBool32) PyLong_AsLong(shaderStorageImageReadWithoutFormat);
                     
-                    (self->base)->shaderStorageImageReadWithoutFormat = c_shaderStorageImageReadWithoutFormat;
-                
-            
-                
-                
-                
+                        (self->base)->shaderStorageImageReadWithoutFormat = c_shaderStorageImageReadWithoutFormat;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderStorageImageWriteWithoutFormat = (VkBool32) PyLong_AsLong(shaderStorageImageWriteWithoutFormat);
                     
-                    (self->base)->shaderStorageImageWriteWithoutFormat = c_shaderStorageImageWriteWithoutFormat;
-                
-            
-                
-                
-                
+                        (self->base)->shaderStorageImageWriteWithoutFormat = c_shaderStorageImageWriteWithoutFormat;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderUniformBufferArrayDynamicIndexing = (VkBool32) PyLong_AsLong(shaderUniformBufferArrayDynamicIndexing);
                     
-                    (self->base)->shaderUniformBufferArrayDynamicIndexing = c_shaderUniformBufferArrayDynamicIndexing;
-                
-            
-                
-                
-                
+                        (self->base)->shaderUniformBufferArrayDynamicIndexing = c_shaderUniformBufferArrayDynamicIndexing;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderSampledImageArrayDynamicIndexing = (VkBool32) PyLong_AsLong(shaderSampledImageArrayDynamicIndexing);
                     
-                    (self->base)->shaderSampledImageArrayDynamicIndexing = c_shaderSampledImageArrayDynamicIndexing;
-                
-            
-                
-                
-                
+                        (self->base)->shaderSampledImageArrayDynamicIndexing = c_shaderSampledImageArrayDynamicIndexing;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderStorageBufferArrayDynamicIndexing = (VkBool32) PyLong_AsLong(shaderStorageBufferArrayDynamicIndexing);
                     
-                    (self->base)->shaderStorageBufferArrayDynamicIndexing = c_shaderStorageBufferArrayDynamicIndexing;
-                
-            
-                
-                
-                
+                        (self->base)->shaderStorageBufferArrayDynamicIndexing = c_shaderStorageBufferArrayDynamicIndexing;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderStorageImageArrayDynamicIndexing = (VkBool32) PyLong_AsLong(shaderStorageImageArrayDynamicIndexing);
                     
-                    (self->base)->shaderStorageImageArrayDynamicIndexing = c_shaderStorageImageArrayDynamicIndexing;
-                
-            
-                
-                
-                
+                        (self->base)->shaderStorageImageArrayDynamicIndexing = c_shaderStorageImageArrayDynamicIndexing;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderClipDistance = (VkBool32) PyLong_AsLong(shaderClipDistance);
                     
-                    (self->base)->shaderClipDistance = c_shaderClipDistance;
-                
-            
-                
-                
-                
+                        (self->base)->shaderClipDistance = c_shaderClipDistance;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderCullDistance = (VkBool32) PyLong_AsLong(shaderCullDistance);
                     
-                    (self->base)->shaderCullDistance = c_shaderCullDistance;
-                
-            
-                
-                
-                
+                        (self->base)->shaderCullDistance = c_shaderCullDistance;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderFloat64 = (VkBool32) PyLong_AsLong(shaderFloat64);
                     
-                    (self->base)->shaderFloat64 = c_shaderFloat64;
-                
-            
-                
-                
-                
+                        (self->base)->shaderFloat64 = c_shaderFloat64;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderInt64 = (VkBool32) PyLong_AsLong(shaderInt64);
                     
-                    (self->base)->shaderInt64 = c_shaderInt64;
-                
-            
-                
-                
-                
+                        (self->base)->shaderInt64 = c_shaderInt64;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderInt16 = (VkBool32) PyLong_AsLong(shaderInt16);
                     
-                    (self->base)->shaderInt16 = c_shaderInt16;
-                
-            
-                
-                
-                
+                        (self->base)->shaderInt16 = c_shaderInt16;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderResourceResidency = (VkBool32) PyLong_AsLong(shaderResourceResidency);
                     
-                    (self->base)->shaderResourceResidency = c_shaderResourceResidency;
-                
-            
-                
-                
-                
+                        (self->base)->shaderResourceResidency = c_shaderResourceResidency;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_shaderResourceMinLod = (VkBool32) PyLong_AsLong(shaderResourceMinLod);
                     
-                    (self->base)->shaderResourceMinLod = c_shaderResourceMinLod;
-                
-            
-                
-                
-                
+                        (self->base)->shaderResourceMinLod = c_shaderResourceMinLod;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseBinding = (VkBool32) PyLong_AsLong(sparseBinding);
                     
-                    (self->base)->sparseBinding = c_sparseBinding;
-                
-            
-                
-                
-                
+                        (self->base)->sparseBinding = c_sparseBinding;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidencyBuffer = (VkBool32) PyLong_AsLong(sparseResidencyBuffer);
                     
-                    (self->base)->sparseResidencyBuffer = c_sparseResidencyBuffer;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidencyBuffer = c_sparseResidencyBuffer;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidencyImage2D = (VkBool32) PyLong_AsLong(sparseResidencyImage2D);
                     
-                    (self->base)->sparseResidencyImage2D = c_sparseResidencyImage2D;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidencyImage2D = c_sparseResidencyImage2D;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidencyImage3D = (VkBool32) PyLong_AsLong(sparseResidencyImage3D);
                     
-                    (self->base)->sparseResidencyImage3D = c_sparseResidencyImage3D;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidencyImage3D = c_sparseResidencyImage3D;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidency2Samples = (VkBool32) PyLong_AsLong(sparseResidency2Samples);
                     
-                    (self->base)->sparseResidency2Samples = c_sparseResidency2Samples;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidency2Samples = c_sparseResidency2Samples;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidency4Samples = (VkBool32) PyLong_AsLong(sparseResidency4Samples);
                     
-                    (self->base)->sparseResidency4Samples = c_sparseResidency4Samples;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidency4Samples = c_sparseResidency4Samples;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidency8Samples = (VkBool32) PyLong_AsLong(sparseResidency8Samples);
                     
-                    (self->base)->sparseResidency8Samples = c_sparseResidency8Samples;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidency8Samples = c_sparseResidency8Samples;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidency16Samples = (VkBool32) PyLong_AsLong(sparseResidency16Samples);
                     
-                    (self->base)->sparseResidency16Samples = c_sparseResidency16Samples;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidency16Samples = c_sparseResidency16Samples;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_sparseResidencyAliased = (VkBool32) PyLong_AsLong(sparseResidencyAliased);
                     
-                    (self->base)->sparseResidencyAliased = c_sparseResidencyAliased;
-                
-            
-                
-                
-                
+                        (self->base)->sparseResidencyAliased = c_sparseResidencyAliased;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_variableMultisampleRate = (VkBool32) PyLong_AsLong(variableMultisampleRate);
                     
-                    (self->base)->variableMultisampleRate = c_variableMultisampleRate;
-                
-            
-                
-                
-                
+                        (self->base)->variableMultisampleRate = c_variableMultisampleRate;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_inheritedQueries = (VkBool32) PyLong_AsLong(inheritedQueries);
                     
-                    (self->base)->inheritedQueries = c_inheritedQueries;
-                
+                        (self->base)->inheritedQueries = c_inheritedQueries;
+                    
+            
             
         
 
@@ -29894,35 +31180,42 @@ PyObject* flags = NULL;
 
             static char *kwlist[] = {"sType","flags",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&flags))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSemaphoreCreateFlags c_flags = (VkSemaphoreCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
+                        (self->base)->flags = c_flags;
+                    
+            
             
         
 
@@ -30033,62 +31326,75 @@ PyObject* pipelineStatistics = NULL;
 
             static char *kwlist[] = {"sType","flags","queryType","queryCount","pipelineStatistics",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &sType,&flags,&queryType,&queryCount,&pipelineStatistics))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &sType,&flags,&queryType,&queryCount,&pipelineStatistics))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkQueryPoolCreateFlags c_flags = (VkQueryPoolCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkQueryType c_queryType = (VkQueryType) PyLong_AsLong(queryType);
                     
-                    (self->base)->queryType = c_queryType;
-                
-            
-                
-                
-                
+                        (self->base)->queryType = c_queryType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queryCount = (uint32_t) PyLong_AsLong(queryCount);
         
-                    (self->base)->queryCount = c_queryCount;
-                
-            
-                
-                
-                
+                        (self->base)->queryCount = c_queryCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkQueryPipelineStatisticFlags c_pipelineStatistics = (VkQueryPipelineStatisticFlags) PyLong_AsLong(pipelineStatistics);
                     
-                    (self->base)->pipelineStatistics = c_pipelineStatistics;
-                
+                        (self->base)->pipelineStatistics = c_pipelineStatistics;
+                    
+            
             
         
 
@@ -30241,99 +31547,123 @@ PyObject* layers = NULL;
 
             static char *kwlist[] = {"sType","flags","renderPass","attachmentCount","pAttachments","width","height","layers",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &sType,&flags,&renderPass,&attachmentCount,&pAttachments,&width,&height,&layers))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &sType,&flags,&renderPass,&attachmentCount,&pAttachments,&width,&height,&layers))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFramebufferCreateFlags c_flags = (VkFramebufferCreateFlags) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-            VkRenderPass c_renderPass = NULL;
-            if (renderPass != Py_None)  {
-                VkRenderPass* handle_pointer = PyCapsule_GetPointer(
-                    renderPass, "VkRenderPass");
-                c_renderPass = *handle_pointer;
-            }
             
-                    (self->base)->renderPass = c_renderPass;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkRenderPass c_renderPass = VK_NULL_HANDLE;
+                if (renderPass != Py_None)  {
+                    VkRenderPass* handle_pointer = PyCapsule_GetPointer(
+                        renderPass, "VkRenderPass");
+                    c_renderPass = *handle_pointer;
+                }
+            
+                        (self->base)->renderPass = c_renderPass;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_attachmentCount = (uint32_t) PyLong_AsLong(attachmentCount);
         
-                    (self->base)->attachmentCount = c_attachmentCount;
-                
-            
-                
-                
-                
+                        (self->base)->attachmentCount = c_attachmentCount;
                     
-            VkImageView* c_pAttachments = NULL;
-            if (pAttachments != Py_None)  {
-                VkImageView* handle_pointer = PyCapsule_GetPointer(
-                    pAttachments, "VkImageView");
-                c_pAttachments = handle_pointer;
-            }
             
-                    (self->base)->pAttachments = c_pAttachments;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkImageView* c_pAttachments = VK_NULL_HANDLE;
+                if (pAttachments != Py_None)  {
+                    int size = PyList_Size(pAttachments);
+                    c_pAttachments = malloc(size * sizeof(VkImageView));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkImageView* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pAttachments, i), "VkImageView");
+                        c_pAttachments[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pAttachments = c_pAttachments;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_width = (uint32_t) PyLong_AsLong(width);
         
-                    (self->base)->width = c_width;
-                
-            
-                
-                
-                
+                        (self->base)->width = c_width;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_height = (uint32_t) PyLong_AsLong(height);
         
-                    (self->base)->height = c_height;
-                
-            
-                
-                
-                
+                        (self->base)->height = c_height;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_layers = (uint32_t) PyLong_AsLong(layers);
         
-                    (self->base)->layers = c_layers;
-                
+                        (self->base)->layers = c_layers;
+                    
+            
             
         
 
@@ -30515,46 +31845,55 @@ PyObject* firstInstance = NULL;
 
             static char *kwlist[] = {"vertexCount","instanceCount","firstVertex","firstInstance",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &vertexCount,&instanceCount,&firstVertex,&firstInstance))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &vertexCount,&instanceCount,&firstVertex,&firstInstance))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_vertexCount = (uint32_t) PyLong_AsLong(vertexCount);
         
-                    (self->base)->vertexCount = c_vertexCount;
-                
-            
-                
-                
-                
+                        (self->base)->vertexCount = c_vertexCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_instanceCount = (uint32_t) PyLong_AsLong(instanceCount);
         
-                    (self->base)->instanceCount = c_instanceCount;
-                
-            
-                
-                
-                
+                        (self->base)->instanceCount = c_instanceCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_firstVertex = (uint32_t) PyLong_AsLong(firstVertex);
         
-                    (self->base)->firstVertex = c_firstVertex;
-                
-            
-                
-                
-                
+                        (self->base)->firstVertex = c_firstVertex;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_firstInstance = (uint32_t) PyLong_AsLong(firstInstance);
         
-                    (self->base)->firstInstance = c_firstInstance;
-                
+                        (self->base)->firstInstance = c_firstInstance;
+                    
+            
             
         
 
@@ -30677,55 +32016,66 @@ PyObject* firstInstance = NULL;
 
             static char *kwlist[] = {"indexCount","instanceCount","firstIndex","vertexOffset","firstInstance",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &indexCount,&instanceCount,&firstIndex,&vertexOffset,&firstInstance))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &indexCount,&instanceCount,&firstIndex,&vertexOffset,&firstInstance))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_indexCount = (uint32_t) PyLong_AsLong(indexCount);
         
-                    (self->base)->indexCount = c_indexCount;
-                
-            
-                
-                
-                
+                        (self->base)->indexCount = c_indexCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_instanceCount = (uint32_t) PyLong_AsLong(instanceCount);
         
-                    (self->base)->instanceCount = c_instanceCount;
-                
-            
-                
-                
-                
+                        (self->base)->instanceCount = c_instanceCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_firstIndex = (uint32_t) PyLong_AsLong(firstIndex);
         
-                    (self->base)->firstIndex = c_firstIndex;
-                
-            
-                
-                
-                
+                        (self->base)->firstIndex = c_firstIndex;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             int32_t c_vertexOffset = (int32_t) PyLong_AsLong(vertexOffset);
         
-                    (self->base)->vertexOffset = c_vertexOffset;
-                
-            
-                
-                
-                
+                        (self->base)->vertexOffset = c_vertexOffset;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_firstInstance = (uint32_t) PyLong_AsLong(firstInstance);
         
-                    (self->base)->firstInstance = c_firstInstance;
-                
+                        (self->base)->firstInstance = c_firstInstance;
+                    
+            
             
         
 
@@ -30859,37 +32209,44 @@ PyObject* z = NULL;
 
             static char *kwlist[] = {"x","y","z",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &x,&y,&z))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &x,&y,&z))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_x = (uint32_t) PyLong_AsLong(x);
         
-                    (self->base)->x = c_x;
-                
-            
-                
-                
-                
+                        (self->base)->x = c_x;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_y = (uint32_t) PyLong_AsLong(y);
         
-                    (self->base)->y = c_y;
-                
-            
-                
-                
-                
+                        (self->base)->y = c_y;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_z = (uint32_t) PyLong_AsLong(z);
         
-                    (self->base)->z = c_z;
-                
+                        (self->base)->z = c_z;
+                    
+            
             
         
 
@@ -31002,108 +32359,148 @@ PyObject* pSignalSemaphores = NULL;
 
             static char *kwlist[] = {"sType","waitSemaphoreCount","pWaitSemaphores","pWaitDstStageMask","commandBufferCount","pCommandBuffers","signalSemaphoreCount","pSignalSemaphores",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &sType,&waitSemaphoreCount,&pWaitSemaphores,&pWaitDstStageMask,&commandBufferCount,&pCommandBuffers,&signalSemaphoreCount,&pSignalSemaphores))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &sType,&waitSemaphoreCount,&pWaitSemaphores,&pWaitDstStageMask,&commandBufferCount,&pCommandBuffers,&signalSemaphoreCount,&pSignalSemaphores))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_waitSemaphoreCount = (uint32_t) PyLong_AsLong(waitSemaphoreCount);
         
-                    (self->base)->waitSemaphoreCount = c_waitSemaphoreCount;
-                
-            
-                
-                
-                
+                        (self->base)->waitSemaphoreCount = c_waitSemaphoreCount;
                     
-            VkSemaphore* c_pWaitSemaphores = NULL;
-            if (pWaitSemaphores != Py_None)  {
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(
-                    pWaitSemaphores, "VkSemaphore");
-                c_pWaitSemaphores = handle_pointer;
-            }
             
-                    (self->base)->pWaitSemaphores = c_pWaitSemaphores;
-                
             
-                
-                
-                
+            
                     
-                    VkPipelineStageFlags* c_pWaitDstStageMask = malloc(sizeof(VkPipelineStageFlags));
-                    {
-                        VkPipelineStageFlags tmp = (VkPipelineStageFlags) PyLong_AsLong(pWaitDstStageMask);
-                        memcpy(c_pWaitDstStageMask, &tmp, sizeof(VkPipelineStageFlags));
+                    
+                    
+                        
+                VkSemaphore* c_pWaitSemaphores = VK_NULL_HANDLE;
+                if (pWaitSemaphores != Py_None)  {
+                    int size = PyList_Size(pWaitSemaphores);
+                    c_pWaitSemaphores = malloc(size * sizeof(VkSemaphore));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkSemaphore* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pWaitSemaphores, i), "VkSemaphore");
+                        c_pWaitSemaphores[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pWaitSemaphores = c_pWaitSemaphores;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                    VkPipelineStageFlags* c_pWaitDstStageMask = NULL;
+                    if (pWaitDstStageMask != Py_None) {
+                        int size = PyList_Size(pWaitDstStageMask);
+                        c_pWaitDstStageMask = malloc(size * sizeof(VkPipelineStageFlags));
+                        int i;
+                        for (i = 0; i < size; i++) {
+                            VkPipelineStageFlags tmp = (VkPipelineStageFlags) PyLong_AsLong(
+                                PyList_GetItem(pWaitDstStageMask, i));
+                            c_pWaitDstStageMask[i] = tmp;
+                        }
                     }
                 
-                    (self->base)->pWaitDstStageMask = c_pWaitDstStageMask;
-                
-            
-                
-                
-                
+                        (self->base)->pWaitDstStageMask = c_pWaitDstStageMask;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_commandBufferCount = (uint32_t) PyLong_AsLong(commandBufferCount);
         
-                    (self->base)->commandBufferCount = c_commandBufferCount;
-                
-            
-                
-                
-                
+                        (self->base)->commandBufferCount = c_commandBufferCount;
                     
-            VkCommandBuffer* c_pCommandBuffers = NULL;
-            if (pCommandBuffers != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    pCommandBuffers, "VkCommandBuffer");
-                c_pCommandBuffers = handle_pointer;
-            }
             
-                    (self->base)->pCommandBuffers = c_pCommandBuffers;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkCommandBuffer* c_pCommandBuffers = VK_NULL_HANDLE;
+                if (pCommandBuffers != Py_None)  {
+                    int size = PyList_Size(pCommandBuffers);
+                    c_pCommandBuffers = malloc(size * sizeof(VkCommandBuffer));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pCommandBuffers, i), "VkCommandBuffer");
+                        c_pCommandBuffers[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pCommandBuffers = c_pCommandBuffers;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_signalSemaphoreCount = (uint32_t) PyLong_AsLong(signalSemaphoreCount);
         
-                    (self->base)->signalSemaphoreCount = c_signalSemaphoreCount;
-                
-            
-                
-                
-                
+                        (self->base)->signalSemaphoreCount = c_signalSemaphoreCount;
                     
-            VkSemaphore* c_pSignalSemaphores = NULL;
-            if (pSignalSemaphores != Py_None)  {
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(
-                    pSignalSemaphores, "VkSemaphore");
-                c_pSignalSemaphores = handle_pointer;
-            }
             
-                    (self->base)->pSignalSemaphores = c_pSignalSemaphores;
-                
+            
+            
+                    
+                    
+                    
+                        
+                VkSemaphore* c_pSignalSemaphores = VK_NULL_HANDLE;
+                if (pSignalSemaphores != Py_None)  {
+                    int size = PyList_Size(pSignalSemaphores);
+                    c_pSignalSemaphores = malloc(size * sizeof(VkSemaphore));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkSemaphore* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pSignalSemaphores, i), "VkSemaphore");
+                        c_pSignalSemaphores[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pSignalSemaphores = c_pSignalSemaphores;
+                    
+            
             
         
 
@@ -31285,29 +32682,33 @@ PyObject* persistentContent = NULL;
 
             static char *kwlist[] = {"display","displayName","physicalDimensions","physicalResolution","supportedTransforms","planeReorderPossible","persistentContent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &display,&displayName,&physicalDimensions,&physicalResolution,&supportedTransforms,&planeReorderPossible,&persistentContent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &display,&displayName,&physicalDimensions,&physicalResolution,&supportedTransforms,&planeReorderPossible,&persistentContent))
         return 0;
     
 
             
-                
-                
-                
-                    
-            VkDisplayKHR c_display = NULL;
-            if (display != Py_None)  {
-                VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
-                    display, "VkDisplayKHR");
-                c_display = *handle_pointer;
-            }
             
-                    (self->base)->display = c_display;
-                
-            
-                
-                
-                
                     
+                    
+                    
+                        
+                VkDisplayKHR c_display = VK_NULL_HANDLE;
+                if (display != Py_None)  {
+                    VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
+                        display, "VkDisplayKHR");
+                    c_display = *handle_pointer;
+                }
+            
+                        (self->base)->display = c_display;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
         char* c_displayName = NULL;
         if (displayName != Py_None)
         {
@@ -31320,53 +32721,64 @@ PyObject* persistentContent = NULL;
             c_displayName = strdup(tmp1);
             Py_DECREF(tmp0);
         }
-                    (self->base)->displayName = c_displayName;
-                
-            
-                
-                
-                
+                        (self->base)->displayName = c_displayName;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_physicalDimensions = *(((PyVkExtent2D*)physicalDimensions)->base);
                 
-                    (self->base)->physicalDimensions = c_physicalDimensions;
-                
-            
-                
-                
-                
+                        (self->base)->physicalDimensions = c_physicalDimensions;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_physicalResolution = *(((PyVkExtent2D*)physicalResolution)->base);
                 
-                    (self->base)->physicalResolution = c_physicalResolution;
-                
-            
-                
-                
-                
+                        (self->base)->physicalResolution = c_physicalResolution;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSurfaceTransformFlagsKHR c_supportedTransforms = (VkSurfaceTransformFlagsKHR) PyLong_AsLong(supportedTransforms);
                     
-                    (self->base)->supportedTransforms = c_supportedTransforms;
-                
-            
-                
-                
-                
+                        (self->base)->supportedTransforms = c_supportedTransforms;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_planeReorderPossible = (VkBool32) PyLong_AsLong(planeReorderPossible);
                     
-                    (self->base)->planeReorderPossible = c_planeReorderPossible;
-                
-            
-                
-                
-                
+                        (self->base)->planeReorderPossible = c_planeReorderPossible;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_persistentContent = (VkBool32) PyLong_AsLong(persistentContent);
                     
-                    (self->base)->persistentContent = c_persistentContent;
-                
+                        (self->base)->persistentContent = c_persistentContent;
+                    
+            
             
         
 
@@ -31528,33 +32940,38 @@ PyObject* currentStackIndex = NULL;
 
             static char *kwlist[] = {"currentDisplay","currentStackIndex",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &currentDisplay,&currentStackIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &currentDisplay,&currentStackIndex))
         return 0;
     
 
             
-                
-                
-                
-                    
-            VkDisplayKHR c_currentDisplay = NULL;
-            if (currentDisplay != Py_None)  {
-                VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
-                    currentDisplay, "VkDisplayKHR");
-                c_currentDisplay = *handle_pointer;
-            }
             
-                    (self->base)->currentDisplay = c_currentDisplay;
-                
-            
-                
-                
-                
                     
+                    
+                    
+                        
+                VkDisplayKHR c_currentDisplay = VK_NULL_HANDLE;
+                if (currentDisplay != Py_None)  {
+                    VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
+                        currentDisplay, "VkDisplayKHR");
+                    c_currentDisplay = *handle_pointer;
+                }
+            
+                        (self->base)->currentDisplay = c_currentDisplay;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_currentStackIndex = (uint32_t) PyLong_AsLong(currentStackIndex);
         
-                    (self->base)->currentStackIndex = c_currentStackIndex;
-                
+                        (self->base)->currentStackIndex = c_currentStackIndex;
+                    
+            
             
         
 
@@ -31645,28 +33062,33 @@ PyObject* refreshRate = NULL;
 
             static char *kwlist[] = {"visibleRegion","refreshRate",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &visibleRegion,&refreshRate))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &visibleRegion,&refreshRate))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkExtent2D c_visibleRegion = *(((PyVkExtent2D*)visibleRegion)->base);
                 
-                    (self->base)->visibleRegion = c_visibleRegion;
-                
-            
-                
-                
-                
+                        (self->base)->visibleRegion = c_visibleRegion;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_refreshRate = (uint32_t) PyLong_AsLong(refreshRate);
         
-                    (self->base)->refreshRate = c_refreshRate;
-                
+                        (self->base)->refreshRate = c_refreshRate;
+                    
+            
             
         
 
@@ -31763,33 +33185,38 @@ PyObject* parameters = NULL;
 
             static char *kwlist[] = {"displayMode","parameters",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &displayMode,&parameters))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &displayMode,&parameters))
         return 0;
     
 
             
-                
-                
-                
-                    
-            VkDisplayModeKHR c_displayMode = NULL;
-            if (displayMode != Py_None)  {
-                VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
-                    displayMode, "VkDisplayModeKHR");
-                c_displayMode = *handle_pointer;
-            }
             
-                    (self->base)->displayMode = c_displayMode;
-                
-            
-                
-                
-                
                     
+                    
+                    
+                        
+                VkDisplayModeKHR c_displayMode = VK_NULL_HANDLE;
+                if (displayMode != Py_None)  {
+                    VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
+                        displayMode, "VkDisplayModeKHR");
+                    c_displayMode = *handle_pointer;
+                }
+            
+                        (self->base)->displayMode = c_displayMode;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkDisplayModeParametersKHR c_parameters = *(((PyVkDisplayModeParametersKHR*)parameters)->base);
                 
-                    (self->base)->parameters = c_parameters;
-                
+                        (self->base)->parameters = c_parameters;
+                    
+            
             
         
 
@@ -31884,44 +33311,53 @@ PyObject* parameters = NULL;
 
             static char *kwlist[] = {"sType","flags","parameters",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&flags,&parameters))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&flags,&parameters))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDisplayModeCreateFlagsKHR c_flags = (VkDisplayModeCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkDisplayModeParametersKHR c_parameters = *(((PyVkDisplayModeParametersKHR*)parameters)->base);
                 
-                    (self->base)->parameters = c_parameters;
-                
+                        (self->base)->parameters = c_parameters;
+                    
+            
             
         
 
@@ -32052,91 +33488,110 @@ PyObject* maxDstExtent = NULL;
 
             static char *kwlist[] = {"supportedAlpha","minSrcPosition","maxSrcPosition","minSrcExtent","maxSrcExtent","minDstPosition","maxDstPosition","minDstExtent","maxDstExtent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOO", kwlist, &supportedAlpha,&minSrcPosition,&maxSrcPosition,&minSrcExtent,&maxSrcExtent,&minDstPosition,&maxDstPosition,&minDstExtent,&maxDstExtent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOO", kwlist, &supportedAlpha,&minSrcPosition,&maxSrcPosition,&minSrcExtent,&maxSrcExtent,&minDstPosition,&maxDstPosition,&minDstExtent,&maxDstExtent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkDisplayPlaneAlphaFlagsKHR c_supportedAlpha = (VkDisplayPlaneAlphaFlagsKHR) PyLong_AsLong(supportedAlpha);
                     
-                    (self->base)->supportedAlpha = c_supportedAlpha;
-                
-            
-                
-                
-                
+                        (self->base)->supportedAlpha = c_supportedAlpha;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset2D c_minSrcPosition = *(((PyVkOffset2D*)minSrcPosition)->base);
                 
-                    (self->base)->minSrcPosition = c_minSrcPosition;
-                
-            
-                
-                
-                
+                        (self->base)->minSrcPosition = c_minSrcPosition;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset2D c_maxSrcPosition = *(((PyVkOffset2D*)maxSrcPosition)->base);
                 
-                    (self->base)->maxSrcPosition = c_maxSrcPosition;
-                
-            
-                
-                
-                
+                        (self->base)->maxSrcPosition = c_maxSrcPosition;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_minSrcExtent = *(((PyVkExtent2D*)minSrcExtent)->base);
                 
-                    (self->base)->minSrcExtent = c_minSrcExtent;
-                
-            
-                
-                
-                
+                        (self->base)->minSrcExtent = c_minSrcExtent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_maxSrcExtent = *(((PyVkExtent2D*)maxSrcExtent)->base);
                 
-                    (self->base)->maxSrcExtent = c_maxSrcExtent;
-                
-            
-                
-                
-                
+                        (self->base)->maxSrcExtent = c_maxSrcExtent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset2D c_minDstPosition = *(((PyVkOffset2D*)minDstPosition)->base);
                 
-                    (self->base)->minDstPosition = c_minDstPosition;
-                
-            
-                
-                
-                
+                        (self->base)->minDstPosition = c_minDstPosition;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkOffset2D c_maxDstPosition = *(((PyVkOffset2D*)maxDstPosition)->base);
                 
-                    (self->base)->maxDstPosition = c_maxDstPosition;
-                
-            
-                
-                
-                
+                        (self->base)->maxDstPosition = c_maxDstPosition;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_minDstExtent = *(((PyVkExtent2D*)minDstExtent)->base);
                 
-                    (self->base)->minDstExtent = c_minDstExtent;
-                
-            
-                
-                
-                
+                        (self->base)->minDstExtent = c_minDstExtent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_maxDstExtent = *(((PyVkExtent2D*)maxDstExtent)->base);
                 
-                    (self->base)->maxDstExtent = c_maxDstExtent;
-                
+                        (self->base)->maxDstExtent = c_maxDstExtent;
+                    
+            
             
         
 
@@ -32352,103 +33807,124 @@ PyObject* imageExtent = NULL;
 
             static char *kwlist[] = {"sType","flags","displayMode","planeIndex","planeStackIndex","transform","globalAlpha","alphaMode","imageExtent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOO", kwlist, &sType,&flags,&displayMode,&planeIndex,&planeStackIndex,&transform,&globalAlpha,&alphaMode,&imageExtent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOO", kwlist, &sType,&flags,&displayMode,&planeIndex,&planeStackIndex,&transform,&globalAlpha,&alphaMode,&imageExtent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDisplaySurfaceCreateFlagsKHR c_flags = (VkDisplaySurfaceCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-            VkDisplayModeKHR c_displayMode = NULL;
-            if (displayMode != Py_None)  {
-                VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
-                    displayMode, "VkDisplayModeKHR");
-                c_displayMode = *handle_pointer;
-            }
             
-                    (self->base)->displayMode = c_displayMode;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkDisplayModeKHR c_displayMode = VK_NULL_HANDLE;
+                if (displayMode != Py_None)  {
+                    VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
+                        displayMode, "VkDisplayModeKHR");
+                    c_displayMode = *handle_pointer;
+                }
+            
+                        (self->base)->displayMode = c_displayMode;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_planeIndex = (uint32_t) PyLong_AsLong(planeIndex);
         
-                    (self->base)->planeIndex = c_planeIndex;
-                
-            
-                
-                
-                
+                        (self->base)->planeIndex = c_planeIndex;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_planeStackIndex = (uint32_t) PyLong_AsLong(planeStackIndex);
         
-                    (self->base)->planeStackIndex = c_planeStackIndex;
-                
-            
-                
-                
-                
+                        (self->base)->planeStackIndex = c_planeStackIndex;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSurfaceTransformFlagBitsKHR c_transform = (VkSurfaceTransformFlagBitsKHR) PyLong_AsLong(transform);
                     
-                    (self->base)->transform = c_transform;
-                
-            
-                
-                
-                
+                        (self->base)->transform = c_transform;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             float c_globalAlpha = (float) PyFloat_AsDouble(globalAlpha);
         
-                    (self->base)->globalAlpha = c_globalAlpha;
-                
-            
-                
-                
-                
+                        (self->base)->globalAlpha = c_globalAlpha;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDisplayPlaneAlphaFlagBitsKHR c_alphaMode = (VkDisplayPlaneAlphaFlagBitsKHR) PyLong_AsLong(alphaMode);
                     
-                    (self->base)->alphaMode = c_alphaMode;
-                
-            
-                
-                
-                
+                        (self->base)->alphaMode = c_alphaMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_imageExtent = *(((PyVkExtent2D*)imageExtent)->base);
                 
-                    (self->base)->imageExtent = c_imageExtent;
-                
+                        (self->base)->imageExtent = c_imageExtent;
+                    
+            
             
         
 
@@ -32649,53 +34125,64 @@ PyObject* persistent = NULL;
 
             static char *kwlist[] = {"sType","srcRect","dstRect","persistent",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&srcRect,&dstRect,&persistent))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&srcRect,&dstRect,&persistent))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkRect2D c_srcRect = *(((PyVkRect2D*)srcRect)->base);
                 
-                    (self->base)->srcRect = c_srcRect;
-                
-            
-                
-                
-                
+                        (self->base)->srcRect = c_srcRect;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkRect2D c_dstRect = *(((PyVkRect2D*)dstRect)->base);
                 
-                    (self->base)->dstRect = c_dstRect;
-                
-            
-                
-                
-                
+                        (self->base)->dstRect = c_dstRect;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_persistent = (VkBool32) PyLong_AsLong(persistent);
                     
-                    (self->base)->persistent = c_persistent;
-                
+                        (self->base)->persistent = c_persistent;
+                    
+            
             
         
 
@@ -32843,100 +34330,121 @@ PyObject* supportedUsageFlags = NULL;
 
             static char *kwlist[] = {"minImageCount","maxImageCount","currentExtent","minImageExtent","maxImageExtent","maxImageArrayLayers","supportedTransforms","currentTransform","supportedCompositeAlpha","supportedUsageFlags",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOO", kwlist, &minImageCount,&maxImageCount,&currentExtent,&minImageExtent,&maxImageExtent,&maxImageArrayLayers,&supportedTransforms,&currentTransform,&supportedCompositeAlpha,&supportedUsageFlags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOO", kwlist, &minImageCount,&maxImageCount,&currentExtent,&minImageExtent,&maxImageExtent,&maxImageArrayLayers,&supportedTransforms,&currentTransform,&supportedCompositeAlpha,&supportedUsageFlags))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
             uint32_t c_minImageCount = (uint32_t) PyLong_AsLong(minImageCount);
         
-                    (self->base)->minImageCount = c_minImageCount;
-                
-            
-                
-                
-                
+                        (self->base)->minImageCount = c_minImageCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_maxImageCount = (uint32_t) PyLong_AsLong(maxImageCount);
         
-                    (self->base)->maxImageCount = c_maxImageCount;
-                
-            
-                
-                
-                
+                        (self->base)->maxImageCount = c_maxImageCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_currentExtent = *(((PyVkExtent2D*)currentExtent)->base);
                 
-                    (self->base)->currentExtent = c_currentExtent;
-                
-            
-                
-                
-                
+                        (self->base)->currentExtent = c_currentExtent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_minImageExtent = *(((PyVkExtent2D*)minImageExtent)->base);
                 
-                    (self->base)->minImageExtent = c_minImageExtent;
-                
-            
-                
-                
-                
+                        (self->base)->minImageExtent = c_minImageExtent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_maxImageExtent = *(((PyVkExtent2D*)maxImageExtent)->base);
                 
-                    (self->base)->maxImageExtent = c_maxImageExtent;
-                
-            
-                
-                
-                
+                        (self->base)->maxImageExtent = c_maxImageExtent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_maxImageArrayLayers = (uint32_t) PyLong_AsLong(maxImageArrayLayers);
         
-                    (self->base)->maxImageArrayLayers = c_maxImageArrayLayers;
-                
-            
-                
-                
-                
+                        (self->base)->maxImageArrayLayers = c_maxImageArrayLayers;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSurfaceTransformFlagsKHR c_supportedTransforms = (VkSurfaceTransformFlagsKHR) PyLong_AsLong(supportedTransforms);
                     
-                    (self->base)->supportedTransforms = c_supportedTransforms;
-                
-            
-                
-                
-                
+                        (self->base)->supportedTransforms = c_supportedTransforms;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSurfaceTransformFlagBitsKHR c_currentTransform = (VkSurfaceTransformFlagBitsKHR) PyLong_AsLong(currentTransform);
                     
-                    (self->base)->currentTransform = c_currentTransform;
-                
-            
-                
-                
-                
+                        (self->base)->currentTransform = c_currentTransform;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCompositeAlphaFlagsKHR c_supportedCompositeAlpha = (VkCompositeAlphaFlagsKHR) PyLong_AsLong(supportedCompositeAlpha);
                     
-                    (self->base)->supportedCompositeAlpha = c_supportedCompositeAlpha;
-                
-            
-                
-                
-                
+                        (self->base)->supportedCompositeAlpha = c_supportedCompositeAlpha;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageUsageFlags c_supportedUsageFlags = (VkImageUsageFlags) PyLong_AsLong(supportedUsageFlags);
                     
-                    (self->base)->supportedUsageFlags = c_supportedUsageFlags;
-                
+                        (self->base)->supportedUsageFlags = c_supportedUsageFlags;
+                    
+            
             
         
 
@@ -33144,48 +34652,58 @@ PyObject* window = NULL;
 
             static char *kwlist[] = {"sType","flags","window",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&flags,&window))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&flags,&window))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkAndroidSurfaceCreateFlagsKHR c_flags = (VkAndroidSurfaceCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-                    ANativeWindow* c_window = malloc(sizeof(ANativeWindow));
-                    {
+            
+            
+            
+                    
+                    
+                    
+                        
+                    ANativeWindow* c_window = NULL;
+                    if (window != Py_None) {
+                        c_window = malloc(sizeof(ANativeWindow));
                         ANativeWindow tmp = (ANativeWindow) PyLong_AsLong(window);
                         memcpy(c_window, &tmp, sizeof(ANativeWindow));
                     }
                 
-                    (self->base)->window = c_window;
-                
+                        (self->base)->window = c_window;
+                    
+            
             
         
 
@@ -33308,61 +34826,74 @@ PyObject* mirSurface = NULL;
 
             static char *kwlist[] = {"sType","flags","connection","mirSurface",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&connection,&mirSurface))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&connection,&mirSurface))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkMirSurfaceCreateFlagsKHR c_flags = (VkMirSurfaceCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-                    MirConnection* c_connection = malloc(sizeof(MirConnection));
-                    {
+            
+            
+            
+                    
+                    
+                    
+                        
+                    MirConnection* c_connection = NULL;
+                    if (connection != Py_None) {
+                        c_connection = malloc(sizeof(MirConnection));
                         MirConnection tmp = (MirConnection) PyLong_AsLong(connection);
                         memcpy(c_connection, &tmp, sizeof(MirConnection));
                     }
                 
-                    (self->base)->connection = c_connection;
-                
-            
-                
-                
-                
+                        (self->base)->connection = c_connection;
                     
-                    MirSurface* c_mirSurface = malloc(sizeof(MirSurface));
-                    {
+            
+            
+            
+                    
+                    
+                    
+                        
+                    MirSurface* c_mirSurface = NULL;
+                    if (mirSurface != Py_None) {
+                        c_mirSurface = malloc(sizeof(MirSurface));
                         MirSurface tmp = (MirSurface) PyLong_AsLong(mirSurface);
                         memcpy(c_mirSurface, &tmp, sizeof(MirSurface));
                     }
                 
-                    (self->base)->mirSurface = c_mirSurface;
-                
+                        (self->base)->mirSurface = c_mirSurface;
+                    
+            
             
         
 
@@ -33498,55 +35029,66 @@ PyObject* surface = NULL;
 
             static char *kwlist[] = {"sType","flags","display","surface",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&display,&surface))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&display,&surface))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkWaylandSurfaceCreateFlagsKHR c_flags = (VkWaylandSurfaceCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         struct wl_display* c_display =
         (struct wl_display*) PyLong_AsLong(display);
         
-                    (self->base)->display = c_display;
-                
-            
-                
-                
-                
+                        (self->base)->display = c_display;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         struct wl_surface* c_surface =
         (struct wl_surface*) PyLong_AsLong(surface);
         
-                    (self->base)->surface = c_surface;
-                
+                        (self->base)->surface = c_surface;
+                    
+            
             
         
 
@@ -33684,53 +35226,64 @@ PyObject* hwnd = NULL;
 
             static char *kwlist[] = {"sType","flags","hinstance","hwnd",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&hinstance,&hwnd))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&hinstance,&hwnd))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkWin32SurfaceCreateFlagsKHR c_flags = (VkWin32SurfaceCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     HINSTANCE c_hinstance = (HINSTANCE) PyLong_AsLong(hinstance);
                     
-                    (self->base)->hinstance = c_hinstance;
-                
-            
-                
-                
-                
+                        (self->base)->hinstance = c_hinstance;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     HWND c_hwnd = (HWND) PyLong_AsLong(hwnd);
                     
-                    (self->base)->hwnd = c_hwnd;
-                
+                        (self->base)->hwnd = c_hwnd;
+                    
+            
             
         
 
@@ -33866,53 +35419,64 @@ PyObject* window = NULL;
 
             static char *kwlist[] = {"sType","flags","dpy","window",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&dpy,&window))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&dpy,&window))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkXlibSurfaceCreateFlagsKHR c_flags = (VkXlibSurfaceCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             Display * c_dpy = (Display *) PyLong_AsLong(dpy);
         
-                    (self->base)->dpy = c_dpy;
-                
-            
-                
-                
-                
+                        (self->base)->dpy = c_dpy;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             Window c_window = (Window) PyLong_AsLong(window);
         
-                    (self->base)->window = c_window;
-                
+                        (self->base)->window = c_window;
+                    
+            
             
         
 
@@ -34050,53 +35614,64 @@ PyObject* window = NULL;
 
             static char *kwlist[] = {"sType","flags","connection","window",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&flags,&connection,&window))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&flags,&connection,&window))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkXcbSurfaceCreateFlagsKHR c_flags = (VkXcbSurfaceCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             xcb_connection_t * c_connection = (xcb_connection_t *) PyLong_AsLong(connection);
         
-                    (self->base)->connection = c_connection;
-                
-            
-                
-                
-                
+                        (self->base)->connection = c_connection;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     xcb_window_t c_window = (xcb_window_t) PyLong_AsLong(window);
                     
-                    (self->base)->window = c_window;
-                
+                        (self->base)->window = c_window;
+                    
+            
             
         
 
@@ -34231,28 +35806,33 @@ PyObject* colorSpace = NULL;
 
             static char *kwlist[] = {"format","colorSpace",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &format,&colorSpace))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &format,&colorSpace))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkFormat c_format = (VkFormat) PyLong_AsLong(format);
                     
-                    (self->base)->format = c_format;
-                
-            
-                
-                
-                
+                        (self->base)->format = c_format;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkColorSpaceKHR c_colorSpace = (VkColorSpaceKHR) PyLong_AsLong(colorSpace);
                     
-                    (self->base)->colorSpace = c_colorSpace;
-                
+                        (self->base)->colorSpace = c_colorSpace;
+                    
+            
             
         
 
@@ -34361,129 +35941,158 @@ PyObject* oldSwapchain = NULL;
 
             static char *kwlist[] = {"sType","flags","surface","minImageCount","imageFormat","imageColorSpace","imageExtent","imageArrayLayers","imageUsage","imageSharingMode","queueFamilyIndexCount","pQueueFamilyIndices","preTransform","compositeAlpha","presentMode","clipped","oldSwapchain",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOOOOOOOO", kwlist, &sType,&flags,&surface,&minImageCount,&imageFormat,&imageColorSpace,&imageExtent,&imageArrayLayers,&imageUsage,&imageSharingMode,&queueFamilyIndexCount,&pQueueFamilyIndices,&preTransform,&compositeAlpha,&presentMode,&clipped,&oldSwapchain))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOOOOOOOO", kwlist, &sType,&flags,&surface,&minImageCount,&imageFormat,&imageColorSpace,&imageExtent,&imageArrayLayers,&imageUsage,&imageSharingMode,&queueFamilyIndexCount,&pQueueFamilyIndices,&preTransform,&compositeAlpha,&presentMode,&clipped,&oldSwapchain))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSwapchainCreateFlagsKHR c_flags = (VkSwapchainCreateFlagsKHR) PyLong_AsLong(flags);
                     
-                    (self->base)->flags = c_flags;
-                
-            
-                
-                
-                
+                        (self->base)->flags = c_flags;
                     
-            VkSurfaceKHR c_surface = NULL;
-            if (surface != Py_None)  {
-                VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
-                    surface, "VkSurfaceKHR");
-                c_surface = *handle_pointer;
-            }
             
-                    (self->base)->surface = c_surface;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkSurfaceKHR c_surface = VK_NULL_HANDLE;
+                if (surface != Py_None)  {
+                    VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
+                        surface, "VkSurfaceKHR");
+                    c_surface = *handle_pointer;
+                }
+            
+                        (self->base)->surface = c_surface;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_minImageCount = (uint32_t) PyLong_AsLong(minImageCount);
         
-                    (self->base)->minImageCount = c_minImageCount;
-                
-            
-                
-                
-                
+                        (self->base)->minImageCount = c_minImageCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkFormat c_imageFormat = (VkFormat) PyLong_AsLong(imageFormat);
                     
-                    (self->base)->imageFormat = c_imageFormat;
-                
-            
-                
-                
-                
+                        (self->base)->imageFormat = c_imageFormat;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkColorSpaceKHR c_imageColorSpace = (VkColorSpaceKHR) PyLong_AsLong(imageColorSpace);
                     
-                    (self->base)->imageColorSpace = c_imageColorSpace;
-                
-            
-                
-                
-                
+                        (self->base)->imageColorSpace = c_imageColorSpace;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                 VkExtent2D c_imageExtent = *(((PyVkExtent2D*)imageExtent)->base);
                 
-                    (self->base)->imageExtent = c_imageExtent;
-                
-            
-                
-                
-                
+                        (self->base)->imageExtent = c_imageExtent;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_imageArrayLayers = (uint32_t) PyLong_AsLong(imageArrayLayers);
         
-                    (self->base)->imageArrayLayers = c_imageArrayLayers;
-                
-            
-                
-                
-                
+                        (self->base)->imageArrayLayers = c_imageArrayLayers;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkImageUsageFlags c_imageUsage = (VkImageUsageFlags) PyLong_AsLong(imageUsage);
                     
-                    (self->base)->imageUsage = c_imageUsage;
-                
-            
-                
-                
-                
+                        (self->base)->imageUsage = c_imageUsage;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSharingMode c_imageSharingMode = (VkSharingMode) PyLong_AsLong(imageSharingMode);
                     
-                    (self->base)->imageSharingMode = c_imageSharingMode;
-                
-            
-                
-                
-                
+                        (self->base)->imageSharingMode = c_imageSharingMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_queueFamilyIndexCount = (uint32_t) PyLong_AsLong(queueFamilyIndexCount);
         
-                    (self->base)->queueFamilyIndexCount = c_queueFamilyIndexCount;
-                
-            
-                
-                
-                
+                        (self->base)->queueFamilyIndexCount = c_queueFamilyIndexCount;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         uint32_t* c_pQueueFamilyIndices = NULL;
         if (pQueueFamilyIndices == Py_None) {
             c_pQueueFamilyIndices = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pQueueFamilyIndices)) {
+            c_pQueueFamilyIndices = (uint32_t*) PyBytes_AsString(pQueueFamilyIndices);
         }
         else {
             int size = PyList_Size(pQueueFamilyIndices);
@@ -34495,58 +36104,69 @@ PyObject* oldSwapchain = NULL;
                 memcpy(c_pQueueFamilyIndices + i, &r, sizeof(uint32_t));
             }
         }
-                    (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
-                
-            
-                
-                
-                
+                        (self->base)->pQueueFamilyIndices = c_pQueueFamilyIndices;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkSurfaceTransformFlagBitsKHR c_preTransform = (VkSurfaceTransformFlagBitsKHR) PyLong_AsLong(preTransform);
                     
-                    (self->base)->preTransform = c_preTransform;
-                
-            
-                
-                
-                
+                        (self->base)->preTransform = c_preTransform;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkCompositeAlphaFlagBitsKHR c_compositeAlpha = (VkCompositeAlphaFlagBitsKHR) PyLong_AsLong(compositeAlpha);
                     
-                    (self->base)->compositeAlpha = c_compositeAlpha;
-                
-            
-                
-                
-                
+                        (self->base)->compositeAlpha = c_compositeAlpha;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkPresentModeKHR c_presentMode = (VkPresentModeKHR) PyLong_AsLong(presentMode);
                     
-                    (self->base)->presentMode = c_presentMode;
-                
-            
-                
-                
-                
+                        (self->base)->presentMode = c_presentMode;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_clipped = (VkBool32) PyLong_AsLong(clipped);
                     
-                    (self->base)->clipped = c_clipped;
-                
-            
-                
-                
-                
+                        (self->base)->clipped = c_clipped;
                     
-            VkSwapchainKHR c_oldSwapchain = NULL;
-            if (oldSwapchain != Py_None)  {
-                VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
-                    oldSwapchain, "VkSwapchainKHR");
-                c_oldSwapchain = *handle_pointer;
-            }
             
-                    (self->base)->oldSwapchain = c_oldSwapchain;
-                
+            
+            
+                    
+                    
+                    
+                        
+                VkSwapchainKHR c_oldSwapchain = VK_NULL_HANDLE;
+                if (oldSwapchain != Py_None)  {
+                    VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
+                        oldSwapchain, "VkSwapchainKHR");
+                    c_oldSwapchain = *handle_pointer;
+                }
+            
+                        (self->base)->oldSwapchain = c_oldSwapchain;
+                    
+            
             
         
 
@@ -34851,80 +36471,107 @@ PyObject* pResults = NULL;
 
             static char *kwlist[] = {"sType","waitSemaphoreCount","pWaitSemaphores","swapchainCount","pSwapchains","pImageIndices","pResults",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &sType,&waitSemaphoreCount,&pWaitSemaphores,&swapchainCount,&pSwapchains,&pImageIndices,&pResults))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &sType,&waitSemaphoreCount,&pWaitSemaphores,&swapchainCount,&pSwapchains,&pImageIndices,&pResults))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_waitSemaphoreCount = (uint32_t) PyLong_AsLong(waitSemaphoreCount);
         
-                    (self->base)->waitSemaphoreCount = c_waitSemaphoreCount;
-                
-            
-                
-                
-                
+                        (self->base)->waitSemaphoreCount = c_waitSemaphoreCount;
                     
-            VkSemaphore* c_pWaitSemaphores = NULL;
-            if (pWaitSemaphores != Py_None)  {
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(
-                    pWaitSemaphores, "VkSemaphore");
-                c_pWaitSemaphores = handle_pointer;
-            }
             
-                    (self->base)->pWaitSemaphores = c_pWaitSemaphores;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkSemaphore* c_pWaitSemaphores = VK_NULL_HANDLE;
+                if (pWaitSemaphores != Py_None)  {
+                    int size = PyList_Size(pWaitSemaphores);
+                    c_pWaitSemaphores = malloc(size * sizeof(VkSemaphore));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkSemaphore* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pWaitSemaphores, i), "VkSemaphore");
+                        c_pWaitSemaphores[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pWaitSemaphores = c_pWaitSemaphores;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_swapchainCount = (uint32_t) PyLong_AsLong(swapchainCount);
         
-                    (self->base)->swapchainCount = c_swapchainCount;
-                
-            
-                
-                
-                
+                        (self->base)->swapchainCount = c_swapchainCount;
                     
-            VkSwapchainKHR* c_pSwapchains = NULL;
-            if (pSwapchains != Py_None)  {
-                VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
-                    pSwapchains, "VkSwapchainKHR");
-                c_pSwapchains = handle_pointer;
-            }
             
-                    (self->base)->pSwapchains = c_pSwapchains;
-                
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
+                VkSwapchainKHR* c_pSwapchains = VK_NULL_HANDLE;
+                if (pSwapchains != Py_None)  {
+                    int size = PyList_Size(pSwapchains);
+                    c_pSwapchains = malloc(size * sizeof(VkSwapchainKHR));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pSwapchains, i), "VkSwapchainKHR");
+                        c_pSwapchains[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pSwapchains = c_pSwapchains;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
         uint32_t* c_pImageIndices = NULL;
         if (pImageIndices == Py_None) {
             c_pImageIndices = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pImageIndices)) {
+            c_pImageIndices = (uint32_t*) PyBytes_AsString(pImageIndices);
         }
         else {
             int size = PyList_Size(pImageIndices);
@@ -34936,21 +36583,30 @@ PyObject* pResults = NULL;
                 memcpy(c_pImageIndices + i, &r, sizeof(uint32_t));
             }
         }
-                    (self->base)->pImageIndices = c_pImageIndices;
-                
-            
-                
-                
-                
+                        (self->base)->pImageIndices = c_pImageIndices;
                     
-                    VkResult* c_pResults = malloc(sizeof(VkResult));
-                    {
-                        VkResult tmp = (VkResult) PyLong_AsLong(pResults);
-                        memcpy(c_pResults, &tmp, sizeof(VkResult));
+            
+            
+            
+                    
+                    
+                    
+                        
+                    VkResult* c_pResults = NULL;
+                    if (pResults != Py_None) {
+                        int size = PyList_Size(pResults);
+                        c_pResults = malloc(size * sizeof(VkResult));
+                        int i;
+                        for (i = 0; i < size; i++) {
+                            VkResult tmp = (VkResult) PyLong_AsLong(
+                                PyList_GetItem(pResults, i));
+                            c_pResults[i] = tmp;
+                        }
                     }
                 
-                    (self->base)->pResults = c_pResults;
-                
+                        (self->base)->pResults = c_pResults;
+                    
+            
             
         
 
@@ -35118,48 +36774,63 @@ PyObject* pDisabledValidationChecks = NULL;
 
             static char *kwlist[] = {"sType","disabledValidationCheckCount","pDisabledValidationChecks",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&disabledValidationCheckCount,&pDisabledValidationChecks))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&disabledValidationCheckCount,&pDisabledValidationChecks))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_disabledValidationCheckCount = (uint32_t) PyLong_AsLong(disabledValidationCheckCount);
         
-                    (self->base)->disabledValidationCheckCount = c_disabledValidationCheckCount;
-                
-            
-                
-                
-                
+                        (self->base)->disabledValidationCheckCount = c_disabledValidationCheckCount;
                     
-                    VkValidationCheckEXT* c_pDisabledValidationChecks = malloc(sizeof(VkValidationCheckEXT));
-                    {
-                        VkValidationCheckEXT tmp = (VkValidationCheckEXT) PyLong_AsLong(pDisabledValidationChecks);
-                        memcpy(c_pDisabledValidationChecks, &tmp, sizeof(VkValidationCheckEXT));
+            
+            
+            
+                    
+                    
+                    
+                        
+                    VkValidationCheckEXT* c_pDisabledValidationChecks = NULL;
+                    if (pDisabledValidationChecks != Py_None) {
+                        int size = PyList_Size(pDisabledValidationChecks);
+                        c_pDisabledValidationChecks = malloc(size * sizeof(VkValidationCheckEXT));
+                        int i;
+                        for (i = 0; i < size; i++) {
+                            VkValidationCheckEXT tmp = (VkValidationCheckEXT) PyLong_AsLong(
+                                PyList_GetItem(pDisabledValidationChecks, i));
+                            c_pDisabledValidationChecks[i] = tmp;
+                        }
                     }
                 
-                    (self->base)->pDisabledValidationChecks = c_pDisabledValidationChecks;
-                
+                        (self->base)->pDisabledValidationChecks = c_pDisabledValidationChecks;
+                    
+            
             
         
 
@@ -35280,35 +36951,42 @@ PyObject* rasterizationOrder = NULL;
 
             static char *kwlist[] = {"sType","rasterizationOrder",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&rasterizationOrder))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&rasterizationOrder))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkRasterizationOrderAMD c_rasterizationOrder = (VkRasterizationOrderAMD) PyLong_AsLong(rasterizationOrder);
                     
-                    (self->base)->rasterizationOrder = c_rasterizationOrder;
-                
+                        (self->base)->rasterizationOrder = c_rasterizationOrder;
+                    
+            
             
         
 
@@ -35418,49 +37096,59 @@ PyObject* pObjectName = NULL;
 
             static char *kwlist[] = {"sType","objectType","object","pObjectName",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &sType,&objectType,&object,&pObjectName))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &sType,&objectType,&object,&pObjectName))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDebugReportObjectTypeEXT c_objectType = (VkDebugReportObjectTypeEXT) PyLong_AsLong(objectType);
                     
-                    (self->base)->objectType = c_objectType;
-                
-            
-                
-                
-                
+                        (self->base)->objectType = c_objectType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint64_t c_object = (uint64_t) PyLong_AsLong(object);
         
-                    (self->base)->object = c_object;
-                
-            
-                
-                
-                
+                        (self->base)->object = c_object;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         char* c_pObjectName = NULL;
         if (pObjectName != Py_None)
         {
@@ -35473,8 +37161,9 @@ PyObject* pObjectName = NULL;
             c_pObjectName = strdup(tmp1);
             Py_DECREF(tmp0);
         }
-                    (self->base)->pObjectName = c_pObjectName;
-                
+                        (self->base)->pObjectName = c_pObjectName;
+                    
+            
             
         
 
@@ -35612,69 +37301,84 @@ PyObject* pTag = NULL;
 
             static char *kwlist[] = {"sType","objectType","object","tagName","tagSize","pTag",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &sType,&objectType,&object,&tagName,&tagSize,&pTag))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &sType,&objectType,&object,&tagName,&tagSize,&pTag))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkDebugReportObjectTypeEXT c_objectType = (VkDebugReportObjectTypeEXT) PyLong_AsLong(objectType);
                     
-                    (self->base)->objectType = c_objectType;
-                
-            
-                
-                
-                
+                        (self->base)->objectType = c_objectType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint64_t c_object = (uint64_t) PyLong_AsLong(object);
         
-                    (self->base)->object = c_object;
-                
-            
-                
-                
-                
+                        (self->base)->object = c_object;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint64_t c_tagName = (uint64_t) PyLong_AsLong(tagName);
         
-                    (self->base)->tagName = c_tagName;
-                
-            
-                
-                
-                
+                        (self->base)->tagName = c_tagName;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             size_t c_tagSize = (size_t) PyLong_AsLong(tagSize);
         
-                    (self->base)->tagSize = c_tagSize;
-                
+                        (self->base)->tagSize = c_tagSize;
+                    
             
-                
-                
-                
-                    void* c_pTag = NULL;
-                    (self->base)->pTag = c_pTag;
-                
+            
+            
+                    
+                    
+                    
+                        void* c_pTag = NULL;
+                        (self->base)->pTag = c_pTag;
+                    
+            
             
         
 
@@ -35836,31 +37540,37 @@ PyObject* color = NULL;
 
             static char *kwlist[] = {"sType","pMarkerName","color",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&pMarkerName,&color))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&pMarkerName,&color))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
         char* c_pMarkerName = NULL;
         if (pMarkerName != Py_None)
         {
@@ -35873,16 +37583,21 @@ PyObject* color = NULL;
             c_pMarkerName = strdup(tmp1);
             Py_DECREF(tmp0);
         }
-                    (self->base)->pMarkerName = c_pMarkerName;
-                
-            
-                
-                
-                
+                        (self->base)->pMarkerName = c_pMarkerName;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         float* c_color = NULL;
         if (color == Py_None) {
             c_color = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(color)) {
+            c_color = (float*) PyBytes_AsString(color);
         }
         else {
             int size = PyList_Size(color);
@@ -35894,10 +37609,11 @@ PyObject* color = NULL;
                 memcpy(c_color + i, &r, sizeof(float));
             }
         }
-                    
+                        
         memcpy((self->base)->color, c_color, 4 * sizeof(float));
         
-                
+                    
+            
             
         
 
@@ -36024,35 +37740,42 @@ PyObject* dedicatedAllocation = NULL;
 
             static char *kwlist[] = {"sType","dedicatedAllocation",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&dedicatedAllocation))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&dedicatedAllocation))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_dedicatedAllocation = (VkBool32) PyLong_AsLong(dedicatedAllocation);
                     
-                    (self->base)->dedicatedAllocation = c_dedicatedAllocation;
-                
+                        (self->base)->dedicatedAllocation = c_dedicatedAllocation;
+                    
+            
             
         
 
@@ -36160,35 +37883,42 @@ PyObject* dedicatedAllocation = NULL;
 
             static char *kwlist[] = {"sType","dedicatedAllocation",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&dedicatedAllocation))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&dedicatedAllocation))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkBool32 c_dedicatedAllocation = (VkBool32) PyLong_AsLong(dedicatedAllocation);
                     
-                    (self->base)->dedicatedAllocation = c_dedicatedAllocation;
-                
+                        (self->base)->dedicatedAllocation = c_dedicatedAllocation;
+                    
+            
             
         
 
@@ -36297,54 +38027,63 @@ PyObject* buffer = NULL;
 
             static char *kwlist[] = {"sType","image","buffer",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&image,&buffer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&image,&buffer))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
             
-                    (self->base)->image = c_image;
-                
             
-                
-                
-                
+            
                     
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
             
-                    (self->base)->buffer = c_buffer;
-                
+            
+            
+                    
+                    
+                    
+                        
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
+            
+                        (self->base)->image = c_image;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
+            
+                        (self->base)->buffer = c_buffer;
+                    
+            
             
         
 
@@ -36461,46 +38200,55 @@ PyObject* compatibleHandleTypes = NULL;
 
             static char *kwlist[] = {"imageFormatProperties","externalMemoryFeatures","exportFromImportedHandleTypes","compatibleHandleTypes",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &imageFormatProperties,&externalMemoryFeatures,&exportFromImportedHandleTypes,&compatibleHandleTypes))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &imageFormatProperties,&externalMemoryFeatures,&exportFromImportedHandleTypes,&compatibleHandleTypes))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                 VkImageFormatProperties c_imageFormatProperties = *(((PyVkImageFormatProperties*)imageFormatProperties)->base);
                 
-                    (self->base)->imageFormatProperties = c_imageFormatProperties;
-                
-            
-                
-                
-                
+                        (self->base)->imageFormatProperties = c_imageFormatProperties;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkExternalMemoryFeatureFlagsNV c_externalMemoryFeatures = (VkExternalMemoryFeatureFlagsNV) PyLong_AsLong(externalMemoryFeatures);
                     
-                    (self->base)->externalMemoryFeatures = c_externalMemoryFeatures;
-                
-            
-                
-                
-                
+                        (self->base)->externalMemoryFeatures = c_externalMemoryFeatures;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkExternalMemoryHandleTypeFlagsNV c_exportFromImportedHandleTypes = (VkExternalMemoryHandleTypeFlagsNV) PyLong_AsLong(exportFromImportedHandleTypes);
                     
-                    (self->base)->exportFromImportedHandleTypes = c_exportFromImportedHandleTypes;
-                
-            
-                
-                
-                
+                        (self->base)->exportFromImportedHandleTypes = c_exportFromImportedHandleTypes;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkExternalMemoryHandleTypeFlagsNV c_compatibleHandleTypes = (VkExternalMemoryHandleTypeFlagsNV) PyLong_AsLong(compatibleHandleTypes);
                     
-                    (self->base)->compatibleHandleTypes = c_compatibleHandleTypes;
-                
+                        (self->base)->compatibleHandleTypes = c_compatibleHandleTypes;
+                    
+            
             
         
 
@@ -36623,35 +38371,42 @@ PyObject* handleTypes = NULL;
 
             static char *kwlist[] = {"sType","handleTypes",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&handleTypes))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&handleTypes))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkExternalMemoryHandleTypeFlagsNV c_handleTypes = (VkExternalMemoryHandleTypeFlagsNV) PyLong_AsLong(handleTypes);
                     
-                    (self->base)->handleTypes = c_handleTypes;
-                
+                        (self->base)->handleTypes = c_handleTypes;
+                    
+            
             
         
 
@@ -36759,35 +38514,42 @@ PyObject* handleTypes = NULL;
 
             static char *kwlist[] = {"sType","handleTypes",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &sType,&handleTypes))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &sType,&handleTypes))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkExternalMemoryHandleTypeFlagsNV c_handleTypes = (VkExternalMemoryHandleTypeFlagsNV) PyLong_AsLong(handleTypes);
                     
-                    (self->base)->handleTypes = c_handleTypes;
-                
+                        (self->base)->handleTypes = c_handleTypes;
+                    
+            
             
         
 
@@ -36896,44 +38658,53 @@ PyObject* handle = NULL;
 
             static char *kwlist[] = {"sType","handleType","handle",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&handleType,&handle))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&handleType,&handle))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
                     VkExternalMemoryHandleTypeFlagsNV c_handleType = (VkExternalMemoryHandleTypeFlagsNV) PyLong_AsLong(handleType);
                     
-                    (self->base)->handleType = c_handleType;
-                
-            
-                
-                
-                
+                        (self->base)->handleType = c_handleType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     HANDLE c_handle = (HANDLE) PyLong_AsLong(handle);
                     
-                    (self->base)->handle = c_handle;
-                
+                        (self->base)->handle = c_handle;
+                    
+            
             
         
 
@@ -37055,48 +38826,58 @@ PyObject* dwAccess = NULL;
 
             static char *kwlist[] = {"sType","pAttributes","dwAccess",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &sType,&pAttributes,&dwAccess))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &sType,&pAttributes,&dwAccess))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
-                    SECURITY_ATTRIBUTES* c_pAttributes = malloc(sizeof(SECURITY_ATTRIBUTES));
-                    {
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                    SECURITY_ATTRIBUTES* c_pAttributes = NULL;
+                    if (pAttributes != Py_None) {
+                        c_pAttributes = malloc(sizeof(SECURITY_ATTRIBUTES));
                         SECURITY_ATTRIBUTES tmp = (SECURITY_ATTRIBUTES) PyLong_AsLong(pAttributes);
                         memcpy(c_pAttributes, &tmp, sizeof(SECURITY_ATTRIBUTES));
                     }
                 
-                    (self->base)->pAttributes = c_pAttributes;
-                
-            
-                
-                
-                
+                        (self->base)->pAttributes = c_pAttributes;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
                     DWORD c_dwAccess = (DWORD) PyLong_AsLong(dwAccess);
                     
-                    (self->base)->dwAccess = c_dwAccess;
-                
+                        (self->base)->dwAccess = c_dwAccess;
+                    
+            
             
         
 
@@ -37223,70 +39004,96 @@ PyObject* pReleaseKeys = NULL;
 
             static char *kwlist[] = {"sType","acquireCount","pAcquireSyncs","pAcquireKeys","pAcquireTimeoutMilliseconds","releaseCount","pReleaseSyncs","pReleaseKeys",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &sType,&acquireCount,&pAcquireSyncs,&pAcquireKeys,&pAcquireTimeoutMilliseconds,&releaseCount,&pReleaseSyncs,&pReleaseKeys))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &sType,&acquireCount,&pAcquireSyncs,&pAcquireKeys,&pAcquireTimeoutMilliseconds,&releaseCount,&pReleaseSyncs,&pReleaseKeys))
         return 0;
     
 
             
-                
-                
-                
+            
                     
+                    
+                    
+                        
                     VkStructureType c_sType = (VkStructureType) PyLong_AsLong(sType);
                     
-                    (self->base)->sType = c_sType;
-                
-            
-                
-                
-                
-                    void * c_pNext = NULL;
-                    (self->base)->pNext = c_pNext;
-                
-            
-                
-                
-                
+                        (self->base)->sType = c_sType;
                     
+            
+            
+            
+                    
+                    
+                    
+                        void * c_pNext = NULL;
+                        (self->base)->pNext = c_pNext;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_acquireCount = (uint32_t) PyLong_AsLong(acquireCount);
         
-                    (self->base)->acquireCount = c_acquireCount;
-                
-            
-                
-                
-                
+                        (self->base)->acquireCount = c_acquireCount;
                     
-            VkDeviceMemory* c_pAcquireSyncs = NULL;
-            if (pAcquireSyncs != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    pAcquireSyncs, "VkDeviceMemory");
-                c_pAcquireSyncs = handle_pointer;
-            }
             
-                    (self->base)->pAcquireSyncs = c_pAcquireSyncs;
-                
             
-                
-                
-                
+            
                     
-                    uint64_t* c_pAcquireKeys = malloc(sizeof(uint64_t));
-                    {
-                        uint64_t tmp = (uint64_t) PyLong_AsLong(pAcquireKeys);
-                        memcpy(c_pAcquireKeys, &tmp, sizeof(uint64_t));
+                    
+                    
+                        
+                VkDeviceMemory* c_pAcquireSyncs = VK_NULL_HANDLE;
+                if (pAcquireSyncs != Py_None)  {
+                    int size = PyList_Size(pAcquireSyncs);
+                    c_pAcquireSyncs = malloc(size * sizeof(VkDeviceMemory));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pAcquireSyncs, i), "VkDeviceMemory");
+                        c_pAcquireSyncs[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pAcquireSyncs = c_pAcquireSyncs;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                    uint64_t* c_pAcquireKeys = NULL;
+                    if (pAcquireKeys != Py_None) {
+                        int size = PyList_Size(pAcquireKeys);
+                        c_pAcquireKeys = malloc(size * sizeof(uint64_t));
+                        int i;
+                        for (i = 0; i < size; i++) {
+                            uint64_t tmp = (uint64_t) PyLong_AsLong(
+                                PyList_GetItem(pAcquireKeys, i));
+                            c_pAcquireKeys[i] = tmp;
+                        }
                     }
                 
-                    (self->base)->pAcquireKeys = c_pAcquireKeys;
-                
-            
-                
-                
-                
+                        (self->base)->pAcquireKeys = c_pAcquireKeys;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
         uint32_t* c_pAcquireTimeoutMilliseconds = NULL;
         if (pAcquireTimeoutMilliseconds == Py_None) {
             c_pAcquireTimeoutMilliseconds = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pAcquireTimeoutMilliseconds)) {
+            c_pAcquireTimeoutMilliseconds = (uint32_t*) PyBytes_AsString(pAcquireTimeoutMilliseconds);
         }
         else {
             int size = PyList_Size(pAcquireTimeoutMilliseconds);
@@ -37298,44 +39105,62 @@ PyObject* pReleaseKeys = NULL;
                 memcpy(c_pAcquireTimeoutMilliseconds + i, &r, sizeof(uint32_t));
             }
         }
-                    (self->base)->pAcquireTimeoutMilliseconds = c_pAcquireTimeoutMilliseconds;
-                
-            
-                
-                
-                
+                        (self->base)->pAcquireTimeoutMilliseconds = c_pAcquireTimeoutMilliseconds;
                     
+            
+            
+            
+                    
+                    
+                    
+                        
             uint32_t c_releaseCount = (uint32_t) PyLong_AsLong(releaseCount);
         
-                    (self->base)->releaseCount = c_releaseCount;
-                
-            
-                
-                
-                
+                        (self->base)->releaseCount = c_releaseCount;
                     
-            VkDeviceMemory* c_pReleaseSyncs = NULL;
-            if (pReleaseSyncs != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    pReleaseSyncs, "VkDeviceMemory");
-                c_pReleaseSyncs = handle_pointer;
-            }
             
-                    (self->base)->pReleaseSyncs = c_pReleaseSyncs;
-                
             
-                
-                
-                
+            
                     
-                    uint64_t* c_pReleaseKeys = malloc(sizeof(uint64_t));
-                    {
-                        uint64_t tmp = (uint64_t) PyLong_AsLong(pReleaseKeys);
-                        memcpy(c_pReleaseKeys, &tmp, sizeof(uint64_t));
+                    
+                    
+                        
+                VkDeviceMemory* c_pReleaseSyncs = VK_NULL_HANDLE;
+                if (pReleaseSyncs != Py_None)  {
+                    int size = PyList_Size(pReleaseSyncs);
+                    c_pReleaseSyncs = malloc(size * sizeof(VkDeviceMemory));
+                    int i;
+                    for (i = 0; i < size; i++) {
+                        VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem(pReleaseSyncs, i), "VkDeviceMemory");
+                        c_pReleaseSyncs[i] = *handle_pointer;
+                    }
+                }
+            
+                        (self->base)->pReleaseSyncs = c_pReleaseSyncs;
+                    
+            
+            
+            
+                    
+                    
+                    
+                        
+                    uint64_t* c_pReleaseKeys = NULL;
+                    if (pReleaseKeys != Py_None) {
+                        int size = PyList_Size(pReleaseKeys);
+                        c_pReleaseKeys = malloc(size * sizeof(uint64_t));
+                        int i;
+                        for (i = 0; i < size; i++) {
+                            uint64_t tmp = (uint64_t) PyLong_AsLong(
+                                PyList_GetItem(pReleaseKeys, i));
+                            c_pReleaseKeys[i] = tmp;
+                        }
                     }
                 
-                    (self->base)->pReleaseKeys = c_pReleaseKeys;
-                
+                        (self->base)->pReleaseKeys = c_pReleaseKeys;
+                    
+            
             
         
 
@@ -37516,18 +39341,23 @@ PyObject* uint32 = NULL;
 
             static char *kwlist[] = {"float32","int32","uint32",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &float32,&int32,&uint32))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "|OOO", kwlist, &float32,&int32,&uint32))
         return 0;
     
 
             
-                
-                
-                
+             if (float32 != NULL) { 
                     
+                    
+                    
+                        
         float* c_float32 = NULL;
         if (float32 == Py_None) {
             c_float32 = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(float32)) {
+            c_float32 = (float*) PyBytes_AsString(float32);
         }
         else {
             int size = PyList_Size(float32);
@@ -37539,18 +39369,23 @@ PyObject* uint32 = NULL;
                 memcpy(c_float32 + i, &r, sizeof(float));
             }
         }
-                    
+                        
         memcpy((self->base)->float32, c_float32, 4 * sizeof(float));
         
-                
-            
-                
-                
-                
                     
+             } 
+            
+             if (int32 != NULL) { 
+                    
+                    
+                    
+                        
         int32_t* c_int32 = NULL;
         if (int32 == Py_None) {
             c_int32 = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(int32)) {
+            c_int32 = (int32_t*) PyBytes_AsString(int32);
         }
         else {
             int size = PyList_Size(int32);
@@ -37562,18 +39397,23 @@ PyObject* uint32 = NULL;
                 memcpy(c_int32 + i, &r, sizeof(int32_t));
             }
         }
-                    
+                        
         memcpy((self->base)->int32, c_int32, 4 * sizeof(int32_t));
         
-                
-            
-                
-                
-                
                     
+             } 
+            
+             if (uint32 != NULL) { 
+                    
+                    
+                    
+                        
         uint32_t* c_uint32 = NULL;
         if (uint32 == Py_None) {
             c_uint32 = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(uint32)) {
+            c_uint32 = (uint32_t*) PyBytes_AsString(uint32);
         }
         else {
             int size = PyList_Size(uint32);
@@ -37585,10 +39425,11 @@ PyObject* uint32 = NULL;
                 memcpy(c_uint32 + i, &r, sizeof(uint32_t));
             }
         }
-                    
+                        
         memcpy((self->base)->uint32, c_uint32, 4 * sizeof(uint32_t));
         
-                
+                    
+             } 
             
         
 
@@ -37713,28 +39554,33 @@ PyObject* depthStencil = NULL;
 
             static char *kwlist[] = {"color","depthStencil",NULL};
             
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &color,&depthStencil))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "|OO", kwlist, &color,&depthStencil))
         return 0;
     
 
             
-                
-                
-                
+             if (color != NULL) { 
                     
+                    
+                    
+                        
                 VkClearColorValue c_color = *(((PyVkClearColorValue*)color)->base);
                 
-                    (self->base)->color = c_color;
-                
-            
-                
-                
-                
+                        (self->base)->color = c_color;
                     
+             } 
+            
+             if (depthStencil != NULL) { 
+                    
+                    
+                    
+                        
                 VkClearDepthStencilValue c_depthStencil = *(((PyVkClearDepthStencilValue*)depthStencil)->base);
                 
-                    (self->base)->depthStencil = c_depthStencil;
-                
+                        (self->base)->depthStencil = c_depthStencil;
+                    
+             } 
             
         
 
@@ -40063,14 +41909,18 @@ void init_pytype_objects(void) {
 
     static char *kwlist[] = {"pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &pCreateInfo))
         return 0;
     
 
     
     
         
-                VkInstanceCreateInfo* c_pCreateInfo = ((PyVkInstanceCreateInfo*)pCreateInfo)->base;
+                VkInstanceCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkInstanceCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -40081,15 +41931,22 @@ void init_pytype_objects(void) {
     
 
     
-        VkInstance *value = malloc(sizeof(VkInstance));
+        int allocate_size = 1;
+
+        
+
+        VkInstance *value = malloc(allocate_size * sizeof(VkInstance));
         
         
             if (raise(vkCreateInstance(c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkInstance", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkInstance", NULL);
+            
         
 
     
@@ -40115,19 +41972,20 @@ void init_pytype_objects(void) {
 
     static char *kwlist[] = {"instance",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &instance))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &instance))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -40165,19 +42023,20 @@ void init_pytype_objects(void) {
 
     static char *kwlist[] = {"instance",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &instance))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &instance))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
@@ -40240,19 +42099,20 @@ void init_pytype_objects(void) {
 
     static char *kwlist[] = {"physicalDevice",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &physicalDevice))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &physicalDevice))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -40261,17 +42121,24 @@ void init_pytype_objects(void) {
     
 
     
-        VkPhysicalDeviceProperties *value = malloc(sizeof(VkPhysicalDeviceProperties));
+        int allocate_size = 1;
+
+        
+
+        VkPhysicalDeviceProperties *value = malloc(allocate_size * sizeof(VkPhysicalDeviceProperties));
         
         
             vkGetPhysicalDeviceProperties(c_physicalDevice,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkPhysicalDevicePropertiesType);
-            if (!return_value)
-                return NULL;
-            ((PyVkPhysicalDeviceProperties*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkPhysicalDevicePropertiesType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkPhysicalDeviceProperties*)return_value)->base = value;
+            
         
 
     
@@ -40297,19 +42164,20 @@ void init_pytype_objects(void) {
 
     static char *kwlist[] = {"physicalDevice",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &physicalDevice))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &physicalDevice))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -40373,19 +42241,20 @@ void init_pytype_objects(void) {
 
     static char *kwlist[] = {"physicalDevice",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &physicalDevice))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &physicalDevice))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -40394,17 +42263,24 @@ void init_pytype_objects(void) {
     
 
     
-        VkPhysicalDeviceMemoryProperties *value = malloc(sizeof(VkPhysicalDeviceMemoryProperties));
+        int allocate_size = 1;
+
+        
+
+        VkPhysicalDeviceMemoryProperties *value = malloc(allocate_size * sizeof(VkPhysicalDeviceMemoryProperties));
         
         
             vkGetPhysicalDeviceMemoryProperties(c_physicalDevice,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkPhysicalDeviceMemoryPropertiesType);
-            if (!return_value)
-                return NULL;
-            ((PyVkPhysicalDeviceMemoryProperties*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkPhysicalDeviceMemoryPropertiesType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkPhysicalDeviceMemoryProperties*)return_value)->base = value;
+            
         
 
     
@@ -40430,19 +42306,20 @@ void init_pytype_objects(void) {
 
     static char *kwlist[] = {"physicalDevice",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &physicalDevice))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &physicalDevice))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -40451,17 +42328,24 @@ void init_pytype_objects(void) {
     
 
     
-        VkPhysicalDeviceFeatures *value = malloc(sizeof(VkPhysicalDeviceFeatures));
+        int allocate_size = 1;
+
+        
+
+        VkPhysicalDeviceFeatures *value = malloc(allocate_size * sizeof(VkPhysicalDeviceFeatures));
         
         
             vkGetPhysicalDeviceFeatures(c_physicalDevice,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkPhysicalDeviceFeaturesType);
-            if (!return_value)
-                return NULL;
-            ((PyVkPhysicalDeviceFeatures*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkPhysicalDeviceFeaturesType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkPhysicalDeviceFeatures*)return_value)->base = value;
+            
         
 
     
@@ -40488,19 +42372,20 @@ PyObject* format = NULL;
 
     static char *kwlist[] = {"physicalDevice","format",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&format))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&format))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -40513,17 +42398,24 @@ PyObject* format = NULL;
     
 
     
-        VkFormatProperties *value = malloc(sizeof(VkFormatProperties));
+        int allocate_size = 1;
+
+        
+
+        VkFormatProperties *value = malloc(allocate_size * sizeof(VkFormatProperties));
         
         
             vkGetPhysicalDeviceFormatProperties(c_physicalDevice,c_format,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkFormatPropertiesType);
-            if (!return_value)
-                return NULL;
-            ((PyVkFormatProperties*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkFormatPropertiesType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkFormatProperties*)return_value)->base = value;
+            
         
 
     
@@ -40554,19 +42446,20 @@ PyObject* flags = NULL;
 
     static char *kwlist[] = {"physicalDevice","format","type","tiling","usage","flags",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &physicalDevice,&format,&type,&tiling,&usage,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &physicalDevice,&format,&type,&tiling,&usage,&flags))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -40595,18 +42488,25 @@ PyObject* flags = NULL;
     
 
     
-        VkImageFormatProperties *value = malloc(sizeof(VkImageFormatProperties));
+        int allocate_size = 1;
+
+        
+
+        VkImageFormatProperties *value = malloc(allocate_size * sizeof(VkImageFormatProperties));
         
         
             if (raise(vkGetPhysicalDeviceImageFormatProperties(c_physicalDevice,c_format,c_type,c_tiling,c_usage,c_flags,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkImageFormatPropertiesType);
-            if (!return_value)
-                return NULL;
-            ((PyVkImageFormatProperties*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkImageFormatPropertiesType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkImageFormatProperties*)return_value)->base = value;
+            
         
 
     
@@ -40633,23 +42533,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"physicalDevice","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
-                VkDeviceCreateInfo* c_pCreateInfo = ((PyVkDeviceCreateInfo*)pCreateInfo)->base;
+                VkDeviceCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkDeviceCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -40660,15 +42564,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkDevice *value = malloc(sizeof(VkDevice));
+        int allocate_size = 1;
+
+        
+
+        VkDevice *value = malloc(allocate_size * sizeof(VkDevice));
         
         
             if (raise(vkCreateDevice(c_physicalDevice,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkDevice", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkDevice", NULL);
+            
         
 
     
@@ -40694,19 +42605,20 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &device))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &device))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -40809,7 +42721,8 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"pLayerName",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &pLayerName))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &pLayerName))
         return 0;
     
 
@@ -40892,19 +42805,20 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"physicalDevice",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &physicalDevice))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &physicalDevice))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -40971,19 +42885,20 @@ PyObject* pLayerName = NULL;
 
     static char *kwlist[] = {"physicalDevice","pLayerName",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&pLayerName))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&pLayerName))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -41065,19 +42980,20 @@ PyObject* queueIndex = NULL;
 
     static char *kwlist[] = {"device","queueFamilyIndex","queueIndex",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&queueFamilyIndex,&queueIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&queueFamilyIndex,&queueIndex))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
@@ -41094,14 +43010,21 @@ PyObject* queueIndex = NULL;
     
 
     
-        VkQueue *value = malloc(sizeof(VkQueue));
+        int allocate_size = 1;
+
+        
+
+        VkQueue *value = malloc(allocate_size * sizeof(VkQueue));
         
         
             vkGetDeviceQueue(c_device,c_queueFamilyIndex,c_queueIndex,value);
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkQueue", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkQueue", NULL);
+            
         
 
     
@@ -41130,19 +43053,20 @@ PyObject* fence = NULL;
 
     static char *kwlist[] = {"queue","submitCount","pSubmits","fence",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &queue,&submitCount,&pSubmits,&fence))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &queue,&submitCount,&pSubmits,&fence))
         return 0;
     
 
     
     
         
-            VkQueue c_queue = NULL;
-            if (queue != Py_None)  {
-                VkQueue* handle_pointer = PyCapsule_GetPointer(
-                    queue, "VkQueue");
-                c_queue = *handle_pointer;
-            }
+                VkQueue c_queue = VK_NULL_HANDLE;
+                if (queue != Py_None)  {
+                    VkQueue* handle_pointer = PyCapsule_GetPointer(
+                        queue, "VkQueue");
+                    c_queue = *handle_pointer;
+                }
             
     
         
@@ -41150,16 +43074,19 @@ PyObject* fence = NULL;
         
     
         
-                VkSubmitInfo* c_pSubmits = ((PyVkSubmitInfo*)pSubmits)->base;
+                VkSubmitInfo* c_pSubmits = NULL;
+                if (pSubmits != Py_None) {
+                    c_pSubmits = ((PyVkSubmitInfo*)pSubmits)->base;
+                }
                 
     
         
-            VkFence c_fence = NULL;
-            if (fence != Py_None)  {
-                VkFence* handle_pointer = PyCapsule_GetPointer(
-                    fence, "VkFence");
-                c_fence = *handle_pointer;
-            }
+                VkFence c_fence = VK_NULL_HANDLE;
+                if (fence != Py_None)  {
+                    VkFence* handle_pointer = PyCapsule_GetPointer(
+                        fence, "VkFence");
+                    c_fence = *handle_pointer;
+                }
             
     
 
@@ -41195,19 +43122,20 @@ PyObject* fence = NULL;
 
     static char *kwlist[] = {"queue",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &queue))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &queue))
         return 0;
     
 
     
     
         
-            VkQueue c_queue = NULL;
-            if (queue != Py_None)  {
-                VkQueue* handle_pointer = PyCapsule_GetPointer(
-                    queue, "VkQueue");
-                c_queue = *handle_pointer;
-            }
+                VkQueue c_queue = VK_NULL_HANDLE;
+                if (queue != Py_None)  {
+                    VkQueue* handle_pointer = PyCapsule_GetPointer(
+                        queue, "VkQueue");
+                    c_queue = *handle_pointer;
+                }
             
     
 
@@ -41243,19 +43171,20 @@ PyObject* fence = NULL;
 
     static char *kwlist[] = {"device",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &device))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &device))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
 
@@ -41292,23 +43221,27 @@ PyObject* pAllocateInfo = NULL;
 
     static char *kwlist[] = {"device","pAllocateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pAllocateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pAllocateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkMemoryAllocateInfo* c_pAllocateInfo = ((PyVkMemoryAllocateInfo*)pAllocateInfo)->base;
+                VkMemoryAllocateInfo* c_pAllocateInfo = NULL;
+                if (pAllocateInfo != Py_None) {
+                    c_pAllocateInfo = ((PyVkMemoryAllocateInfo*)pAllocateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -41319,15 +43252,22 @@ PyObject* pAllocateInfo = NULL;
     
 
     
-        VkDeviceMemory *value = malloc(sizeof(VkDeviceMemory));
+        int allocate_size = 1;
+
+        
+
+        VkDeviceMemory *value = malloc(allocate_size * sizeof(VkDeviceMemory));
         
         
             if (raise(vkAllocateMemory(c_device,c_pAllocateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkDeviceMemory", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkDeviceMemory", NULL);
+            
         
 
     
@@ -41354,28 +43294,29 @@ PyObject* memory = NULL;
 
     static char *kwlist[] = {"device","memory",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&memory))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&memory))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -41414,28 +43355,29 @@ PyObject* memory = NULL;
 
     static char *kwlist[] = {"device","memory",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&memory))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&memory))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
             
     
 
@@ -41473,19 +43415,20 @@ PyObject* pMemoryRanges = NULL;
 
     static char *kwlist[] = {"device","memoryRangeCount","pMemoryRanges",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&memoryRangeCount,&pMemoryRanges))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&memoryRangeCount,&pMemoryRanges))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
@@ -41493,7 +43436,10 @@ PyObject* pMemoryRanges = NULL;
         
     
         
-                VkMappedMemoryRange* c_pMemoryRanges = ((PyVkMappedMemoryRange*)pMemoryRanges)->base;
+                VkMappedMemoryRange* c_pMemoryRanges = NULL;
+                if (pMemoryRanges != Py_None) {
+                    c_pMemoryRanges = ((PyVkMappedMemoryRange*)pMemoryRanges)->base;
+                }
                 
     
 
@@ -41531,19 +43477,20 @@ PyObject* pMemoryRanges = NULL;
 
     static char *kwlist[] = {"device","memoryRangeCount","pMemoryRanges",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&memoryRangeCount,&pMemoryRanges))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&memoryRangeCount,&pMemoryRanges))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
@@ -41551,7 +43498,10 @@ PyObject* pMemoryRanges = NULL;
         
     
         
-                VkMappedMemoryRange* c_pMemoryRanges = ((PyVkMappedMemoryRange*)pMemoryRanges)->base;
+                VkMappedMemoryRange* c_pMemoryRanges = NULL;
+                if (pMemoryRanges != Py_None) {
+                    c_pMemoryRanges = ((PyVkMappedMemoryRange*)pMemoryRanges)->base;
+                }
                 
     
 
@@ -41588,28 +43538,29 @@ PyObject* memory = NULL;
 
     static char *kwlist[] = {"device","memory",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&memory))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&memory))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
             
     
         
@@ -41618,14 +43569,21 @@ PyObject* memory = NULL;
     
 
     
-        VkDeviceSize *value = malloc(sizeof(VkDeviceSize));
+        int allocate_size = 1;
+
+        
+
+        VkDeviceSize *value = malloc(allocate_size * sizeof(VkDeviceSize));
         
         
             vkGetDeviceMemoryCommitment(c_device,c_memory,value);
         
 
+
         
-            PyObject* return_value = PyLong_FromLong((long) *value);
+            
+                PyObject* return_value = PyLong_FromLong((long) *value);
+            
         
 
     
@@ -41652,28 +43610,29 @@ PyObject* buffer = NULL;
 
     static char *kwlist[] = {"device","buffer",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&buffer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&buffer))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
@@ -41682,17 +43641,24 @@ PyObject* buffer = NULL;
     
 
     
-        VkMemoryRequirements *value = malloc(sizeof(VkMemoryRequirements));
+        int allocate_size = 1;
+
+        
+
+        VkMemoryRequirements *value = malloc(allocate_size * sizeof(VkMemoryRequirements));
         
         
             vkGetBufferMemoryRequirements(c_device,c_buffer,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkMemoryRequirementsType);
-            if (!return_value)
-                return NULL;
-            ((PyVkMemoryRequirements*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkMemoryRequirementsType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkMemoryRequirements*)return_value)->base = value;
+            
         
 
     
@@ -41721,37 +43687,38 @@ PyObject* memoryOffset = NULL;
 
     static char *kwlist[] = {"device","buffer","memory","memoryOffset",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &device,&buffer,&memory,&memoryOffset))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &device,&buffer,&memory,&memoryOffset))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
             
     
         
@@ -41792,28 +43759,29 @@ PyObject* image = NULL;
 
     static char *kwlist[] = {"device","image",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&image))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&image))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
             
     
         
@@ -41822,17 +43790,24 @@ PyObject* image = NULL;
     
 
     
-        VkMemoryRequirements *value = malloc(sizeof(VkMemoryRequirements));
+        int allocate_size = 1;
+
+        
+
+        VkMemoryRequirements *value = malloc(allocate_size * sizeof(VkMemoryRequirements));
         
         
             vkGetImageMemoryRequirements(c_device,c_image,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkMemoryRequirementsType);
-            if (!return_value)
-                return NULL;
-            ((PyVkMemoryRequirements*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkMemoryRequirementsType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkMemoryRequirements*)return_value)->base = value;
+            
         
 
     
@@ -41861,37 +43836,38 @@ PyObject* memoryOffset = NULL;
 
     static char *kwlist[] = {"device","image","memory","memoryOffset",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &device,&image,&memory,&memoryOffset))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &device,&image,&memory,&memoryOffset))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
             
     
         
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
             
     
         
@@ -41932,28 +43908,29 @@ PyObject* image = NULL;
 
     static char *kwlist[] = {"device","image",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&image))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&image))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
             
     
         
@@ -42022,19 +43999,20 @@ PyObject* tiling = NULL;
 
     static char *kwlist[] = {"physicalDevice","format","type","samples","usage","tiling",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &physicalDevice,&format,&type,&samples,&usage,&tiling))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &physicalDevice,&format,&type,&samples,&usage,&tiling))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -42121,19 +44099,20 @@ PyObject* fence = NULL;
 
     static char *kwlist[] = {"queue","bindInfoCount","pBindInfo","fence",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &queue,&bindInfoCount,&pBindInfo,&fence))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &queue,&bindInfoCount,&pBindInfo,&fence))
         return 0;
     
 
     
     
         
-            VkQueue c_queue = NULL;
-            if (queue != Py_None)  {
-                VkQueue* handle_pointer = PyCapsule_GetPointer(
-                    queue, "VkQueue");
-                c_queue = *handle_pointer;
-            }
+                VkQueue c_queue = VK_NULL_HANDLE;
+                if (queue != Py_None)  {
+                    VkQueue* handle_pointer = PyCapsule_GetPointer(
+                        queue, "VkQueue");
+                    c_queue = *handle_pointer;
+                }
             
     
         
@@ -42141,16 +44120,19 @@ PyObject* fence = NULL;
         
     
         
-                VkBindSparseInfo* c_pBindInfo = ((PyVkBindSparseInfo*)pBindInfo)->base;
+                VkBindSparseInfo* c_pBindInfo = NULL;
+                if (pBindInfo != Py_None) {
+                    c_pBindInfo = ((PyVkBindSparseInfo*)pBindInfo)->base;
+                }
                 
     
         
-            VkFence c_fence = NULL;
-            if (fence != Py_None)  {
-                VkFence* handle_pointer = PyCapsule_GetPointer(
-                    fence, "VkFence");
-                c_fence = *handle_pointer;
-            }
+                VkFence c_fence = VK_NULL_HANDLE;
+                if (fence != Py_None)  {
+                    VkFence* handle_pointer = PyCapsule_GetPointer(
+                        fence, "VkFence");
+                    c_fence = *handle_pointer;
+                }
             
     
 
@@ -42187,23 +44169,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkFenceCreateInfo* c_pCreateInfo = ((PyVkFenceCreateInfo*)pCreateInfo)->base;
+                VkFenceCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkFenceCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -42214,15 +44200,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkFence *value = malloc(sizeof(VkFence));
+        int allocate_size = 1;
+
+        
+
+        VkFence *value = malloc(allocate_size * sizeof(VkFence));
         
         
             if (raise(vkCreateFence(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkFence", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkFence", NULL);
+            
         
 
     
@@ -42249,28 +44242,29 @@ PyObject* fence = NULL;
 
     static char *kwlist[] = {"device","fence",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&fence))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&fence))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkFence c_fence = NULL;
-            if (fence != Py_None)  {
-                VkFence* handle_pointer = PyCapsule_GetPointer(
-                    fence, "VkFence");
-                c_fence = *handle_pointer;
-            }
+                VkFence c_fence = VK_NULL_HANDLE;
+                if (fence != Py_None)  {
+                    VkFence* handle_pointer = PyCapsule_GetPointer(
+                        fence, "VkFence");
+                    c_fence = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -42310,19 +44304,20 @@ PyObject* pFences = NULL;
 
     static char *kwlist[] = {"device","fenceCount","pFences",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&fenceCount,&pFences))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&fenceCount,&pFences))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
@@ -42330,12 +44325,12 @@ PyObject* pFences = NULL;
         
     
         
-            VkFence* c_pFences = NULL;
-            if (pFences != Py_None)  {
-                VkFence* handle_pointer = PyCapsule_GetPointer(
-                    pFences, "VkFence");
-                c_pFences = handle_pointer;
-            }
+                VkFence* c_pFences = VK_NULL_HANDLE;
+                if (pFences != Py_None)  {
+                    VkFence* handle_pointer = PyCapsule_GetPointer(
+                        pFences, "VkFence");
+                    c_pFences = handle_pointer;
+                }
             
     
 
@@ -42372,28 +44367,29 @@ PyObject* fence = NULL;
 
     static char *kwlist[] = {"device","fence",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&fence))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&fence))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkFence c_fence = NULL;
-            if (fence != Py_None)  {
-                VkFence* handle_pointer = PyCapsule_GetPointer(
-                    fence, "VkFence");
-                c_fence = *handle_pointer;
-            }
+                VkFence c_fence = VK_NULL_HANDLE;
+                if (fence != Py_None)  {
+                    VkFence* handle_pointer = PyCapsule_GetPointer(
+                        fence, "VkFence");
+                    c_fence = *handle_pointer;
+                }
             
     
 
@@ -42433,19 +44429,20 @@ PyObject* timeout = NULL;
 
     static char *kwlist[] = {"device","fenceCount","pFences","waitAll","timeout",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &device,&fenceCount,&pFences,&waitAll,&timeout))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &device,&fenceCount,&pFences,&waitAll,&timeout))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
@@ -42453,12 +44450,12 @@ PyObject* timeout = NULL;
         
     
         
-            VkFence* c_pFences = NULL;
-            if (pFences != Py_None)  {
-                VkFence* handle_pointer = PyCapsule_GetPointer(
-                    pFences, "VkFence");
-                c_pFences = handle_pointer;
-            }
+                VkFence* c_pFences = VK_NULL_HANDLE;
+                if (pFences != Py_None)  {
+                    VkFence* handle_pointer = PyCapsule_GetPointer(
+                        pFences, "VkFence");
+                    c_pFences = handle_pointer;
+                }
             
     
         
@@ -42503,23 +44500,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkSemaphoreCreateInfo* c_pCreateInfo = ((PyVkSemaphoreCreateInfo*)pCreateInfo)->base;
+                VkSemaphoreCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkSemaphoreCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -42530,15 +44531,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSemaphore *value = malloc(sizeof(VkSemaphore));
+        int allocate_size = 1;
+
+        
+
+        VkSemaphore *value = malloc(allocate_size * sizeof(VkSemaphore));
         
         
             if (raise(vkCreateSemaphore(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSemaphore", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSemaphore", NULL);
+            
         
 
     
@@ -42565,28 +44573,29 @@ PyObject* semaphore = NULL;
 
     static char *kwlist[] = {"device","semaphore",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&semaphore))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&semaphore))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkSemaphore c_semaphore = NULL;
-            if (semaphore != Py_None)  {
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(
-                    semaphore, "VkSemaphore");
-                c_semaphore = *handle_pointer;
-            }
+                VkSemaphore c_semaphore = VK_NULL_HANDLE;
+                if (semaphore != Py_None)  {
+                    VkSemaphore* handle_pointer = PyCapsule_GetPointer(
+                        semaphore, "VkSemaphore");
+                    c_semaphore = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -42625,23 +44634,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkEventCreateInfo* c_pCreateInfo = ((PyVkEventCreateInfo*)pCreateInfo)->base;
+                VkEventCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkEventCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -42652,15 +44665,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkEvent *value = malloc(sizeof(VkEvent));
+        int allocate_size = 1;
+
+        
+
+        VkEvent *value = malloc(allocate_size * sizeof(VkEvent));
         
         
             if (raise(vkCreateEvent(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkEvent", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkEvent", NULL);
+            
         
 
     
@@ -42687,28 +44707,29 @@ PyObject* event = NULL;
 
     static char *kwlist[] = {"device","event",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&event))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&event))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkEvent c_event = NULL;
-            if (event != Py_None)  {
-                VkEvent* handle_pointer = PyCapsule_GetPointer(
-                    event, "VkEvent");
-                c_event = *handle_pointer;
-            }
+                VkEvent c_event = VK_NULL_HANDLE;
+                if (event != Py_None)  {
+                    VkEvent* handle_pointer = PyCapsule_GetPointer(
+                        event, "VkEvent");
+                    c_event = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -42747,28 +44768,29 @@ PyObject* event = NULL;
 
     static char *kwlist[] = {"device","event",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&event))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&event))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkEvent c_event = NULL;
-            if (event != Py_None)  {
-                VkEvent* handle_pointer = PyCapsule_GetPointer(
-                    event, "VkEvent");
-                c_event = *handle_pointer;
-            }
+                VkEvent c_event = VK_NULL_HANDLE;
+                if (event != Py_None)  {
+                    VkEvent* handle_pointer = PyCapsule_GetPointer(
+                        event, "VkEvent");
+                    c_event = *handle_pointer;
+                }
             
     
 
@@ -42805,28 +44827,29 @@ PyObject* event = NULL;
 
     static char *kwlist[] = {"device","event",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&event))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&event))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkEvent c_event = NULL;
-            if (event != Py_None)  {
-                VkEvent* handle_pointer = PyCapsule_GetPointer(
-                    event, "VkEvent");
-                c_event = *handle_pointer;
-            }
+                VkEvent c_event = VK_NULL_HANDLE;
+                if (event != Py_None)  {
+                    VkEvent* handle_pointer = PyCapsule_GetPointer(
+                        event, "VkEvent");
+                    c_event = *handle_pointer;
+                }
             
     
 
@@ -42863,28 +44886,29 @@ PyObject* event = NULL;
 
     static char *kwlist[] = {"device","event",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&event))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&event))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkEvent c_event = NULL;
-            if (event != Py_None)  {
-                VkEvent* handle_pointer = PyCapsule_GetPointer(
-                    event, "VkEvent");
-                c_event = *handle_pointer;
-            }
+                VkEvent c_event = VK_NULL_HANDLE;
+                if (event != Py_None)  {
+                    VkEvent* handle_pointer = PyCapsule_GetPointer(
+                        event, "VkEvent");
+                    c_event = *handle_pointer;
+                }
             
     
 
@@ -42921,23 +44945,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkQueryPoolCreateInfo* c_pCreateInfo = ((PyVkQueryPoolCreateInfo*)pCreateInfo)->base;
+                VkQueryPoolCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkQueryPoolCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -42948,15 +44976,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkQueryPool *value = malloc(sizeof(VkQueryPool));
+        int allocate_size = 1;
+
+        
+
+        VkQueryPool *value = malloc(allocate_size * sizeof(VkQueryPool));
         
         
             if (raise(vkCreateQueryPool(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkQueryPool", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkQueryPool", NULL);
+            
         
 
     
@@ -42983,28 +45018,29 @@ PyObject* queryPool = NULL;
 
     static char *kwlist[] = {"device","queryPool",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&queryPool))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&queryPool))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkQueryPool c_queryPool = NULL;
-            if (queryPool != Py_None)  {
-                VkQueryPool* handle_pointer = PyCapsule_GetPointer(
-                    queryPool, "VkQueryPool");
-                c_queryPool = *handle_pointer;
-            }
+                VkQueryPool c_queryPool = VK_NULL_HANDLE;
+                if (queryPool != Py_None)  {
+                    VkQueryPool* handle_pointer = PyCapsule_GetPointer(
+                        queryPool, "VkQueryPool");
+                    c_queryPool = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43049,28 +45085,29 @@ PyObject* flags = NULL;
 
     static char *kwlist[] = {"device","queryPool","firstQuery","queryCount","dataSize","pData","stride","flags",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &device,&queryPool,&firstQuery,&queryCount,&dataSize,&pData,&stride,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &device,&queryPool,&firstQuery,&queryCount,&dataSize,&pData,&stride,&flags))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkQueryPool c_queryPool = NULL;
-            if (queryPool != Py_None)  {
-                VkQueryPool* handle_pointer = PyCapsule_GetPointer(
-                    queryPool, "VkQueryPool");
-                c_queryPool = *handle_pointer;
-            }
+                VkQueryPool c_queryPool = VK_NULL_HANDLE;
+                if (queryPool != Py_None)  {
+                    VkQueryPool* handle_pointer = PyCapsule_GetPointer(
+                        queryPool, "VkQueryPool");
+                    c_queryPool = *handle_pointer;
+                }
             
     
         
@@ -43129,23 +45166,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkBufferCreateInfo* c_pCreateInfo = ((PyVkBufferCreateInfo*)pCreateInfo)->base;
+                VkBufferCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkBufferCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43156,15 +45197,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkBuffer *value = malloc(sizeof(VkBuffer));
+        int allocate_size = 1;
+
+        
+
+        VkBuffer *value = malloc(allocate_size * sizeof(VkBuffer));
         
         
             if (raise(vkCreateBuffer(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkBuffer", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkBuffer", NULL);
+            
         
 
     
@@ -43191,28 +45239,29 @@ PyObject* buffer = NULL;
 
     static char *kwlist[] = {"device","buffer",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&buffer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&buffer))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43251,23 +45300,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkBufferViewCreateInfo* c_pCreateInfo = ((PyVkBufferViewCreateInfo*)pCreateInfo)->base;
+                VkBufferViewCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkBufferViewCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43278,15 +45331,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkBufferView *value = malloc(sizeof(VkBufferView));
+        int allocate_size = 1;
+
+        
+
+        VkBufferView *value = malloc(allocate_size * sizeof(VkBufferView));
         
         
             if (raise(vkCreateBufferView(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkBufferView", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkBufferView", NULL);
+            
         
 
     
@@ -43313,28 +45373,29 @@ PyObject* bufferView = NULL;
 
     static char *kwlist[] = {"device","bufferView",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&bufferView))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&bufferView))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkBufferView c_bufferView = NULL;
-            if (bufferView != Py_None)  {
-                VkBufferView* handle_pointer = PyCapsule_GetPointer(
-                    bufferView, "VkBufferView");
-                c_bufferView = *handle_pointer;
-            }
+                VkBufferView c_bufferView = VK_NULL_HANDLE;
+                if (bufferView != Py_None)  {
+                    VkBufferView* handle_pointer = PyCapsule_GetPointer(
+                        bufferView, "VkBufferView");
+                    c_bufferView = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43373,23 +45434,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkImageCreateInfo* c_pCreateInfo = ((PyVkImageCreateInfo*)pCreateInfo)->base;
+                VkImageCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkImageCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43400,15 +45465,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkImage *value = malloc(sizeof(VkImage));
+        int allocate_size = 1;
+
+        
+
+        VkImage *value = malloc(allocate_size * sizeof(VkImage));
         
         
             if (raise(vkCreateImage(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkImage", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkImage", NULL);
+            
         
 
     
@@ -43435,28 +45507,29 @@ PyObject* image = NULL;
 
     static char *kwlist[] = {"device","image",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&image))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&image))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43496,32 +45569,36 @@ PyObject* pSubresource = NULL;
 
     static char *kwlist[] = {"device","image","pSubresource",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&image,&pSubresource))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&image,&pSubresource))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
             
     
         
-                VkImageSubresource* c_pSubresource = ((PyVkImageSubresource*)pSubresource)->base;
+                VkImageSubresource* c_pSubresource = NULL;
+                if (pSubresource != Py_None) {
+                    c_pSubresource = ((PyVkImageSubresource*)pSubresource)->base;
+                }
                 
     
         
@@ -43530,17 +45607,24 @@ PyObject* pSubresource = NULL;
     
 
     
-        VkSubresourceLayout *value = malloc(sizeof(VkSubresourceLayout));
+        int allocate_size = 1;
+
+        
+
+        VkSubresourceLayout *value = malloc(allocate_size * sizeof(VkSubresourceLayout));
         
         
             vkGetImageSubresourceLayout(c_device,c_image,c_pSubresource,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkSubresourceLayoutType);
-            if (!return_value)
-                return NULL;
-            ((PyVkSubresourceLayout*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkSubresourceLayoutType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkSubresourceLayout*)return_value)->base = value;
+            
         
 
     
@@ -43567,23 +45651,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkImageViewCreateInfo* c_pCreateInfo = ((PyVkImageViewCreateInfo*)pCreateInfo)->base;
+                VkImageViewCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkImageViewCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43594,15 +45682,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkImageView *value = malloc(sizeof(VkImageView));
+        int allocate_size = 1;
+
+        
+
+        VkImageView *value = malloc(allocate_size * sizeof(VkImageView));
         
         
             if (raise(vkCreateImageView(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkImageView", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkImageView", NULL);
+            
         
 
     
@@ -43629,28 +45724,29 @@ PyObject* imageView = NULL;
 
     static char *kwlist[] = {"device","imageView",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&imageView))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&imageView))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkImageView c_imageView = NULL;
-            if (imageView != Py_None)  {
-                VkImageView* handle_pointer = PyCapsule_GetPointer(
-                    imageView, "VkImageView");
-                c_imageView = *handle_pointer;
-            }
+                VkImageView c_imageView = VK_NULL_HANDLE;
+                if (imageView != Py_None)  {
+                    VkImageView* handle_pointer = PyCapsule_GetPointer(
+                        imageView, "VkImageView");
+                    c_imageView = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43689,23 +45785,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkShaderModuleCreateInfo* c_pCreateInfo = ((PyVkShaderModuleCreateInfo*)pCreateInfo)->base;
+                VkShaderModuleCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkShaderModuleCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43716,15 +45816,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkShaderModule *value = malloc(sizeof(VkShaderModule));
+        int allocate_size = 1;
+
+        
+
+        VkShaderModule *value = malloc(allocate_size * sizeof(VkShaderModule));
         
         
             if (raise(vkCreateShaderModule(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkShaderModule", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkShaderModule", NULL);
+            
         
 
     
@@ -43751,28 +45858,29 @@ PyObject* shaderModule = NULL;
 
     static char *kwlist[] = {"device","shaderModule",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&shaderModule))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&shaderModule))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkShaderModule c_shaderModule = NULL;
-            if (shaderModule != Py_None)  {
-                VkShaderModule* handle_pointer = PyCapsule_GetPointer(
-                    shaderModule, "VkShaderModule");
-                c_shaderModule = *handle_pointer;
-            }
+                VkShaderModule c_shaderModule = VK_NULL_HANDLE;
+                if (shaderModule != Py_None)  {
+                    VkShaderModule* handle_pointer = PyCapsule_GetPointer(
+                        shaderModule, "VkShaderModule");
+                    c_shaderModule = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43811,23 +45919,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkPipelineCacheCreateInfo* c_pCreateInfo = ((PyVkPipelineCacheCreateInfo*)pCreateInfo)->base;
+                VkPipelineCacheCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkPipelineCacheCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43838,15 +45950,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkPipelineCache *value = malloc(sizeof(VkPipelineCache));
+        int allocate_size = 1;
+
+        
+
+        VkPipelineCache *value = malloc(allocate_size * sizeof(VkPipelineCache));
         
         
             if (raise(vkCreatePipelineCache(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkPipelineCache", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkPipelineCache", NULL);
+            
         
 
     
@@ -43873,28 +45992,29 @@ PyObject* pipelineCache = NULL;
 
     static char *kwlist[] = {"device","pipelineCache",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pipelineCache))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pipelineCache))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkPipelineCache c_pipelineCache = NULL;
-            if (pipelineCache != Py_None)  {
-                VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
-                    pipelineCache, "VkPipelineCache");
-                c_pipelineCache = *handle_pointer;
-            }
+                VkPipelineCache c_pipelineCache = VK_NULL_HANDLE;
+                if (pipelineCache != Py_None)  {
+                    VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
+                        pipelineCache, "VkPipelineCache");
+                    c_pipelineCache = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -43935,28 +46055,29 @@ PyObject* pSrcCaches = NULL;
 
     static char *kwlist[] = {"device","dstCache","srcCacheCount","pSrcCaches",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &device,&dstCache,&srcCacheCount,&pSrcCaches))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &device,&dstCache,&srcCacheCount,&pSrcCaches))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkPipelineCache c_dstCache = NULL;
-            if (dstCache != Py_None)  {
-                VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
-                    dstCache, "VkPipelineCache");
-                c_dstCache = *handle_pointer;
-            }
+                VkPipelineCache c_dstCache = VK_NULL_HANDLE;
+                if (dstCache != Py_None)  {
+                    VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
+                        dstCache, "VkPipelineCache");
+                    c_dstCache = *handle_pointer;
+                }
             
     
         
@@ -43964,12 +46085,12 @@ PyObject* pSrcCaches = NULL;
         
     
         
-            VkPipelineCache* c_pSrcCaches = NULL;
-            if (pSrcCaches != Py_None)  {
-                VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
-                    pSrcCaches, "VkPipelineCache");
-                c_pSrcCaches = handle_pointer;
-            }
+                VkPipelineCache* c_pSrcCaches = VK_NULL_HANDLE;
+                if (pSrcCaches != Py_None)  {
+                    VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
+                        pSrcCaches, "VkPipelineCache");
+                    c_pSrcCaches = handle_pointer;
+                }
             
     
 
@@ -44008,28 +46129,29 @@ PyObject* pCreateInfos = NULL;
 
     static char *kwlist[] = {"device","pipelineCache","createInfoCount","pCreateInfos",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &device,&pipelineCache,&createInfoCount,&pCreateInfos))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &device,&pipelineCache,&createInfoCount,&pCreateInfos))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkPipelineCache c_pipelineCache = NULL;
-            if (pipelineCache != Py_None)  {
-                VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
-                    pipelineCache, "VkPipelineCache");
-                c_pipelineCache = *handle_pointer;
-            }
+                VkPipelineCache c_pipelineCache = VK_NULL_HANDLE;
+                if (pipelineCache != Py_None)  {
+                    VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
+                        pipelineCache, "VkPipelineCache");
+                    c_pipelineCache = *handle_pointer;
+                }
             
     
         
@@ -44037,7 +46159,10 @@ PyObject* pCreateInfos = NULL;
         
     
         
-                VkGraphicsPipelineCreateInfo* c_pCreateInfos = ((PyVkGraphicsPipelineCreateInfo*)pCreateInfos)->base;
+                VkGraphicsPipelineCreateInfo* c_pCreateInfos = NULL;
+                if (pCreateInfos != Py_None) {
+                    c_pCreateInfos = ((PyVkGraphicsPipelineCreateInfo*)pCreateInfos)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44048,15 +46173,22 @@ PyObject* pCreateInfos = NULL;
     
 
     
-        VkPipeline *value = malloc(sizeof(VkPipeline));
+        int allocate_size = 1;
+
+        
+
+        VkPipeline *value = malloc(allocate_size * sizeof(VkPipeline));
         
         
             if (raise(vkCreateGraphicsPipelines(c_device,c_pipelineCache,c_createInfoCount,c_pCreateInfos,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkPipeline", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkPipeline", NULL);
+            
         
 
     
@@ -44085,28 +46217,29 @@ PyObject* pCreateInfos = NULL;
 
     static char *kwlist[] = {"device","pipelineCache","createInfoCount","pCreateInfos",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &device,&pipelineCache,&createInfoCount,&pCreateInfos))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &device,&pipelineCache,&createInfoCount,&pCreateInfos))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkPipelineCache c_pipelineCache = NULL;
-            if (pipelineCache != Py_None)  {
-                VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
-                    pipelineCache, "VkPipelineCache");
-                c_pipelineCache = *handle_pointer;
-            }
+                VkPipelineCache c_pipelineCache = VK_NULL_HANDLE;
+                if (pipelineCache != Py_None)  {
+                    VkPipelineCache* handle_pointer = PyCapsule_GetPointer(
+                        pipelineCache, "VkPipelineCache");
+                    c_pipelineCache = *handle_pointer;
+                }
             
     
         
@@ -44114,7 +46247,10 @@ PyObject* pCreateInfos = NULL;
         
     
         
-                VkComputePipelineCreateInfo* c_pCreateInfos = ((PyVkComputePipelineCreateInfo*)pCreateInfos)->base;
+                VkComputePipelineCreateInfo* c_pCreateInfos = NULL;
+                if (pCreateInfos != Py_None) {
+                    c_pCreateInfos = ((PyVkComputePipelineCreateInfo*)pCreateInfos)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44125,15 +46261,22 @@ PyObject* pCreateInfos = NULL;
     
 
     
-        VkPipeline *value = malloc(sizeof(VkPipeline));
+        int allocate_size = 1;
+
+        
+
+        VkPipeline *value = malloc(allocate_size * sizeof(VkPipeline));
         
         
             if (raise(vkCreateComputePipelines(c_device,c_pipelineCache,c_createInfoCount,c_pCreateInfos,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkPipeline", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkPipeline", NULL);
+            
         
 
     
@@ -44160,28 +46303,29 @@ PyObject* pipeline = NULL;
 
     static char *kwlist[] = {"device","pipeline",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pipeline))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pipeline))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkPipeline c_pipeline = NULL;
-            if (pipeline != Py_None)  {
-                VkPipeline* handle_pointer = PyCapsule_GetPointer(
-                    pipeline, "VkPipeline");
-                c_pipeline = *handle_pointer;
-            }
+                VkPipeline c_pipeline = VK_NULL_HANDLE;
+                if (pipeline != Py_None)  {
+                    VkPipeline* handle_pointer = PyCapsule_GetPointer(
+                        pipeline, "VkPipeline");
+                    c_pipeline = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44220,23 +46364,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkPipelineLayoutCreateInfo* c_pCreateInfo = ((PyVkPipelineLayoutCreateInfo*)pCreateInfo)->base;
+                VkPipelineLayoutCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkPipelineLayoutCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44247,15 +46395,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkPipelineLayout *value = malloc(sizeof(VkPipelineLayout));
+        int allocate_size = 1;
+
+        
+
+        VkPipelineLayout *value = malloc(allocate_size * sizeof(VkPipelineLayout));
         
         
             if (raise(vkCreatePipelineLayout(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkPipelineLayout", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkPipelineLayout", NULL);
+            
         
 
     
@@ -44282,28 +46437,29 @@ PyObject* pipelineLayout = NULL;
 
     static char *kwlist[] = {"device","pipelineLayout",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pipelineLayout))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pipelineLayout))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkPipelineLayout c_pipelineLayout = NULL;
-            if (pipelineLayout != Py_None)  {
-                VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
-                    pipelineLayout, "VkPipelineLayout");
-                c_pipelineLayout = *handle_pointer;
-            }
+                VkPipelineLayout c_pipelineLayout = VK_NULL_HANDLE;
+                if (pipelineLayout != Py_None)  {
+                    VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
+                        pipelineLayout, "VkPipelineLayout");
+                    c_pipelineLayout = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44342,23 +46498,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkSamplerCreateInfo* c_pCreateInfo = ((PyVkSamplerCreateInfo*)pCreateInfo)->base;
+                VkSamplerCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkSamplerCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44369,15 +46529,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSampler *value = malloc(sizeof(VkSampler));
+        int allocate_size = 1;
+
+        
+
+        VkSampler *value = malloc(allocate_size * sizeof(VkSampler));
         
         
             if (raise(vkCreateSampler(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSampler", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSampler", NULL);
+            
         
 
     
@@ -44404,28 +46571,29 @@ PyObject* sampler = NULL;
 
     static char *kwlist[] = {"device","sampler",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&sampler))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&sampler))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkSampler c_sampler = NULL;
-            if (sampler != Py_None)  {
-                VkSampler* handle_pointer = PyCapsule_GetPointer(
-                    sampler, "VkSampler");
-                c_sampler = *handle_pointer;
-            }
+                VkSampler c_sampler = VK_NULL_HANDLE;
+                if (sampler != Py_None)  {
+                    VkSampler* handle_pointer = PyCapsule_GetPointer(
+                        sampler, "VkSampler");
+                    c_sampler = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44464,23 +46632,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkDescriptorSetLayoutCreateInfo* c_pCreateInfo = ((PyVkDescriptorSetLayoutCreateInfo*)pCreateInfo)->base;
+                VkDescriptorSetLayoutCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkDescriptorSetLayoutCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44491,15 +46663,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkDescriptorSetLayout *value = malloc(sizeof(VkDescriptorSetLayout));
+        int allocate_size = 1;
+
+        
+
+        VkDescriptorSetLayout *value = malloc(allocate_size * sizeof(VkDescriptorSetLayout));
         
         
             if (raise(vkCreateDescriptorSetLayout(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkDescriptorSetLayout", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkDescriptorSetLayout", NULL);
+            
         
 
     
@@ -44526,28 +46705,29 @@ PyObject* descriptorSetLayout = NULL;
 
     static char *kwlist[] = {"device","descriptorSetLayout",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&descriptorSetLayout))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&descriptorSetLayout))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDescriptorSetLayout c_descriptorSetLayout = NULL;
-            if (descriptorSetLayout != Py_None)  {
-                VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
-                    descriptorSetLayout, "VkDescriptorSetLayout");
-                c_descriptorSetLayout = *handle_pointer;
-            }
+                VkDescriptorSetLayout c_descriptorSetLayout = VK_NULL_HANDLE;
+                if (descriptorSetLayout != Py_None)  {
+                    VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(
+                        descriptorSetLayout, "VkDescriptorSetLayout");
+                    c_descriptorSetLayout = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44586,23 +46766,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkDescriptorPoolCreateInfo* c_pCreateInfo = ((PyVkDescriptorPoolCreateInfo*)pCreateInfo)->base;
+                VkDescriptorPoolCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkDescriptorPoolCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44613,15 +46797,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkDescriptorPool *value = malloc(sizeof(VkDescriptorPool));
+        int allocate_size = 1;
+
+        
+
+        VkDescriptorPool *value = malloc(allocate_size * sizeof(VkDescriptorPool));
         
         
             if (raise(vkCreateDescriptorPool(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkDescriptorPool", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkDescriptorPool", NULL);
+            
         
 
     
@@ -44648,28 +46839,29 @@ PyObject* descriptorPool = NULL;
 
     static char *kwlist[] = {"device","descriptorPool",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&descriptorPool))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&descriptorPool))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDescriptorPool c_descriptorPool = NULL;
-            if (descriptorPool != Py_None)  {
-                VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
-                    descriptorPool, "VkDescriptorPool");
-                c_descriptorPool = *handle_pointer;
-            }
+                VkDescriptorPool c_descriptorPool = VK_NULL_HANDLE;
+                if (descriptorPool != Py_None)  {
+                    VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
+                        descriptorPool, "VkDescriptorPool");
+                    c_descriptorPool = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44709,28 +46901,29 @@ PyObject* flags = NULL;
 
     static char *kwlist[] = {"device","descriptorPool","flags",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&descriptorPool,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&descriptorPool,&flags))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDescriptorPool c_descriptorPool = NULL;
-            if (descriptorPool != Py_None)  {
-                VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
-                    descriptorPool, "VkDescriptorPool");
-                c_descriptorPool = *handle_pointer;
-            }
+                VkDescriptorPool c_descriptorPool = VK_NULL_HANDLE;
+                if (descriptorPool != Py_None)  {
+                    VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
+                        descriptorPool, "VkDescriptorPool");
+                    c_descriptorPool = *handle_pointer;
+                }
             
     
         
@@ -44771,23 +46964,27 @@ PyObject* pAllocateInfo = NULL;
 
     static char *kwlist[] = {"device","pAllocateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pAllocateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pAllocateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkDescriptorSetAllocateInfo* c_pAllocateInfo = ((PyVkDescriptorSetAllocateInfo*)pAllocateInfo)->base;
+                VkDescriptorSetAllocateInfo* c_pAllocateInfo = NULL;
+                if (pAllocateInfo != Py_None) {
+                    c_pAllocateInfo = ((PyVkDescriptorSetAllocateInfo*)pAllocateInfo)->base;
+                }
                 
     
         
@@ -44796,15 +46993,32 @@ PyObject* pAllocateInfo = NULL;
     
 
     
-        VkDescriptorSet *value = malloc(sizeof(VkDescriptorSet));
+        int allocate_size = 1;
+
+        
+            allocate_size = (int) c_pAllocateInfo->descriptorSetCount;
+        
+
+        VkDescriptorSet *value = malloc(allocate_size * sizeof(VkDescriptorSet));
         
         
             if (raise(vkAllocateDescriptorSets(c_device,c_pAllocateInfo,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkDescriptorSet", NULL);
+            PyObject* return_value = PyList_New(0);
+            int i = 0;
+            for (i = 0; i < allocate_size; i++) {
+                VkDescriptorSet* val = malloc(sizeof(VkDescriptorSet));
+                memcpy(val, value + i, sizeof(VkDescriptorSet));
+
+                
+                    PyObject* tmp = PyCapsule_New(val, "VkDescriptorSet", NULL);
+                
+                PyList_Append(return_value, tmp);
+            }
         
 
     
@@ -44833,28 +47047,29 @@ PyObject* pDescriptorSets = NULL;
 
     static char *kwlist[] = {"device","descriptorPool","descriptorSetCount","pDescriptorSets",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &device,&descriptorPool,&descriptorSetCount,&pDescriptorSets))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &device,&descriptorPool,&descriptorSetCount,&pDescriptorSets))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDescriptorPool c_descriptorPool = NULL;
-            if (descriptorPool != Py_None)  {
-                VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
-                    descriptorPool, "VkDescriptorPool");
-                c_descriptorPool = *handle_pointer;
-            }
+                VkDescriptorPool c_descriptorPool = VK_NULL_HANDLE;
+                if (descriptorPool != Py_None)  {
+                    VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(
+                        descriptorPool, "VkDescriptorPool");
+                    c_descriptorPool = *handle_pointer;
+                }
             
     
         
@@ -44862,12 +47077,12 @@ PyObject* pDescriptorSets = NULL;
         
     
         
-            VkDescriptorSet* c_pDescriptorSets = NULL;
-            if (pDescriptorSets != Py_None)  {
-                VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
-                    pDescriptorSets, "VkDescriptorSet");
-                c_pDescriptorSets = handle_pointer;
-            }
+                VkDescriptorSet* c_pDescriptorSets = VK_NULL_HANDLE;
+                if (pDescriptorSets != Py_None)  {
+                    VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
+                        pDescriptorSets, "VkDescriptorSet");
+                    c_pDescriptorSets = handle_pointer;
+                }
             
     
 
@@ -44907,19 +47122,20 @@ PyObject* pDescriptorCopies = NULL;
 
     static char *kwlist[] = {"device","descriptorWriteCount","pDescriptorWrites","descriptorCopyCount","pDescriptorCopies",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &device,&descriptorWriteCount,&pDescriptorWrites,&descriptorCopyCount,&pDescriptorCopies))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &device,&descriptorWriteCount,&pDescriptorWrites,&descriptorCopyCount,&pDescriptorCopies))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
@@ -44927,7 +47143,10 @@ PyObject* pDescriptorCopies = NULL;
         
     
         
-                VkWriteDescriptorSet* c_pDescriptorWrites = ((PyVkWriteDescriptorSet*)pDescriptorWrites)->base;
+                VkWriteDescriptorSet* c_pDescriptorWrites = NULL;
+                if (pDescriptorWrites != Py_None) {
+                    c_pDescriptorWrites = ((PyVkWriteDescriptorSet*)pDescriptorWrites)->base;
+                }
                 
     
         
@@ -44935,7 +47154,10 @@ PyObject* pDescriptorCopies = NULL;
         
     
         
-                VkCopyDescriptorSet* c_pDescriptorCopies = ((PyVkCopyDescriptorSet*)pDescriptorCopies)->base;
+                VkCopyDescriptorSet* c_pDescriptorCopies = NULL;
+                if (pDescriptorCopies != Py_None) {
+                    c_pDescriptorCopies = ((PyVkCopyDescriptorSet*)pDescriptorCopies)->base;
+                }
                 
     
 
@@ -44972,23 +47194,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkFramebufferCreateInfo* c_pCreateInfo = ((PyVkFramebufferCreateInfo*)pCreateInfo)->base;
+                VkFramebufferCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkFramebufferCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -44999,15 +47225,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkFramebuffer *value = malloc(sizeof(VkFramebuffer));
+        int allocate_size = 1;
+
+        
+
+        VkFramebuffer *value = malloc(allocate_size * sizeof(VkFramebuffer));
         
         
             if (raise(vkCreateFramebuffer(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkFramebuffer", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkFramebuffer", NULL);
+            
         
 
     
@@ -45034,28 +47267,29 @@ PyObject* framebuffer = NULL;
 
     static char *kwlist[] = {"device","framebuffer",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&framebuffer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&framebuffer))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkFramebuffer c_framebuffer = NULL;
-            if (framebuffer != Py_None)  {
-                VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
-                    framebuffer, "VkFramebuffer");
-                c_framebuffer = *handle_pointer;
-            }
+                VkFramebuffer c_framebuffer = VK_NULL_HANDLE;
+                if (framebuffer != Py_None)  {
+                    VkFramebuffer* handle_pointer = PyCapsule_GetPointer(
+                        framebuffer, "VkFramebuffer");
+                    c_framebuffer = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -45094,23 +47328,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkRenderPassCreateInfo* c_pCreateInfo = ((PyVkRenderPassCreateInfo*)pCreateInfo)->base;
+                VkRenderPassCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkRenderPassCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -45121,15 +47359,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkRenderPass *value = malloc(sizeof(VkRenderPass));
+        int allocate_size = 1;
+
+        
+
+        VkRenderPass *value = malloc(allocate_size * sizeof(VkRenderPass));
         
         
             if (raise(vkCreateRenderPass(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkRenderPass", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkRenderPass", NULL);
+            
         
 
     
@@ -45156,28 +47401,29 @@ PyObject* renderPass = NULL;
 
     static char *kwlist[] = {"device","renderPass",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&renderPass))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&renderPass))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkRenderPass c_renderPass = NULL;
-            if (renderPass != Py_None)  {
-                VkRenderPass* handle_pointer = PyCapsule_GetPointer(
-                    renderPass, "VkRenderPass");
-                c_renderPass = *handle_pointer;
-            }
+                VkRenderPass c_renderPass = VK_NULL_HANDLE;
+                if (renderPass != Py_None)  {
+                    VkRenderPass* handle_pointer = PyCapsule_GetPointer(
+                        renderPass, "VkRenderPass");
+                    c_renderPass = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -45216,28 +47462,29 @@ PyObject* renderPass = NULL;
 
     static char *kwlist[] = {"device","renderPass",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&renderPass))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&renderPass))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkRenderPass c_renderPass = NULL;
-            if (renderPass != Py_None)  {
-                VkRenderPass* handle_pointer = PyCapsule_GetPointer(
-                    renderPass, "VkRenderPass");
-                c_renderPass = *handle_pointer;
-            }
+                VkRenderPass c_renderPass = VK_NULL_HANDLE;
+                if (renderPass != Py_None)  {
+                    VkRenderPass* handle_pointer = PyCapsule_GetPointer(
+                        renderPass, "VkRenderPass");
+                    c_renderPass = *handle_pointer;
+                }
             
     
         
@@ -45246,17 +47493,24 @@ PyObject* renderPass = NULL;
     
 
     
-        VkExtent2D *value = malloc(sizeof(VkExtent2D));
+        int allocate_size = 1;
+
+        
+
+        VkExtent2D *value = malloc(allocate_size * sizeof(VkExtent2D));
         
         
             vkGetRenderAreaGranularity(c_device,c_renderPass,value);
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkExtent2DType);
-            if (!return_value)
-                return NULL;
-            ((PyVkExtent2D*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkExtent2DType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkExtent2D*)return_value)->base = value;
+            
         
 
     
@@ -45283,23 +47537,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkCommandPoolCreateInfo* c_pCreateInfo = ((PyVkCommandPoolCreateInfo*)pCreateInfo)->base;
+                VkCommandPoolCreateInfo* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkCommandPoolCreateInfo*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -45310,15 +47568,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkCommandPool *value = malloc(sizeof(VkCommandPool));
+        int allocate_size = 1;
+
+        
+
+        VkCommandPool *value = malloc(allocate_size * sizeof(VkCommandPool));
         
         
             if (raise(vkCreateCommandPool(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkCommandPool", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkCommandPool", NULL);
+            
         
 
     
@@ -45345,28 +47610,29 @@ PyObject* commandPool = NULL;
 
     static char *kwlist[] = {"device","commandPool",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&commandPool))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&commandPool))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkCommandPool c_commandPool = NULL;
-            if (commandPool != Py_None)  {
-                VkCommandPool* handle_pointer = PyCapsule_GetPointer(
-                    commandPool, "VkCommandPool");
-                c_commandPool = *handle_pointer;
-            }
+                VkCommandPool c_commandPool = VK_NULL_HANDLE;
+                if (commandPool != Py_None)  {
+                    VkCommandPool* handle_pointer = PyCapsule_GetPointer(
+                        commandPool, "VkCommandPool");
+                    c_commandPool = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -45406,28 +47672,29 @@ PyObject* flags = NULL;
 
     static char *kwlist[] = {"device","commandPool","flags",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&commandPool,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&commandPool,&flags))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkCommandPool c_commandPool = NULL;
-            if (commandPool != Py_None)  {
-                VkCommandPool* handle_pointer = PyCapsule_GetPointer(
-                    commandPool, "VkCommandPool");
-                c_commandPool = *handle_pointer;
-            }
+                VkCommandPool c_commandPool = VK_NULL_HANDLE;
+                if (commandPool != Py_None)  {
+                    VkCommandPool* handle_pointer = PyCapsule_GetPointer(
+                        commandPool, "VkCommandPool");
+                    c_commandPool = *handle_pointer;
+                }
             
     
         
@@ -45468,23 +47735,27 @@ PyObject* pAllocateInfo = NULL;
 
     static char *kwlist[] = {"device","pAllocateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pAllocateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pAllocateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkCommandBufferAllocateInfo* c_pAllocateInfo = ((PyVkCommandBufferAllocateInfo*)pAllocateInfo)->base;
+                VkCommandBufferAllocateInfo* c_pAllocateInfo = NULL;
+                if (pAllocateInfo != Py_None) {
+                    c_pAllocateInfo = ((PyVkCommandBufferAllocateInfo*)pAllocateInfo)->base;
+                }
                 
     
         
@@ -45493,15 +47764,32 @@ PyObject* pAllocateInfo = NULL;
     
 
     
-        VkCommandBuffer *value = malloc(sizeof(VkCommandBuffer));
+        int allocate_size = 1;
+
+        
+            allocate_size = (int) c_pAllocateInfo->commandBufferCount;
+        
+
+        VkCommandBuffer *value = malloc(allocate_size * sizeof(VkCommandBuffer));
         
         
             if (raise(vkAllocateCommandBuffers(c_device,c_pAllocateInfo,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkCommandBuffer", NULL);
+            PyObject* return_value = PyList_New(0);
+            int i = 0;
+            for (i = 0; i < allocate_size; i++) {
+                VkCommandBuffer* val = malloc(sizeof(VkCommandBuffer));
+                memcpy(val, value + i, sizeof(VkCommandBuffer));
+
+                
+                    PyObject* tmp = PyCapsule_New(val, "VkCommandBuffer", NULL);
+                
+                PyList_Append(return_value, tmp);
+            }
         
 
     
@@ -45530,28 +47818,29 @@ PyObject* pCommandBuffers = NULL;
 
     static char *kwlist[] = {"device","commandPool","commandBufferCount","pCommandBuffers",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &device,&commandPool,&commandBufferCount,&pCommandBuffers))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &device,&commandPool,&commandBufferCount,&pCommandBuffers))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkCommandPool c_commandPool = NULL;
-            if (commandPool != Py_None)  {
-                VkCommandPool* handle_pointer = PyCapsule_GetPointer(
-                    commandPool, "VkCommandPool");
-                c_commandPool = *handle_pointer;
-            }
+                VkCommandPool c_commandPool = VK_NULL_HANDLE;
+                if (commandPool != Py_None)  {
+                    VkCommandPool* handle_pointer = PyCapsule_GetPointer(
+                        commandPool, "VkCommandPool");
+                    c_commandPool = *handle_pointer;
+                }
             
     
         
@@ -45559,12 +47848,12 @@ PyObject* pCommandBuffers = NULL;
         
     
         
-            VkCommandBuffer* c_pCommandBuffers = NULL;
-            if (pCommandBuffers != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    pCommandBuffers, "VkCommandBuffer");
-                c_pCommandBuffers = handle_pointer;
-            }
+                VkCommandBuffer* c_pCommandBuffers = VK_NULL_HANDLE;
+                if (pCommandBuffers != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        pCommandBuffers, "VkCommandBuffer");
+                    c_pCommandBuffers = handle_pointer;
+                }
             
     
 
@@ -45601,23 +47890,27 @@ PyObject* pBeginInfo = NULL;
 
     static char *kwlist[] = {"commandBuffer","pBeginInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &commandBuffer,&pBeginInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &commandBuffer,&pBeginInfo))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-                VkCommandBufferBeginInfo* c_pBeginInfo = ((PyVkCommandBufferBeginInfo*)pBeginInfo)->base;
+                VkCommandBufferBeginInfo* c_pBeginInfo = NULL;
+                if (pBeginInfo != Py_None) {
+                    c_pBeginInfo = ((PyVkCommandBufferBeginInfo*)pBeginInfo)->base;
+                }
                 
     
 
@@ -45653,19 +47946,20 @@ PyObject* pBeginInfo = NULL;
 
     static char *kwlist[] = {"commandBuffer",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &commandBuffer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &commandBuffer))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
 
@@ -45702,19 +47996,20 @@ PyObject* flags = NULL;
 
     static char *kwlist[] = {"commandBuffer","flags",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &commandBuffer,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &commandBuffer,&flags))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -45756,19 +48051,20 @@ PyObject* pipeline = NULL;
 
     static char *kwlist[] = {"commandBuffer","pipelineBindPoint","pipeline",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&pipelineBindPoint,&pipeline))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&pipelineBindPoint,&pipeline))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -45776,12 +48072,12 @@ PyObject* pipeline = NULL;
                     
     
         
-            VkPipeline c_pipeline = NULL;
-            if (pipeline != Py_None)  {
-                VkPipeline* handle_pointer = PyCapsule_GetPointer(
-                    pipeline, "VkPipeline");
-                c_pipeline = *handle_pointer;
-            }
+                VkPipeline c_pipeline = VK_NULL_HANDLE;
+                if (pipeline != Py_None)  {
+                    VkPipeline* handle_pointer = PyCapsule_GetPointer(
+                        pipeline, "VkPipeline");
+                    c_pipeline = *handle_pointer;
+                }
             
     
 
@@ -45820,19 +48116,20 @@ PyObject* pViewports = NULL;
 
     static char *kwlist[] = {"commandBuffer","firstViewport","viewportCount","pViewports",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&firstViewport,&viewportCount,&pViewports))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&firstViewport,&viewportCount,&pViewports))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -45844,7 +48141,10 @@ PyObject* pViewports = NULL;
         
     
         
-                VkViewport* c_pViewports = ((PyVkViewport*)pViewports)->base;
+                VkViewport* c_pViewports = NULL;
+                if (pViewports != Py_None) {
+                    c_pViewports = ((PyVkViewport*)pViewports)->base;
+                }
                 
     
 
@@ -45883,19 +48183,20 @@ PyObject* pScissors = NULL;
 
     static char *kwlist[] = {"commandBuffer","firstScissor","scissorCount","pScissors",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&firstScissor,&scissorCount,&pScissors))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&firstScissor,&scissorCount,&pScissors))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -45907,7 +48208,10 @@ PyObject* pScissors = NULL;
         
     
         
-                VkRect2D* c_pScissors = ((PyVkRect2D*)pScissors)->base;
+                VkRect2D* c_pScissors = NULL;
+                if (pScissors != Py_None) {
+                    c_pScissors = ((PyVkRect2D*)pScissors)->base;
+                }
                 
     
 
@@ -45944,19 +48248,20 @@ PyObject* lineWidth = NULL;
 
     static char *kwlist[] = {"commandBuffer","lineWidth",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &commandBuffer,&lineWidth))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &commandBuffer,&lineWidth))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -45999,19 +48304,20 @@ PyObject* depthBiasSlopeFactor = NULL;
 
     static char *kwlist[] = {"commandBuffer","depthBiasConstantFactor","depthBiasClamp","depthBiasSlopeFactor",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&depthBiasConstantFactor,&depthBiasClamp,&depthBiasSlopeFactor))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&depthBiasConstantFactor,&depthBiasClamp,&depthBiasSlopeFactor))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46060,25 +48366,29 @@ PyObject* blendConstants = NULL;
 
     static char *kwlist[] = {"commandBuffer","blendConstants",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &commandBuffer,&blendConstants))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &commandBuffer,&blendConstants))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
         float* c_blendConstants = NULL;
         if (blendConstants == Py_None) {
             c_blendConstants = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(blendConstants)) {
+            c_blendConstants = (float*) PyBytes_AsString(blendConstants);
         }
         else {
             int size = PyList_Size(blendConstants);
@@ -46126,19 +48436,20 @@ PyObject* maxDepthBounds = NULL;
 
     static char *kwlist[] = {"commandBuffer","minDepthBounds","maxDepthBounds",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&minDepthBounds,&maxDepthBounds))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&minDepthBounds,&maxDepthBounds))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46184,19 +48495,20 @@ PyObject* compareMask = NULL;
 
     static char *kwlist[] = {"commandBuffer","faceMask","compareMask",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&faceMask,&compareMask))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&faceMask,&compareMask))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46242,19 +48554,20 @@ PyObject* writeMask = NULL;
 
     static char *kwlist[] = {"commandBuffer","faceMask","writeMask",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&faceMask,&writeMask))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&faceMask,&writeMask))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46300,19 +48613,20 @@ PyObject* reference = NULL;
 
     static char *kwlist[] = {"commandBuffer","faceMask","reference",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&faceMask,&reference))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&faceMask,&reference))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46363,19 +48677,20 @@ PyObject* pDynamicOffsets = NULL;
 
     static char *kwlist[] = {"commandBuffer","pipelineBindPoint","layout","firstSet","descriptorSetCount","pDescriptorSets","dynamicOffsetCount","pDynamicOffsets",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &commandBuffer,&pipelineBindPoint,&layout,&firstSet,&descriptorSetCount,&pDescriptorSets,&dynamicOffsetCount,&pDynamicOffsets))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &commandBuffer,&pipelineBindPoint,&layout,&firstSet,&descriptorSetCount,&pDescriptorSets,&dynamicOffsetCount,&pDynamicOffsets))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46383,12 +48698,12 @@ PyObject* pDynamicOffsets = NULL;
                     
     
         
-            VkPipelineLayout c_layout = NULL;
-            if (layout != Py_None)  {
-                VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
-                    layout, "VkPipelineLayout");
-                c_layout = *handle_pointer;
-            }
+                VkPipelineLayout c_layout = VK_NULL_HANDLE;
+                if (layout != Py_None)  {
+                    VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
+                        layout, "VkPipelineLayout");
+                    c_layout = *handle_pointer;
+                }
             
     
         
@@ -46400,12 +48715,12 @@ PyObject* pDynamicOffsets = NULL;
         
     
         
-            VkDescriptorSet* c_pDescriptorSets = NULL;
-            if (pDescriptorSets != Py_None)  {
-                VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
-                    pDescriptorSets, "VkDescriptorSet");
-                c_pDescriptorSets = handle_pointer;
-            }
+                VkDescriptorSet* c_pDescriptorSets = VK_NULL_HANDLE;
+                if (pDescriptorSets != Py_None)  {
+                    VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(
+                        pDescriptorSets, "VkDescriptorSet");
+                    c_pDescriptorSets = handle_pointer;
+                }
             
     
         
@@ -46416,6 +48731,9 @@ PyObject* pDynamicOffsets = NULL;
         uint32_t* c_pDynamicOffsets = NULL;
         if (pDynamicOffsets == Py_None) {
             c_pDynamicOffsets = VK_NULL_HANDLE;
+        }
+        else if (PyBytes_CheckExact(pDynamicOffsets)) {
+            c_pDynamicOffsets = (uint32_t*) PyBytes_AsString(pDynamicOffsets);
         }
         else {
             int size = PyList_Size(pDynamicOffsets);
@@ -46464,28 +48782,29 @@ PyObject* indexType = NULL;
 
     static char *kwlist[] = {"commandBuffer","buffer","offset","indexType",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&buffer,&offset,&indexType))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&buffer,&offset,&indexType))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
@@ -46533,19 +48852,20 @@ PyObject* pOffsets = NULL;
 
     static char *kwlist[] = {"commandBuffer","firstBinding","bindingCount","pBuffers","pOffsets",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&firstBinding,&bindingCount,&pBuffers,&pOffsets))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&firstBinding,&bindingCount,&pBuffers,&pOffsets))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46557,17 +48877,18 @@ PyObject* pOffsets = NULL;
         
     
         
-            VkBuffer* c_pBuffers = NULL;
-            if (pBuffers != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    pBuffers, "VkBuffer");
-                c_pBuffers = handle_pointer;
-            }
+                VkBuffer* c_pBuffers = VK_NULL_HANDLE;
+                if (pBuffers != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        pBuffers, "VkBuffer");
+                    c_pBuffers = handle_pointer;
+                }
             
     
         
-                    VkDeviceSize* c_pOffsets = malloc(sizeof(VkDeviceSize));
-                    {
+                    VkDeviceSize* c_pOffsets = NULL;
+                    if (pOffsets != Py_None) {
+                        c_pOffsets = malloc(sizeof(VkDeviceSize));
                         VkDeviceSize tmp = (VkDeviceSize) PyLong_AsLong(pOffsets);
                         memcpy(c_pOffsets, &tmp, sizeof(VkDeviceSize));
                     }
@@ -46610,19 +48931,20 @@ PyObject* firstInstance = NULL;
 
     static char *kwlist[] = {"commandBuffer","vertexCount","instanceCount","firstVertex","firstInstance",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&vertexCount,&instanceCount,&firstVertex,&firstInstance))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&vertexCount,&instanceCount,&firstVertex,&firstInstance))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46679,19 +49001,20 @@ PyObject* firstInstance = NULL;
 
     static char *kwlist[] = {"commandBuffer","indexCount","instanceCount","firstIndex","vertexOffset","firstInstance",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &commandBuffer,&indexCount,&instanceCount,&firstIndex,&vertexOffset,&firstInstance))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &commandBuffer,&indexCount,&instanceCount,&firstIndex,&vertexOffset,&firstInstance))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46751,28 +49074,29 @@ PyObject* stride = NULL;
 
     static char *kwlist[] = {"commandBuffer","buffer","offset","drawCount","stride",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&buffer,&offset,&drawCount,&stride))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&buffer,&offset,&drawCount,&stride))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
@@ -46824,28 +49148,29 @@ PyObject* stride = NULL;
 
     static char *kwlist[] = {"commandBuffer","buffer","offset","drawCount","stride",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&buffer,&offset,&drawCount,&stride))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&buffer,&offset,&drawCount,&stride))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
@@ -46896,19 +49221,20 @@ PyObject* z = NULL;
 
     static char *kwlist[] = {"commandBuffer","x","y","z",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&x,&y,&z))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&x,&y,&z))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -46958,28 +49284,29 @@ PyObject* offset = NULL;
 
     static char *kwlist[] = {"commandBuffer","buffer","offset",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&buffer,&offset))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&buffer,&offset))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
@@ -47023,37 +49350,38 @@ PyObject* pRegions = NULL;
 
     static char *kwlist[] = {"commandBuffer","srcBuffer","dstBuffer","regionCount","pRegions",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&srcBuffer,&dstBuffer,&regionCount,&pRegions))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&srcBuffer,&dstBuffer,&regionCount,&pRegions))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_srcBuffer = NULL;
-            if (srcBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    srcBuffer, "VkBuffer");
-                c_srcBuffer = *handle_pointer;
-            }
+                VkBuffer c_srcBuffer = VK_NULL_HANDLE;
+                if (srcBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        srcBuffer, "VkBuffer");
+                    c_srcBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_dstBuffer = NULL;
-            if (dstBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    dstBuffer, "VkBuffer");
-                c_dstBuffer = *handle_pointer;
-            }
+                VkBuffer c_dstBuffer = VK_NULL_HANDLE;
+                if (dstBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        dstBuffer, "VkBuffer");
+                    c_dstBuffer = *handle_pointer;
+                }
             
     
         
@@ -47061,7 +49389,10 @@ PyObject* pRegions = NULL;
         
     
         
-                VkBufferCopy* c_pRegions = ((PyVkBufferCopy*)pRegions)->base;
+                VkBufferCopy* c_pRegions = NULL;
+                if (pRegions != Py_None) {
+                    c_pRegions = ((PyVkBufferCopy*)pRegions)->base;
+                }
                 
     
 
@@ -47103,28 +49434,29 @@ PyObject* pRegions = NULL;
 
     static char *kwlist[] = {"commandBuffer","srcImage","srcImageLayout","dstImage","dstImageLayout","regionCount","pRegions",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstImage,&dstImageLayout,&regionCount,&pRegions))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstImage,&dstImageLayout,&regionCount,&pRegions))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkImage c_srcImage = NULL;
-            if (srcImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    srcImage, "VkImage");
-                c_srcImage = *handle_pointer;
-            }
+                VkImage c_srcImage = VK_NULL_HANDLE;
+                if (srcImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        srcImage, "VkImage");
+                    c_srcImage = *handle_pointer;
+                }
             
     
         
@@ -47132,12 +49464,12 @@ PyObject* pRegions = NULL;
                     
     
         
-            VkImage c_dstImage = NULL;
-            if (dstImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    dstImage, "VkImage");
-                c_dstImage = *handle_pointer;
-            }
+                VkImage c_dstImage = VK_NULL_HANDLE;
+                if (dstImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        dstImage, "VkImage");
+                    c_dstImage = *handle_pointer;
+                }
             
     
         
@@ -47149,7 +49481,10 @@ PyObject* pRegions = NULL;
         
     
         
-                VkImageCopy* c_pRegions = ((PyVkImageCopy*)pRegions)->base;
+                VkImageCopy* c_pRegions = NULL;
+                if (pRegions != Py_None) {
+                    c_pRegions = ((PyVkImageCopy*)pRegions)->base;
+                }
                 
     
 
@@ -47192,28 +49527,29 @@ PyObject* filter = NULL;
 
     static char *kwlist[] = {"commandBuffer","srcImage","srcImageLayout","dstImage","dstImageLayout","regionCount","pRegions","filter",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstImage,&dstImageLayout,&regionCount,&pRegions,&filter))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstImage,&dstImageLayout,&regionCount,&pRegions,&filter))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkImage c_srcImage = NULL;
-            if (srcImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    srcImage, "VkImage");
-                c_srcImage = *handle_pointer;
-            }
+                VkImage c_srcImage = VK_NULL_HANDLE;
+                if (srcImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        srcImage, "VkImage");
+                    c_srcImage = *handle_pointer;
+                }
             
     
         
@@ -47221,12 +49557,12 @@ PyObject* filter = NULL;
                     
     
         
-            VkImage c_dstImage = NULL;
-            if (dstImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    dstImage, "VkImage");
-                c_dstImage = *handle_pointer;
-            }
+                VkImage c_dstImage = VK_NULL_HANDLE;
+                if (dstImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        dstImage, "VkImage");
+                    c_dstImage = *handle_pointer;
+                }
             
     
         
@@ -47238,7 +49574,10 @@ PyObject* filter = NULL;
         
     
         
-                VkImageBlit* c_pRegions = ((PyVkImageBlit*)pRegions)->base;
+                VkImageBlit* c_pRegions = NULL;
+                if (pRegions != Py_None) {
+                    c_pRegions = ((PyVkImageBlit*)pRegions)->base;
+                }
                 
     
         
@@ -47283,37 +49622,38 @@ PyObject* pRegions = NULL;
 
     static char *kwlist[] = {"commandBuffer","srcBuffer","dstImage","dstImageLayout","regionCount","pRegions",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &commandBuffer,&srcBuffer,&dstImage,&dstImageLayout,&regionCount,&pRegions))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &commandBuffer,&srcBuffer,&dstImage,&dstImageLayout,&regionCount,&pRegions))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_srcBuffer = NULL;
-            if (srcBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    srcBuffer, "VkBuffer");
-                c_srcBuffer = *handle_pointer;
-            }
+                VkBuffer c_srcBuffer = VK_NULL_HANDLE;
+                if (srcBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        srcBuffer, "VkBuffer");
+                    c_srcBuffer = *handle_pointer;
+                }
             
     
         
-            VkImage c_dstImage = NULL;
-            if (dstImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    dstImage, "VkImage");
-                c_dstImage = *handle_pointer;
-            }
+                VkImage c_dstImage = VK_NULL_HANDLE;
+                if (dstImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        dstImage, "VkImage");
+                    c_dstImage = *handle_pointer;
+                }
             
     
         
@@ -47325,7 +49665,10 @@ PyObject* pRegions = NULL;
         
     
         
-                VkBufferImageCopy* c_pRegions = ((PyVkBufferImageCopy*)pRegions)->base;
+                VkBufferImageCopy* c_pRegions = NULL;
+                if (pRegions != Py_None) {
+                    c_pRegions = ((PyVkBufferImageCopy*)pRegions)->base;
+                }
                 
     
 
@@ -47366,28 +49709,29 @@ PyObject* pRegions = NULL;
 
     static char *kwlist[] = {"commandBuffer","srcImage","srcImageLayout","dstBuffer","regionCount","pRegions",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstBuffer,&regionCount,&pRegions))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstBuffer,&regionCount,&pRegions))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkImage c_srcImage = NULL;
-            if (srcImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    srcImage, "VkImage");
-                c_srcImage = *handle_pointer;
-            }
+                VkImage c_srcImage = VK_NULL_HANDLE;
+                if (srcImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        srcImage, "VkImage");
+                    c_srcImage = *handle_pointer;
+                }
             
     
         
@@ -47395,12 +49739,12 @@ PyObject* pRegions = NULL;
                     
     
         
-            VkBuffer c_dstBuffer = NULL;
-            if (dstBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    dstBuffer, "VkBuffer");
-                c_dstBuffer = *handle_pointer;
-            }
+                VkBuffer c_dstBuffer = VK_NULL_HANDLE;
+                if (dstBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        dstBuffer, "VkBuffer");
+                    c_dstBuffer = *handle_pointer;
+                }
             
     
         
@@ -47408,7 +49752,10 @@ PyObject* pRegions = NULL;
         
     
         
-                VkBufferImageCopy* c_pRegions = ((PyVkBufferImageCopy*)pRegions)->base;
+                VkBufferImageCopy* c_pRegions = NULL;
+                if (pRegions != Py_None) {
+                    c_pRegions = ((PyVkBufferImageCopy*)pRegions)->base;
+                }
                 
     
 
@@ -47448,28 +49795,29 @@ PyObject* pData = NULL;
 
     static char *kwlist[] = {"commandBuffer","dstBuffer","dstOffset","dataSize","pData",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&dstBuffer,&dstOffset,&dataSize,&pData))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&dstBuffer,&dstOffset,&dataSize,&pData))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_dstBuffer = NULL;
-            if (dstBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    dstBuffer, "VkBuffer");
-                c_dstBuffer = *handle_pointer;
-            }
+                VkBuffer c_dstBuffer = VK_NULL_HANDLE;
+                if (dstBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        dstBuffer, "VkBuffer");
+                    c_dstBuffer = *handle_pointer;
+                }
             
     
         
@@ -47519,28 +49867,29 @@ PyObject* data = NULL;
 
     static char *kwlist[] = {"commandBuffer","dstBuffer","dstOffset","size","data",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&dstBuffer,&dstOffset,&size,&data))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&dstBuffer,&dstOffset,&size,&data))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_dstBuffer = NULL;
-            if (dstBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    dstBuffer, "VkBuffer");
-                c_dstBuffer = *handle_pointer;
-            }
+                VkBuffer c_dstBuffer = VK_NULL_HANDLE;
+                if (dstBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        dstBuffer, "VkBuffer");
+                    c_dstBuffer = *handle_pointer;
+                }
             
     
         
@@ -47593,28 +49942,29 @@ PyObject* pRanges = NULL;
 
     static char *kwlist[] = {"commandBuffer","image","imageLayout","pColor","rangeCount","pRanges",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &commandBuffer,&image,&imageLayout,&pColor,&rangeCount,&pRanges))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &commandBuffer,&image,&imageLayout,&pColor,&rangeCount,&pRanges))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
             
     
         
@@ -47622,7 +49972,10 @@ PyObject* pRanges = NULL;
                     
     
         
-                VkClearColorValue* c_pColor = ((PyVkClearColorValue*)pColor)->base;
+                VkClearColorValue* c_pColor = NULL;
+                if (pColor != Py_None) {
+                    c_pColor = ((PyVkClearColorValue*)pColor)->base;
+                }
                 
     
         
@@ -47630,7 +49983,10 @@ PyObject* pRanges = NULL;
         
     
         
-                VkImageSubresourceRange* c_pRanges = ((PyVkImageSubresourceRange*)pRanges)->base;
+                VkImageSubresourceRange* c_pRanges = NULL;
+                if (pRanges != Py_None) {
+                    c_pRanges = ((PyVkImageSubresourceRange*)pRanges)->base;
+                }
                 
     
 
@@ -47671,28 +50027,29 @@ PyObject* pRanges = NULL;
 
     static char *kwlist[] = {"commandBuffer","image","imageLayout","pDepthStencil","rangeCount","pRanges",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &commandBuffer,&image,&imageLayout,&pDepthStencil,&rangeCount,&pRanges))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &commandBuffer,&image,&imageLayout,&pDepthStencil,&rangeCount,&pRanges))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkImage c_image = NULL;
-            if (image != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    image, "VkImage");
-                c_image = *handle_pointer;
-            }
+                VkImage c_image = VK_NULL_HANDLE;
+                if (image != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        image, "VkImage");
+                    c_image = *handle_pointer;
+                }
             
     
         
@@ -47700,7 +50057,10 @@ PyObject* pRanges = NULL;
                     
     
         
-                VkClearDepthStencilValue* c_pDepthStencil = ((PyVkClearDepthStencilValue*)pDepthStencil)->base;
+                VkClearDepthStencilValue* c_pDepthStencil = NULL;
+                if (pDepthStencil != Py_None) {
+                    c_pDepthStencil = ((PyVkClearDepthStencilValue*)pDepthStencil)->base;
+                }
                 
     
         
@@ -47708,7 +50068,10 @@ PyObject* pRanges = NULL;
         
     
         
-                VkImageSubresourceRange* c_pRanges = ((PyVkImageSubresourceRange*)pRanges)->base;
+                VkImageSubresourceRange* c_pRanges = NULL;
+                if (pRanges != Py_None) {
+                    c_pRanges = ((PyVkImageSubresourceRange*)pRanges)->base;
+                }
                 
     
 
@@ -47748,19 +50111,20 @@ PyObject* pRects = NULL;
 
     static char *kwlist[] = {"commandBuffer","attachmentCount","pAttachments","rectCount","pRects",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOO", kwlist, &commandBuffer,&attachmentCount,&pAttachments,&rectCount,&pRects))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &commandBuffer,&attachmentCount,&pAttachments,&rectCount,&pRects))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -47768,7 +50132,10 @@ PyObject* pRects = NULL;
         
     
         
-                VkClearAttachment* c_pAttachments = ((PyVkClearAttachment*)pAttachments)->base;
+                VkClearAttachment* c_pAttachments = NULL;
+                if (pAttachments != Py_None) {
+                    c_pAttachments = ((PyVkClearAttachment*)pAttachments)->base;
+                }
                 
     
         
@@ -47776,7 +50143,10 @@ PyObject* pRects = NULL;
         
     
         
-                VkClearRect* c_pRects = ((PyVkClearRect*)pRects)->base;
+                VkClearRect* c_pRects = NULL;
+                if (pRects != Py_None) {
+                    c_pRects = ((PyVkClearRect*)pRects)->base;
+                }
                 
     
 
@@ -47818,28 +50188,29 @@ PyObject* pRegions = NULL;
 
     static char *kwlist[] = {"commandBuffer","srcImage","srcImageLayout","dstImage","dstImageLayout","regionCount","pRegions",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstImage,&dstImageLayout,&regionCount,&pRegions))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &commandBuffer,&srcImage,&srcImageLayout,&dstImage,&dstImageLayout,&regionCount,&pRegions))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkImage c_srcImage = NULL;
-            if (srcImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    srcImage, "VkImage");
-                c_srcImage = *handle_pointer;
-            }
+                VkImage c_srcImage = VK_NULL_HANDLE;
+                if (srcImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        srcImage, "VkImage");
+                    c_srcImage = *handle_pointer;
+                }
             
     
         
@@ -47847,12 +50218,12 @@ PyObject* pRegions = NULL;
                     
     
         
-            VkImage c_dstImage = NULL;
-            if (dstImage != Py_None)  {
-                VkImage* handle_pointer = PyCapsule_GetPointer(
-                    dstImage, "VkImage");
-                c_dstImage = *handle_pointer;
-            }
+                VkImage c_dstImage = VK_NULL_HANDLE;
+                if (dstImage != Py_None)  {
+                    VkImage* handle_pointer = PyCapsule_GetPointer(
+                        dstImage, "VkImage");
+                    c_dstImage = *handle_pointer;
+                }
             
     
         
@@ -47864,7 +50235,10 @@ PyObject* pRegions = NULL;
         
     
         
-                VkImageResolve* c_pRegions = ((PyVkImageResolve*)pRegions)->base;
+                VkImageResolve* c_pRegions = NULL;
+                if (pRegions != Py_None) {
+                    c_pRegions = ((PyVkImageResolve*)pRegions)->base;
+                }
                 
     
 
@@ -47902,28 +50276,29 @@ PyObject* stageMask = NULL;
 
     static char *kwlist[] = {"commandBuffer","event","stageMask",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&event,&stageMask))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&event,&stageMask))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkEvent c_event = NULL;
-            if (event != Py_None)  {
-                VkEvent* handle_pointer = PyCapsule_GetPointer(
-                    event, "VkEvent");
-                c_event = *handle_pointer;
-            }
+                VkEvent c_event = VK_NULL_HANDLE;
+                if (event != Py_None)  {
+                    VkEvent* handle_pointer = PyCapsule_GetPointer(
+                        event, "VkEvent");
+                    c_event = *handle_pointer;
+                }
             
     
         
@@ -47965,28 +50340,29 @@ PyObject* stageMask = NULL;
 
     static char *kwlist[] = {"commandBuffer","event","stageMask",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&event,&stageMask))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&event,&stageMask))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkEvent c_event = NULL;
-            if (event != Py_None)  {
-                VkEvent* handle_pointer = PyCapsule_GetPointer(
-                    event, "VkEvent");
-                c_event = *handle_pointer;
-            }
+                VkEvent c_event = VK_NULL_HANDLE;
+                if (event != Py_None)  {
+                    VkEvent* handle_pointer = PyCapsule_GetPointer(
+                        event, "VkEvent");
+                    c_event = *handle_pointer;
+                }
             
     
         
@@ -48036,19 +50412,20 @@ PyObject* pImageMemoryBarriers = NULL;
 
     static char *kwlist[] = {"commandBuffer","eventCount","pEvents","srcStageMask","dstStageMask","memoryBarrierCount","pMemoryBarriers","bufferMemoryBarrierCount","pBufferMemoryBarriers","imageMemoryBarrierCount","pImageMemoryBarriers",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOOO", kwlist, &commandBuffer,&eventCount,&pEvents,&srcStageMask,&dstStageMask,&memoryBarrierCount,&pMemoryBarriers,&bufferMemoryBarrierCount,&pBufferMemoryBarriers,&imageMemoryBarrierCount,&pImageMemoryBarriers))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOOO", kwlist, &commandBuffer,&eventCount,&pEvents,&srcStageMask,&dstStageMask,&memoryBarrierCount,&pMemoryBarriers,&bufferMemoryBarrierCount,&pBufferMemoryBarriers,&imageMemoryBarrierCount,&pImageMemoryBarriers))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -48056,12 +50433,12 @@ PyObject* pImageMemoryBarriers = NULL;
         
     
         
-            VkEvent* c_pEvents = NULL;
-            if (pEvents != Py_None)  {
-                VkEvent* handle_pointer = PyCapsule_GetPointer(
-                    pEvents, "VkEvent");
-                c_pEvents = handle_pointer;
-            }
+                VkEvent* c_pEvents = VK_NULL_HANDLE;
+                if (pEvents != Py_None)  {
+                    VkEvent* handle_pointer = PyCapsule_GetPointer(
+                        pEvents, "VkEvent");
+                    c_pEvents = handle_pointer;
+                }
             
     
         
@@ -48077,7 +50454,10 @@ PyObject* pImageMemoryBarriers = NULL;
         
     
         
-                VkMemoryBarrier* c_pMemoryBarriers = ((PyVkMemoryBarrier*)pMemoryBarriers)->base;
+                VkMemoryBarrier* c_pMemoryBarriers = NULL;
+                if (pMemoryBarriers != Py_None) {
+                    c_pMemoryBarriers = ((PyVkMemoryBarrier*)pMemoryBarriers)->base;
+                }
                 
     
         
@@ -48085,7 +50465,10 @@ PyObject* pImageMemoryBarriers = NULL;
         
     
         
-                VkBufferMemoryBarrier* c_pBufferMemoryBarriers = ((PyVkBufferMemoryBarrier*)pBufferMemoryBarriers)->base;
+                VkBufferMemoryBarrier* c_pBufferMemoryBarriers = NULL;
+                if (pBufferMemoryBarriers != Py_None) {
+                    c_pBufferMemoryBarriers = ((PyVkBufferMemoryBarrier*)pBufferMemoryBarriers)->base;
+                }
                 
     
         
@@ -48093,7 +50476,10 @@ PyObject* pImageMemoryBarriers = NULL;
         
     
         
-                VkImageMemoryBarrier* c_pImageMemoryBarriers = ((PyVkImageMemoryBarrier*)pImageMemoryBarriers)->base;
+                VkImageMemoryBarrier* c_pImageMemoryBarriers = NULL;
+                if (pImageMemoryBarriers != Py_None) {
+                    c_pImageMemoryBarriers = ((PyVkImageMemoryBarrier*)pImageMemoryBarriers)->base;
+                }
                 
     
 
@@ -48138,19 +50524,20 @@ PyObject* pImageMemoryBarriers = NULL;
 
     static char *kwlist[] = {"commandBuffer","srcStageMask","dstStageMask","dependencyFlags","memoryBarrierCount","pMemoryBarriers","bufferMemoryBarrierCount","pBufferMemoryBarriers","imageMemoryBarrierCount","pImageMemoryBarriers",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOOOO", kwlist, &commandBuffer,&srcStageMask,&dstStageMask,&dependencyFlags,&memoryBarrierCount,&pMemoryBarriers,&bufferMemoryBarrierCount,&pBufferMemoryBarriers,&imageMemoryBarrierCount,&pImageMemoryBarriers))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOOOO", kwlist, &commandBuffer,&srcStageMask,&dstStageMask,&dependencyFlags,&memoryBarrierCount,&pMemoryBarriers,&bufferMemoryBarrierCount,&pBufferMemoryBarriers,&imageMemoryBarrierCount,&pImageMemoryBarriers))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -48170,7 +50557,10 @@ PyObject* pImageMemoryBarriers = NULL;
         
     
         
-                VkMemoryBarrier* c_pMemoryBarriers = ((PyVkMemoryBarrier*)pMemoryBarriers)->base;
+                VkMemoryBarrier* c_pMemoryBarriers = NULL;
+                if (pMemoryBarriers != Py_None) {
+                    c_pMemoryBarriers = ((PyVkMemoryBarrier*)pMemoryBarriers)->base;
+                }
                 
     
         
@@ -48178,7 +50568,10 @@ PyObject* pImageMemoryBarriers = NULL;
         
     
         
-                VkBufferMemoryBarrier* c_pBufferMemoryBarriers = ((PyVkBufferMemoryBarrier*)pBufferMemoryBarriers)->base;
+                VkBufferMemoryBarrier* c_pBufferMemoryBarriers = NULL;
+                if (pBufferMemoryBarriers != Py_None) {
+                    c_pBufferMemoryBarriers = ((PyVkBufferMemoryBarrier*)pBufferMemoryBarriers)->base;
+                }
                 
     
         
@@ -48186,7 +50579,10 @@ PyObject* pImageMemoryBarriers = NULL;
         
     
         
-                VkImageMemoryBarrier* c_pImageMemoryBarriers = ((PyVkImageMemoryBarrier*)pImageMemoryBarriers)->base;
+                VkImageMemoryBarrier* c_pImageMemoryBarriers = NULL;
+                if (pImageMemoryBarriers != Py_None) {
+                    c_pImageMemoryBarriers = ((PyVkImageMemoryBarrier*)pImageMemoryBarriers)->base;
+                }
                 
     
 
@@ -48225,28 +50621,29 @@ PyObject* flags = NULL;
 
     static char *kwlist[] = {"commandBuffer","queryPool","query","flags",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&queryPool,&query,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&queryPool,&query,&flags))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkQueryPool c_queryPool = NULL;
-            if (queryPool != Py_None)  {
-                VkQueryPool* handle_pointer = PyCapsule_GetPointer(
-                    queryPool, "VkQueryPool");
-                c_queryPool = *handle_pointer;
-            }
+                VkQueryPool c_queryPool = VK_NULL_HANDLE;
+                if (queryPool != Py_None)  {
+                    VkQueryPool* handle_pointer = PyCapsule_GetPointer(
+                        queryPool, "VkQueryPool");
+                    c_queryPool = *handle_pointer;
+                }
             
     
         
@@ -48292,28 +50689,29 @@ PyObject* query = NULL;
 
     static char *kwlist[] = {"commandBuffer","queryPool","query",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&queryPool,&query))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&queryPool,&query))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkQueryPool c_queryPool = NULL;
-            if (queryPool != Py_None)  {
-                VkQueryPool* handle_pointer = PyCapsule_GetPointer(
-                    queryPool, "VkQueryPool");
-                c_queryPool = *handle_pointer;
-            }
+                VkQueryPool c_queryPool = VK_NULL_HANDLE;
+                if (queryPool != Py_None)  {
+                    VkQueryPool* handle_pointer = PyCapsule_GetPointer(
+                        queryPool, "VkQueryPool");
+                    c_queryPool = *handle_pointer;
+                }
             
     
         
@@ -48356,28 +50754,29 @@ PyObject* queryCount = NULL;
 
     static char *kwlist[] = {"commandBuffer","queryPool","firstQuery","queryCount",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&queryPool,&firstQuery,&queryCount))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&queryPool,&firstQuery,&queryCount))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkQueryPool c_queryPool = NULL;
-            if (queryPool != Py_None)  {
-                VkQueryPool* handle_pointer = PyCapsule_GetPointer(
-                    queryPool, "VkQueryPool");
-                c_queryPool = *handle_pointer;
-            }
+                VkQueryPool c_queryPool = VK_NULL_HANDLE;
+                if (queryPool != Py_None)  {
+                    VkQueryPool* handle_pointer = PyCapsule_GetPointer(
+                        queryPool, "VkQueryPool");
+                    c_queryPool = *handle_pointer;
+                }
             
     
         
@@ -48424,19 +50823,20 @@ PyObject* query = NULL;
 
     static char *kwlist[] = {"commandBuffer","pipelineStage","queryPool","query",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &commandBuffer,&pipelineStage,&queryPool,&query))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &commandBuffer,&pipelineStage,&queryPool,&query))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -48444,12 +50844,12 @@ PyObject* query = NULL;
                     
     
         
-            VkQueryPool c_queryPool = NULL;
-            if (queryPool != Py_None)  {
-                VkQueryPool* handle_pointer = PyCapsule_GetPointer(
-                    queryPool, "VkQueryPool");
-                c_queryPool = *handle_pointer;
-            }
+                VkQueryPool c_queryPool = VK_NULL_HANDLE;
+                if (queryPool != Py_None)  {
+                    VkQueryPool* handle_pointer = PyCapsule_GetPointer(
+                        queryPool, "VkQueryPool");
+                    c_queryPool = *handle_pointer;
+                }
             
     
         
@@ -48496,28 +50896,29 @@ PyObject* flags = NULL;
 
     static char *kwlist[] = {"commandBuffer","queryPool","firstQuery","queryCount","dstBuffer","dstOffset","stride","flags",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &commandBuffer,&queryPool,&firstQuery,&queryCount,&dstBuffer,&dstOffset,&stride,&flags))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &commandBuffer,&queryPool,&firstQuery,&queryCount,&dstBuffer,&dstOffset,&stride,&flags))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkQueryPool c_queryPool = NULL;
-            if (queryPool != Py_None)  {
-                VkQueryPool* handle_pointer = PyCapsule_GetPointer(
-                    queryPool, "VkQueryPool");
-                c_queryPool = *handle_pointer;
-            }
+                VkQueryPool c_queryPool = VK_NULL_HANDLE;
+                if (queryPool != Py_None)  {
+                    VkQueryPool* handle_pointer = PyCapsule_GetPointer(
+                        queryPool, "VkQueryPool");
+                    c_queryPool = *handle_pointer;
+                }
             
     
         
@@ -48529,12 +50930,12 @@ PyObject* flags = NULL;
         
     
         
-            VkBuffer c_dstBuffer = NULL;
-            if (dstBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    dstBuffer, "VkBuffer");
-                c_dstBuffer = *handle_pointer;
-            }
+                VkBuffer c_dstBuffer = VK_NULL_HANDLE;
+                if (dstBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        dstBuffer, "VkBuffer");
+                    c_dstBuffer = *handle_pointer;
+                }
             
     
         
@@ -48587,28 +50988,29 @@ PyObject* pValues = NULL;
 
     static char *kwlist[] = {"commandBuffer","layout","stageFlags","offset","size","pValues",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &commandBuffer,&layout,&stageFlags,&offset,&size,&pValues))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOO", kwlist, &commandBuffer,&layout,&stageFlags,&offset,&size,&pValues))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkPipelineLayout c_layout = NULL;
-            if (layout != Py_None)  {
-                VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
-                    layout, "VkPipelineLayout");
-                c_layout = *handle_pointer;
-            }
+                VkPipelineLayout c_layout = VK_NULL_HANDLE;
+                if (layout != Py_None)  {
+                    VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(
+                        layout, "VkPipelineLayout");
+                    c_layout = *handle_pointer;
+                }
             
     
         
@@ -48660,23 +51062,27 @@ PyObject* contents = NULL;
 
     static char *kwlist[] = {"commandBuffer","pRenderPassBegin","contents",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&pRenderPassBegin,&contents))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&pRenderPassBegin,&contents))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-                VkRenderPassBeginInfo* c_pRenderPassBegin = ((PyVkRenderPassBeginInfo*)pRenderPassBegin)->base;
+                VkRenderPassBeginInfo* c_pRenderPassBegin = NULL;
+                if (pRenderPassBegin != Py_None) {
+                    c_pRenderPassBegin = ((PyVkRenderPassBeginInfo*)pRenderPassBegin)->base;
+                }
                 
     
         
@@ -48717,19 +51123,20 @@ PyObject* contents = NULL;
 
     static char *kwlist[] = {"commandBuffer","contents",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &commandBuffer,&contents))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &commandBuffer,&contents))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -48769,19 +51176,20 @@ PyObject* contents = NULL;
 
     static char *kwlist[] = {"commandBuffer",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &commandBuffer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &commandBuffer))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
 
@@ -48819,19 +51227,20 @@ PyObject* pCommandBuffers = NULL;
 
     static char *kwlist[] = {"commandBuffer","commandBufferCount","pCommandBuffers",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &commandBuffer,&commandBufferCount,&pCommandBuffers))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &commandBuffer,&commandBufferCount,&pCommandBuffers))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
@@ -48839,12 +51248,12 @@ PyObject* pCommandBuffers = NULL;
         
     
         
-            VkCommandBuffer* c_pCommandBuffers = NULL;
-            if (pCommandBuffers != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    pCommandBuffers, "VkCommandBuffer");
-                c_pCommandBuffers = handle_pointer;
-            }
+                VkCommandBuffer* c_pCommandBuffers = VK_NULL_HANDLE;
+                if (pCommandBuffers != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        pCommandBuffers, "VkCommandBuffer");
+                    c_pCommandBuffers = handle_pointer;
+                }
             
     
 
@@ -48909,23 +51318,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkAndroidSurfaceCreateInfoKHR* c_pCreateInfo = ((PyVkAndroidSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                VkAndroidSurfaceCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkAndroidSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -48936,15 +51349,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSurfaceKHR *value = malloc(sizeof(VkSurfaceKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceKHR *value = malloc(allocate_size * sizeof(VkSurfaceKHR));
         
         
             if (raise((*(((PyvkCreateAndroidSurfaceKHR*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
         
 
     
@@ -49001,19 +51421,20 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"physicalDevice",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &physicalDevice))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &physicalDevice))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -49110,19 +51531,20 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"physicalDevice",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &physicalDevice))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &physicalDevice))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -49220,19 +51642,20 @@ PyObject* planeIndex = NULL;
 
     static char *kwlist[] = {"physicalDevice","planeIndex",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&planeIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&planeIndex))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -49331,28 +51754,29 @@ PyObject* display = NULL;
 
     static char *kwlist[] = {"physicalDevice","display",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&display))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&display))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
-            VkDisplayKHR c_display = NULL;
-            if (display != Py_None)  {
-                VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
-                    display, "VkDisplayKHR");
-                c_display = *handle_pointer;
-            }
+                VkDisplayKHR c_display = VK_NULL_HANDLE;
+                if (display != Py_None)  {
+                    VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
+                        display, "VkDisplayKHR");
+                    c_display = *handle_pointer;
+                }
             
     
         
@@ -49451,32 +51875,36 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"physicalDevice","display","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &physicalDevice,&display,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &physicalDevice,&display,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
-            VkDisplayKHR c_display = NULL;
-            if (display != Py_None)  {
-                VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
-                    display, "VkDisplayKHR");
-                c_display = *handle_pointer;
-            }
+                VkDisplayKHR c_display = VK_NULL_HANDLE;
+                if (display != Py_None)  {
+                    VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(
+                        display, "VkDisplayKHR");
+                    c_display = *handle_pointer;
+                }
             
     
         
-                VkDisplayModeCreateInfoKHR* c_pCreateInfo = ((PyVkDisplayModeCreateInfoKHR*)pCreateInfo)->base;
+                VkDisplayModeCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkDisplayModeCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -49487,15 +51915,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkDisplayModeKHR *value = malloc(sizeof(VkDisplayModeKHR));
+        int allocate_size = 1;
+
+        
+
+        VkDisplayModeKHR *value = malloc(allocate_size * sizeof(VkDisplayModeKHR));
         
         
             if (raise((*(((PyvkCreateDisplayModeKHR*)self)->pfn))(c_physicalDevice,c_display,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkDisplayModeKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkDisplayModeKHR", NULL);
+            
         
 
     
@@ -49554,28 +51989,29 @@ PyObject* planeIndex = NULL;
 
     static char *kwlist[] = {"physicalDevice","mode","planeIndex",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &physicalDevice,&mode,&planeIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &physicalDevice,&mode,&planeIndex))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
-            VkDisplayModeKHR c_mode = NULL;
-            if (mode != Py_None)  {
-                VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
-                    mode, "VkDisplayModeKHR");
-                c_mode = *handle_pointer;
-            }
+                VkDisplayModeKHR c_mode = VK_NULL_HANDLE;
+                if (mode != Py_None)  {
+                    VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(
+                        mode, "VkDisplayModeKHR");
+                    c_mode = *handle_pointer;
+                }
             
     
         
@@ -49588,18 +52024,25 @@ PyObject* planeIndex = NULL;
     
 
     
-        VkDisplayPlaneCapabilitiesKHR *value = malloc(sizeof(VkDisplayPlaneCapabilitiesKHR));
+        int allocate_size = 1;
+
+        
+
+        VkDisplayPlaneCapabilitiesKHR *value = malloc(allocate_size * sizeof(VkDisplayPlaneCapabilitiesKHR));
         
         
             if (raise((*(((PyvkGetDisplayPlaneCapabilitiesKHR*)self)->pfn))(c_physicalDevice,c_mode,c_planeIndex,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkDisplayPlaneCapabilitiesKHRType);
-            if (!return_value)
-                return NULL;
-            ((PyVkDisplayPlaneCapabilitiesKHR*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkDisplayPlaneCapabilitiesKHRType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkDisplayPlaneCapabilitiesKHR*)return_value)->base = value;
+            
         
 
     
@@ -49657,23 +52100,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkDisplaySurfaceCreateInfoKHR* c_pCreateInfo = ((PyVkDisplaySurfaceCreateInfoKHR*)pCreateInfo)->base;
+                VkDisplaySurfaceCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkDisplaySurfaceCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -49684,15 +52131,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSurfaceKHR *value = malloc(sizeof(VkSurfaceKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceKHR *value = malloc(allocate_size * sizeof(VkSurfaceKHR));
         
         
             if (raise((*(((PyvkCreateDisplayPlaneSurfaceKHR*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
         
 
     
@@ -49751,19 +52205,20 @@ PyObject* pCreateInfos = NULL;
 
     static char *kwlist[] = {"device","swapchainCount","pCreateInfos",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&swapchainCount,&pCreateInfos))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&swapchainCount,&pCreateInfos))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
@@ -49771,7 +52226,10 @@ PyObject* pCreateInfos = NULL;
         
     
         
-                VkSwapchainCreateInfoKHR* c_pCreateInfos = ((PyVkSwapchainCreateInfoKHR*)pCreateInfos)->base;
+                VkSwapchainCreateInfoKHR* c_pCreateInfos = NULL;
+                if (pCreateInfos != Py_None) {
+                    c_pCreateInfos = ((PyVkSwapchainCreateInfoKHR*)pCreateInfos)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -49782,15 +52240,22 @@ PyObject* pCreateInfos = NULL;
     
 
     
-        VkSwapchainKHR *value = malloc(sizeof(VkSwapchainKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSwapchainKHR *value = malloc(allocate_size * sizeof(VkSwapchainKHR));
         
         
             if (raise((*(((PyvkCreateSharedSwapchainsKHR*)self)->pfn))(c_device,c_swapchainCount,c_pCreateInfos,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSwapchainKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSwapchainKHR", NULL);
+            
         
 
     
@@ -49848,23 +52313,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkMirSurfaceCreateInfoKHR* c_pCreateInfo = ((PyVkMirSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                VkMirSurfaceCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkMirSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -49875,15 +52344,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSurfaceKHR *value = malloc(sizeof(VkSurfaceKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceKHR *value = malloc(allocate_size * sizeof(VkSurfaceKHR));
         
         
             if (raise((*(((PyvkCreateMirSurfaceKHR*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
         
 
     
@@ -49942,19 +52418,20 @@ PyObject* connection = NULL;
 
     static char *kwlist[] = {"physicalDevice","queueFamilyIndex","connection",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &physicalDevice,&queueFamilyIndex,&connection))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &physicalDevice,&queueFamilyIndex,&connection))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -49962,8 +52439,9 @@ PyObject* connection = NULL;
         
     
         
-                    MirConnection* c_connection = malloc(sizeof(MirConnection));
-                    {
+                    MirConnection* c_connection = NULL;
+                    if (connection != Py_None) {
+                        c_connection = malloc(sizeof(MirConnection));
                         MirConnection tmp = (MirConnection) PyLong_AsLong(connection);
                         memcpy(c_connection, &tmp, sizeof(MirConnection));
                     }
@@ -50033,28 +52511,29 @@ PyObject* surface = NULL;
 
     static char *kwlist[] = {"instance","surface",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&surface))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&surface))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-            VkSurfaceKHR c_surface = NULL;
-            if (surface != Py_None)  {
-                VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
-                    surface, "VkSurfaceKHR");
-                c_surface = *handle_pointer;
-            }
+                VkSurfaceKHR c_surface = VK_NULL_HANDLE;
+                if (surface != Py_None)  {
+                    VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
+                        surface, "VkSurfaceKHR");
+                    c_surface = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -50125,19 +52604,20 @@ PyObject* surface = NULL;
 
     static char *kwlist[] = {"physicalDevice","queueFamilyIndex","surface",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &physicalDevice,&queueFamilyIndex,&surface))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &physicalDevice,&queueFamilyIndex,&surface))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -50145,12 +52625,12 @@ PyObject* surface = NULL;
         
     
         
-            VkSurfaceKHR c_surface = NULL;
-            if (surface != Py_None)  {
-                VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
-                    surface, "VkSurfaceKHR");
-                c_surface = *handle_pointer;
-            }
+                VkSurfaceKHR c_surface = VK_NULL_HANDLE;
+                if (surface != Py_None)  {
+                    VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
+                        surface, "VkSurfaceKHR");
+                    c_surface = *handle_pointer;
+                }
             
     
         
@@ -50159,15 +52639,22 @@ PyObject* surface = NULL;
     
 
     
-        VkBool32 *value = malloc(sizeof(VkBool32));
+        int allocate_size = 1;
+
+        
+
+        VkBool32 *value = malloc(allocate_size * sizeof(VkBool32));
         
         
             if (raise((*(((PyvkGetPhysicalDeviceSurfaceSupportKHR*)self)->pfn))(c_physicalDevice,c_queueFamilyIndex,c_surface,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyLong_FromLong((long) *value);
+            
+                PyObject* return_value = PyLong_FromLong((long) *value);
+            
         
 
     
@@ -50225,28 +52712,29 @@ PyObject* surface = NULL;
 
     static char *kwlist[] = {"physicalDevice","surface",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&surface))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&surface))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
-            VkSurfaceKHR c_surface = NULL;
-            if (surface != Py_None)  {
-                VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
-                    surface, "VkSurfaceKHR");
-                c_surface = *handle_pointer;
-            }
+                VkSurfaceKHR c_surface = VK_NULL_HANDLE;
+                if (surface != Py_None)  {
+                    VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
+                        surface, "VkSurfaceKHR");
+                    c_surface = *handle_pointer;
+                }
             
     
         
@@ -50255,18 +52743,25 @@ PyObject* surface = NULL;
     
 
     
-        VkSurfaceCapabilitiesKHR *value = malloc(sizeof(VkSurfaceCapabilitiesKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceCapabilitiesKHR *value = malloc(allocate_size * sizeof(VkSurfaceCapabilitiesKHR));
         
         
             if (raise((*(((PyvkGetPhysicalDeviceSurfaceCapabilitiesKHR*)self)->pfn))(c_physicalDevice,c_surface,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkSurfaceCapabilitiesKHRType);
-            if (!return_value)
-                return NULL;
-            ((PyVkSurfaceCapabilitiesKHR*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkSurfaceCapabilitiesKHRType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkSurfaceCapabilitiesKHR*)return_value)->base = value;
+            
         
 
     
@@ -50324,28 +52819,29 @@ PyObject* surface = NULL;
 
     static char *kwlist[] = {"physicalDevice","surface",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&surface))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&surface))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
-            VkSurfaceKHR c_surface = NULL;
-            if (surface != Py_None)  {
-                VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
-                    surface, "VkSurfaceKHR");
-                c_surface = *handle_pointer;
-            }
+                VkSurfaceKHR c_surface = VK_NULL_HANDLE;
+                if (surface != Py_None)  {
+                    VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
+                        surface, "VkSurfaceKHR");
+                    c_surface = *handle_pointer;
+                }
             
     
         
@@ -50443,28 +52939,29 @@ PyObject* surface = NULL;
 
     static char *kwlist[] = {"physicalDevice","surface",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&surface))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&surface))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
-            VkSurfaceKHR c_surface = NULL;
-            if (surface != Py_None)  {
-                VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
-                    surface, "VkSurfaceKHR");
-                c_surface = *handle_pointer;
-            }
+                VkSurfaceKHR c_surface = VK_NULL_HANDLE;
+                if (surface != Py_None)  {
+                    VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(
+                        surface, "VkSurfaceKHR");
+                    c_surface = *handle_pointer;
+                }
             
     
         
@@ -50559,23 +53056,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"device","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkSwapchainCreateInfoKHR* c_pCreateInfo = ((PyVkSwapchainCreateInfoKHR*)pCreateInfo)->base;
+                VkSwapchainCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkSwapchainCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -50586,15 +53087,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSwapchainKHR *value = malloc(sizeof(VkSwapchainKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSwapchainKHR *value = malloc(allocate_size * sizeof(VkSwapchainKHR));
         
         
             if (raise((*(((PyvkCreateSwapchainKHR*)self)->pfn))(c_device,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSwapchainKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSwapchainKHR", NULL);
+            
         
 
     
@@ -50652,28 +53160,29 @@ PyObject* swapchain = NULL;
 
     static char *kwlist[] = {"device","swapchain",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&swapchain))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&swapchain))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkSwapchainKHR c_swapchain = NULL;
-            if (swapchain != Py_None)  {
-                VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
-                    swapchain, "VkSwapchainKHR");
-                c_swapchain = *handle_pointer;
-            }
+                VkSwapchainKHR c_swapchain = VK_NULL_HANDLE;
+                if (swapchain != Py_None)  {
+                    VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
+                        swapchain, "VkSwapchainKHR");
+                    c_swapchain = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -50743,28 +53252,29 @@ PyObject* swapchain = NULL;
 
     static char *kwlist[] = {"device","swapchain",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&swapchain))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&swapchain))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkSwapchainKHR c_swapchain = NULL;
-            if (swapchain != Py_None)  {
-                VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
-                    swapchain, "VkSwapchainKHR");
-                c_swapchain = *handle_pointer;
-            }
+                VkSwapchainKHR c_swapchain = VK_NULL_HANDLE;
+                if (swapchain != Py_None)  {
+                    VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
+                        swapchain, "VkSwapchainKHR");
+                    c_swapchain = *handle_pointer;
+                }
             
     
         
@@ -50859,32 +53369,32 @@ PyObject* swapchain = NULL;
 PyObject* timeout = NULL;
 PyObject* semaphore = NULL;
 PyObject* fence = NULL;
-PyObject* pImageIndex = NULL;
 
-    static char *kwlist[] = {"device","swapchain","timeout","semaphore","fence","pImageIndex",NULL};
+    static char *kwlist[] = {"device","swapchain","timeout","semaphore","fence",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOO", kwlist, &device,&swapchain,&timeout,&semaphore,&fence,&pImageIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOO", kwlist, &device,&swapchain,&timeout,&semaphore,&fence))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkSwapchainKHR c_swapchain = NULL;
-            if (swapchain != Py_None)  {
-                VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
-                    swapchain, "VkSwapchainKHR");
-                c_swapchain = *handle_pointer;
-            }
+                VkSwapchainKHR c_swapchain = VK_NULL_HANDLE;
+                if (swapchain != Py_None)  {
+                    VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(
+                        swapchain, "VkSwapchainKHR");
+                    c_swapchain = *handle_pointer;
+                }
             
     
         
@@ -50892,49 +53402,47 @@ PyObject* pImageIndex = NULL;
         
     
         
-            VkSemaphore c_semaphore = NULL;
-            if (semaphore != Py_None)  {
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(
-                    semaphore, "VkSemaphore");
-                c_semaphore = *handle_pointer;
-            }
+                VkSemaphore c_semaphore = VK_NULL_HANDLE;
+                if (semaphore != Py_None)  {
+                    VkSemaphore* handle_pointer = PyCapsule_GetPointer(
+                        semaphore, "VkSemaphore");
+                    c_semaphore = *handle_pointer;
+                }
             
     
         
-            VkFence c_fence = NULL;
-            if (fence != Py_None)  {
-                VkFence* handle_pointer = PyCapsule_GetPointer(
-                    fence, "VkFence");
-                c_fence = *handle_pointer;
-            }
+                VkFence c_fence = VK_NULL_HANDLE;
+                if (fence != Py_None)  {
+                    VkFence* handle_pointer = PyCapsule_GetPointer(
+                        fence, "VkFence");
+                    c_fence = *handle_pointer;
+                }
             
     
         
-        uint32_t* c_pImageIndex = NULL;
-        if (pImageIndex == Py_None) {
-            c_pImageIndex = VK_NULL_HANDLE;
-        }
-        else {
-            int size = PyList_Size(pImageIndex);
-            c_pImageIndex = malloc(sizeof(uint32_t) * size);
-            int i;
-            for (i = 0; i < size; i++) {
-                uint32_t r = (uint32_t) PyLong_AsLong(
-                    PyList_GetItem(pImageIndex, i));
-                memcpy(c_pImageIndex + i, &r, sizeof(uint32_t));
-            }
-        }
     
 
     
 
     
-        
+        int allocate_size = 1;
 
         
-            (*(((PyvkAcquireNextImageKHR*)self)->pfn))(c_device,c_swapchain,c_timeout,c_semaphore,c_fence,c_pImageIndex);
-            PyObject* return_value = Py_None;
+
+        uint32_t *value = malloc(allocate_size * sizeof(uint32_t));
         
+        
+            if (raise((*(((PyvkAcquireNextImageKHR*)self)->pfn))(c_device,c_swapchain,c_timeout,c_semaphore,c_fence,value)))
+                return NULL;
+        
+
+
+        
+            
+                PyObject* return_value = PyLong_FromLong((long) *value);
+            
+        
+
     
 
     return return_value;
@@ -50990,23 +53498,27 @@ PyObject* pPresentInfo = NULL;
 
     static char *kwlist[] = {"queue","pPresentInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &queue,&pPresentInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &queue,&pPresentInfo))
         return 0;
     
 
     
     
         
-            VkQueue c_queue = NULL;
-            if (queue != Py_None)  {
-                VkQueue* handle_pointer = PyCapsule_GetPointer(
-                    queue, "VkQueue");
-                c_queue = *handle_pointer;
-            }
+                VkQueue c_queue = VK_NULL_HANDLE;
+                if (queue != Py_None)  {
+                    VkQueue* handle_pointer = PyCapsule_GetPointer(
+                        queue, "VkQueue");
+                    c_queue = *handle_pointer;
+                }
             
     
         
-                VkPresentInfoKHR* c_pPresentInfo = ((PyVkPresentInfoKHR*)pPresentInfo)->base;
+                VkPresentInfoKHR* c_pPresentInfo = NULL;
+                if (pPresentInfo != Py_None) {
+                    c_pPresentInfo = ((PyVkPresentInfoKHR*)pPresentInfo)->base;
+                }
                 
     
 
@@ -51074,23 +53586,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkWaylandSurfaceCreateInfoKHR* c_pCreateInfo = ((PyVkWaylandSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                VkWaylandSurfaceCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkWaylandSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -51101,15 +53617,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSurfaceKHR *value = malloc(sizeof(VkSurfaceKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceKHR *value = malloc(allocate_size * sizeof(VkSurfaceKHR));
         
         
             if (raise((*(((PyvkCreateWaylandSurfaceKHR*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
         
 
     
@@ -51168,19 +53691,20 @@ PyObject* display = NULL;
 
     static char *kwlist[] = {"physicalDevice","queueFamilyIndex","display",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &physicalDevice,&queueFamilyIndex,&display))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &physicalDevice,&queueFamilyIndex,&display))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -51256,23 +53780,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkWin32SurfaceCreateInfoKHR* c_pCreateInfo = ((PyVkWin32SurfaceCreateInfoKHR*)pCreateInfo)->base;
+                VkWin32SurfaceCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkWin32SurfaceCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -51283,15 +53811,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSurfaceKHR *value = malloc(sizeof(VkSurfaceKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceKHR *value = malloc(allocate_size * sizeof(VkSurfaceKHR));
         
         
             if (raise((*(((PyvkCreateWin32SurfaceKHR*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
         
 
     
@@ -51349,19 +53884,20 @@ PyObject* queueFamilyIndex = NULL;
 
     static char *kwlist[] = {"physicalDevice","queueFamilyIndex",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &physicalDevice,&queueFamilyIndex))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &physicalDevice,&queueFamilyIndex))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -51432,23 +53968,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkXlibSurfaceCreateInfoKHR* c_pCreateInfo = ((PyVkXlibSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                VkXlibSurfaceCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkXlibSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -51459,15 +53999,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSurfaceKHR *value = malloc(sizeof(VkSurfaceKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceKHR *value = malloc(allocate_size * sizeof(VkSurfaceKHR));
         
         
             if (raise((*(((PyvkCreateXlibSurfaceKHR*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
         
 
     
@@ -51527,19 +54074,20 @@ PyObject* visualID = NULL;
 
     static char *kwlist[] = {"physicalDevice","queueFamilyIndex","dpy","visualID",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &physicalDevice,&queueFamilyIndex,&dpy,&visualID))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &physicalDevice,&queueFamilyIndex,&dpy,&visualID))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -51618,23 +54166,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkXcbSurfaceCreateInfoKHR* c_pCreateInfo = ((PyVkXcbSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                VkXcbSurfaceCreateInfoKHR* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkXcbSurfaceCreateInfoKHR*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -51645,15 +54197,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkSurfaceKHR *value = malloc(sizeof(VkSurfaceKHR));
+        int allocate_size = 1;
+
+        
+
+        VkSurfaceKHR *value = malloc(allocate_size * sizeof(VkSurfaceKHR));
         
         
             if (raise((*(((PyvkCreateXcbSurfaceKHR*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkSurfaceKHR", NULL);
+            
         
 
     
@@ -51713,19 +54272,20 @@ PyObject* visual_id = NULL;
 
     static char *kwlist[] = {"physicalDevice","queueFamilyIndex","connection","visual_id",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOO", kwlist, &physicalDevice,&queueFamilyIndex,&connection,&visual_id))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOO", kwlist, &physicalDevice,&queueFamilyIndex,&connection,&visual_id))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -51804,23 +54364,27 @@ PyObject* pCreateInfo = NULL;
 
     static char *kwlist[] = {"instance","pCreateInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&pCreateInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&pCreateInfo))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-                VkDebugReportCallbackCreateInfoEXT* c_pCreateInfo = ((PyVkDebugReportCallbackCreateInfoEXT*)pCreateInfo)->base;
+                VkDebugReportCallbackCreateInfoEXT* c_pCreateInfo = NULL;
+                if (pCreateInfo != Py_None) {
+                    c_pCreateInfo = ((PyVkDebugReportCallbackCreateInfoEXT*)pCreateInfo)->base;
+                }
                 
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -51831,15 +54395,22 @@ PyObject* pCreateInfo = NULL;
     
 
     
-        VkDebugReportCallbackEXT *value = malloc(sizeof(VkDebugReportCallbackEXT));
+        int allocate_size = 1;
+
+        
+
+        VkDebugReportCallbackEXT *value = malloc(allocate_size * sizeof(VkDebugReportCallbackEXT));
         
         
             if (raise((*(((PyvkCreateDebugReportCallbackEXT*)self)->pfn))(c_instance,c_pCreateInfo,c_pAllocator,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyCapsule_New(value, "VkDebugReportCallbackEXT", NULL);
+            
+                PyObject* return_value = PyCapsule_New(value, "VkDebugReportCallbackEXT", NULL);
+            
         
 
     
@@ -51897,28 +54468,29 @@ PyObject* callback = NULL;
 
     static char *kwlist[] = {"instance","callback",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &instance,&callback))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &instance,&callback))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
-            VkDebugReportCallbackEXT c_callback = NULL;
-            if (callback != Py_None)  {
-                VkDebugReportCallbackEXT* handle_pointer = PyCapsule_GetPointer(
-                    callback, "VkDebugReportCallbackEXT");
-                c_callback = *handle_pointer;
-            }
+                VkDebugReportCallbackEXT c_callback = VK_NULL_HANDLE;
+                if (callback != Py_None)  {
+                    VkDebugReportCallbackEXT* handle_pointer = PyCapsule_GetPointer(
+                        callback, "VkDebugReportCallbackEXT");
+                    c_callback = *handle_pointer;
+                }
             
     
         VkAllocationCallbacks * c_pAllocator = NULL;
@@ -51994,19 +54566,20 @@ PyObject* pMessage = NULL;
 
     static char *kwlist[] = {"instance","flags","objectType","object","location","messageCode","pLayerPrefix","pMessage",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOOO", kwlist, &instance,&flags,&objectType,&object,&location,&messageCode,&pLayerPrefix,&pMessage))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOOO", kwlist, &instance,&flags,&objectType,&object,&location,&messageCode,&pLayerPrefix,&pMessage))
         return 0;
     
 
     
     
         
-            VkInstance c_instance = NULL;
-            if (instance != Py_None)  {
-                VkInstance* handle_pointer = PyCapsule_GetPointer(
-                    instance, "VkInstance");
-                c_instance = *handle_pointer;
-            }
+                VkInstance c_instance = VK_NULL_HANDLE;
+                if (instance != Py_None)  {
+                    VkInstance* handle_pointer = PyCapsule_GetPointer(
+                        instance, "VkInstance");
+                    c_instance = *handle_pointer;
+                }
             
     
         
@@ -52122,23 +54695,27 @@ PyObject* pNameInfo = NULL;
 
     static char *kwlist[] = {"device","pNameInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pNameInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pNameInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkDebugMarkerObjectNameInfoEXT* c_pNameInfo = ((PyVkDebugMarkerObjectNameInfoEXT*)pNameInfo)->base;
+                VkDebugMarkerObjectNameInfoEXT* c_pNameInfo = NULL;
+                if (pNameInfo != Py_None) {
+                    c_pNameInfo = ((PyVkDebugMarkerObjectNameInfoEXT*)pNameInfo)->base;
+                }
                 
     
 
@@ -52206,23 +54783,27 @@ PyObject* pTagInfo = NULL;
 
     static char *kwlist[] = {"device","pTagInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &device,&pTagInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &device,&pTagInfo))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-                VkDebugMarkerObjectTagInfoEXT* c_pTagInfo = ((PyVkDebugMarkerObjectTagInfoEXT*)pTagInfo)->base;
+                VkDebugMarkerObjectTagInfoEXT* c_pTagInfo = NULL;
+                if (pTagInfo != Py_None) {
+                    c_pTagInfo = ((PyVkDebugMarkerObjectTagInfoEXT*)pTagInfo)->base;
+                }
                 
     
 
@@ -52290,23 +54871,27 @@ PyObject* pMarkerInfo = NULL;
 
     static char *kwlist[] = {"commandBuffer","pMarkerInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &commandBuffer,&pMarkerInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &commandBuffer,&pMarkerInfo))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-                VkDebugMarkerMarkerInfoEXT* c_pMarkerInfo = ((PyVkDebugMarkerMarkerInfoEXT*)pMarkerInfo)->base;
+                VkDebugMarkerMarkerInfoEXT* c_pMarkerInfo = NULL;
+                if (pMarkerInfo != Py_None) {
+                    c_pMarkerInfo = ((PyVkDebugMarkerMarkerInfoEXT*)pMarkerInfo)->base;
+                }
                 
     
 
@@ -52373,19 +54958,20 @@ PyObject* pMarkerInfo = NULL;
 
     static char *kwlist[] = {"commandBuffer",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "O", kwlist, &commandBuffer))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O", kwlist, &commandBuffer))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
 
@@ -52453,23 +55039,27 @@ PyObject* pMarkerInfo = NULL;
 
     static char *kwlist[] = {"commandBuffer","pMarkerInfo",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OO", kwlist, &commandBuffer,&pMarkerInfo))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OO", kwlist, &commandBuffer,&pMarkerInfo))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-                VkDebugMarkerMarkerInfoEXT* c_pMarkerInfo = ((PyVkDebugMarkerMarkerInfoEXT*)pMarkerInfo)->base;
+                VkDebugMarkerMarkerInfoEXT* c_pMarkerInfo = NULL;
+                if (pMarkerInfo != Py_None) {
+                    c_pMarkerInfo = ((PyVkDebugMarkerMarkerInfoEXT*)pMarkerInfo)->base;
+                }
                 
     
 
@@ -52542,19 +55132,20 @@ PyObject* externalHandleType = NULL;
 
     static char *kwlist[] = {"physicalDevice","format","type","tiling","usage","flags","externalHandleType",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &physicalDevice,&format,&type,&tiling,&usage,&flags,&externalHandleType))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &physicalDevice,&format,&type,&tiling,&usage,&flags,&externalHandleType))
         return 0;
     
 
     
     
         
-            VkPhysicalDevice c_physicalDevice = NULL;
-            if (physicalDevice != Py_None)  {
-                VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
-                    physicalDevice, "VkPhysicalDevice");
-                c_physicalDevice = *handle_pointer;
-            }
+                VkPhysicalDevice c_physicalDevice = VK_NULL_HANDLE;
+                if (physicalDevice != Py_None)  {
+                    VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(
+                        physicalDevice, "VkPhysicalDevice");
+                    c_physicalDevice = *handle_pointer;
+                }
             
     
         
@@ -52587,18 +55178,25 @@ PyObject* externalHandleType = NULL;
     
 
     
-        VkExternalImageFormatPropertiesNV *value = malloc(sizeof(VkExternalImageFormatPropertiesNV));
+        int allocate_size = 1;
+
+        
+
+        VkExternalImageFormatPropertiesNV *value = malloc(allocate_size * sizeof(VkExternalImageFormatPropertiesNV));
         
         
             if (raise((*(((PyvkGetPhysicalDeviceExternalImageFormatPropertiesNV*)self)->pfn))(c_physicalDevice,c_format,c_type,c_tiling,c_usage,c_flags,c_externalHandleType,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = _PyObject_New(&PyVkExternalImageFormatPropertiesNVType);
-            if (!return_value)
-                return NULL;
-            ((PyVkExternalImageFormatPropertiesNV*)return_value)->base = value;
+            
+                PyObject* return_value = _PyObject_New(&PyVkExternalImageFormatPropertiesNVType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkExternalImageFormatPropertiesNV*)return_value)->base = value;
+            
         
 
     
@@ -52657,28 +55255,29 @@ PyObject* handleType = NULL;
 
     static char *kwlist[] = {"device","memory","handleType",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOO", kwlist, &device,&memory,&handleType))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOO", kwlist, &device,&memory,&handleType))
         return 0;
     
 
     
     
         
-            VkDevice c_device = NULL;
-            if (device != Py_None)  {
-                VkDevice* handle_pointer = PyCapsule_GetPointer(
-                    device, "VkDevice");
-                c_device = *handle_pointer;
-            }
+                VkDevice c_device = VK_NULL_HANDLE;
+                if (device != Py_None)  {
+                    VkDevice* handle_pointer = PyCapsule_GetPointer(
+                        device, "VkDevice");
+                    c_device = *handle_pointer;
+                }
             
     
         
-            VkDeviceMemory c_memory = NULL;
-            if (memory != Py_None)  {
-                VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
-                    memory, "VkDeviceMemory");
-                c_memory = *handle_pointer;
-            }
+                VkDeviceMemory c_memory = VK_NULL_HANDLE;
+                if (memory != Py_None)  {
+                    VkDeviceMemory* handle_pointer = PyCapsule_GetPointer(
+                        memory, "VkDeviceMemory");
+                    c_memory = *handle_pointer;
+                }
             
     
         
@@ -52691,15 +55290,22 @@ PyObject* handleType = NULL;
     
 
     
-        HANDLE *value = malloc(sizeof(HANDLE));
+        int allocate_size = 1;
+
+        
+
+        HANDLE *value = malloc(allocate_size * sizeof(HANDLE));
         
         
             if (raise((*(((PyvkGetMemoryWin32HandleNV*)self)->pfn))(c_device,c_memory,c_handleType,value)))
                 return NULL;
         
 
+
         
-            PyObject* return_value = PyLong_FromLong((long) *value);
+            
+                PyObject* return_value = PyLong_FromLong((long) *value);
+            
         
 
     
@@ -52762,28 +55368,29 @@ PyObject* stride = NULL;
 
     static char *kwlist[] = {"commandBuffer","buffer","offset","countBuffer","countBufferOffset","maxDrawCount","stride",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &commandBuffer,&buffer,&offset,&countBuffer,&countBufferOffset,&maxDrawCount,&stride))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &commandBuffer,&buffer,&offset,&countBuffer,&countBufferOffset,&maxDrawCount,&stride))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
@@ -52791,12 +55398,12 @@ PyObject* stride = NULL;
                     
     
         
-            VkBuffer c_countBuffer = NULL;
-            if (countBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    countBuffer, "VkBuffer");
-                c_countBuffer = *handle_pointer;
-            }
+                VkBuffer c_countBuffer = VK_NULL_HANDLE;
+                if (countBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        countBuffer, "VkBuffer");
+                    c_countBuffer = *handle_pointer;
+                }
             
     
         
@@ -52881,28 +55488,29 @@ PyObject* stride = NULL;
 
     static char *kwlist[] = {"commandBuffer","buffer","offset","countBuffer","countBufferOffset","maxDrawCount","stride",NULL};
     
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "OOOOOOO", kwlist, &commandBuffer,&buffer,&offset,&countBuffer,&countBufferOffset,&maxDrawCount,&stride))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "OOOOOOO", kwlist, &commandBuffer,&buffer,&offset,&countBuffer,&countBufferOffset,&maxDrawCount,&stride))
         return 0;
     
 
     
     
         
-            VkCommandBuffer c_commandBuffer = NULL;
-            if (commandBuffer != Py_None)  {
-                VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
-                    commandBuffer, "VkCommandBuffer");
-                c_commandBuffer = *handle_pointer;
-            }
+                VkCommandBuffer c_commandBuffer = VK_NULL_HANDLE;
+                if (commandBuffer != Py_None)  {
+                    VkCommandBuffer* handle_pointer = PyCapsule_GetPointer(
+                        commandBuffer, "VkCommandBuffer");
+                    c_commandBuffer = *handle_pointer;
+                }
             
     
         
-            VkBuffer c_buffer = NULL;
-            if (buffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    buffer, "VkBuffer");
-                c_buffer = *handle_pointer;
-            }
+                VkBuffer c_buffer = VK_NULL_HANDLE;
+                if (buffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        buffer, "VkBuffer");
+                    c_buffer = *handle_pointer;
+                }
             
     
         
@@ -52910,12 +55518,12 @@ PyObject* stride = NULL;
                     
     
         
-            VkBuffer c_countBuffer = NULL;
-            if (countBuffer != Py_None)  {
-                VkBuffer* handle_pointer = PyCapsule_GetPointer(
-                    countBuffer, "VkBuffer");
-                c_countBuffer = *handle_pointer;
-            }
+                VkBuffer c_countBuffer = VK_NULL_HANDLE;
+                if (countBuffer != Py_None)  {
+                    VkBuffer* handle_pointer = PyCapsule_GetPointer(
+                        countBuffer, "VkBuffer");
+                    c_countBuffer = *handle_pointer;
+                }
             
     
         
@@ -60407,33 +63015,29 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     PyModule_AddObject(module, "VulkanError", VulkanError);
 
     
-        VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorExtensionNotPresent);
-        PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
+        VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorLayerNotPresent);
+        PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
     
-        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
-        Py_INCREF(VkErrorMemoryMapFailed);
-        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
-    
-        VkEventReset = PyErr_NewException("vulkan.VkEventReset", VulkanError, NULL);
-        Py_INCREF(VkEventReset);
-        PyModule_AddObject(module, "VkEventReset", VkEventReset);
-    
-        VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
-        Py_INCREF(VkErrorIncompatibleDriver);
-        PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
+        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
+        Py_INCREF(VkErrorTooManyObjects);
+        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
     
         VkNotReady = PyErr_NewException("vulkan.VkNotReady", VulkanError, NULL);
         Py_INCREF(VkNotReady);
         PyModule_AddObject(module, "VkNotReady", VkNotReady);
     
-        VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
-        Py_INCREF(VkEventSet);
-        PyModule_AddObject(module, "VkEventSet", VkEventSet);
-    
         VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
         Py_INCREF(VkErrorFormatNotSupported);
         PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
+    
+        VkEventReset = PyErr_NewException("vulkan.VkEventReset", VulkanError, NULL);
+        Py_INCREF(VkEventReset);
+        PyModule_AddObject(module, "VkEventReset", VkEventReset);
+    
+        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
+        Py_INCREF(VkErrorDeviceLost);
+        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
     
         VkErrorFeatureNotPresent = PyErr_NewException("vulkan.VkErrorFeatureNotPresent", VulkanError, NULL);
         Py_INCREF(VkErrorFeatureNotPresent);
@@ -60443,37 +63047,41 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
         Py_INCREF(VkErrorInitializationFailed);
         PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
     
-        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
-        Py_INCREF(VkErrorFragmentedPool);
-        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
-    
-        VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
-        Py_INCREF(VkErrorOutOfDeviceMemory);
-        PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
-    
-        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
-        Py_INCREF(VkErrorTooManyObjects);
-        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
-    
-        VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
-        Py_INCREF(VkErrorOutOfHostMemory);
-        PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
-    
-        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
-        Py_INCREF(VkIncomplete);
-        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
-    
-        VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorLayerNotPresent);
-        PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
+        VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
+        Py_INCREF(VkEventSet);
+        PyModule_AddObject(module, "VkEventSet", VkEventSet);
     
         VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
         Py_INCREF(VkTimeout);
         PyModule_AddObject(module, "VkTimeout", VkTimeout);
     
-        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
-        Py_INCREF(VkErrorDeviceLost);
-        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
+        VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
+        Py_INCREF(VkErrorOutOfHostMemory);
+        PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
+    
+        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
+        Py_INCREF(VkErrorMemoryMapFailed);
+        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
+    
+        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
+        Py_INCREF(VkErrorFragmentedPool);
+        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
+    
+        VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
+        Py_INCREF(VkErrorIncompatibleDriver);
+        PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
+    
+        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
+        Py_INCREF(VkIncomplete);
+        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
+    
+        VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
+        Py_INCREF(VkErrorOutOfDeviceMemory);
+        PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
+    
+        VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorExtensionNotPresent);
+        PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
     
 
 

@@ -33,15 +33,17 @@
         {% if not s.return_only %}
             {{s.members|init_function_members}}
             {{s.members|kwlist}}
-            {{s.members|parse_tuple_and_keywords}}
+            {{s.members|parse_tuple_and_keywords(optional=s.union)}}
 
             {% for m in s.members %}
-                {% set cname = 'c_' ~ m.name %}
-                {% set jr = m|python_to_c(m.name, cname, '-1', force_array=m.force_array) %}
-                {% if jr %}
-                    {{jr}}
-                    {{cname|copy_in_object(m)}}
-                {% endif %}
+            {% if s.union %} if ({{m.name}} != NULL) { {% endif %}
+                    {% set cname = 'c_' ~ m.name %}
+                    {% set jr = m|python_to_c(m.name, cname, '-1', force_array=m.force_array) %}
+                    {% if jr %}
+                        {{jr}}
+                        {{cname|copy_in_object(m)}}
+                    {% endif %}
+            {% if s.union %} } {% endif %}
             {% endfor %}
         {% endif %}
 

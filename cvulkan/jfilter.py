@@ -57,7 +57,7 @@ def kwlist(members):
     return "static char *kwlist[] = {%s};" % result
 
 
-def parse_tuple_and_keywords(members):
+def parse_tuple_and_keywords(members, optional=False):
     members = members_formated(members)
     if not members:
         return ''
@@ -65,9 +65,10 @@ def parse_tuple_and_keywords(members):
     var_names = ','.join(["&"+m['name'] for m in members_formated(members)])
     o = 'O' * len(members)
     return '''
-    if( !PyArg_ParseTupleAndKeywords(args, kwds, "{o}", kwlist, {names}))
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "{optional}{o}", kwlist, {names}))
         return 0;
-    '''.format(o=o, names=var_names)
+    '''.format(o=o, optional='|' if optional else '', names=var_names)
 
 
 def copy_in_object(cname, member):
@@ -126,6 +127,9 @@ def python_to_c(member, pyname, cname, return_value='NULL',
         {ctype}* {cname} = NULL;
         if ({pyname} == Py_None) {{
             {cname} = VK_NULL_HANDLE;
+        }}
+        else if (PyBytes_CheckExact({pyname})) {{
+            {cname} = ({ctype}*) PyBytes_AsString({pyname});
         }}
         else {{
             int size = PyList_Size({pyname});
@@ -230,9 +234,9 @@ def python_to_c(member, pyname, cname, return_value='NULL',
                or raw_signature.endswith(']'):
                 return '''
                 {vkname}* {cname} = NULL;
-                {{
+                if ({pyname} != Py_None) {{
                     int size = PyList_Size({pyname});
-                    {cname} = malloc(sizeof({vkname}));
+                    {cname} = malloc(size * sizeof({vkname}));
                     int i;
                     for (i = 0; i < size; i++) {{
                         {cname}[i] = *( (
@@ -242,30 +246,62 @@ def python_to_c(member, pyname, cname, return_value='NULL',
                 '''.format(cname=cname, pyname=pyname, vkname=vkname)
             elif raw_signature.endswith('*') and not force_array:
                 return '''
-                {vkname}* {cname} = ((Py{vkname}*){pyname})->base;
+                {vkname}* {cname} = NULL;
+                if ({pyname} != Py_None) {{
+                    {cname} = ((Py{vkname}*){pyname})->base;
+                }}
                 '''.format(cname=cname, pyname=pyname, vkname=vkname)
             else:
                 return '''
                 {vkname} {cname} = *(((Py{vkname}*){pyname})->base);
                 '''.format(vkname=vkname, cname=cname, pyname=pyname)
-        elif signature['is_handle']:
+        elif signature['is_handle'] and force_array:
+            return '''
+                {vkname}* {cname} = VK_NULL_HANDLE;
+                if ({pyname} != Py_None)  {{
+                    int size = PyList_Size({pyname});
+                    {cname} = malloc(size * sizeof({vkname}));
+                    int i;
+                    for (i = 0; i < size; i++) {{
+                        {vkname}* handle_pointer = PyCapsule_GetPointer(
+                        PyList_GetItem({pyname}, i), "{vkname}");
+                        {cname}[i] = *handle_pointer;
+                    }}
+                }}
+            '''.format(vkname=vkname, cname=cname, pyname=pyname)
+        elif signature['is_handle'] and not force_array:
             deference = '' if member['type'].endswith('*') else '*'
             inv_deference = '*' if not deference else ''
             return '''
-            {vkname}{inv_deference} {cname} = NULL;
-            if ({pyname} != Py_None)  {{
-                {vkname}* handle_pointer = PyCapsule_GetPointer(
-                    {pyname}, "{vkname}");
-                {cname} = {deference}handle_pointer;
-            }}
+                {vkname}{inv_deference} {cname} = VK_NULL_HANDLE;
+                if ({pyname} != Py_None)  {{
+                    {vkname}* handle_pointer = PyCapsule_GetPointer(
+                        {pyname}, "{vkname}");
+                    {cname} = {deference}handle_pointer;
+                }}
             '''.format(vkname=vkname, cname=cname, pyname=pyname,
                        deference=deference, inv_deference=inv_deference)
         # int type
         else:
-            if raw_signature.endswith('*'):
+            if raw_signature.endswith('*') and member.get('len'):
                 return '''
-                    {vkname}* {cname} = malloc(sizeof({vkname}));
-                    {{
+                    {vkname}* {cname} = NULL;
+                    if ({pyname} != Py_None) {{
+                        int size = PyList_Size({pyname});
+                        {cname} = malloc(size * sizeof({vkname}));
+                        int i;
+                        for (i = 0; i < size; i++) {{
+                            {vkname} tmp = ({vkname}) PyLong_AsLong(
+                                PyList_GetItem({pyname}, i));
+                            {cname}[i] = tmp;
+                        }}
+                    }}
+                '''.format(vkname=vkname, cname=cname, pyname=pyname)
+            elif raw_signature.endswith('*'):
+                return '''
+                    {vkname}* {cname} = NULL;
+                    if ({pyname} != Py_None) {{
+                        {cname} = malloc(sizeof({vkname}));
                         {vkname} tmp = ({vkname}) PyLong_AsLong({pyname});
                         memcpy({cname}, &tmp, sizeof({vkname}));
                     }}

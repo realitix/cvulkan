@@ -54,6 +54,7 @@ model['structs'] = [{
         'raw_type': 'type' -> Type without #text
         'null': False,
         'enum': MAX_ARRAY -> Size of array with fixed length,
+        'len': 'member', -> Name of the member for the array length
         'force_array': False -> Used when a pointer is an array of VK types
     }]
 }]
@@ -77,7 +78,10 @@ model['functions'] = [{
         'type': 'type without #text',
         'handle': False,
         'enum': False,
-        'struct': True
+        'struct': True,
+        'static_count': {
+            'key': 'name', -> Name of the member if count is static
+            'value': 'name' -> Name of the property if count is static
     },
     'members': [{
         'name': 'name',
@@ -303,12 +307,16 @@ def model_structs(vk, model):
             if '#text' in member:
                 text = member['#text'].replace('const ', '').strip()
                 type_name += ' ' + text
+
+            l = member['@len'] if '@len' in member else None
+
             members.append({
                 'name': member['name'],
                 'type': type_name,
                 'raw_type': member['type'],
                 'enum': member.get('enum'),
                 'null': True if member['name'] in NULL_MEMBERS else False,
+                'len': l,
                 'force_array': True if '@len' in member else False
             })
 
@@ -319,7 +327,6 @@ def model_structs(vk, model):
             'return_only': True if struct.get('@returnedonly') else False,
             'union': True if struct in unions else False
         })
-
 
     model['custom_structs'] = CUSTOM_STRUCTS
 
@@ -356,6 +363,12 @@ def model_functions(vk, model):
 
     def format_return_member(member):
         t = member['type']
+
+        static_count = None
+        if '@len' in member and '::' in member['@len']:
+            lens = member['@len'].split('::')
+            static_count = {'key': lens[0], 'value': lens[1]}
+
         is_handle = t in get_handle_names(vk)
         is_enum = t in get_enum_names(vk)
         is_struct = t in get_struct_names(vk)
@@ -363,13 +376,15 @@ def model_functions(vk, model):
                 'type': t,
                 'handle': is_handle,
                 'enum': is_enum,
-                'struct': is_struct}
+                'struct': is_struct,
+                'static_count': static_count}
 
     ALLOCATE_PREFIX = ('vkCreate', 'vkGet', 'vkEnumerate', 'vkAllocate',
-                       'vkMap')
+                       'vkMap', 'vkAcquire')
     ALLOCATE_EXCEPTION = ('vkGetFenceStatus', 'vkGetEventStatus',
                           'vkGetQueryPoolResults',
                           'vkGetPhysicalDeviceXlibPresentationSupportKHR')
+    COUNT_EXCEPTION = ('vkAcquireNextImageKHR',)
 
     model['functions'] = []
     model['extension_functions'] = []
@@ -387,6 +402,8 @@ def model_functions(vk, model):
             function['param'] = [function['param']]
 
         count_param = get_count_param(function)
+        if fname in COUNT_EXCEPTION:
+            count_param = None
         is_allocate = any([fname.startswith(a) for a in ALLOCATE_PREFIX])
         is_count = is_allocate and count_param is not None
 

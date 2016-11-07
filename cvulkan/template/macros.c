@@ -65,7 +65,13 @@
         free(values);
 
     {% elif f.allocate %}
-        {{rt}} *value = malloc(sizeof({{rt}}));
+        int allocate_size = 1;
+
+        {% if f.return_member.static_count %}
+            allocate_size = (int) {{prefix}}{{f.return_member.static_count.key}}->{{f.return_member.static_count.value}};
+        {% endif %}
+
+        {{rt}} *value = malloc(allocate_size * sizeof({{rt}}));
         {% set call_function = cname ~ '(' ~ f.members|join_comma(1, prefix) ~ 'value)' %}
         {% if f.return_result %}
             if (raise({{call_function}}))
@@ -74,17 +80,41 @@
             {{call_function}};
         {% endif %}
 
-        {% if f.return_member.handle %}
-            PyObject* return_value = PyCapsule_New(value, "{{rt}}", NULL);
-        {% elif f.return_member.enum %}
-            PyObject* return_value = PyLong_FromLong((long) *value);
-        {% elif f.return_member.struct %}
-            PyObject* return_value = _PyObject_New(&Py{{rt}}Type);
-            if (!return_value)
-                return NULL;
-            ((Py{{rt}}*)return_value)->base = value;
+
+        {% if f.return_member.static_count %}
+            PyObject* return_value = PyList_New(0);
+            int i = 0;
+            for (i = 0; i < allocate_size; i++) {
+                {{rt}}* val = malloc(sizeof({{rt}}));
+                memcpy(val, value + i, sizeof({{rt}}));
+
+                {% if f.return_member.handle %}
+                    PyObject* tmp = PyCapsule_New(val, "{{rt}}", NULL);
+                {% elif f.return_member.enum %}
+                    PyObject* tmp = PyLong_FromLong((long) *val);
+                {% elif f.return_member.struct %}
+                    PyObject* tmp = _PyObject_New(&Py{{rt}}Type);
+                    if (!tmp)
+                        return NULL;
+                    ((Py{{rt}}*)tmp)->base = val;
+                {% else %}
+                    PyObject* tmp = PyLong_FromLong((long) *val);
+                {% endif %}
+                PyList_Append(return_value, tmp);
+            }
         {% else %}
-            PyObject* return_value = PyLong_FromLong((long) *value);
+            {% if f.return_member.handle %}
+                PyObject* return_value = PyCapsule_New(value, "{{rt}}", NULL);
+            {% elif f.return_member.enum %}
+                PyObject* return_value = PyLong_FromLong((long) *value);
+            {% elif f.return_member.struct %}
+                PyObject* return_value = _PyObject_New(&Py{{rt}}Type);
+                if (!return_value)
+                    return NULL;
+                ((Py{{rt}}*)return_value)->base = value;
+            {% else %}
+                PyObject* return_value = PyLong_FromLong((long) *value);
+            {% endif %}
         {% endif %}
 
     {% else %}
