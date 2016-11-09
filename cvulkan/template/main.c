@@ -20,6 +20,7 @@ int raise(int value) {
     return 0;
 }
 
+
 // ---------------
 // DECLARE FUNCTIONS PROTOTYPE
 // ---------------
@@ -33,16 +34,33 @@ int raise(int value) {
     static PFN_{{f}} {{f}};
 {% endfor %}
 
+typedef struct {
+    PyObject_HEAD VkDebugReportCallbackCreateInfoEXT *base;
+}
+PyVkDebugReportCallbackCreateInfoEXT;
+
 
 // ---------------
 // DECLARE PYTHON STRUCTS
 // ---------------
 {% for s in model.structs %}
     {% call check_define(s.define) %}
-        typedef struct { PyObject_HEAD {{s.name}} *base; } Py{{s.name}};
+        typedef struct {
+            PyObject_HEAD
+            {{s.name}} *base;
+            {% if s.union %}
+                int selected;
+            {% endif %}
+        } Py{{s.name}};
         static PyTypeObject Py{{s.name}}Type;
     {% endcall %}
 {% endfor %}
+
+
+// ---------------
+// DECLARE CONVERTERS
+// ---------------
+{% include 'converters.c' %}
 
 
 // ---------------

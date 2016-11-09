@@ -1,7 +1,6 @@
 """C Vulkan generator
 
-# How it works?
-C vulkan module is generated following these steps:
+# How it works?  C vulkan module is generated following these steps:
     - Download vk.xml or get it locally
     - Pass it to xmltodict to get a python dict from it
     - Generate a custom model for each part of the binding
@@ -114,12 +113,15 @@ model['custom_structs'] = ['f1', 'f2']
 Macros are just custom functions.
 model['macros'] = ['f1', 'f2']
 
-
 ## Exceptions
 Exceptions are created based on the name in the VkResult enum:
 model['exceptions'] = {
     'exceptionName': value
 }
+
+## Signatures
+Signatures are used in converters.c to convert Python to Vulkan type
+model['signatures']
 """
 import jinja2
 import os
@@ -149,8 +151,17 @@ CACHE_MAPPING = {
 MAPPING_EXTENSION_DEFINE = {
     'VkAndroidSurfaceCreateInfoKHR': 'VK_USE_PLATFORM_ANDROID_KHR',
     'VkMirSurfaceCreateInfoKHR': 'VK_USE_PLATFORM_MIR_KHR',
+    'VkMirSurfaceCreateFlagsKHR': 'VK_USE_PLATFORM_MIR_KHR',
+    'MirConnection': 'VK_USE_PLATFORM_MIR_KHR',
+    'MirSurface': 'VK_USE_PLATFORM_MIR_KHR',
     'VkWaylandSurfaceCreateInfoKHR': 'VK_USE_PLATFORM_WAYLAND_KHR',
+    'HANDLE': 'VK_USE_PLATFORM_WIN32_KHR',
+    'HWND': 'VK_USE_PLATFORM_WIN32_KHR',
+    'HINSTANCE': 'VK_USE_PLATFORM_WIN32_KHR',
+    'SECURITY_ATTRIBUTES': 'VK_USE_PLATFORM_WIN32_KHR',
+    'DWORD': 'VK_USE_PLATFORM_WIN32_KHR',
     'VkWin32SurfaceCreateInfoKHR': 'VK_USE_PLATFORM_WIN32_KHR',
+    'VkWin32SurfaceCreateFlagsKHR': 'VK_USE_PLATFORM_WIN32_KHR',
     'VkImportMemoryWin32HandleInfoNV': 'VK_USE_PLATFORM_WIN32_KHR',
     'VkExportMemoryWin32HandleInfoNV': 'VK_USE_PLATFORM_WIN32_KHR',
     'VkWin32KeyedMutexAcquireReleaseInfoNV': 'VK_USE_PLATFORM_WIN32_KHR',
@@ -158,6 +169,8 @@ MAPPING_EXTENSION_DEFINE = {
     'VkXlibSurfaceCreateInfoKHR': 'VK_USE_PLATFORM_XLIB_KHR',
     'VkRect3D': 'hackdefine',  # VkRect3D is not used
     'vkCreateAndroidSurfaceKHR': 'VK_USE_PLATFORM_ANDROID_KHR',
+    'VkAndroidSurfaceCreateFlagsKHR': 'VK_USE_PLATFORM_ANDROID_KHR',
+    'ANativeWindow': 'VK_USE_PLATFORM_ANDROID_KHR',
     'vkCreateMirSurfaceKHR': 'VK_USE_PLATFORM_MIR_KHR',
     'vkGetPhysicalDeviceMirPresentationSupportKHR': 'VK_USE_PLATFORM_MIR_KHR',
     'vkCreateWaylandSurfaceKHR': 'VK_USE_PLATFORM_WAYLAND_KHR',
@@ -165,12 +178,18 @@ MAPPING_EXTENSION_DEFINE = {
     'VK_USE_PLATFORM_WAYLAND_KHR',
     'vkCreateWin32SurfaceKHR': 'VK_USE_PLATFORM_WIN32_KHR',
     'vkCreateXcbSurfaceKHR': 'VK_USE_PLATFORM_XCB_KHR',
+    'xcb_connection_t': 'VK_USE_PLATFORM_XCB_KHR',
+    'xcb_visualid_t': 'VK_USE_PLATFORM_XCB_KHR',
+    'xcb_window_t': 'VK_USE_PLATFORM_XCB_KHR',
+    'VisualID': 'VK_USE_PLATFORM_XCB_KHR',
     'vkGetPhysicalDeviceXcbPresentationSupportKHR': 'VK_USE_PLATFORM_XCB_KHR',
     'vkGetMemoryWin32HandleNV': 'VK_USE_PLATFORM_WIN32_KHR',
     'vkGetPhysicalDeviceWin32PresentationSupportKHR':
     'VK_USE_PLATFORM_WIN32_KHR',
     'vkGetPhysicalDeviceXlibPresentationSupportKHR':
     'VK_USE_PLATFORM_XLIB_KHR',
+    'Window': 'VK_USE_PLATFORM_XLIB_KHR',
+    'Display': 'VK_USE_PLATFORM_XLIB_KHR',
     'vkCreateXlibSurfaceKHR': 'VK_USE_PLATFORM_XLIB_KHR'
 }
 
@@ -296,9 +315,10 @@ def model_structs(vk, model):
                if s.get('@category', None) == 'struct']
     unions = [u for u in vk['registry']['types']['type']
               if u.get('@category', None) == 'union']
+    FORCE_RETURN_ONLY = ('VkAllocationCallbacks',)
     for struct in structs + unions:
-
-        if struct['@name'] in CUSTOM_STRUCTS:
+        sname = struct['@name']
+        if sname in CUSTOM_STRUCTS:
             continue
 
         members = []
@@ -320,11 +340,15 @@ def model_structs(vk, model):
                 'force_array': True if '@len' in member else False
             })
 
+        return_only = False
+        if struct.get('@returnedonly') or sname in FORCE_RETURN_ONLY:
+            return_only = True
+
         model['structs'].append({
-            'name': struct['@name'],
+            'name': sname,
             'define': MAPPING_EXTENSION_DEFINE.get(struct['@name']),
             'members': members,
-            'return_only': True if struct.get('@returnedonly') else False,
+            'return_only': return_only,
             'union': True if struct in unions else False
         })
 
@@ -478,6 +502,8 @@ def get_signatures(vk):
     for name in names:
         if name.startswith('PFN'):
             continue
+        if not name.startswith('Vk'):
+            continue
 
         vkname = name.split()[0]
         is_struct = vkname in [s['@name'] for s in structs]
@@ -491,6 +517,25 @@ def get_signatures(vk):
             'is_handle': is_handle
         })
 
+    return result
+
+
+def converters_signatures(signatures):
+    '''return array used in converters
+    '''
+    cache_vknames = set()
+    result = []
+    for s in signatures:
+        if s['vkname'] in cache_vknames:
+            continue
+        cache_vknames.add(s['vkname'])
+        result.append({
+            'vkname': s['vkname'],
+            'is_struct': s['is_struct'],
+            'is_union': s['is_union'],
+            'is_handle': s['is_handle'],
+            'define': MAPPING_EXTENSION_DEFINE.get(s['vkname'])
+        })
     return result
 
 
@@ -508,6 +553,31 @@ def model_exceptions(vk, model):
         model['exceptions'][camel_name] = enum['@value']
 
 
+def get_called_converters(model):
+    '''Create a list with all called converters
+
+    That allow to write only used converters
+    in converters.c
+    '''
+    called_converters = set()
+
+    def go(s):
+        if s.get('return_only'):
+            return
+
+        members = jfilter.members_formated(s['members'])
+        for m in members:
+            called_converters.add(jfilter.detect_py_to_c(m))
+
+    for f in (model['functions'] + model['extension_functions'] +
+              model['structs']):
+        if f.get('union'):
+            continue
+        go(f)
+
+    return called_converters
+
+
 def main():
     model = {}
     vk = init()
@@ -523,7 +593,12 @@ def main():
         loader=jinja2.FileSystemLoader(os.path.join(PATH, 'template')))
 
     # jfilter needs signatures
-    jfilter.vulkan_signatures = get_signatures(vk)
+    signatures = get_signatures(vk)
+    jfilter.vulkan_signatures = signatures
+    model['signatures'] = converters_signatures(signatures)
+    model['MAPPING_EXTENSION_DEFINE'] = MAPPING_EXTENSION_DEFINE
+    model['called_converters'] = get_called_converters(model)
+
     env.filters.update({f: getattr(jfilter, f) for f in jfilter.__all__})
 
     with open(DEFAULT_OUT_FILE, 'w') as out:

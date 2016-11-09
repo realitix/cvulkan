@@ -7,8 +7,8 @@ Enjoy the pain!
 '''
 
 __all__ = ['join_comma', 'kwlist', 'parse_tuple_and_keywords',
-           'python_to_c', 'c_to_python', 'init_function_members',
-           'copy_in_object']
+           'c_to_python', 'init_function_members',
+           'copy_in_object', 'format_fname']
 
 # Vulkan signatures with this data model
 # signatures = [{
@@ -31,7 +31,14 @@ def join_comma(members, without_n=0, prefix=''):
     if not members[:without_n]:
         return ''
 
-    return ','.join([prefix + m['name'] for m in members[:without_n]]) + dot
+    names = []
+    for m in members[:without_n]:
+        if m.get('null'):
+            names.append('NULL')
+        else:
+            names.append(m['name'])
+
+    return ','.join(names) + dot
 
 
 def members_formated(members):
@@ -39,10 +46,77 @@ def members_formated(members):
             if not m.get('to_create') and not m.get('null')]
 
 
+def init_member(member):
+    def t(ct):
+        if member['type'] == ct:
+            return True
+        return False
+
+    def from_type(ctype):
+        return '%s %s;\n' % (ctype, member['name'])
+
+    # ----------------
+    # NATIVE C TYPES
+    # ----------------
+    for ctype in ('uint32_t', 'uint64_t', 'int32_t', 'size_t', 'Window',
+                  'Display *', 'float', 'void *', 'xcb_connection_t *',
+                  'xcb_visualid_t', 'xcb_window_t', 'ANativeWindow *',
+                  'MirConnection *', 'MirSurface *', 'HINSTANCE',
+                  'HWND', 'HANDLE', 'SECURITY_ATTRIBUTES *', 'DWORD',
+                  'MirConnection *', 'VisualID'):
+        if t(ctype):
+            return from_type(ctype)
+    if t('char []') or t('char *'):
+        return from_type('char*')
+    if t('char * const*'):
+        return from_type('char**')
+    if t('float [2]') or t('float [4]') or t('float *'):
+        return from_type('float*')
+    if t('uint32_t [2]') or t('uint32_t [3]') or \
+       t('uint32_t [4]') or t('uint32_t *'):
+        return from_type('uint32_t*')
+    if t('int32_t [4]'):
+        return from_type('int32_t*')
+    if t('uint64_t *'):
+        return from_type('uint64_t*')
+    if t('uint8_t []'):
+        return from_type('uint8_t*')
+    if t('wl_display struct *'):
+        return from_type('struct wl_display*')
+    if t('wl_surface struct *'):
+        return from_type('struct wl_surface*')
+
+    # ----------------
+    # VULKAN TYPES
+    # ----------------
+    for signature in vulkan_signatures:
+        raw_signature = signature['raw']
+        vkname = signature['vkname']
+        if not t(raw_signature):
+            continue
+
+        if signature['is_struct'] or signature['is_union']:
+            if raw_signature.endswith('*') or raw_signature.endswith(']'):
+                return from_type('%s*' % vkname)
+            else:
+                return from_type(vkname)
+        elif signature['is_handle']:
+            if member['type'].endswith('*'):
+                return from_type('%s*' % vkname)
+            else:
+                return from_type(vkname)
+        else:
+            if raw_signature.endswith('*'):
+                return from_type('%s*' % vkname)
+            else:
+                return from_type(vkname)
+    return '//cant init member\n'
+
+
 def init_function_members(members):
     result = ''
     for m in members_formated(members):
-        result += 'PyObject* %s = NULL;\n' % m['name']
+        result += init_member(m)
 
     return result
 
@@ -57,43 +131,133 @@ def kwlist(members):
     return "static char *kwlist[] = {%s};" % result
 
 
-def parse_tuple_and_keywords(members, optional=False):
+def format_fname(name):
+    '''Well format function name'''
+    return name.replace(' ', '_').replace('*', 'x')
+
+
+def detect_py_to_c(member):
+    def t(ct):
+        if member['type'] == ct:
+            return True
+        return False
+
+    # ----------------
+    # NATIVE C TYPES
+    # ----------------
+    for ctype in ('uint32_t', 'uint64_t', 'int32_t', 'size_t', 'Window',
+                  'Display *', 'xcb_connection_t *', 'float', 'void *',
+                  'xcb_window_t', 'ANativeWindow *', 'MirConnection *',
+                  'MirSurface *', 'HINSTANCE', 'HWND', 'HANDLE',
+                  'SECURITY_ATTRIBUTES *', 'DWORD', 'MirConnection *',
+                  'VisualID', 'xcb_visualid_t'):
+        if t(ctype):
+            return '%s_converter' % format_fname(ctype)
+    if t('char []') or t('char *'):
+        return 'string_converter'
+    if t('char * const*'):
+        return 'array_string_converter'
+    if t('float [2]') or t('float [4]') or t('float *'):
+        return 'array_float_converter'
+    if t('uint32_t [2]') or t('uint32_t [3]') or \
+       t('uint32_t [4]') or t('uint32_t *'):
+        return 'array_uint32_t_converter'
+    if t('int32_t [4]'):
+        return 'array_int32_t_converter'
+    if t('uint8_t []'):
+        return 'array_uint8_t_converter'
+    if t('uint64_t *'):
+        return 'array_uint64_t_converter'
+    if t('wl_display struct *'):
+        return 'wl_display_converter'
+    if t('wl_surface struct *'):
+        return 'wl_surface_converter'
+
+    # ----------------
+    # VULKAN TYPES
+    # ----------------
+    force_array = member.get('force_array')
+    for signature in vulkan_signatures:
+        raw_signature = signature['raw']
+        vkname = signature['vkname']
+        if not t(raw_signature):
+            continue
+
+        if signature['is_struct'] or signature['is_union']:
+            if (raw_signature.endswith('*') and force_array) \
+               or raw_signature.endswith(']'):
+                return 'struct_array_%s_converter' % vkname
+            elif raw_signature.endswith('*') and not force_array:
+                return 'struct_pointer_%s_converter' % vkname
+            else:
+                return 'struct_base_%s_converter' % vkname
+        elif signature['is_handle']:
+            if force_array:
+                return 'handle_array_%s_converter' % vkname
+            elif member['type'].endswith('*'):
+                return 'handle_pointer_%s_converter' % vkname
+            else:
+                return 'handle_base_%s_converter' % vkname
+        else:
+            if raw_signature.endswith('*') and member.get('len'):
+                return 'flag_array_%s_converter' % vkname
+            elif raw_signature.endswith('*'):
+                return 'flag_pointer_%s_converter' % vkname
+            else:
+                return 'flag_base_%s_converter' % vkname
+
+    return 'cant_detect_py_to_c'
+
+
+def parse_tuple_and_keywords(members, optional=False, return_value='NULL'):
+    '''Parse Python object to C type'''
     members = members_formated(members)
     if not members:
         return ''
 
-    var_names = ','.join(["&"+m['name'] for m in members_formated(members)])
-    o = 'O' * len(members)
+    options = []
+    var_names = []
+
+    for member in members:
+        name = detect_py_to_c(member)
+        options += 'O&'
+        var_names.append(name)
+        var_names.append('&%s' % member['name'])
+
+    options = ''.join(options)
+    var_names = ','.join(var_names)
     return '''
     if( !PyArg_ParseTupleAndKeywords(args, kwds,
         "{optional}{o}", kwlist, {names}))
-        return 0;
-    '''.format(o=o, optional='|' if optional else '', names=var_names)
+        return {return_value};
+    '''.format(o=options, optional='|' if optional else '',
+               names=var_names, return_value=return_value)
 
 
-def copy_in_object(cname, member):
+def copy_in_object(member):
     '''Insert c value named cname into member
     Depending on the type, the way to do it can change
     '''
     mname = member['name']
+
+    if member.get('null'):
+        return '(self->base)->{mname} = NULL;'.format(mname=mname)
     if member['type'] == 'char []':
-        return 'strcpy((self->base)->{mname}, {cname});'.format(
-            cname=cname, mname=mname)
+        return 'strcpy((self->base)->{mname}, {mname});'.format(mname=mname)
     if member['type'].endswith('[2]'):
         return '''
-        memcpy((self->base)->{mname}, {cname}, 2 * sizeof({mtype}));
-        '''.format(mname=mname, cname=cname, mtype=member['raw_type'])
+        memcpy((self->base)->{mname}, {mname}, 2 * sizeof({mtype}));
+        '''.format(mname=mname, mtype=member['raw_type'])
     if member['type'].endswith('[4]'):
         return '''
-        memcpy((self->base)->{mname}, {cname}, 4 * sizeof({mtype}));
-        '''.format(mname=mname, cname=cname, mtype=member['raw_type'])
+        memcpy((self->base)->{mname}, {mname}, 4 * sizeof({mtype}));
+        '''.format(mname=mname, mtype=member['raw_type'])
     if member['enum']:
         return '''
-        memcpy((self->base)->{mname}, {cname}, {enum} * sizeof({mtype}));
-        '''.format(mname=mname, cname=cname, mtype=member['raw_type'],
+        memcpy((self->base)->{mname}, {mname}, {enum} * sizeof({mtype}));
+        '''.format(mname=mname, mtype=member['raw_type'],
                    enum=member['enum'])
-    return '(self->base)->{mname} = {cname};'.format(
-            cname=cname, mname=mname)
+    return '(self->base)->{mname} = {mname};'.format(mname=mname)
 
 
 def python_to_c(member, pyname, cname, return_value='NULL',
@@ -152,7 +316,7 @@ def python_to_c(member, pyname, cname, return_value='NULL',
     # ----------------
     # NATIVE C TYPES
     # ----------------
-    for ctype in ('uint32_t', 'uint64_t', 'int32_t', 'size_t',
+    for ctype in (
                   'Window', 'Display *'):
         if t(ctype):
             return basic_generic(ctype, 'PyLong_AsLong')

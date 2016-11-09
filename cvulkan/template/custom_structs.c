@@ -1,8 +1,3 @@
-typedef struct {
-    PyObject_HEAD VkDebugReportCallbackCreateInfoEXT *base;
-}
-PyVkDebugReportCallbackCreateInfoEXT;
-
 static void PyVkDebugReportCallbackCreateInfoEXT_del(PyVkDebugReportCallbackCreateInfoEXT* self) {
     Py_TYPE(self)->tp_free((PyObject*)self);
 }

@@ -29,26 +29,26 @@
     // ----------
     // Init
     // ----------
+    {# Hack to handle unions! #}
+    {% if s.union %}
+        {% include 'init_unions/' ~ s.name|lower ~ '.c' %}
+    {% else %}
     static int Py{{s.name}}_init(Py{{s.name}} *self, PyObject *args, PyObject *kwds) {
         {% if not s.return_only %}
             {{s.members|init_function_members}}
             {{s.members|kwlist}}
-            {{s.members|parse_tuple_and_keywords(optional=s.union)}}
+            {{s.members|parse_tuple_and_keywords(optional=s.union, return_value='-1')}}
 
             {% for m in s.members %}
-            {% if s.union %} if ({{m.name}} != NULL) { {% endif %}
-                    {% set cname = 'c_' ~ m.name %}
-                    {% set jr = m|python_to_c(m.name, cname, '-1', force_array=m.force_array) %}
-                    {% if jr %}
-                        {{jr}}
-                        {{cname|copy_in_object(m)}}
-                    {% endif %}
-            {% if s.union %} } {% endif %}
+            {% if s.union %} //if ({{m.name}} != NULL) { {% endif %}
+                {{m|copy_in_object}}
+            {% if s.union %} //} {% endif %}
             {% endfor %}
         {% endif %}
 
         return 0;
     }
+    {% endif %}
 
 
     // ----------

@@ -390,10 +390,9 @@ input_assembly_create = VkPipelineInputAssemblyStateCreateInfo(
     flags=0,
     topology=VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
     primitiveRestartEnable=VK_FALSE)
-
 viewport = VkViewport(
-    x=0, y=0, width=extent.width, height=extent.height,
-    minDepth=0, maxDepth=1)
+    x=0., y=0., width=float(extent.width), height=float(extent.height),
+    minDepth=0., maxDepth=1.)
 
 scissor_offset = VkOffset2D(x=0, y=0)
 scissor = VkRect2D(offset=scissor_offset, extent=extent)
@@ -415,9 +414,9 @@ rasterizer_create = VkPipelineRasterizationStateCreateInfo(
     cullMode=VK_CULL_MODE_BACK_BIT,
     frontFace=VK_FRONT_FACE_CLOCKWISE,
     depthBiasEnable=VK_FALSE,
-    depthBiasConstantFactor=0,
-    depthBiasClamp=0,
-    depthBiasSlopeFactor=0)
+    depthBiasConstantFactor=0.,
+    depthBiasClamp=0.,
+    depthBiasSlopeFactor=0.)
 
 multisample_create = VkPipelineMultisampleStateCreateInfo(
     sType=VK_STRUCTURE_TYPE_PIPELINE_MULTISAMPLE_STATE_CREATE_INFO,
@@ -534,7 +533,7 @@ for i, command_buffer in enumerate(command_buffers):
     # Create render pass
     render_area = VkRect2D(offset=VkOffset2D(x=0, y=0),
                            extent=extent)
-    color = VkClearColorValue(float32=[0, 0, 0, 1])
+    color = VkClearColorValue(float32=[0, 1, 0, 1])
     clear_value = VkClearValue(color=color)
 
     render_pass_begin_create = VkRenderPassBeginInfo(
@@ -570,7 +569,11 @@ vkQueuePresentKHR = vkGetInstanceProcAddr(instance, "vkQueuePresentKHR")
 # maximum value of a 64 bit unsigned integer
 max_uint = 1844674473709551615
 def draw_frame():
-    image_index = vkAcquireNextImageKHR(logical_device, swapchain, max_uint, semaphore_image_available, None)
+    try:
+        image_index = vkAcquireNextImageKHR(logical_device, swapchain, 1000000000, semaphore_image_available, None)
+    except:
+        print('not ready')
+        return
 
     wait_semaphores = [semaphore_image_available]
     wait_stages = [VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT]
@@ -605,10 +608,12 @@ def draw_frame():
 
 # Main loop
 running = True
+i = 0
 while running:
     events = sdl2.ext.get_events()
+    draw_frame()
+    vkDeviceWaitIdle(logical_device)
     for event in events:
-        draw_frame()
         if event.type == sdl2.SDL_QUIT:
             running = False
             break

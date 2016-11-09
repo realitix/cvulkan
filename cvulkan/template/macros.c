@@ -4,7 +4,7 @@
     {% if define %} #endif {% endif %}
 {% endmacro %}
 
-{% macro content_function(f, call_name=None) %}
+{% macro content_function(f, call_name=None, return_value='NULL') %}
     {% set cname = f.name %}
     {% if call_name %}
         {% set cname = call_name %}
@@ -12,19 +12,14 @@
 
     {{f.members|init_function_members}}
     {{f.members|kwlist}}
-    {{f.members|parse_tuple_and_keywords}}
-
-    {% set prefix = 'c_' %}
-    {% for m in f.members %}
-        {{m|python_to_c(m.name, prefix ~ m.name, 'NULL')}}
-    {% endfor %}
+    {{f.members|parse_tuple_and_keywords(return_value=return_value)}}
 
     {% set rt = f.return_member.type %}
 
     {% if f.count %}
         uint32_t count;
 
-        {% set call_function = cname ~ '(' ~ f.members|join_comma(2, prefix) ~ '&count, NULL)' %}
+        {% set call_function = cname ~ '(' ~ f.members|join_comma(2, '') ~ '&count, NULL)' %}
         {% if f.return_result %}
             if (raise({{call_function}}))
                 return NULL;
@@ -34,7 +29,7 @@
 
         {{rt}} *values = malloc(count * sizeof({{rt}}));
 
-        {% set call_function = cname ~ '(' ~ f.members|join_comma(2, prefix) ~ '&count, values)' %}
+        {% set call_function = cname ~ '(' ~ f.members|join_comma(2, '') ~ '&count, values)' %}
         {% if f.return_result %}
             if (raise({{call_function}}))
                 return NULL;
@@ -68,11 +63,11 @@
         int allocate_size = 1;
 
         {% if f.return_member.static_count %}
-            allocate_size = (int) {{prefix}}{{f.return_member.static_count.key}}->{{f.return_member.static_count.value}};
+            allocate_size = (int) {{f.return_member.static_count.key}}->{{f.return_member.static_count.value}};
         {% endif %}
 
         {{rt}} *value = malloc(allocate_size * sizeof({{rt}}));
-        {% set call_function = cname ~ '(' ~ f.members|join_comma(1, prefix) ~ 'value)' %}
+        {% set call_function = cname ~ '(' ~ f.members|join_comma(1, '') ~ 'value)' %}
         {% if f.return_result %}
             if (raise({{call_function}}))
                 return NULL;
@@ -118,12 +113,13 @@
         {% endif %}
 
     {% else %}
-        {% set call_function = cname ~ '(' ~ f.members|join_comma(0, prefix) ~ ')' %}
+        {% set call_function = cname ~ '(' ~ f.members|join_comma(0, '') ~ ')' %}
 
         {% if f.return_boolean %}
             PyObject* return_value = PyBool_FromLong({{call_function}});
         {% else %}
             {{call_function}};
+            Py_INCREF(Py_None);
             PyObject* return_value = Py_None;
         {% endif %}
     {% endif %}
