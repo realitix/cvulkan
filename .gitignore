@@ -91,4 +91,6 @@ ENV/
 cvulkan/cache_vk_plateform.h
 cvulkan/cache_vk.xml
 cvulkan/cache_vulkan.h
+cvulkan/template/vulkan.h
+cvulkan/template/vk_plateform.h
 

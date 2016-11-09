@@ -1,5 +1,8 @@
+from distutils.command.clean import clean
 from setuptools import setup, find_packages, Extension
 import os
+
+import cvulkan
 
 
 def get_include_paths():
@@ -47,9 +50,29 @@ print("Extension compiled for : %s" % enabled_defines)
 vulkanmodule = Extension('vulkan',
                          sources=['cvulkan/vulkanmodule2.c'],
                          define_macros=macros)
+
+
+class CVulkanClean(clean):
+    def run(self):
+        super().run()
+
+        # Clean tmp files
+        app_path = os.path.dirname(os.path.realpath(__file__))
+        for filepath in ['cvulkan/cache_vk_plateform.h',
+                         'cvulkan/cache_vk.xml', 'cvulkan/cache_vulkan.h',
+                         'cvulkan/template/vk_plateform.h',
+                         'cvulkan/template/vulkan.h']:
+            path = os.path.join(app_path, filepath)
+            try:
+                os.remove(path)
+                print('Delete %s' % path)
+            except Exception:
+                print('%s not existant' % path)
+
+
 setup(
     name="cvulkan",
-    version="0.1",
+    version=cvulkan.__version__,
     packages=find_packages(),
     author="realitix",
     author_email="realitix@gmail.com",
@@ -69,5 +92,6 @@ setup(
         "Topic :: Multimedia :: Graphics :: 3D Rendering"
     ],
     license="Apache",
-    ext_modules=[vulkanmodule]
+    ext_modules=[vulkanmodule],
+    cmdclass={'clean': CVulkanClean}
 )
