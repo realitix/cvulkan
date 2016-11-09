@@ -84,14 +84,19 @@ setup(
     include_package_data=True,
     url="http://github.com/realitix/cvulkan",
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache Software License",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: Android",
+        "Operating System :: Microsoft :: Windows",
+        "Operating System :: POSIX :: Linux",
         "Natural Language :: English",
         "Programming Language :: Python :: 3.5",
-        "Topic :: Multimedia :: Graphics :: 3D Rendering"
+        "Topic :: Multimedia :: Graphics",
+        "Topic :: Scientific/Engineering",
+        "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    license="Apache",
+    license="MIT",
     ext_modules=[vulkanmodule],
     cmdclass={'clean': CVulkanClean}
 )
