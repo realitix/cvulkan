@@ -8,7 +8,7 @@ Enjoy the pain!
 
 __all__ = ['join_comma', 'kwlist', 'parse_tuple_and_keywords',
            'c_to_python', 'init_function_members',
-           'copy_in_object', 'format_fname']
+           'copy_in_object', 'format_fname', 'free_pyc']
 
 # Vulkan signatures with this data model
 # signatures = [{
@@ -152,26 +152,26 @@ def detect_py_to_c(member):
                   'SECURITY_ATTRIBUTES *', 'DWORD', 'MirConnection *',
                   'VisualID', 'xcb_visualid_t'):
         if t(ctype):
-            return '%s_converter' % format_fname(ctype)
+            return 'pyc_%s_converter' % format_fname(ctype)
     if t('char []') or t('char *'):
-        return 'string_converter'
+        return 'pyc_string_converter'
     if t('char * const*'):
-        return 'array_string_converter'
+        return 'pyc_array_string_converter'
     if t('float [2]') or t('float [4]') or t('float *'):
-        return 'array_float_converter'
+        return 'pyc_array_float_converter'
     if t('uint32_t [2]') or t('uint32_t [3]') or \
        t('uint32_t [4]') or t('uint32_t *'):
-        return 'array_uint32_t_converter'
+        return 'pyc_array_uint32_t_converter'
     if t('int32_t [4]'):
-        return 'array_int32_t_converter'
+        return 'pyc_array_int32_t_converter'
     if t('uint8_t []'):
-        return 'array_uint8_t_converter'
+        return 'pyc_array_uint8_t_converter'
     if t('uint64_t *'):
-        return 'array_uint64_t_converter'
+        return 'pyc_array_uint64_t_converter'
     if t('wl_display struct *'):
-        return 'wl_display_converter'
+        return 'pyc_wl_display_converter'
     if t('wl_surface struct *'):
-        return 'wl_surface_converter'
+        return 'pyc_wl_surface_converter'
 
     # ----------------
     # VULKAN TYPES
@@ -186,25 +186,25 @@ def detect_py_to_c(member):
         if signature['is_struct'] or signature['is_union']:
             if (raw_signature.endswith('*') and force_array) \
                or raw_signature.endswith(']'):
-                return 'struct_array_%s_converter' % vkname
+                return 'pyc_struct_array_%s_converter' % vkname
             elif raw_signature.endswith('*') and not force_array:
-                return 'struct_pointer_%s_converter' % vkname
+                return 'pyc_struct_pointer_%s_converter' % vkname
             else:
-                return 'struct_base_%s_converter' % vkname
+                return 'pyc_struct_base_%s_converter' % vkname
         elif signature['is_handle']:
             if force_array:
-                return 'handle_array_%s_converter' % vkname
+                return 'pyc_handle_array_%s_converter' % vkname
             elif member['type'].endswith('*'):
-                return 'handle_pointer_%s_converter' % vkname
+                return 'pyc_handle_pointer_%s_converter' % vkname
             else:
-                return 'handle_base_%s_converter' % vkname
+                return 'pyc_handle_base_%s_converter' % vkname
         else:
             if raw_signature.endswith('*') and member.get('len'):
-                return 'flag_array_%s_converter' % vkname
+                return 'pyc_flag_array_%s_converter' % vkname
             elif raw_signature.endswith('*'):
-                return 'flag_pointer_%s_converter' % vkname
+                return 'pyc_flag_pointer_%s_converter' % vkname
             else:
-                return 'flag_base_%s_converter' % vkname
+                return 'pyc_flag_base_%s_converter' % vkname
 
     return 'cant_detect_py_to_c'
 
@@ -232,6 +232,20 @@ def parse_tuple_and_keywords(members, optional=False, return_value='NULL'):
         return {return_value};
     '''.format(o=options, optional='|' if optional else '',
                names=var_names, return_value=return_value)
+
+
+def free_pyc(members):
+    '''Call functions to free each member'''
+    members = members_formated(members)
+    if not members:
+        return ''
+
+    result = ''
+    for m in members:
+        fname = detect_py_to_c(m) + '_free'
+        result += '%s(&%s);\n' % (fname, m['name'])
+
+    return result
 
 
 def copy_in_object(member):

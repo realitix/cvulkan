@@ -78,12 +78,47 @@ sdl2.SDL_GetWindowWMInfo(window, ctypes.byref(wm_info))
 
 # ----------
 # Create surface
+vkDestroySurfaceKHR = vkGetInstanceProcAddr(instance, "vkDestroySurfaceKHR")
+
 def surface_xlib():
     print("Create Xlib surface")
     vkCreateXlibSurfaceKHR = vkGetInstanceProcAddr(instance, "vkCreateXlibSurfaceKHR")
-    surface_create = VkXlibSurfaceCreateInfoKHR(sType=VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR, dpy=wm_info.info.x11.display, window=wm_info.info.x11.window, flags=0)
+    surface_create = VkXlibSurfaceCreateInfoKHR(
+        sType=VK_STRUCTURE_TYPE_XLIB_SURFACE_CREATE_INFO_KHR,
+        dpy=wm_info.info.x11.display,
+        window=wm_info.info.x11.window,
+        flags=0)
     return vkCreateXlibSurfaceKHR(instance=instance, pCreateInfo=surface_create)
 
+def surface_mir():
+    print("Create mir surface")
+    vkCreateMirSurfaceKHR = vkGetInstanceProcAddr(instance, "vkCreateMirSurfaceKHR")
+    surface_create = VkMirSurfaceCreateInfoKHR(
+        sType=VK_STRUCTURE_TYPE_MIR_SURFACE_CREATE_INFO_KHR,
+        connection=wm_info.info.mir.connection,
+        mirSurface=wm_info.info.mir.surface,
+        flags=0)
+    return vkCreateMirSurfaceKHR(instance=instance, pCreateInfo=surface_create)
+
+def surface_wayland():
+    print("Create wayland surface")
+    vkCreateWaylandSurfaceKHR = vkGetInstanceProcAddr(instance, "vkCreateWaylandSurfaceKHR")
+    surface_create = VkWaylandSurfaceCreateInfoKHR(
+        sType=VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR,
+        display=wm_info.info.wl.display,
+        surface=wm_info.info.surface,
+        flags=0)
+    return vkCreateWaylandSurfaceKHR(instance=instance, pCreateInfo=surface_create)
+
+def surface_win32():
+    print("Create windows surface")
+    vkCreateWin32SurfaceKHR = vkGetInstanceProcAddr(instance, "vkCreateWin32SurfaceKHR")
+    surface_create = VkWin32SurfaceCreateInfoKHR(
+        sType=VK_STRUCTURE_TYPE_WAYLAND_SURFACE_CREATE_INFO_KHR,
+        hinstance='TODO',
+        hwdn=wm_info.info.win.window,
+        flags=0)
+    return vkCreateWaylandSurfaceKHR(instance=instance, pCreateInfo=surface_create)
 
 surface_mapping = {
     sdl2.SDL_SYSWM_X11: surface_xlib}
@@ -232,6 +267,7 @@ if queue_family_graphic_index != queue_family_present_index:
     pQueueFamilyIndices = queueFamilyIndices
 
 vkCreateSwapchainKHR = vkGetInstanceProcAddr(instance, 'vkCreateSwapchainKHR')
+vkDestroySwapchainKHR = vkGetInstanceProcAddr(instance, 'vkDestroySwapchainKHR')
 vkGetSwapchainImagesKHR = vkGetInstanceProcAddr(instance, 'vkGetSwapchainImagesKHR')
 
 swapchain_create = VkSwapchainCreateInfoKHR(
@@ -608,6 +644,7 @@ def draw_frame():
 
 # Main loop
 running = True
+#running = False
 i = 0
 while running:
     events = sdl2.ext.get_events()
@@ -621,6 +658,20 @@ while running:
 
 # ----------
 # Clean everything
-# vkDestroyDebugReportCallbackEXT(instance, callback)
-# We don't call it to see the error
+vkDestroySemaphore(logical_device, semaphore_image_available)
+vkDestroySemaphore(logical_device, semaphore_render_finished)
+vkDestroyCommandPool(logical_device, command_pool)
+for f in framebuffers:
+    vkDestroyFramebuffer(logical_device, f)
+vkDestroyPipeline(logical_device, pipeline)
+vkDestroyPipelineLayout(logical_device, pipeline_layout)
+vkDestroyRenderPass(logical_device, render_pass)
+vkDestroyShaderModule(logical_device, frag_shader_module)
+vkDestroyShaderModule(logical_device, vert_shader_module)
+for i in image_views:
+    vkDestroyImageView(logical_device, i)
+vkDestroySwapchainKHR(logical_device, swapchain)
+vkDestroyDevice(logical_device)
+vkDestroySurfaceKHR(instance, surface)
+vkDestroyDebugReportCallbackEXT(instance, callback)
 vkDestroyInstance(instance)

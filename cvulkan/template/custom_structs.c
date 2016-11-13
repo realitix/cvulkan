@@ -65,11 +65,3 @@ PyVkDebugReportCallbackCreateInfoEXT_init(
     return 0;
 }
 
-static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType = {
-    PyVarObject_HEAD_INIT(NULL, 0)
-    "vulkan.VkDebugReportCallbackCreateInfoEXT", sizeof(PyVkDebugReportCallbackCreateInfoEXT), 0,
-    (destructor)PyVkDebugReportCallbackCreateInfoEXT_del,
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
-    "VkDebugReportCallbackCreateInfoEXT object",0,0,0,0,0,0,0,0,
-    0,0,0,0,0,0,(initproc)PyVkDebugReportCallbackCreateInfoEXT_init,0,PyVkDebugReportCallbackCreateInfoEXT_new,
-};

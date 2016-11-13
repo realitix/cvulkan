@@ -1,7 +1,7 @@
 from distutils.command.clean import clean
-from setuptools import setup, find_packages, Extension
 import os
-
+from setuptools import setup, find_packages, Extension
+import pypandoc
 import cvulkan
 
 
@@ -48,7 +48,7 @@ macros = [(d, None) for d in enabled_defines]
 print("Extension compiled for : %s" % enabled_defines)
 
 vulkanmodule = Extension('vulkan',
-                         sources=['cvulkan/vulkanmodule2.c'],
+                         sources=['cvulkan/vulkanmodule.c'],
                          define_macros=macros)
 
 
@@ -70,6 +70,11 @@ class CVulkanClean(clean):
                 print('%s not existant' % path)
 
 
+def rst_readme():
+    app_path = os.path.dirname(os.path.realpath(__file__))
+    return pypandoc.convert(os.path.join(app_path, 'README.md'), 'rst')
+
+
 setup(
     name="cvulkan",
     version=cvulkan.__version__,
@@ -77,7 +82,7 @@ setup(
     author="realitix",
     author_email="realitix@gmail.com",
     description="C Vulkan Wrapper",
-    long_description=open("README.md").read(),
+    long_description=rst_readme(),
     install_requires=[],
     setup_requires=[],
     tests_require=[],

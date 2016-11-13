@@ -44,6 +44,8 @@
                 {{m|copy_in_object}}
             {% if s.union %} //} {% endif %}
             {% endfor %}
+
+            {{s.members|free_pyc}}
         {% endif %}
 
         return 0;
@@ -102,4 +104,12 @@ void init_pytype_objects(void) {
             };
         {% endcall %}
     {% endfor %}
+    PyVkDebugReportCallbackCreateInfoEXTType = (PyTypeObject) {
+        PyVarObject_HEAD_INIT(NULL, 0)
+        "vulkan.VkDebugReportCallbackCreateInfoEXT", sizeof(PyVkDebugReportCallbackCreateInfoEXT), 0,
+        (destructor)PyVkDebugReportCallbackCreateInfoEXT_del,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+        "VkDebugReportCallbackCreateInfoEXT object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyVkDebugReportCallbackCreateInfoEXT_init,0,PyVkDebugReportCallbackCreateInfoEXT_new,
+    };
 }

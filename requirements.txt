@@ -1,3 +1,5 @@
 requests
 xmltodict
 jinja2
+pypandoc
+pysdl2

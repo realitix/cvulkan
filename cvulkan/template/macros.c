@@ -124,5 +124,7 @@
         {% endif %}
     {% endif %}
 
+    {{f.members|free_pyc}}
+
     return return_value;
 {% endmacro %}

@@ -54,6 +54,7 @@ PyVkDebugReportCallbackCreateInfoEXT;
         } Py{{s.name}};
         static PyTypeObject Py{{s.name}}Type;
     {% endcall %}
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
 {% endfor %}
 
 
