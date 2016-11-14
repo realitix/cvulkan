@@ -644,7 +644,7 @@ def draw_frame():
 
 # Main loop
 running = True
-#running = False
+running = False
 i = 0
 while running:
     events = sdl2.ext.get_events()

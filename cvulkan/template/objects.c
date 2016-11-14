@@ -22,6 +22,9 @@
     // Del
     // ---------
     static void Py{{s.name}}_del(Py{{s.name}}* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
         Py_TYPE(self)->tp_free((PyObject*)self);
     }
 
@@ -45,7 +48,7 @@
             {% if s.union %} //} {% endif %}
             {% endfor %}
 
-            {{s.members|free_pyc}}
+            {{s.members|free_pyc(disable=True)}}
         {% endif %}
 
         return 0;

@@ -21,7 +21,7 @@
         return 1;
     }
 
-    static void pyc_{{t|format_fname}}_converter_free({{t}}* val) { }
+    static void pyc_{{t|format_fname}}_converter_free({{t}}* val, int disable) { }
     {% endcall %}
     {% endcall %}
 {% endfor %}
@@ -41,14 +41,14 @@ static int pyc_float_converter(PyObject* arg, float* val) {
     return 1;
 }
 
-static void pyc_float_converter_free(float* val) {}
+static void pyc_float_converter_free(float* val, int disable) {}
 
 static int pyc_{{'void *'|format_fname}}_converter(PyObject* arg, void** val) {
     *val = NULL;
     return 1;
 }
 
-static void pyc_{{'void *'|format_fname}}_converter_free(void** val) {}
+static void pyc_{{'void *'|format_fname}}_converter_free(void** val, int disable) {}
 
 static int pyc_string_converter(PyObject* arg, char** val) {
     if (arg == Py_None) {
@@ -86,7 +86,14 @@ static int pyc_string_converter(PyObject* arg, char** val) {
     return 1;
 }
 
-static void pyc_string_converter_free(char** val) {}
+static void pyc_string_converter_free(char** val, int disable) {
+    if (disable)
+        return;
+
+    if (*val != NULL) {
+        free(*val);
+    }
+}
 
 static int pyc_array_string_converter(PyObject* arg, char*** val) {
     if (!PyList_Check(arg)) {
@@ -96,7 +103,8 @@ static int pyc_array_string_converter(PyObject* arg, char*** val) {
 
     int size = PyList_Size(arg);
 
-    *val = malloc(sizeof(char*) * size);
+    // Array ends with NULL (needed for free part)
+    *val = malloc(sizeof(char*) * (size + 1));
     if (*val == NULL) {
         PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
         return 0;
@@ -153,10 +161,24 @@ static int pyc_array_string_converter(PyObject* arg, char*** val) {
         Py_DECREF(ascii_str);
     }
 
+    (*val)[i] = NULL;
+
     return 1;
 }
 
-static void pyc_array_string_converter_free(char*** val) {}
+static void pyc_array_string_converter_free(char*** val, int disable) {
+    if (disable)
+        return;
+
+    char** tmp = *val;
+
+    while (tmp != NULL) {
+        free(*tmp);
+        tmp++;
+    }
+
+    free(*val);
+}
 
 {% macro list_generic(ctype, pyfunction) %}
 static int pyc_array_{{ctype}}_converter(PyObject* arg, {{ctype}}** val) {
@@ -188,7 +210,12 @@ static int pyc_array_{{ctype}}_converter(PyObject* arg, {{ctype}}** val) {
     return 1;
 }
 
-static void pyc_array_{{ctype}}_converter_free({{ctype}}** val) {}
+static void pyc_array_{{ctype}}_converter_free({{ctype}}** val, int disable) {
+    if (disable)
+        return;
+
+    free(*val);
+}
 {% endmacro %}
 
 {{list_generic('float', 'PyFloat_AsDouble')}}
@@ -205,14 +232,14 @@ static int pyc_wl_display_converter(PyObject* arg, struct wl_display** val) {
     return 1;
 }
 
-static void pyc_wl_display_converter_free(struct wl_display** val) {}
+static void pyc_wl_display_converter_free(struct wl_display** val, int disable) {}
 
 static int pyc_wl_surface_converter(PyObject* arg, struct wl_surface** val) {
    *val = (struct wl_surface*) PyLong_AsLong(arg);
    return 1;
 }
 
-static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
+static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) {}
 
 {% for signature in model.signatures %}
     {% set vkname = signature.vkname %}
@@ -260,7 +287,12 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
             return 1;
         }
 
-        static void pyc_struct_array_{{vkname}}_converter_free({{vkname}}** val) {}
+        static void pyc_struct_array_{{vkname}}_converter_free({{vkname}}** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
         {% endcall %}
 
         {% call check_called('pyc_struct_pointer_'~ vkname ~'_converter') %}
@@ -278,7 +310,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
             *val = ((Py{{vkname}}*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_{{vkname}}_converter_free({{vkname}}** val) {}
+        static void pyc_struct_pointer_{{vkname}}_converter_free({{vkname}}** val, int disable) {}
         {% endcall %}
 
         {% call check_called('pyc_struct_base_'~ vkname ~'_converter') %}
@@ -291,7 +323,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
             *val = *(((Py{{vkname}}*)arg)->base);
             return 1;
         }
-        static void pyc_struct_base_{{vkname}}_converter_free({{vkname}}* val) {}
+        static void pyc_struct_base_{{vkname}}_converter_free({{vkname}}* val, int disable) {}
         {% endcall %}
 
     {% elif signature.is_handle %}
@@ -339,7 +371,12 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
 
             return 1;
         }
-        static void pyc_handle_array_{{vkname}}_converter_free({{vkname}}** val) {}
+        static void pyc_handle_array_{{vkname}}_converter_free({{vkname}}** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
         {% if vkname == 'VkDeviceMemory' %}
             #endif
         {% endif %}
@@ -360,7 +397,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
             *val = handle_pointer;
             return 1;
         }
-        static void pyc_handle_pointer_{{vkname}}_converter_free({{vkname}}** val) {}
+        static void pyc_handle_pointer_{{vkname}}_converter_free({{vkname}}** val, int disable) {}
         {% endcall %}
 
         {% call check_called('pyc_handle_base_'~ vkname ~'_converter') %}
@@ -378,7 +415,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
             *val = *handle_pointer;
             return 1;
         }
-        static void pyc_handle_base_{{vkname}}_converter_free({{vkname}}* val) {}
+        static void pyc_handle_base_{{vkname}}_converter_free({{vkname}}* val, int disable) {}
         {% endcall %}
 
     {% else %}
@@ -426,7 +463,12 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
             }
             return 1;
         }
-        static void pyc_flag_array_{{vkname}}_converter_free({{vkname}}** val) {}
+        static void pyc_flag_array_{{vkname}}_converter_free({{vkname}}** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
         {% endcall %}
 
         {% call check_called('pyc_flag_pointer_'~ vkname ~'_converter') %}
@@ -456,7 +498,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
             memcpy(*val, &tmp, sizeof({{vkname}}));
             return 1;
         }
-        static void pyc_flag_pointer_{{vkname}}_converter_free({{vkname}}** val) {}
+        static void pyc_flag_pointer_{{vkname}}_converter_free({{vkname}}** val, int disable) {}
         {% endcall %}
 
         {% call check_called('pyc_flag_base_'~ vkname ~'_converter') %}
@@ -473,7 +515,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val) {}
 
             return 1;
         }
-        static void pyc_flag_base_{{vkname}}_converter_free({{vkname}}* val) {}
+        static void pyc_flag_base_{{vkname}}_converter_free({{vkname}}* val, int disable) {}
         {% endcall %}
 
     {% endif %}

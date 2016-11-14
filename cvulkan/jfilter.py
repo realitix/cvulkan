@@ -234,7 +234,7 @@ def parse_tuple_and_keywords(members, optional=False, return_value='NULL'):
                names=var_names, return_value=return_value)
 
 
-def free_pyc(members):
+def free_pyc(members, disable=False):
     '''Call functions to free each member'''
     members = members_formated(members)
     if not members:
@@ -243,7 +243,7 @@ def free_pyc(members):
     result = ''
     for m in members:
         fname = detect_py_to_c(m) + '_free'
-        result += '%s(&%s);\n' % (fname, m['name'])
+        result += '%s(&%s, %s);\n' % (fname, m['name'], 1 if disable else 0)
 
     return result
 
