@@ -190,7 +190,8 @@ MAPPING_EXTENSION_DEFINE = {
     'VK_USE_PLATFORM_XLIB_KHR',
     'Window': 'VK_USE_PLATFORM_XLIB_KHR',
     'Display': 'VK_USE_PLATFORM_XLIB_KHR',
-    'vkCreateXlibSurfaceKHR': 'VK_USE_PLATFORM_XLIB_KHR'
+    'vkCreateXlibSurfaceKHR': 'VK_USE_PLATFORM_XLIB_KHR',
+    'VkWaylandSurfaceCreateFlagsKHR': 'VK_USE_PLATFORM_WAYLAND_KHR'
 }
 
 CUSTOM_FUNCTIONS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr',
