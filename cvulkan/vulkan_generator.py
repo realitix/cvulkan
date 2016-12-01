@@ -109,9 +109,9 @@ Custom functions are written directly in C in the template.
 We create an array in the model to declare them in python.
 model['custom_structs'] = ['f1', 'f2']
 
-## Macros
+## Macro functions
 Macros are just custom functions.
-model['macros'] = ['f1', 'f2']
+model['macro_functions'] = ['f1', 'f2']
 
 ## Exceptions
 Exceptions are created based on the name in the VkResult enum:
@@ -197,8 +197,9 @@ CUSTOM_FUNCTIONS = ('vkGetInstanceProcAddr', 'vkGetDeviceProcAddr',
                     'vkMapMemory', 'vkGetPipelineCacheData')
 CUSTOM_STRUCTS = ('VkDebugReportCallbackCreateInfoEXT',)
 CUSTOM_CONSTANTS = {'VK_NULL_HANDLE': 0}
-MACROS = ('VK_MAKE_VERSION', 'VK_VERSION_MAJOR', 'VK_VERSION_MINOR',
-          'VK_VERSION_PATCH')
+MACRO_FUNCTIONS = ('VK_MAKE_VERSION', 'VK_VERSION_MAJOR',
+                   'VK_VERSION_MINOR', 'VK_VERSION_PATCH')
+MACRO_PROPERTIES = ('VK_NULL_HANDLE', 'UINT64_MAX')
 NULL_MEMBERS = ('pNext', 'pAllocator', 'pUserData')
 
 
@@ -302,11 +303,6 @@ def model_constants(vk, model):
 
     add_constant({'@name': 'VK_API_VERSION_1_0',
                   '@value': 'VK_API_VERSION_1_0'})
-
-    #for key, value in CUSTOM_CONSTANTS.items():
-    #    model['constants'].append({'name': key,
-    #                               'value': value,
-    #                               'type': 'int'})
 
 
 def model_structs(vk, model):
@@ -465,7 +461,11 @@ def model_functions(vk, model):
 
     # Add custom functions
     model['custom_functions'] = CUSTOM_FUNCTIONS
-    model['macros'] = MACROS
+
+
+def model_macros(model):
+    model['macro_functions'] = MACRO_FUNCTIONS
+    model['macro_properties'] = MACRO_PROPERTIES
 
 
 def get_signatures(vk):
@@ -585,6 +585,7 @@ def main():
     model_structs(vk, model)
     model_functions(vk, model)
     model_exceptions(vk, model)
+    model_macros(model)
 
     env = jinja2.Environment(
         autoescape=False,
@@ -603,6 +604,7 @@ def main():
 
     with open(DEFAULT_OUT_FILE, 'w') as out:
         out.write(env.get_template('main.c').render(model=model))
+
 
 if __name__ == '__main__':
     main()

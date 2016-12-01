@@ -133,7 +133,7 @@ static PyMethodDef VulkanMethods[] = {
         {"{{f}}", (PyCFunction)Py{{f}}, METH_VARARGS, ""},
     {% endfor %}
 
-    {% for f in model.macros %}
+    {% for f in model.macro_functions %}
         {"{{f}}", (PyCFunction)Py{{f}}, METH_VARARGS, ""},
     {% endfor %}
 

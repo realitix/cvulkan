@@ -10,10 +10,22 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     // ----------
     // CONSTANTS
     // ----------
-    {% for constant in model['constants'] %}
+    {% for constant in model.constants %}
         {% if constant.type == 'int' %}
             PyModule_AddIntConstant(module, "{{constant.name}}", {{constant.value}});
+        {% elif constant.type == 'str' %}
+            PyModule_AddStringConstant(module, "{{constant.name}}", {{constant.value}});
         {% endif %}
+    {% endfor %}
+
+
+    // ----------
+    // MACROS
+    // ----------
+    {% for m in model.macro_properties %}
+        {# Return 0 on success #}
+        if(PyModule_AddIntMacro(module, {{m}}))
+            return NULL;
     {% endfor %}
 
 

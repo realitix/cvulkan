@@ -118,7 +118,7 @@ def surface_win32():
         hinstance='TODO',
         hwdn=wm_info.info.win.window,
         flags=0)
-    return vkCreateWaylandSurfaceKHR(instance=instance, pCreateInfo=surface_create)
+    return vkCreateWin32SurfaceKHR(instance=instance, pCreateInfo=surface_create)
 
 surface_mapping = {
     sdl2.SDL_SYSWM_X11: surface_xlib}
@@ -602,12 +602,10 @@ semaphore_render_finished = vkCreateSemaphore(logical_device, semaphore_create)
 vkAcquireNextImageKHR = vkGetInstanceProcAddr(instance, "vkAcquireNextImageKHR")
 vkQueuePresentKHR = vkGetInstanceProcAddr(instance, "vkQueuePresentKHR")
 
-# maximum value of a 64 bit unsigned integer
-max_uint = 1844674473709551615
 def draw_frame():
     try:
-        image_index = vkAcquireNextImageKHR(logical_device, swapchain, 1000000000, semaphore_image_available, None)
-    except:
+        image_index = vkAcquireNextImageKHR(logical_device, swapchain, UINT64_MAX, semaphore_image_available, None)
+    except VkNotReady:
         print('not ready')
         return
 
@@ -644,15 +642,24 @@ def draw_frame():
 
 # Main loop
 running = True
-running = False
+#running = False
 i = 0
+import time
+last_time = time.perf_counter() * 1000
+fps = 0
 while running:
+    fps += 1
+    if time.perf_counter() * 1000 - last_time >= 1000:
+        last_time = time.perf_counter() * 1000
+        print("FPS: %s" % fps)
+        fps = 0
+
     events = sdl2.ext.get_events()
     draw_frame()
-    vkDeviceWaitIdle(logical_device)
     for event in events:
         if event.type == sdl2.SDL_QUIT:
             running = False
+            vkDeviceWaitIdle(logical_device)
             break
 
 

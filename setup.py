@@ -1,7 +1,7 @@
+from distutils.cmd import Command
 from distutils.command.clean import clean
 import os
 from setuptools import setup, find_packages, Extension
-import pypandoc
 import cvulkan
 
 
@@ -24,6 +24,7 @@ def get_include_paths():
             result.append(line)
     return result
 
+
 include_paths = get_include_paths()
 
 
@@ -32,6 +33,7 @@ def c_import_exists(import_file):
         if os.path.exists(os.path.join(path, import_file)):
             return True
     return False
+
 
 define_mapping = {
     'android/native_window.h': 'VK_USE_PLATFORM_ANDROID_KHR',
@@ -70,9 +72,25 @@ class CVulkanClean(clean):
                 print('%s not existant' % path)
 
 
-def rst_readme():
-    app_path = os.path.dirname(os.path.realpath(__file__))
-    return pypandoc.convert(os.path.join(app_path, 'README.md'), 'rst')
+class ReadmeCommand(Command):
+    '''Convert the markdown README to Rest format (for pypi)'''
+
+    description = "Prepare README to pypi"
+    user_options = []
+
+    def initialize_options(self):
+        import pypandoc
+        self.pypandoc = pypandoc
+
+    def finalize_options(self):
+        pass
+
+    def run(self):
+        app_path = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(app_path, 'README.rst'), 'w') as result:
+            result.write(self.pypandoc.convert(
+                os.path.join(app_path, 'README.md'),
+                'rst'))
 
 
 setup(
@@ -82,7 +100,7 @@ setup(
     author="realitix",
     author_email="realitix@gmail.com",
     description="C Vulkan Wrapper",
-    long_description=rst_readme(),
+    long_description=open('README.rst').read(),
     install_requires=[],
     setup_requires=[],
     tests_require=[],
@@ -103,5 +121,5 @@ setup(
     ],
     license="MIT",
     ext_modules=[vulkanmodule],
-    cmdclass={'clean': CVulkanClean}
+    cmdclass={'clean': CVulkanClean, 'readme': ReadmeCommand}
 )
