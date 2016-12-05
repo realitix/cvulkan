@@ -45,3 +45,7 @@ Here the basic steps:
  - Pass the model to the `jinja2` template engine
  - The template engine generate the final c file
 
+## Community
+
+You can checkout my blog, I speaks about **CVulkan**:
+[Blog](https://realitix.github.io)
