@@ -341,7 +341,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of {{vkname}}");
                 return 0;
             }
 
@@ -428,7 +428,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of {{vkname}}");
                 return 0;
             }
 
@@ -449,7 +449,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
                 if (!PyLong_Check(item)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be an integer");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of {{vkname}} or integer");
                     return 0;
                 }
 
@@ -479,7 +479,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be an integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a {{vkname}} or integer");
                 return 0;
             }
 
@@ -504,7 +504,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         {% call check_called('pyc_flag_base_'~ vkname ~'_converter') %}
         static int pyc_flag_base_{{vkname}}_converter(PyObject* arg, {{vkname}}* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be an integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a {{vkname}} or integer");
                 return 0;
             }
 

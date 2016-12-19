@@ -81,11 +81,13 @@ model['functions'] = [{
         'static_count': {
             'key': 'name', -> Name of the member if count is static
             'value': 'name' -> Name of the property if count is static
+        }
     },
     'members': [{
         'name': 'name',
         'type': 'type', -> raw_type + #text
         'null': False,
+        'force_array': False, -> This member is a list
         'to_create': False -> this value must be created(count or allocate)
     }]
 }]
@@ -380,6 +382,7 @@ def model_functions(vk, model):
         return {'name': member['name'],
                 'type': type_name,
                 'null': member['name'] in NULL_MEMBERS,
+                'force_array': True if '@len' in member else False,
                 'to_create': False}
 
     def format_return_member(member):

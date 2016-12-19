@@ -520,7 +520,7 @@ pipeline_create = VkGraphicsPipelineCreateInfo(
     basePipelineHandle=None,
     basePipelineIndex=-1)
 
-pipeline = vkCreateGraphicsPipelines(logical_device, None, 1, pipeline_create)
+pipeline = vkCreateGraphicsPipelines(logical_device, None, 1, [pipeline_create])
 
 
 # Framebuffers creation
@@ -624,8 +624,7 @@ def draw_frame():
         signalSemaphoreCount=len(signal_semaphores),
         pSignalSemaphores=signal_semaphores)
 
-    #TODO: submit_create must be an array
-    vkQueueSubmit(graphic_queue, 1, submit_create, None)
+    vkQueueSubmit(graphic_queue, 1, [submit_create], None)
 
     present_create = VkPresentInfoKHR(
         sType=VK_STRUCTURE_TYPE_PRESENT_INFO_KHR,
