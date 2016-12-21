@@ -1,4 +1,4 @@
-# CVulkan
+![logo](https://cdn.rawgit.com/realitix/cvulkan/master/logo/cvulkan-web.svg)
 
 CVulkan is a C extension for Vulkan. It leverages power of Vulkan with simplicity of Python.
 
