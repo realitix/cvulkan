@@ -49,3 +49,10 @@ Here the basic steps:
 
 You can checkout my blog, I speaks about **CVulkan**:
 [Blog](https://realitix.github.io)
+
+## Supported By
+
+CVulkan is supported by helpful 3rd parties via code contributions, test devices and so forth.
+Make our supporters happy and visit their sites!
+
+![linagora](https://www.linagora.com/sites/all/themes/tux/logo.png)
