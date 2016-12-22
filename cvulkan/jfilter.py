@@ -199,7 +199,7 @@ def detect_py_to_c(member):
             else:
                 return 'pyc_handle_base_%s_converter' % vkname
         else:
-            if raw_signature.endswith('*') and member.get('len'):
+            if raw_signature.endswith('*') and force_array:
                 return 'pyc_flag_array_%s_converter' % vkname
             elif raw_signature.endswith('*'):
                 return 'pyc_flag_pointer_%s_converter' % vkname

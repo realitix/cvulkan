@@ -379,6 +379,7 @@ def model_functions(vk, model):
         if '#text' in member:
             text = member['#text'].replace('const ', '').strip()
             type_name += ' ' + text
+
         return {'name': member['name'],
                 'type': type_name,
                 'null': member['name'] in NULL_MEMBERS,
