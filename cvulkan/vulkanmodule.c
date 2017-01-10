@@ -180,7 +180,7 @@ extern "C" {
 #define VK_VERSION_MINOR(version) (((uint32_t)(version) >> 12) & 0x3ff)
 #define VK_VERSION_PATCH(version) ((uint32_t)(version) & 0xfff)
 // Version of this file
-#define VK_HEADER_VERSION 32
+#define VK_HEADER_VERSION 38
 
 
 #define VK_NULL_HANDLE 0
@@ -363,6 +363,12 @@ typedef enum VkStructureType {
     VK_STRUCTURE_TYPE_EXPORT_MEMORY_WIN32_HANDLE_INFO_NV = 1000057001,
     VK_STRUCTURE_TYPE_WIN32_KEYED_MUTEX_ACQUIRE_RELEASE_INFO_NV = 1000058000,
     VK_STRUCTURE_TYPE_VALIDATION_FLAGS_EXT = 1000061000,
+    VK_STRUCTURE_TYPE_OBJECT_TABLE_CREATE_INFO_NVX = 1000086000,
+    VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX = 1000086001,
+    VK_STRUCTURE_TYPE_CMD_PROCESS_COMMANDS_INFO_NVX = 1000086002,
+    VK_STRUCTURE_TYPE_CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX = 1000086003,
+    VK_STRUCTURE_TYPE_DEVICE_GENERATED_COMMANDS_LIMITS_NVX = 1000086004,
+    VK_STRUCTURE_TYPE_DEVICE_GENERATED_COMMANDS_FEATURES_NVX = 1000086005,
     VK_STRUCTURE_TYPE_BEGIN_RANGE = VK_STRUCTURE_TYPE_APPLICATION_INFO,
     VK_STRUCTURE_TYPE_END_RANGE = VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO,
     VK_STRUCTURE_TYPE_RANGE_SIZE = (VK_STRUCTURE_TYPE_LOADER_DEVICE_CREATE_INFO - VK_STRUCTURE_TYPE_APPLICATION_INFO + 1),
@@ -1055,6 +1061,7 @@ typedef enum VkPipelineStageFlagBits {
     VK_PIPELINE_STAGE_HOST_BIT = 0x00004000,
     VK_PIPELINE_STAGE_ALL_GRAPHICS_BIT = 0x00008000,
     VK_PIPELINE_STAGE_ALL_COMMANDS_BIT = 0x00010000,
+    VK_PIPELINE_STAGE_COMMAND_PROCESS_BIT_NVX = 0x00020000,
     VK_PIPELINE_STAGE_FLAG_BITS_MAX_ENUM = 0x7FFFFFFF
 } VkPipelineStageFlagBits;
 typedef VkFlags VkPipelineStageFlags;
@@ -1229,6 +1236,8 @@ typedef enum VkAccessFlagBits {
     VK_ACCESS_HOST_WRITE_BIT = 0x00004000,
     VK_ACCESS_MEMORY_READ_BIT = 0x00008000,
     VK_ACCESS_MEMORY_WRITE_BIT = 0x00010000,
+    VK_ACCESS_COMMAND_PROCESS_READ_BIT_NVX = 0x00020000,
+    VK_ACCESS_COMMAND_PROCESS_WRITE_BIT_NVX = 0x00040000,
     VK_ACCESS_FLAG_BITS_MAX_ENUM = 0x7FFFFFFF
 } VkAccessFlagBits;
 typedef VkFlags VkAccessFlags;
@@ -3872,7 +3881,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL vkGetPhysicalDeviceWin32PresentationSupportKHR(
 #define VK_EXT_debug_report 1
 VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkDebugReportCallbackEXT)
 
-#define VK_EXT_DEBUG_REPORT_SPEC_VERSION  3
+#define VK_EXT_DEBUG_REPORT_SPEC_VERSION  4
 #define VK_EXT_DEBUG_REPORT_EXTENSION_NAME "VK_EXT_debug_report"
 #define VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT VK_STRUCTURE_TYPE_DEBUG_REPORT_CALLBACK_CREATE_INFO_EXT
 
@@ -3907,9 +3916,13 @@ typedef enum VkDebugReportObjectTypeEXT {
     VK_DEBUG_REPORT_OBJECT_TYPE_SURFACE_KHR_EXT = 26,
     VK_DEBUG_REPORT_OBJECT_TYPE_SWAPCHAIN_KHR_EXT = 27,
     VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT = 28,
+    VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT = 29,
+    VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT = 30,
+    VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT = 31,
+    VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT = 32,
     VK_DEBUG_REPORT_OBJECT_TYPE_BEGIN_RANGE_EXT = VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT,
-    VK_DEBUG_REPORT_OBJECT_TYPE_END_RANGE_EXT = VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT,
-    VK_DEBUG_REPORT_OBJECT_TYPE_RANGE_SIZE_EXT = (VK_DEBUG_REPORT_OBJECT_TYPE_DEBUG_REPORT_EXT - VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT + 1),
+    VK_DEBUG_REPORT_OBJECT_TYPE_END_RANGE_EXT = VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT,
+    VK_DEBUG_REPORT_OBJECT_TYPE_RANGE_SIZE_EXT = (VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT - VK_DEBUG_REPORT_OBJECT_TYPE_UNKNOWN_EXT + 1),
     VK_DEBUG_REPORT_OBJECT_TYPE_MAX_ENUM_EXT = 0x7FFFFFFF
 } VkDebugReportObjectTypeEXT;
 
@@ -4291,6 +4304,232 @@ typedef struct VkValidationFlagsEXT {
 
 
 
+#define VK_NVX_device_generated_commands 1
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkObjectTableNVX)
+VK_DEFINE_NON_DISPATCHABLE_HANDLE(VkIndirectCommandsLayoutNVX)
+
+#define VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION 1
+#define VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME "VK_NVX_device_generated_commands"
+
+
+typedef enum VkIndirectCommandsTokenTypeNVX {
+    VK_INDIRECT_COMMANDS_TOKEN_PIPELINE_NVX = 0,
+    VK_INDIRECT_COMMANDS_TOKEN_DESCRIPTOR_SET_NVX = 1,
+    VK_INDIRECT_COMMANDS_TOKEN_INDEX_BUFFER_NVX = 2,
+    VK_INDIRECT_COMMANDS_TOKEN_VERTEX_BUFFER_NVX = 3,
+    VK_INDIRECT_COMMANDS_TOKEN_PUSH_CONSTANT_NVX = 4,
+    VK_INDIRECT_COMMANDS_TOKEN_DRAW_INDEXED_NVX = 5,
+    VK_INDIRECT_COMMANDS_TOKEN_DRAW_NVX = 6,
+    VK_INDIRECT_COMMANDS_TOKEN_DISPATCH_NVX = 7,
+    VK_INDIRECT_COMMANDS_TOKEN_TYPE_BEGIN_RANGE_NVX = VK_INDIRECT_COMMANDS_TOKEN_PIPELINE_NVX,
+    VK_INDIRECT_COMMANDS_TOKEN_TYPE_END_RANGE_NVX = VK_INDIRECT_COMMANDS_TOKEN_DISPATCH_NVX,
+    VK_INDIRECT_COMMANDS_TOKEN_TYPE_RANGE_SIZE_NVX = (VK_INDIRECT_COMMANDS_TOKEN_DISPATCH_NVX - VK_INDIRECT_COMMANDS_TOKEN_PIPELINE_NVX + 1),
+    VK_INDIRECT_COMMANDS_TOKEN_TYPE_MAX_ENUM_NVX = 0x7FFFFFFF
+} VkIndirectCommandsTokenTypeNVX;
+
+typedef enum VkObjectEntryTypeNVX {
+    VK_OBJECT_ENTRY_DESCRIPTOR_SET_NVX = 0,
+    VK_OBJECT_ENTRY_PIPELINE_NVX = 1,
+    VK_OBJECT_ENTRY_INDEX_BUFFER_NVX = 2,
+    VK_OBJECT_ENTRY_VERTEX_BUFFER_NVX = 3,
+    VK_OBJECT_ENTRY_PUSH_CONSTANT_NVX = 4,
+    VK_OBJECT_ENTRY_TYPE_BEGIN_RANGE_NVX = VK_OBJECT_ENTRY_DESCRIPTOR_SET_NVX,
+    VK_OBJECT_ENTRY_TYPE_END_RANGE_NVX = VK_OBJECT_ENTRY_PUSH_CONSTANT_NVX,
+    VK_OBJECT_ENTRY_TYPE_RANGE_SIZE_NVX = (VK_OBJECT_ENTRY_PUSH_CONSTANT_NVX - VK_OBJECT_ENTRY_DESCRIPTOR_SET_NVX + 1),
+    VK_OBJECT_ENTRY_TYPE_MAX_ENUM_NVX = 0x7FFFFFFF
+} VkObjectEntryTypeNVX;
+
+
+typedef enum VkIndirectCommandsLayoutUsageFlagBitsNVX {
+    VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX = 0x00000001,
+    VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX = 0x00000002,
+    VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX = 0x00000004,
+    VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX = 0x00000008,
+    VK_INDIRECT_COMMANDS_LAYOUT_USAGE_FLAG_BITS_MAX_ENUM_NVX = 0x7FFFFFFF
+} VkIndirectCommandsLayoutUsageFlagBitsNVX;
+typedef VkFlags VkIndirectCommandsLayoutUsageFlagsNVX;
+
+typedef enum VkObjectEntryUsageFlagBitsNVX {
+    VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX = 0x00000001,
+    VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX = 0x00000002,
+    VK_OBJECT_ENTRY_USAGE_FLAG_BITS_MAX_ENUM_NVX = 0x7FFFFFFF
+} VkObjectEntryUsageFlagBitsNVX;
+typedef VkFlags VkObjectEntryUsageFlagsNVX;
+
+typedef struct VkDeviceGeneratedCommandsFeaturesNVX {
+    VkStructureType    sType;
+    void*        pNext;
+    VkBool32           computeBindingPointSupport;
+} VkDeviceGeneratedCommandsFeaturesNVX;
+
+typedef struct VkDeviceGeneratedCommandsLimitsNVX {
+    VkStructureType    sType;
+    void*        pNext;
+    uint32_t           maxIndirectCommandsLayoutTokenCount;
+    uint32_t           maxObjectEntryCounts;
+    uint32_t           minSequenceCountBufferOffsetAlignment;
+    uint32_t           minSequenceIndexBufferOffsetAlignment;
+    uint32_t           minCommandsTokenBufferOffsetAlignment;
+} VkDeviceGeneratedCommandsLimitsNVX;
+
+typedef struct VkIndirectCommandsTokenNVX {
+    VkIndirectCommandsTokenTypeNVX    tokenType;
+    VkBuffer                          buffer;
+    VkDeviceSize                      offset;
+} VkIndirectCommandsTokenNVX;
+
+typedef struct VkIndirectCommandsLayoutTokenNVX {
+    VkIndirectCommandsTokenTypeNVX    tokenType;
+    uint32_t                          bindingUnit;
+    uint32_t                          dynamicCount;
+    uint32_t                          divisor;
+} VkIndirectCommandsLayoutTokenNVX;
+
+typedef struct VkIndirectCommandsLayoutCreateInfoNVX {
+    VkStructureType                            sType;
+    void*                                pNext;
+    VkPipelineBindPoint                        pipelineBindPoint;
+    VkIndirectCommandsLayoutUsageFlagsNVX      flags;
+    uint32_t                                   tokenCount;
+    VkIndirectCommandsLayoutTokenNVX*    pTokens;
+} VkIndirectCommandsLayoutCreateInfoNVX;
+
+typedef struct VkCmdProcessCommandsInfoNVX {
+    VkStructureType                      sType;
+    void*                          pNext;
+    VkObjectTableNVX                     objectTable;
+    VkIndirectCommandsLayoutNVX          indirectCommandsLayout;
+    uint32_t                             indirectCommandsTokenCount;
+    VkIndirectCommandsTokenNVX*    pIndirectCommandsTokens;
+    uint32_t                             maxSequencesCount;
+    VkCommandBuffer                      targetCommandBuffer;
+    VkBuffer                             sequencesCountBuffer;
+    VkDeviceSize                         sequencesCountOffset;
+    VkBuffer                             sequencesIndexBuffer;
+    VkDeviceSize                         sequencesIndexOffset;
+} VkCmdProcessCommandsInfoNVX;
+
+typedef struct VkCmdReserveSpaceForCommandsInfoNVX {
+    VkStructureType                sType;
+    void*                    pNext;
+    VkObjectTableNVX               objectTable;
+    VkIndirectCommandsLayoutNVX    indirectCommandsLayout;
+    uint32_t                       maxSequencesCount;
+} VkCmdReserveSpaceForCommandsInfoNVX;
+
+typedef struct VkObjectTableCreateInfoNVX {
+    VkStructureType                      sType;
+    void*                          pNext;
+    uint32_t                             objectCount;
+    VkObjectEntryTypeNVX*          pObjectEntryTypes;
+    uint32_t*                      pObjectEntryCounts;
+    VkObjectEntryUsageFlagsNVX*    pObjectEntryUsageFlags;
+    uint32_t                             maxUniformBuffersPerDescriptor;
+    uint32_t                             maxStorageBuffersPerDescriptor;
+    uint32_t                             maxStorageImagesPerDescriptor;
+    uint32_t                             maxSampledImagesPerDescriptor;
+    uint32_t                             maxPipelineLayouts;
+} VkObjectTableCreateInfoNVX;
+
+typedef struct VkObjectTableEntryNVX {
+    VkObjectEntryTypeNVX          type;
+    VkObjectEntryUsageFlagsNVX    flags;
+} VkObjectTableEntryNVX;
+
+typedef struct VkObjectTablePipelineEntryNVX {
+    VkObjectEntryTypeNVX          type;
+    VkObjectEntryUsageFlagsNVX    flags;
+    VkPipeline                    pipeline;
+} VkObjectTablePipelineEntryNVX;
+
+typedef struct VkObjectTableDescriptorSetEntryNVX {
+    VkObjectEntryTypeNVX          type;
+    VkObjectEntryUsageFlagsNVX    flags;
+    VkPipelineLayout              pipelineLayout;
+    VkDescriptorSet               descriptorSet;
+} VkObjectTableDescriptorSetEntryNVX;
+
+typedef struct VkObjectTableVertexBufferEntryNVX {
+    VkObjectEntryTypeNVX          type;
+    VkObjectEntryUsageFlagsNVX    flags;
+    VkBuffer                      buffer;
+} VkObjectTableVertexBufferEntryNVX;
+
+typedef struct VkObjectTableIndexBufferEntryNVX {
+    VkObjectEntryTypeNVX          type;
+    VkObjectEntryUsageFlagsNVX    flags;
+    VkBuffer                      buffer;
+} VkObjectTableIndexBufferEntryNVX;
+
+typedef struct VkObjectTablePushConstantEntryNVX {
+    VkObjectEntryTypeNVX          type;
+    VkObjectEntryUsageFlagsNVX    flags;
+    VkPipelineLayout              pipelineLayout;
+    VkShaderStageFlags            stageFlags;
+} VkObjectTablePushConstantEntryNVX;
+
+
+typedef void (VKAPI_PTR *PFN_vkCmdProcessCommandsNVX)(VkCommandBuffer commandBuffer, VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo);
+typedef void (VKAPI_PTR *PFN_vkCmdReserveSpaceForCommandsNVX)(VkCommandBuffer commandBuffer, VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo);
+typedef VkResult (VKAPI_PTR *PFN_vkCreateIndirectCommandsLayoutNVX)(VkDevice device, VkIndirectCommandsLayoutCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkIndirectCommandsLayoutNVX* pIndirectCommandsLayout);
+typedef void (VKAPI_PTR *PFN_vkDestroyIndirectCommandsLayoutNVX)(VkDevice device, VkIndirectCommandsLayoutNVX indirectCommandsLayout, VkAllocationCallbacks* pAllocator);
+typedef VkResult (VKAPI_PTR *PFN_vkCreateObjectTableNVX)(VkDevice device, VkObjectTableCreateInfoNVX* pCreateInfo, VkAllocationCallbacks* pAllocator, VkObjectTableNVX* pObjectTable);
+typedef void (VKAPI_PTR *PFN_vkDestroyObjectTableNVX)(VkDevice device, VkObjectTableNVX objectTable, VkAllocationCallbacks* pAllocator);
+typedef VkResult (VKAPI_PTR *PFN_vkRegisterObjectsNVX)(VkDevice device, VkObjectTableNVX objectTable, uint32_t objectCount, VkObjectTableEntryNVX* *   ppObjectTableEntries, uint32_t* pObjectIndices);
+typedef VkResult (VKAPI_PTR *PFN_vkUnregisterObjectsNVX)(VkDevice device, VkObjectTableNVX objectTable, uint32_t objectCount, VkObjectEntryTypeNVX* pObjectEntryTypes, uint32_t* pObjectIndices);
+typedef void (VKAPI_PTR *PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX)(VkPhysicalDevice physicalDevice, VkDeviceGeneratedCommandsFeaturesNVX* pFeatures, VkDeviceGeneratedCommandsLimitsNVX* pLimits);
+
+#ifndef VK_NO_PROTOTYPES
+VKAPI_ATTR void VKAPI_CALL vkCmdProcessCommandsNVX(
+    VkCommandBuffer                             commandBuffer,
+    VkCmdProcessCommandsInfoNVX*          pProcessCommandsInfo);
+
+VKAPI_ATTR void VKAPI_CALL vkCmdReserveSpaceForCommandsNVX(
+    VkCommandBuffer                             commandBuffer,
+    VkCmdReserveSpaceForCommandsInfoNVX*  pReserveSpaceInfo);
+
+VKAPI_ATTR VkResult VKAPI_CALL vkCreateIndirectCommandsLayoutNVX(
+    VkDevice                                    device,
+    VkIndirectCommandsLayoutCreateInfoNVX* pCreateInfo,
+    VkAllocationCallbacks*                pAllocator,
+    VkIndirectCommandsLayoutNVX*                pIndirectCommandsLayout);
+
+VKAPI_ATTR void VKAPI_CALL vkDestroyIndirectCommandsLayoutNVX(
+    VkDevice                                    device,
+    VkIndirectCommandsLayoutNVX                 indirectCommandsLayout,
+    VkAllocationCallbacks*                pAllocator);
+
+VKAPI_ATTR VkResult VKAPI_CALL vkCreateObjectTableNVX(
+    VkDevice                                    device,
+    VkObjectTableCreateInfoNVX*           pCreateInfo,
+    VkAllocationCallbacks*                pAllocator,
+    VkObjectTableNVX*                           pObjectTable);
+
+VKAPI_ATTR void VKAPI_CALL vkDestroyObjectTableNVX(
+    VkDevice                                    device,
+    VkObjectTableNVX                            objectTable,
+    VkAllocationCallbacks*                pAllocator);
+
+VKAPI_ATTR VkResult VKAPI_CALL vkRegisterObjectsNVX(
+    VkDevice                                    device,
+    VkObjectTableNVX                            objectTable,
+    uint32_t                                    objectCount,
+    VkObjectTableEntryNVX* *        ppObjectTableEntries,
+    uint32_t*                             pObjectIndices);
+
+VKAPI_ATTR VkResult VKAPI_CALL vkUnregisterObjectsNVX(
+    VkDevice                                    device,
+    VkObjectTableNVX                            objectTable,
+    uint32_t                                    objectCount,
+    VkObjectEntryTypeNVX*                 pObjectEntryTypes,
+    uint32_t*                             pObjectIndices);
+
+VKAPI_ATTR void VKAPI_CALL vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX(
+    VkPhysicalDevice                            physicalDevice,
+    VkDeviceGeneratedCommandsFeaturesNVX*       pFeatures,
+    VkDeviceGeneratedCommandsLimitsNVX*         pLimits);
+#endif
+
 #ifdef __cplusplus
 }
 #endif
@@ -4303,78 +4542,48 @@ typedef struct VkValidationFlagsEXT {
 // ---------------
 static PyObject *VulkanError;
 
-    static PyObject *VkTimeout;
-
-    static PyObject *VkErrorDeviceLost;
-
-    static PyObject *VkErrorMemoryMapFailed;
-
     static PyObject *VkNotReady;
 
-    static PyObject *VkErrorTooManyObjects;
-
-    static PyObject *VkErrorFeatureNotPresent;
-
-    static PyObject *VkErrorInitializationFailed;
-
-    static PyObject *VkErrorIncompatibleDriver;
-
-    static PyObject *VkErrorExtensionNotPresent;
-
-    static PyObject *VkErrorLayerNotPresent;
-
-    static PyObject *VkIncomplete;
-
-    static PyObject *VkErrorFormatNotSupported;
+    static PyObject *VkTimeout;
 
     static PyObject *VkEventSet;
 
     static PyObject *VkEventReset;
 
+    static PyObject *VkIncomplete;
+
     static PyObject *VkErrorOutOfHostMemory;
 
-    static PyObject *VkErrorFragmentedPool;
-
     static PyObject *VkErrorOutOfDeviceMemory;
+
+    static PyObject *VkErrorInitializationFailed;
+
+    static PyObject *VkErrorDeviceLost;
+
+    static PyObject *VkErrorMemoryMapFailed;
+
+    static PyObject *VkErrorLayerNotPresent;
+
+    static PyObject *VkErrorExtensionNotPresent;
+
+    static PyObject *VkErrorFeatureNotPresent;
+
+    static PyObject *VkErrorIncompatibleDriver;
+
+    static PyObject *VkErrorTooManyObjects;
+
+    static PyObject *VkErrorFormatNotSupported;
+
+    static PyObject *VkErrorFragmentedPool;
 
 
 int raise(int value) {
     switch(value) {
         
-            case 2: PyErr_SetString(VkTimeout, "");
-                return 1;
-        
-            case -4: PyErr_SetString(VkErrorDeviceLost, "");
-                return 1;
-        
-            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
-                return 1;
-        
             case 1: PyErr_SetString(VkNotReady, "");
                 return 1;
         
-            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
-                return 1;
-        
-            case -8: PyErr_SetString(VkErrorFeatureNotPresent, "");
-                return 1;
-        
-            case -3: PyErr_SetString(VkErrorInitializationFailed, "");
-                return 1;
-        
-            case -9: PyErr_SetString(VkErrorIncompatibleDriver, "");
-                return 1;
-        
-            case -7: PyErr_SetString(VkErrorExtensionNotPresent, "");
-                return 1;
-        
-            case -6: PyErr_SetString(VkErrorLayerNotPresent, "");
-                return 1;
-        
-            case 5: PyErr_SetString(VkIncomplete, "");
-                return 1;
-        
-            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
+            case 2: PyErr_SetString(VkTimeout, "");
                 return 1;
         
             case 3: PyErr_SetString(VkEventSet, "");
@@ -4383,13 +4592,43 @@ int raise(int value) {
             case 4: PyErr_SetString(VkEventReset, "");
                 return 1;
         
+            case 5: PyErr_SetString(VkIncomplete, "");
+                return 1;
+        
             case -1: PyErr_SetString(VkErrorOutOfHostMemory, "");
                 return 1;
         
-            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
+            case -2: PyErr_SetString(VkErrorOutOfDeviceMemory, "");
                 return 1;
         
-            case -2: PyErr_SetString(VkErrorOutOfDeviceMemory, "");
+            case -3: PyErr_SetString(VkErrorInitializationFailed, "");
+                return 1;
+        
+            case -4: PyErr_SetString(VkErrorDeviceLost, "");
+                return 1;
+        
+            case -5: PyErr_SetString(VkErrorMemoryMapFailed, "");
+                return 1;
+        
+            case -6: PyErr_SetString(VkErrorLayerNotPresent, "");
+                return 1;
+        
+            case -7: PyErr_SetString(VkErrorExtensionNotPresent, "");
+                return 1;
+        
+            case -8: PyErr_SetString(VkErrorFeatureNotPresent, "");
+                return 1;
+        
+            case -9: PyErr_SetString(VkErrorIncompatibleDriver, "");
+                return 1;
+        
+            case -10: PyErr_SetString(VkErrorTooManyObjects, "");
+                return 1;
+        
+            case -11: PyErr_SetString(VkErrorFormatNotSupported, "");
+                return 1;
+        
+            case -12: PyErr_SetString(VkErrorFragmentedPool, "");
                 return 1;
         
        }
@@ -7423,6 +7662,202 @@ PyVkDebugReportCallbackCreateInfoEXT;
         
         typedef struct {
             PyObject_HEAD
+            VkDeviceGeneratedCommandsFeaturesNVX *base;
+            
+        } PyVkDeviceGeneratedCommandsFeaturesNVX;
+        static PyTypeObject PyVkDeviceGeneratedCommandsFeaturesNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkDeviceGeneratedCommandsLimitsNVX *base;
+            
+        } PyVkDeviceGeneratedCommandsLimitsNVX;
+        static PyTypeObject PyVkDeviceGeneratedCommandsLimitsNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkIndirectCommandsTokenNVX *base;
+            
+        } PyVkIndirectCommandsTokenNVX;
+        static PyTypeObject PyVkIndirectCommandsTokenNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkIndirectCommandsLayoutTokenNVX *base;
+            
+        } PyVkIndirectCommandsLayoutTokenNVX;
+        static PyTypeObject PyVkIndirectCommandsLayoutTokenNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkIndirectCommandsLayoutCreateInfoNVX *base;
+            
+        } PyVkIndirectCommandsLayoutCreateInfoNVX;
+        static PyTypeObject PyVkIndirectCommandsLayoutCreateInfoNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkCmdProcessCommandsInfoNVX *base;
+            
+        } PyVkCmdProcessCommandsInfoNVX;
+        static PyTypeObject PyVkCmdProcessCommandsInfoNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkCmdReserveSpaceForCommandsInfoNVX *base;
+            
+        } PyVkCmdReserveSpaceForCommandsInfoNVX;
+        static PyTypeObject PyVkCmdReserveSpaceForCommandsInfoNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkObjectTableCreateInfoNVX *base;
+            
+        } PyVkObjectTableCreateInfoNVX;
+        static PyTypeObject PyVkObjectTableCreateInfoNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkObjectTableEntryNVX *base;
+            
+        } PyVkObjectTableEntryNVX;
+        static PyTypeObject PyVkObjectTableEntryNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkObjectTablePipelineEntryNVX *base;
+            
+        } PyVkObjectTablePipelineEntryNVX;
+        static PyTypeObject PyVkObjectTablePipelineEntryNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkObjectTableDescriptorSetEntryNVX *base;
+            
+        } PyVkObjectTableDescriptorSetEntryNVX;
+        static PyTypeObject PyVkObjectTableDescriptorSetEntryNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkObjectTableVertexBufferEntryNVX *base;
+            
+        } PyVkObjectTableVertexBufferEntryNVX;
+        static PyTypeObject PyVkObjectTableVertexBufferEntryNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkObjectTableIndexBufferEntryNVX *base;
+            
+        } PyVkObjectTableIndexBufferEntryNVX;
+        static PyTypeObject PyVkObjectTableIndexBufferEntryNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
+            VkObjectTablePushConstantEntryNVX *base;
+            
+        } PyVkObjectTablePushConstantEntryNVX;
+        static PyTypeObject PyVkObjectTablePushConstantEntryNVXType;
+    
+    
+
+    static PyTypeObject PyVkDebugReportCallbackCreateInfoEXTType;
+
+    
+    
+        
+        typedef struct {
+            PyObject_HEAD
             VkClearColorValue *base;
             
                 int selected;
@@ -8225,2774 +8660,6 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-        
-        static int pyc_struct_pointer_VkMemoryAllocateInfo_converter(PyObject* arg, VkMemoryAllocateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkMemoryAllocateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkMemoryAllocateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkMemoryAllocateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkMemoryAllocateInfo_converter_free(VkMemoryAllocateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkCommandBufferUsageFlags_converter(PyObject* arg, VkCommandBufferUsageFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferUsageFlags or integer");
-                return 0;
-            }
-
-            *val = (VkCommandBufferUsageFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkCommandBufferUsageFlags_converter_free(VkCommandBufferUsageFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkPipelineCache_converter(PyObject* arg, VkPipelineCache** val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineCache");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkPipelineCache));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                VkPipelineCache* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkPipelineCache");
-                if (handle_pointer == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = *handle_pointer;
-            }
-
-            return 1;
-        }
-        static void pyc_handle_array_VkPipelineCache_converter_free(VkPipelineCache** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkPipelineCache_converter(PyObject* arg, VkPipelineCache* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkPipelineCache* handle_pointer = PyCapsule_GetPointer(arg, "VkPipelineCache");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkPipelineCache_converter_free(VkPipelineCache* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkRenderPassBeginInfo_converter(PyObject* arg, VkRenderPassBeginInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkRenderPassBeginInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRenderPassBeginInfo");
-                return 0;
-            }
-
-            *val = ((PyVkRenderPassBeginInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkRenderPassBeginInfo_converter_free(VkRenderPassBeginInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkPushConstantRange_converter(PyObject* arg, VkPushConstantRange** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkPushConstantRange));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkPushConstantRangeType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPushConstantRange");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkPushConstantRange*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkPushConstantRange_converter_free(VkPushConstantRange** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkSparseImageMemoryBind_converter(PyObject* arg, VkSparseImageMemoryBind** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSparseImageMemoryBind));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkSparseImageMemoryBindType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseImageMemoryBind");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkSparseImageMemoryBind*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkSparseImageMemoryBind_converter_free(VkSparseImageMemoryBind** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkBufferCreateInfo_converter(PyObject* arg, VkBufferCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkBufferCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkBufferCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkBufferCreateInfo_converter_free(VkBufferCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkBlendOp_converter(PyObject* arg, VkBlendOp* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBlendOp or integer");
-                return 0;
-            }
-
-            *val = (VkBlendOp) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkBlendOp_converter_free(VkBlendOp* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPresentModeKHR_converter(PyObject* arg, VkPresentModeKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPresentModeKHR or integer");
-                return 0;
-            }
-
-            *val = (VkPresentModeKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPresentModeKHR_converter_free(VkPresentModeKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDisplayModeCreateInfoKHR_converter(PyObject* arg, VkDisplayModeCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDisplayModeCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayModeCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkDisplayModeCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDisplayModeCreateInfoKHR_converter_free(VkDisplayModeCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPhysicalDeviceFeatures_converter(PyObject* arg, VkPhysicalDeviceFeatures** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPhysicalDeviceFeaturesType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPhysicalDeviceFeatures");
-                return 0;
-            }
-
-            *val = ((PyVkPhysicalDeviceFeatures*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPhysicalDeviceFeatures_converter_free(VkPhysicalDeviceFeatures** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkComputePipelineCreateInfo_converter(PyObject* arg, VkComputePipelineCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkComputePipelineCreateInfo));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkComputePipelineCreateInfoType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkComputePipelineCreateInfo");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkComputePipelineCreateInfo*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkComputePipelineCreateInfo_converter_free(VkComputePipelineCreateInfo** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkBufferCopy_converter(PyObject* arg, VkBufferCopy** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkBufferCopy));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkBufferCopyType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkBufferCopy");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkBufferCopy*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkBufferCopy_converter_free(VkBufferCopy** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkAttachmentDescriptionFlags_converter(PyObject* arg, VkAttachmentDescriptionFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAttachmentDescriptionFlags or integer");
-                return 0;
-            }
-
-            *val = (VkAttachmentDescriptionFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkAttachmentDescriptionFlags_converter_free(VkAttachmentDescriptionFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkQueue_converter(PyObject* arg, VkQueue* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkQueue* handle_pointer = PyCapsule_GetPointer(arg, "VkQueue");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkQueue_converter_free(VkQueue* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkWriteDescriptorSet_converter(PyObject* arg, VkWriteDescriptorSet** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkWriteDescriptorSet));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkWriteDescriptorSetType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkWriteDescriptorSet");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkWriteDescriptorSet*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkWriteDescriptorSet_converter_free(VkWriteDescriptorSet** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkSamplerCreateInfo_converter(PyObject* arg, VkSamplerCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkSamplerCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkSamplerCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkSamplerCreateInfo_converter_free(VkSamplerCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDebugMarkerObjectNameInfoEXT_converter(PyObject* arg, VkDebugMarkerObjectNameInfoEXT** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDebugMarkerObjectNameInfoEXTType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugMarkerObjectNameInfoEXT");
-                return 0;
-            }
-
-            *val = ((PyVkDebugMarkerObjectNameInfoEXT*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDebugMarkerObjectNameInfoEXT_converter_free(VkDebugMarkerObjectNameInfoEXT** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkRenderPassCreateInfo_converter(PyObject* arg, VkRenderPassCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkRenderPassCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRenderPassCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkRenderPassCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkRenderPassCreateInfo_converter_free(VkRenderPassCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDeviceCreateInfo_converter(PyObject* arg, VkDeviceCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDeviceCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkDeviceCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDeviceCreateInfo_converter_free(VkDeviceCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkRect2D_converter(PyObject* arg, VkRect2D** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkRect2D));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkRect2DType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkRect2D");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkRect2D*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkRect2D_converter_free(VkRect2D** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkRect2D_converter(PyObject* arg, VkRect2D* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkRect2DType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRect2D");
-                return 0;
-            }
-
-            *val = *(((PyVkRect2D*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkRect2D_converter_free(VkRect2D* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkCommandBufferLevel_converter(PyObject* arg, VkCommandBufferLevel* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferLevel or integer");
-                return 0;
-            }
-
-            *val = (VkCommandBufferLevel) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkCommandBufferLevel_converter_free(VkCommandBufferLevel* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkStructureType_converter(PyObject* arg, VkStructureType* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStructureType or integer");
-                return 0;
-            }
-
-            *val = (VkStructureType) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkStructureType_converter_free(VkStructureType* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkBufferCreateFlags_converter(PyObject* arg, VkBufferCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkBufferCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkBufferCreateFlags_converter_free(VkBufferCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkBorderColor_converter(PyObject* arg, VkBorderColor* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBorderColor or integer");
-                return 0;
-            }
-
-            *val = (VkBorderColor) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkBorderColor_converter_free(VkBorderColor* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineViewportStateCreateInfo_converter(PyObject* arg, VkPipelineViewportStateCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineViewportStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineViewportStateCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineViewportStateCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineViewportStateCreateInfo_converter_free(VkPipelineViewportStateCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkImageMemoryBarrier_converter(PyObject* arg, VkImageMemoryBarrier** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkImageMemoryBarrier));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkImageMemoryBarrierType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageMemoryBarrier");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkImageMemoryBarrier*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkImageMemoryBarrier_converter_free(VkImageMemoryBarrier** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkSemaphoreCreateInfo_converter(PyObject* arg, VkSemaphoreCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkSemaphoreCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSemaphoreCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkSemaphoreCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkSemaphoreCreateInfo_converter_free(VkSemaphoreCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkClearColorValue_converter(PyObject* arg, VkClearColorValue** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkClearColorValueType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkClearColorValue");
-                return 0;
-            }
-
-            *val = ((PyVkClearColorValue*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkClearColorValue_converter_free(VkClearColorValue** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDescriptorType_converter(PyObject* arg, VkDescriptorType* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorType or integer");
-                return 0;
-            }
-
-            *val = (VkDescriptorType) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDescriptorType_converter_free(VkDescriptorType* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkImageView_converter(PyObject* arg, VkImageView** val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageView");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkImageView));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                VkImageView* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkImageView");
-                if (handle_pointer == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = *handle_pointer;
-            }
-
-            return 1;
-        }
-        static void pyc_handle_array_VkImageView_converter_free(VkImageView** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkImageView_converter(PyObject* arg, VkImageView* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkImageView* handle_pointer = PyCapsule_GetPointer(arg, "VkImageView");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkImageView_converter_free(VkImageView* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkClearAttachment_converter(PyObject* arg, VkClearAttachment** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkClearAttachment));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkClearAttachmentType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkClearAttachment");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkClearAttachment*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkClearAttachment_converter_free(VkClearAttachment** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_flag_array_VkPipelineStageFlags_converter(PyObject* arg, VkPipelineStageFlags** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineStageFlags");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkPipelineStageFlags));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyLong_Check(item)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineStageFlags or integer");
-                    return 0;
-                }
-
-                VkPipelineStageFlags tmp = (VkPipelineStageFlags) PyLong_AsLong(item);
-                if (PyErr_Occurred()) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = tmp;
-            }
-            return 1;
-        }
-        static void pyc_flag_array_VkPipelineStageFlags_converter_free(VkPipelineStageFlags** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineStageFlags_converter(PyObject* arg, VkPipelineStageFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineStageFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineStageFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineStageFlags_converter_free(VkPipelineStageFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkDebugReportCallbackEXT_converter(PyObject* arg, VkDebugReportCallbackEXT* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkDebugReportCallbackEXT* handle_pointer = PyCapsule_GetPointer(arg, "VkDebugReportCallbackEXT");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkDebugReportCallbackEXT_converter_free(VkDebugReportCallbackEXT* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkCommandBufferBeginInfo_converter(PyObject* arg, VkCommandBufferBeginInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkCommandBufferBeginInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferBeginInfo");
-                return 0;
-            }
-
-            *val = ((PyVkCommandBufferBeginInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkCommandBufferBeginInfo_converter_free(VkCommandBufferBeginInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkImageSubresourceRange_converter(PyObject* arg, VkImageSubresourceRange** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkImageSubresourceRange));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkImageSubresourceRangeType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageSubresourceRange");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkImageSubresourceRange*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkImageSubresourceRange_converter_free(VkImageSubresourceRange** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkImageSubresourceRange_converter(PyObject* arg, VkImageSubresourceRange* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceRangeType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresourceRange");
-                return 0;
-            }
-
-            *val = *(((PyVkImageSubresourceRange*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkImageSubresourceRange_converter_free(VkImageSubresourceRange* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineLayoutCreateInfo_converter(PyObject* arg, VkPipelineLayoutCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineLayoutCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineLayoutCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineLayoutCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineLayoutCreateInfo_converter_free(VkPipelineLayoutCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkSwapchainKHR_converter(PyObject* arg, VkSwapchainKHR** val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSwapchainKHR");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSwapchainKHR));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkSwapchainKHR");
-                if (handle_pointer == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = *handle_pointer;
-            }
-
-            return 1;
-        }
-        static void pyc_handle_array_VkSwapchainKHR_converter_free(VkSwapchainKHR** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkSwapchainKHR_converter(PyObject* arg, VkSwapchainKHR* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkSwapchainKHR");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkSwapchainKHR_converter_free(VkSwapchainKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkImageFormatProperties_converter(PyObject* arg, VkImageFormatProperties* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkImageFormatPropertiesType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageFormatProperties");
-                return 0;
-            }
-
-            *val = *(((PyVkImageFormatProperties*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkImageFormatProperties_converter_free(VkImageFormatProperties* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_WIN32_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkWin32SurfaceCreateFlagsKHR_converter(PyObject* arg, VkWin32SurfaceCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWin32SurfaceCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkWin32SurfaceCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkWin32SurfaceCreateFlagsKHR_converter_free(VkWin32SurfaceCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineCacheCreateInfo_converter(PyObject* arg, VkPipelineCacheCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineCacheCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineCacheCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineCacheCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineCacheCreateInfo_converter_free(VkPipelineCacheCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkDescriptorSet_converter(PyObject* arg, VkDescriptorSet** val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorSet");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDescriptorSet));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkDescriptorSet");
-                if (handle_pointer == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = *handle_pointer;
-            }
-
-            return 1;
-        }
-        static void pyc_handle_array_VkDescriptorSet_converter_free(VkDescriptorSet** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkDescriptorSet_converter(PyObject* arg, VkDescriptorSet* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(arg, "VkDescriptorSet");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkDescriptorSet_converter_free(VkDescriptorSet* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkBool32_converter(PyObject* arg, VkBool32* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBool32 or integer");
-                return 0;
-            }
-
-            *val = (VkBool32) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkBool32_converter_free(VkBool32* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkClearValue_converter(PyObject* arg, VkClearValue** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkClearValue));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkClearValueType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkClearValue");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkClearValue*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkClearValue_converter_free(VkClearValue** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkClearValue_converter(PyObject* arg, VkClearValue* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkClearValueType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkClearValue");
-                return 0;
-            }
-
-            *val = *(((PyVkClearValue*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkClearValue_converter_free(VkClearValue* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkDisplayKHR_converter(PyObject* arg, VkDisplayKHR* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkDisplayKHR");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkDisplayKHR_converter_free(VkDisplayKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkCommandBufferInheritanceInfo_converter(PyObject* arg, VkCommandBufferInheritanceInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkCommandBufferInheritanceInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferInheritanceInfo");
-                return 0;
-            }
-
-            *val = ((PyVkCommandBufferInheritanceInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkCommandBufferInheritanceInfo_converter_free(VkCommandBufferInheritanceInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
 
 
         
@@ -11026,7 +8693,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
     
 
     
-    
+     #ifdef VK_USE_PLATFORM_XCB_KHR 
         
 
     
@@ -11037,159 +8704,70 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
-        
-        static int pyc_flag_base_VkShaderStageFlags_converter(PyObject* arg, VkShaderStageFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderStageFlags or integer");
+        static int pyc_struct_pointer_VkXcbSurfaceCreateInfoKHR_converter(PyObject* arg, VkXcbSurfaceCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkXcbSurfaceCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXcbSurfaceCreateInfoKHR");
                 return 0;
             }
 
-            *val = (VkShaderStageFlags) PyLong_AsLong(arg);
+            *val = ((PyVkXcbSurfaceCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkXcbSurfaceCreateInfoKHR_converter_free(VkXcbSurfaceCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkCullModeFlags_converter(PyObject* arg, VkCullModeFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCullModeFlags or integer");
+                return 0;
+            }
+
+            *val = (VkCullModeFlags) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkShaderStageFlags_converter_free(VkShaderStageFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkInstance_converter(PyObject* arg, VkInstance* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkInstance* handle_pointer = PyCapsule_GetPointer(arg, "VkInstance");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkInstance_converter_free(VkInstance* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkPhysicalDevice_converter(PyObject* arg, VkPhysicalDevice* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(arg, "VkPhysicalDevice");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkPhysicalDevice_converter_free(VkPhysicalDevice* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkImageViewType_converter(PyObject* arg, VkImageViewType* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageViewType or integer");
-                return 0;
-            }
-
-            *val = (VkImageViewType) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkImageViewType_converter_free(VkImageViewType* val, int disable) {}
+        static void pyc_flag_base_VkCullModeFlags_converter_free(VkCullModeFlags* val, int disable) {}
         
     
 
@@ -11212,7 +8790,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_array_VkOffset3D_converter(PyObject* arg, VkOffset3D** val) {
+        static int pyc_struct_array_VkImageBlit_converter(PyObject* arg, VkImageBlit** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
@@ -11224,7 +8802,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkOffset3D));
+            *val = malloc(size * sizeof(VkImageBlit));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -11238,150 +8816,19 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkOffset3DType)) {
+                if (!PyObject_TypeCheck(item, &PyVkImageBlitType)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkOffset3D");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageBlit");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkOffset3D*) item)->base);
+                (*val)[i] = *(((PyVkImageBlit*) item)->base);
             }
 
             return 1;
         }
 
-        static void pyc_struct_array_VkOffset3D_converter_free(VkOffset3D** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkOffset3D_converter(PyObject* arg, VkOffset3D* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkOffset3DType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkOffset3D");
-                return 0;
-            }
-
-            *val = *(((PyVkOffset3D*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkOffset3D_converter_free(VkOffset3D* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkAccessFlags_converter(PyObject* arg, VkAccessFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAccessFlags or integer");
-                return 0;
-            }
-
-            *val = (VkAccessFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkAccessFlags_converter_free(VkAccessFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkVertexInputBindingDescription_converter(PyObject* arg, VkVertexInputBindingDescription** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkVertexInputBindingDescription));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkVertexInputBindingDescriptionType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkVertexInputBindingDescription");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkVertexInputBindingDescription*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkVertexInputBindingDescription_converter_free(VkVertexInputBindingDescription** val, int disable) {
+        static void pyc_struct_array_VkImageBlit_converter_free(VkImageBlit** val, int disable) {
             if (disable)
                 return;
 
@@ -11416,8 +8863,141 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
         
-        static int pyc_struct_array_VkVertexInputAttributeDescription_converter(PyObject* arg, VkVertexInputAttributeDescription** val) {
+    
+        
+        static int pyc_struct_pointer_VkClearDepthStencilValue_converter(PyObject* arg, VkClearDepthStencilValue** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkClearDepthStencilValueType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkClearDepthStencilValue");
+                return 0;
+            }
+
+            *val = ((PyVkClearDepthStencilValue*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkClearDepthStencilValue_converter_free(VkClearDepthStencilValue** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSampleCountFlagBits_converter(PyObject* arg, VkSampleCountFlagBits* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSampleCountFlagBits or integer");
+                return 0;
+            }
+
+            *val = (VkSampleCountFlagBits) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSampleCountFlagBits_converter_free(VkSampleCountFlagBits* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkStencilOp_converter(PyObject* arg, VkStencilOp* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStencilOp or integer");
+                return 0;
+            }
+
+            *val = (VkStencilOp) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkStencilOp_converter_free(VkStencilOp* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkAttachmentDescription_converter(PyObject* arg, VkAttachmentDescription** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
@@ -11429,7 +9009,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkVertexInputAttributeDescription));
+            *val = malloc(size * sizeof(VkAttachmentDescription));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -11443,19 +9023,19 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkVertexInputAttributeDescriptionType)) {
+                if (!PyObject_TypeCheck(item, &PyVkAttachmentDescriptionType)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkVertexInputAttributeDescription");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkAttachmentDescription");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkVertexInputAttributeDescription*) item)->base);
+                (*val)[i] = *(((PyVkAttachmentDescription*) item)->base);
             }
 
             return 1;
         }
 
-        static void pyc_struct_array_VkVertexInputAttributeDescription_converter_free(VkVertexInputAttributeDescription** val, int disable) {
+        static void pyc_struct_array_VkAttachmentDescription_converter_free(VkAttachmentDescription** val, int disable) {
             if (disable)
                 return;
 
@@ -11499,20 +9079,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkSamplerMipmapMode_converter(PyObject* arg, VkSamplerMipmapMode* val) {
+        static int pyc_flag_base_VkLogicOp_converter(PyObject* arg, VkLogicOp* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerMipmapMode or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkLogicOp or integer");
                 return 0;
             }
 
-            *val = (VkSamplerMipmapMode) PyLong_AsLong(arg);
+            *val = (VkLogicOp) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkSamplerMipmapMode_converter_free(VkSamplerMipmapMode* val, int disable) {}
+        static void pyc_flag_base_VkLogicOp_converter_free(VkLogicOp* val, int disable) {}
         
     
 
@@ -11538,25 +9118,115 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
-        
-        static int pyc_flag_base_VkQueryResultFlags_converter(PyObject* arg, VkQueryResultFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryResultFlags or integer");
+        static int pyc_struct_pointer_VkPipelineDepthStencilStateCreateInfo_converter(PyObject* arg, VkPipelineDepthStencilStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineDepthStencilStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDepthStencilStateCreateInfo");
                 return 0;
             }
 
-            *val = (VkQueryResultFlags) PyLong_AsLong(arg);
+            *val = ((PyVkPipelineDepthStencilStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineDepthStencilStateCreateInfo_converter_free(VkPipelineDepthStencilStateCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPresentInfoKHR_converter(PyObject* arg, VkPresentInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPresentInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPresentInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkPresentInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPresentInfoKHR_converter_free(VkPresentInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSwapchainCreateFlagsKHR_converter(PyObject* arg, VkSwapchainCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSwapchainCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkSwapchainCreateFlagsKHR) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkQueryResultFlags_converter_free(VkQueryResultFlags* val, int disable) {}
+        static void pyc_flag_base_VkSwapchainCreateFlagsKHR_converter_free(VkSwapchainCreateFlagsKHR* val, int disable) {}
         
     
 
@@ -11587,20 +9257,224 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkCompareOp_converter(PyObject* arg, VkCompareOp* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCompareOp or integer");
+        static int pyc_struct_base_VkExtent3D_converter(PyObject* arg, VkExtent3D* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkExtent3DType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkExtent3D");
                 return 0;
             }
 
-            *val = (VkCompareOp) PyLong_AsLong(arg);
+            *val = *(((PyVkExtent3D*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkExtent3D_converter_free(VkExtent3D* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineVertexInputStateCreateInfo_converter(PyObject* arg, VkPipelineVertexInputStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineVertexInputStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineVertexInputStateCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkPipelineVertexInputStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineVertexInputStateCreateInfo_converter_free(VkPipelineVertexInputStateCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkImageType_converter(PyObject* arg, VkImageType* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageType or integer");
+                return 0;
+            }
+
+            *val = (VkImageType) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkCompareOp_converter_free(VkCompareOp* val, int disable) {}
+        static void pyc_flag_base_VkImageType_converter_free(VkImageType* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkObjectTableEntryNVX_converter(PyObject* arg, VkObjectTableEntryNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkObjectTableEntryNVX));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkObjectTableEntryNVXType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkObjectTableEntryNVX");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkObjectTableEntryNVX*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkObjectTableEntryNVX_converter_free(VkObjectTableEntryNVX** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkInstanceCreateInfo_converter(PyObject* arg, VkInstanceCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkInstanceCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkInstanceCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkInstanceCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkInstanceCreateInfo_converter_free(VkInstanceCreateInfo** val, int disable) {}
+        
+    
+
+
         
     
 
@@ -11721,203 +9595,71 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
         
-        static int pyc_struct_array_VkDescriptorImageInfo_converter(PyObject* arg, VkDescriptorImageInfo** val) {
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkImage_converter(PyObject* arg, VkImage* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkImage* handle_pointer = PyCapsule_GetPointer(arg, "VkImage");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkImage_converter_free(VkImage* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkCommandPoolCreateInfo_converter(PyObject* arg, VkCommandPoolCreateInfo** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+            if (!PyObject_TypeCheck(arg, &PyVkCommandPoolCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandPoolCreateInfo");
                 return 0;
             }
 
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDescriptorImageInfo));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkDescriptorImageInfoType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorImageInfo");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkDescriptorImageInfo*) item)->base);
-            }
-
+            *val = ((PyVkCommandPoolCreateInfo*)arg)->base;
             return 1;
         }
-
-        static void pyc_struct_array_VkDescriptorImageInfo_converter_free(VkDescriptorImageInfo** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkAttachmentDescription_converter(PyObject* arg, VkAttachmentDescription** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkAttachmentDescription));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkAttachmentDescriptionType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkAttachmentDescription");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkAttachmentDescription*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkAttachmentDescription_converter_free(VkAttachmentDescription** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkDescriptorPoolSize_converter(PyObject* arg, VkDescriptorPoolSize** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDescriptorPoolSize));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkDescriptorPoolSizeType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorPoolSize");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkDescriptorPoolSize*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkDescriptorPoolSize_converter_free(VkDescriptorPoolSize** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
+        static void pyc_struct_pointer_VkCommandPoolCreateInfo_converter_free(VkCommandPoolCreateInfo** val, int disable) {}
         
     
 
@@ -11952,20 +9694,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkPipelineVertexInputStateCreateFlags_converter(PyObject* arg, VkPipelineVertexInputStateCreateFlags* val) {
+        static int pyc_flag_base_VkBool32_converter(PyObject* arg, VkBool32* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineVertexInputStateCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBool32 or integer");
                 return 0;
             }
 
-            *val = (VkPipelineVertexInputStateCreateFlags) PyLong_AsLong(arg);
+            *val = (VkBool32) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkPipelineVertexInputStateCreateFlags_converter_free(VkPipelineVertexInputStateCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkBool32_converter_free(VkBool32* val, int disable) {}
         
     
 
@@ -11985,131 +9727,6 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
     
 
-        
-    
-        
-        static int pyc_flag_array_VkValidationCheckEXT_converter(PyObject* arg, VkValidationCheckEXT** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkValidationCheckEXT");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkValidationCheckEXT));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyLong_Check(item)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkValidationCheckEXT or integer");
-                    return 0;
-                }
-
-                VkValidationCheckEXT tmp = (VkValidationCheckEXT) PyLong_AsLong(item);
-                if (PyErr_Occurred()) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = tmp;
-            }
-            return 1;
-        }
-        static void pyc_flag_array_VkValidationCheckEXT_converter_free(VkValidationCheckEXT** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkMappedMemoryRange_converter(PyObject* arg, VkMappedMemoryRange** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkMappedMemoryRange));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkMappedMemoryRangeType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkMappedMemoryRange");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkMappedMemoryRange*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkMappedMemoryRange_converter_free(VkMappedMemoryRange** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
         
     
 
@@ -12148,20 +9765,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkDependencyFlags_converter(PyObject* arg, VkDependencyFlags* val) {
+        static int pyc_flag_base_VkImageCreateFlags_converter(PyObject* arg, VkImageCreateFlags* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDependencyFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageCreateFlags or integer");
                 return 0;
             }
 
-            *val = (VkDependencyFlags) PyLong_AsLong(arg);
+            *val = (VkImageCreateFlags) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkDependencyFlags_converter_free(VkDependencyFlags* val, int disable) {}
+        static void pyc_flag_base_VkImageCreateFlags_converter_free(VkImageCreateFlags* val, int disable) {}
         
     
 
@@ -12183,20 +9800,225 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
         
-        static int pyc_struct_array_VkDescriptorBufferInfo_converter(PyObject* arg, VkDescriptorBufferInfo** val) {
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDebugMarkerObjectTagInfoEXT_converter(PyObject* arg, VkDebugMarkerObjectTagInfoEXT** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
+            if (!PyObject_TypeCheck(arg, &PyVkDebugMarkerObjectTagInfoEXTType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugMarkerObjectTagInfoEXT");
+                return 0;
+            }
+
+            *val = ((PyVkDebugMarkerObjectTagInfoEXT*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDebugMarkerObjectTagInfoEXT_converter_free(VkDebugMarkerObjectTagInfoEXT** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkQueryPoolCreateInfo_converter(PyObject* arg, VkQueryPoolCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkQueryPoolCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryPoolCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkQueryPoolCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkQueryPoolCreateInfo_converter_free(VkQueryPoolCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkPhysicalDevice_converter(PyObject* arg, VkPhysicalDevice* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkPhysicalDevice* handle_pointer = PyCapsule_GetPointer(arg, "VkPhysicalDevice");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkPhysicalDevice_converter_free(VkPhysicalDevice* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkStencilOpState_converter(PyObject* arg, VkStencilOpState* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkStencilOpStateType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStencilOpState");
+                return 0;
+            }
+
+            *val = *(((PyVkStencilOpState*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkStencilOpState_converter_free(VkStencilOpState* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
+        
+        static int pyc_handle_array_VkDescriptorSetLayout_converter(PyObject* arg, VkDescriptorSetLayout** val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
             if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorSetLayout");
                 return 0;
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDescriptorBufferInfo));
+            *val = malloc(size * sizeof(VkDescriptorSetLayout));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -12210,19 +10032,206 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkDescriptorBufferInfoType)) {
+                VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkDescriptorSetLayout");
+                if (handle_pointer == NULL) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorBufferInfo");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkDescriptorBufferInfo*) item)->base);
+                (*val)[i] = *handle_pointer;
+            }
+
+            return 1;
+        }
+        static void pyc_handle_array_VkDescriptorSetLayout_converter_free(VkDescriptorSetLayout** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkDescriptorSetLayout_converter(PyObject* arg, VkDescriptorSetLayout* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(arg, "VkDescriptorSetLayout");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkDescriptorSetLayout_converter_free(VkDescriptorSetLayout* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
+        
+        static int pyc_handle_array_VkPipelineCache_converter(PyObject* arg, VkPipelineCache** val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineCache");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkPipelineCache));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                VkPipelineCache* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkPipelineCache");
+                if (handle_pointer == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = *handle_pointer;
+            }
+
+            return 1;
+        }
+        static void pyc_handle_array_VkPipelineCache_converter_free(VkPipelineCache** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkPipelineCache_converter(PyObject* arg, VkPipelineCache* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkPipelineCache* handle_pointer = PyCapsule_GetPointer(arg, "VkPipelineCache");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkPipelineCache_converter_free(VkPipelineCache* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkBufferImageCopy_converter(PyObject* arg, VkBufferImageCopy** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkBufferImageCopy));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkBufferImageCopyType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkBufferImageCopy");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkBufferImageCopy*) item)->base);
             }
 
             return 1;
         }
 
-        static void pyc_struct_array_VkDescriptorBufferInfo_converter_free(VkDescriptorBufferInfo** val, int disable) {
+        static void pyc_struct_array_VkBufferImageCopy_converter_free(VkBufferImageCopy** val, int disable) {
             if (disable)
                 return;
 
@@ -12232,6 +10241,228 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
     
 
 
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkPipeline_converter(PyObject* arg, VkPipeline* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkPipeline* handle_pointer = PyCapsule_GetPointer(arg, "VkPipeline");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkPipeline_converter_free(VkPipeline* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkDebugReportCallbackEXT_converter(PyObject* arg, VkDebugReportCallbackEXT* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkDebugReportCallbackEXT* handle_pointer = PyCapsule_GetPointer(arg, "VkDebugReportCallbackEXT");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkDebugReportCallbackEXT_converter_free(VkDebugReportCallbackEXT* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkClearValue_converter(PyObject* arg, VkClearValue** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkClearValue));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkClearValueType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkClearValue");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkClearValue*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkClearValue_converter_free(VkClearValue** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkClearValue_converter(PyObject* arg, VkClearValue* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkClearValueType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkClearValue");
+                return 0;
+            }
+
+            *val = *(((PyVkClearValue*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkClearValue_converter_free(VkClearValue* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDescriptorSetAllocateInfo_converter(PyObject* arg, VkDescriptorSetAllocateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkDescriptorSetAllocateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorSetAllocateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkDescriptorSetAllocateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDescriptorSetAllocateInfo_converter_free(VkDescriptorSetAllocateInfo** val, int disable) {}
         
     
 
@@ -12361,1544 +10592,6 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkDisplayModeCreateFlagsKHR_converter(PyObject* arg, VkDisplayModeCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayModeCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkDisplayModeCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDisplayModeCreateFlagsKHR_converter_free(VkDisplayModeCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkCommandPoolResetFlags_converter(PyObject* arg, VkCommandPoolResetFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandPoolResetFlags or integer");
-                return 0;
-            }
-
-            *val = (VkCommandPoolResetFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkCommandPoolResetFlags_converter_free(VkCommandPoolResetFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkColorComponentFlags_converter(PyObject* arg, VkColorComponentFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkColorComponentFlags or integer");
-                return 0;
-            }
-
-            *val = (VkColorComponentFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkColorComponentFlags_converter_free(VkColorComponentFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkSamplerAddressMode_converter(PyObject* arg, VkSamplerAddressMode* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerAddressMode or integer");
-                return 0;
-            }
-
-            *val = (VkSamplerAddressMode) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkSamplerAddressMode_converter_free(VkSamplerAddressMode* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDescriptorPoolCreateInfo_converter(PyObject* arg, VkDescriptorPoolCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDescriptorPoolCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorPoolCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkDescriptorPoolCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDescriptorPoolCreateInfo_converter_free(VkDescriptorPoolCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkDescriptorSetLayoutBinding_converter(PyObject* arg, VkDescriptorSetLayoutBinding** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDescriptorSetLayoutBinding));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkDescriptorSetLayoutBindingType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorSetLayoutBinding");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkDescriptorSetLayoutBinding*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkDescriptorSetLayoutBinding_converter_free(VkDescriptorSetLayoutBinding** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkClearRect_converter(PyObject* arg, VkClearRect** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkClearRect));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkClearRectType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkClearRect");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkClearRect*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkClearRect_converter_free(VkClearRect** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkImageSubresource_converter(PyObject* arg, VkImageSubresource** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresource");
-                return 0;
-            }
-
-            *val = ((PyVkImageSubresource*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkImageSubresource_converter_free(VkImageSubresource** val, int disable) {}
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkImageSubresource_converter(PyObject* arg, VkImageSubresource* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresource");
-                return 0;
-            }
-
-            *val = *(((PyVkImageSubresource*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkImageSubresource_converter_free(VkImageSubresource* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDebugReportCallbackCreateInfoEXT_converter(PyObject* arg, VkDebugReportCallbackCreateInfoEXT** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDebugReportCallbackCreateInfoEXTType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugReportCallbackCreateInfoEXT");
-                return 0;
-            }
-
-            *val = ((PyVkDebugReportCallbackCreateInfoEXT*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDebugReportCallbackCreateInfoEXT_converter_free(VkDebugReportCallbackCreateInfoEXT** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkDescriptorPool_converter(PyObject* arg, VkDescriptorPool* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(arg, "VkDescriptorPool");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkDescriptorPool_converter_free(VkDescriptorPool* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkSubpassDescription_converter(PyObject* arg, VkSubpassDescription** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSubpassDescription));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkSubpassDescriptionType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSubpassDescription");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkSubpassDescription*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkSubpassDescription_converter_free(VkSubpassDescription** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDeviceQueueCreateFlags_converter(PyObject* arg, VkDeviceQueueCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceQueueCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkDeviceQueueCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDeviceQueueCreateFlags_converter_free(VkDeviceQueueCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkFramebufferCreateFlags_converter(PyObject* arg, VkFramebufferCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFramebufferCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkFramebufferCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkFramebufferCreateFlags_converter_free(VkFramebufferCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineRasterizationStateCreateFlags_converter(PyObject* arg, VkPipelineRasterizationStateCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineRasterizationStateCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineRasterizationStateCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineRasterizationStateCreateFlags_converter_free(VkPipelineRasterizationStateCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkDisplayModeKHR_converter(PyObject* arg, VkDisplayModeKHR* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkDisplayModeKHR");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkDisplayModeKHR_converter_free(VkDisplayModeKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineMultisampleStateCreateFlags_converter(PyObject* arg, VkPipelineMultisampleStateCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineMultisampleStateCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineMultisampleStateCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineMultisampleStateCreateFlags_converter_free(VkPipelineMultisampleStateCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkXlibSurfaceCreateFlagsKHR_converter(PyObject* arg, VkXlibSurfaceCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXlibSurfaceCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkXlibSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkXlibSurfaceCreateFlagsKHR_converter_free(VkXlibSurfaceCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_flag_array_VkDeviceSize_converter(PyObject* arg, VkDeviceSize** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDeviceSize");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDeviceSize));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyLong_Check(item)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDeviceSize or integer");
-                    return 0;
-                }
-
-                VkDeviceSize tmp = (VkDeviceSize) PyLong_AsLong(item);
-                if (PyErr_Occurred()) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = tmp;
-            }
-            return 1;
-        }
-        static void pyc_flag_array_VkDeviceSize_converter_free(VkDeviceSize** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDeviceSize_converter(PyObject* arg, VkDeviceSize* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceSize or integer");
-                return 0;
-            }
-
-            *val = (VkDeviceSize) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDeviceSize_converter_free(VkDeviceSize* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineDynamicStateCreateInfo_converter(PyObject* arg, VkPipelineDynamicStateCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineDynamicStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDynamicStateCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineDynamicStateCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineDynamicStateCreateInfo_converter_free(VkPipelineDynamicStateCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineStageFlagBits_converter(PyObject* arg, VkPipelineStageFlagBits* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineStageFlagBits or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineStageFlagBits) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineStageFlagBits_converter_free(VkPipelineStageFlagBits* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_WAYLAND_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkWaylandSurfaceCreateInfoKHR_converter(PyObject* arg, VkWaylandSurfaceCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkWaylandSurfaceCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWaylandSurfaceCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkWaylandSurfaceCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkWaylandSurfaceCreateInfoKHR_converter_free(VkWaylandSurfaceCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkBlendFactor_converter(PyObject* arg, VkBlendFactor* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBlendFactor or integer");
-                return 0;
-            }
-
-            *val = (VkBlendFactor) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkBlendFactor_converter_free(VkBlendFactor* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkVertexInputRate_converter(PyObject* arg, VkVertexInputRate* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkVertexInputRate or integer");
-                return 0;
-            }
-
-            *val = (VkVertexInputRate) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkVertexInputRate_converter_free(VkVertexInputRate* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkSampler_converter(PyObject* arg, VkSampler** val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSampler");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSampler));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                VkSampler* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkSampler");
-                if (handle_pointer == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = *handle_pointer;
-            }
-
-            return 1;
-        }
-        static void pyc_handle_array_VkSampler_converter_free(VkSampler** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkSampler_converter(PyObject* arg, VkSampler* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkSampler* handle_pointer = PyCapsule_GetPointer(arg, "VkSampler");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkSampler_converter_free(VkSampler* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkStencilOp_converter(PyObject* arg, VkStencilOp* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStencilOp or integer");
-                return 0;
-            }
-
-            *val = (VkStencilOp) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkStencilOp_converter_free(VkStencilOp* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkImageResolve_converter(PyObject* arg, VkImageResolve** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkImageResolve));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkImageResolveType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageResolve");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkImageResolve*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkImageResolve_converter_free(VkImageResolve** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineCreateFlags_converter(PyObject* arg, VkPipelineCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineCreateFlags_converter_free(VkPipelineCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
         static int pyc_flag_base_VkSparseMemoryBindFlags_converter(PyObject* arg, VkSparseMemoryBindFlags* val) {
             if (!PyLong_Check(arg)) {
                 PyErr_SetString(PyExc_TypeError, "Argument must be a VkSparseMemoryBindFlags or integer");
@@ -13943,108 +10636,21 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkQueryPipelineStatisticFlags_converter(PyObject* arg, VkQueryPipelineStatisticFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryPipelineStatisticFlags or integer");
+        static int pyc_handle_base_VkQueue_converter(PyObject* arg, VkQueue* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkQueue* handle_pointer = PyCapsule_GetPointer(arg, "VkQueue");
+            if (handle_pointer == NULL) {
                 return 0;
             }
 
-            *val = (VkQueryPipelineStatisticFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
+            *val = *handle_pointer;
             return 1;
         }
-        static void pyc_flag_base_VkQueryPipelineStatisticFlags_converter_free(VkQueryPipelineStatisticFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkInstanceCreateFlags_converter(PyObject* arg, VkInstanceCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkInstanceCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkInstanceCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkInstanceCreateFlags_converter_free(VkInstanceCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkImageType_converter(PyObject* arg, VkImageType* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageType or integer");
-                return 0;
-            }
-
-            *val = (VkImageType) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkImageType_converter_free(VkImageType* val, int disable) {}
+        static void pyc_handle_base_VkQueue_converter_free(VkQueue* val, int disable) {}
         
     
 
@@ -14071,21 +10677,21 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_pointer_VkPipelineColorBlendStateCreateInfo_converter(PyObject* arg, VkPipelineColorBlendStateCreateInfo** val) {
+        static int pyc_struct_pointer_VkFenceCreateInfo_converter(PyObject* arg, VkFenceCreateInfo** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineColorBlendStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineColorBlendStateCreateInfo");
+            if (!PyObject_TypeCheck(arg, &PyVkFenceCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFenceCreateInfo");
                 return 0;
             }
 
-            *val = ((PyVkPipelineColorBlendStateCreateInfo*)arg)->base;
+            *val = ((PyVkFenceCreateInfo*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_VkPipelineColorBlendStateCreateInfo_converter_free(VkPipelineColorBlendStateCreateInfo** val, int disable) {}
+        static void pyc_struct_pointer_VkFenceCreateInfo_converter_free(VkFenceCreateInfo** val, int disable) {}
         
     
 
@@ -14111,108 +10717,23 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
-
-
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
         
-    
-        
-        static int pyc_flag_base_VkSurfaceTransformFlagBitsKHR_converter(PyObject* arg, VkSurfaceTransformFlagBitsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSurfaceTransformFlagBitsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkSurfaceTransformFlagBitsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkSurfaceTransformFlagBitsKHR_converter_free(VkSurfaceTransformFlagBitsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDescriptorSetLayoutCreateFlags_converter(PyObject* arg, VkDescriptorSetLayoutCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorSetLayoutCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkDescriptorSetLayoutCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDescriptorSetLayoutCreateFlags_converter_free(VkDescriptorSetLayoutCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkViewport_converter(PyObject* arg, VkViewport** val) {
+        static int pyc_handle_array_VkSwapchainKHR_converter(PyObject* arg, VkSwapchainKHR** val) {
             if (arg == Py_None) {
-                *val = NULL;
+                *val = VK_NULL_HANDLE;
                 return 1;
             }
 
             if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSwapchainKHR");
                 return 0;
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkViewport));
+            *val = malloc(size * sizeof(VkSwapchainKHR));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -14226,24 +10747,114 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkViewportType)) {
+                VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkSwapchainKHR");
+                if (handle_pointer == NULL) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkViewport");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkViewport*) item)->base);
+                (*val)[i] = *handle_pointer;
             }
 
             return 1;
         }
-
-        static void pyc_struct_array_VkViewport_converter_free(VkViewport** val, int disable) {
+        static void pyc_handle_array_VkSwapchainKHR_converter_free(VkSwapchainKHR** val, int disable) {
             if (disable)
                 return;
 
             free(*val);
         }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkSwapchainKHR_converter(PyObject* arg, VkSwapchainKHR* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkSwapchainKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkSwapchainKHR");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkSwapchainKHR_converter_free(VkSwapchainKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkIndirectCommandsLayoutNVX_converter(PyObject* arg, VkIndirectCommandsLayoutNVX* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkIndirectCommandsLayoutNVX* handle_pointer = PyCapsule_GetPointer(arg, "VkIndirectCommandsLayoutNVX");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkIndirectCommandsLayoutNVX_converter_free(VkIndirectCommandsLayoutNVX* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
         
     
 
@@ -14292,6 +10903,276 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             return 1;
         }
         static void pyc_struct_base_VkOffset2D_converter_free(VkOffset2D* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkBorderColor_converter(PyObject* arg, VkBorderColor* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBorderColor or integer");
+                return 0;
+            }
+
+            *val = (VkBorderColor) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkBorderColor_converter_free(VkBorderColor* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkMappedMemoryRange_converter(PyObject* arg, VkMappedMemoryRange** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkMappedMemoryRange));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkMappedMemoryRangeType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkMappedMemoryRange");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkMappedMemoryRange*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkMappedMemoryRange_converter_free(VkMappedMemoryRange** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkVertexInputAttributeDescription_converter(PyObject* arg, VkVertexInputAttributeDescription** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkVertexInputAttributeDescription));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkVertexInputAttributeDescriptionType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkVertexInputAttributeDescription");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkVertexInputAttributeDescription*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkVertexInputAttributeDescription_converter_free(VkVertexInputAttributeDescription** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_flag_array_VkResult_converter(PyObject* arg, VkResult** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkResult");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkResult));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyLong_Check(item)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkResult or integer");
+                    return 0;
+                }
+
+                VkResult tmp = (VkResult) PyLong_AsLong(item);
+                if (PyErr_Occurred()) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = tmp;
+            }
+            return 1;
+        }
+        static void pyc_flag_array_VkResult_converter_free(VkResult** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
         
     
 
@@ -14417,13 +11298,84 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_handle_base_VkPipelineLayout_converter(PyObject* arg, VkPipelineLayout* val) {
+        static int pyc_flag_base_VkPipelineColorBlendStateCreateFlags_converter(PyObject* arg, VkPipelineColorBlendStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineColorBlendStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineColorBlendStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineColorBlendStateCreateFlags_converter_free(VkPipelineColorBlendStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkDisplayModeKHR_converter(PyObject* arg, VkDisplayModeKHR* val) {
             if (arg == Py_None) {
                 *val = VK_NULL_HANDLE;
                 return 1;
             }
 
-            VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(arg, "VkPipelineLayout");
+            VkDisplayModeKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkDisplayModeKHR");
             if (handle_pointer == NULL) {
                 return 0;
             }
@@ -14431,167 +11383,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             *val = *handle_pointer;
             return 1;
         }
-        static void pyc_handle_base_VkPipelineLayout_converter_free(VkPipelineLayout* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkShaderStageFlagBits_converter(PyObject* arg, VkShaderStageFlagBits* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderStageFlagBits or integer");
-                return 0;
-            }
-
-            *val = (VkShaderStageFlagBits) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkShaderStageFlagBits_converter_free(VkShaderStageFlagBits* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkShaderModule_converter(PyObject* arg, VkShaderModule* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkShaderModule* handle_pointer = PyCapsule_GetPointer(arg, "VkShaderModule");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkShaderModule_converter_free(VkShaderModule* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkFrontFace_converter(PyObject* arg, VkFrontFace* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFrontFace or integer");
-                return 0;
-            }
-
-            *val = (VkFrontFace) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkFrontFace_converter_free(VkFrontFace* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
+        static void pyc_handle_base_VkDisplayModeKHR_converter_free(VkDisplayModeKHR* val, int disable) {}
         
     
 
@@ -14618,21 +11410,326 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_pointer_VkBufferViewCreateInfo_converter(PyObject* arg, VkBufferViewCreateInfo** val) {
+        static int pyc_struct_pointer_VkClearColorValue_converter(PyObject* arg, VkClearColorValue** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkBufferViewCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferViewCreateInfo");
+            if (!PyObject_TypeCheck(arg, &PyVkClearColorValueType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkClearColorValue");
                 return 0;
             }
 
-            *val = ((PyVkBufferViewCreateInfo*)arg)->base;
+            *val = ((PyVkClearColorValue*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_VkBufferViewCreateInfo_converter_free(VkBufferViewCreateInfo** val, int disable) {}
+        static void pyc_struct_pointer_VkClearColorValue_converter_free(VkClearColorValue** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDebugMarkerObjectNameInfoEXT_converter(PyObject* arg, VkDebugMarkerObjectNameInfoEXT** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkDebugMarkerObjectNameInfoEXTType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugMarkerObjectNameInfoEXT");
+                return 0;
+            }
+
+            *val = ((PyVkDebugMarkerObjectNameInfoEXT*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDebugMarkerObjectNameInfoEXT_converter_free(VkDebugMarkerObjectNameInfoEXT** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkDescriptorImageInfo_converter(PyObject* arg, VkDescriptorImageInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkDescriptorImageInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkDescriptorImageInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorImageInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkDescriptorImageInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkDescriptorImageInfo_converter_free(VkDescriptorImageInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_flag_array_VkSampleMask_converter(PyObject* arg, VkSampleMask** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSampleMask");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSampleMask));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyLong_Check(item)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSampleMask or integer");
+                    return 0;
+                }
+
+                VkSampleMask tmp = (VkSampleMask) PyLong_AsLong(item);
+                if (PyErr_Occurred()) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = tmp;
+            }
+            return 1;
+        }
+        static void pyc_flag_array_VkSampleMask_converter_free(VkSampleMask** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
         
     
 
@@ -14741,65 +11838,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkSemaphoreCreateFlags_converter(PyObject* arg, VkSemaphoreCreateFlags* val) {
+        static int pyc_flag_base_VkVertexInputRate_converter(PyObject* arg, VkVertexInputRate* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSemaphoreCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkVertexInputRate or integer");
                 return 0;
             }
 
-            *val = (VkSemaphoreCreateFlags) PyLong_AsLong(arg);
+            *val = (VkVertexInputRate) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkSemaphoreCreateFlags_converter_free(VkSemaphoreCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkImage_converter(PyObject* arg, VkImage* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkImage* handle_pointer = PyCapsule_GetPointer(arg, "VkImage");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkImage_converter_free(VkImage* val, int disable) {}
+        static void pyc_flag_base_VkVertexInputRate_converter_free(VkVertexInputRate* val, int disable) {}
         
     
 
@@ -14822,19 +11874,19 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_array_VkGraphicsPipelineCreateInfo_converter(PyObject* arg, VkGraphicsPipelineCreateInfo** val) {
+        static int pyc_flag_array_VkObjectEntryUsageFlagsNVX_converter(PyObject* arg, VkObjectEntryUsageFlagsNVX** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
             if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkObjectEntryUsageFlagsNVX");
                 return 0;
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkGraphicsPipelineCreateInfo));
+            *val = malloc(size * sizeof(VkObjectEntryUsageFlagsNVX));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -14848,19 +11900,499 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkGraphicsPipelineCreateInfoType)) {
+                if (!PyLong_Check(item)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkGraphicsPipelineCreateInfo");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkObjectEntryUsageFlagsNVX or integer");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkGraphicsPipelineCreateInfo*) item)->base);
+                VkObjectEntryUsageFlagsNVX tmp = (VkObjectEntryUsageFlagsNVX) PyLong_AsLong(item);
+                if (PyErr_Occurred()) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = tmp;
+            }
+            return 1;
+        }
+        static void pyc_flag_array_VkObjectEntryUsageFlagsNVX_converter_free(VkObjectEntryUsageFlagsNVX** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter(PyObject* arg, VkObjectEntryUsageFlagsNVX* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkObjectEntryUsageFlagsNVX or integer");
+                return 0;
+            }
+
+            *val = (VkObjectEntryUsageFlagsNVX) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
             }
 
             return 1;
         }
+        static void pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter_free(VkObjectEntryUsageFlagsNVX* val, int disable) {}
+        
+    
 
-        static void pyc_struct_array_VkGraphicsPipelineCreateInfo_converter_free(VkGraphicsPipelineCreateInfo** val, int disable) {
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkRenderPassCreateFlags_converter(PyObject* arg, VkRenderPassCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRenderPassCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkRenderPassCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkRenderPassCreateFlags_converter_free(VkRenderPassCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkEventCreateFlags_converter(PyObject* arg, VkEventCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkEventCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkEventCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkEventCreateFlags_converter_free(VkEventCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkCmdProcessCommandsInfoNVX_converter(PyObject* arg, VkCmdProcessCommandsInfoNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkCmdProcessCommandsInfoNVXType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCmdProcessCommandsInfoNVX");
+                return 0;
+            }
+
+            *val = ((PyVkCmdProcessCommandsInfoNVX*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkCmdProcessCommandsInfoNVX_converter_free(VkCmdProcessCommandsInfoNVX** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkQueryPipelineStatisticFlags_converter(PyObject* arg, VkQueryPipelineStatisticFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryPipelineStatisticFlags or integer");
+                return 0;
+            }
+
+            *val = (VkQueryPipelineStatisticFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkQueryPipelineStatisticFlags_converter_free(VkQueryPipelineStatisticFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkQueryPoolCreateFlags_converter(PyObject* arg, VkQueryPoolCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryPoolCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkQueryPoolCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkQueryPoolCreateFlags_converter_free(VkQueryPoolCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkXcbSurfaceCreateFlagsKHR_converter(PyObject* arg, VkXcbSurfaceCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXcbSurfaceCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkXcbSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkXcbSurfaceCreateFlagsKHR_converter_free(VkXcbSurfaceCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkObjectTableNVX_converter(PyObject* arg, VkObjectTableNVX* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkObjectTableNVX* handle_pointer = PyCapsule_GetPointer(arg, "VkObjectTableNVX");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkObjectTableNVX_converter_free(VkObjectTableNVX* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPresentModeKHR_converter(PyObject* arg, VkPresentModeKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPresentModeKHR or integer");
+                return 0;
+            }
+
+            *val = (VkPresentModeKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPresentModeKHR_converter_free(VkPresentModeKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_flag_array_VkDynamicState_converter(PyObject* arg, VkDynamicState** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDynamicState");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkDynamicState));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyLong_Check(item)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDynamicState or integer");
+                    return 0;
+                }
+
+                VkDynamicState tmp = (VkDynamicState) PyLong_AsLong(item);
+                if (PyErr_Occurred()) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = tmp;
+            }
+            return 1;
+        }
+        static void pyc_flag_array_VkDynamicState_converter_free(VkDynamicState** val, int disable) {
             if (disable)
                 return;
 
@@ -14899,26 +12431,26 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
         
-        static int pyc_struct_pointer_VkPipelineTessellationStateCreateInfo_converter(PyObject* arg, VkPipelineTessellationStateCreateInfo** val) {
+    
+        
+        static int pyc_handle_base_VkSurfaceKHR_converter(PyObject* arg, VkSurfaceKHR* val) {
             if (arg == Py_None) {
-                *val = NULL;
+                *val = VK_NULL_HANDLE;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineTessellationStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineTessellationStateCreateInfo");
+            VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkSurfaceKHR");
+            if (handle_pointer == NULL) {
                 return 0;
             }
 
-            *val = ((PyVkPipelineTessellationStateCreateInfo*)arg)->base;
+            *val = *handle_pointer;
             return 1;
         }
-        static void pyc_struct_pointer_VkPipelineTessellationStateCreateInfo_converter_free(VkPipelineTessellationStateCreateInfo** val, int disable) {}
-        
-    
-
-
+        static void pyc_handle_base_VkSurfaceKHR_converter_free(VkSurfaceKHR* val, int disable) {}
         
     
 
@@ -14948,21 +12480,324 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
         
-        static int pyc_flag_base_VkComponentSwizzle_converter(PyObject* arg, VkComponentSwizzle* val) {
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineBindPoint_converter(PyObject* arg, VkPipelineBindPoint* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkComponentSwizzle or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineBindPoint or integer");
                 return 0;
             }
 
-            *val = (VkComponentSwizzle) PyLong_AsLong(arg);
+            *val = (VkPipelineBindPoint) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkComponentSwizzle_converter_free(VkComponentSwizzle* val, int disable) {}
+        static void pyc_flag_base_VkPipelineBindPoint_converter_free(VkPipelineBindPoint* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineDepthStencilStateCreateFlags_converter(PyObject* arg, VkPipelineDepthStencilStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDepthStencilStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineDepthStencilStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineDepthStencilStateCreateFlags_converter_free(VkPipelineDepthStencilStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSamplerAddressMode_converter(PyObject* arg, VkSamplerAddressMode* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerAddressMode or integer");
+                return 0;
+            }
+
+            *val = (VkSamplerAddressMode) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSamplerAddressMode_converter_free(VkSamplerAddressMode* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkPipelineLayout_converter(PyObject* arg, VkPipelineLayout* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkPipelineLayout* handle_pointer = PyCapsule_GetPointer(arg, "VkPipelineLayout");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkPipelineLayout_converter_free(VkPipelineLayout* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkImageUsageFlags_converter(PyObject* arg, VkImageUsageFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageUsageFlags or integer");
+                return 0;
+            }
+
+            *val = (VkImageUsageFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkImageUsageFlags_converter_free(VkImageUsageFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkCommandBufferBeginInfo_converter(PyObject* arg, VkCommandBufferBeginInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkCommandBufferBeginInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferBeginInfo");
+                return 0;
+            }
+
+            *val = ((PyVkCommandBufferBeginInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkCommandBufferBeginInfo_converter_free(VkCommandBufferBeginInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
         
     
 
@@ -15088,20 +12923,115 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkIndexType_converter(PyObject* arg, VkIndexType* val) {
+        static int pyc_flag_base_VkAttachmentLoadOp_converter(PyObject* arg, VkAttachmentLoadOp* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkIndexType or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAttachmentLoadOp or integer");
                 return 0;
             }
 
-            *val = (VkIndexType) PyLong_AsLong(arg);
+            *val = (VkAttachmentLoadOp) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkIndexType_converter_free(VkIndexType* val, int disable) {}
+        static void pyc_flag_base_VkAttachmentLoadOp_converter_free(VkAttachmentLoadOp* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
+        
+        static int pyc_handle_array_VkDescriptorSet_converter(PyObject* arg, VkDescriptorSet** val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorSet");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkDescriptorSet));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkDescriptorSet");
+                if (handle_pointer == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = *handle_pointer;
+            }
+
+            return 1;
+        }
+        static void pyc_handle_array_VkDescriptorSet_converter_free(VkDescriptorSet** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkDescriptorSet_converter(PyObject* arg, VkDescriptorSet* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkDescriptorSet* handle_pointer = PyCapsule_GetPointer(arg, "VkDescriptorSet");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkDescriptorSet_converter_free(VkDescriptorSet* val, int disable) {}
         
     
 
@@ -15128,21 +13058,21 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_pointer_VkCommandPoolCreateInfo_converter(PyObject* arg, VkCommandPoolCreateInfo** val) {
+        static int pyc_struct_pointer_VkPhysicalDeviceFeatures_converter(PyObject* arg, VkPhysicalDeviceFeatures** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkCommandPoolCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandPoolCreateInfo");
+            if (!PyObject_TypeCheck(arg, &PyVkPhysicalDeviceFeaturesType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPhysicalDeviceFeatures");
                 return 0;
             }
 
-            *val = ((PyVkCommandPoolCreateInfo*)arg)->base;
+            *val = ((PyVkPhysicalDeviceFeatures*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_VkCommandPoolCreateInfo_converter_free(VkCommandPoolCreateInfo** val, int disable) {}
+        static void pyc_struct_pointer_VkPhysicalDeviceFeatures_converter_free(VkPhysicalDeviceFeatures** val, int disable) {}
         
     
 
@@ -15177,20 +13107,5579 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkPipelineDynamicStateCreateFlags_converter(PyObject* arg, VkPipelineDynamicStateCreateFlags* val) {
+        static int pyc_flag_base_VkSamplerMipmapMode_converter(PyObject* arg, VkSamplerMipmapMode* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDynamicStateCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerMipmapMode or integer");
                 return 0;
             }
 
-            *val = (VkPipelineDynamicStateCreateFlags) PyLong_AsLong(arg);
+            *val = (VkSamplerMipmapMode) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkPipelineDynamicStateCreateFlags_converter_free(VkPipelineDynamicStateCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkSamplerMipmapMode_converter_free(VkSamplerMipmapMode* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineCreateFlags_converter(PyObject* arg, VkPipelineCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineCreateFlags_converter_free(VkPipelineCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDebugReportCallbackCreateInfoEXT_converter(PyObject* arg, VkDebugReportCallbackCreateInfoEXT** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkDebugReportCallbackCreateInfoEXTType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugReportCallbackCreateInfoEXT");
+                return 0;
+            }
+
+            *val = ((PyVkDebugReportCallbackCreateInfoEXT*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDebugReportCallbackCreateInfoEXT_converter_free(VkDebugReportCallbackCreateInfoEXT** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineInputAssemblyStateCreateInfo_converter(PyObject* arg, VkPipelineInputAssemblyStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineInputAssemblyStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineInputAssemblyStateCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkPipelineInputAssemblyStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineInputAssemblyStateCreateInfo_converter_free(VkPipelineInputAssemblyStateCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkBufferUsageFlags_converter(PyObject* arg, VkBufferUsageFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferUsageFlags or integer");
+                return 0;
+            }
+
+            *val = (VkBufferUsageFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkBufferUsageFlags_converter_free(VkBufferUsageFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkShaderModule_converter(PyObject* arg, VkShaderModule* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkShaderModule* handle_pointer = PyCapsule_GetPointer(arg, "VkShaderModule");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkShaderModule_converter_free(VkShaderModule* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_WIN32_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkWin32SurfaceCreateInfoKHR_converter(PyObject* arg, VkWin32SurfaceCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkWin32SurfaceCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWin32SurfaceCreateInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkWin32SurfaceCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkWin32SurfaceCreateInfoKHR_converter_free(VkWin32SurfaceCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
+        
+        static int pyc_handle_array_VkEvent_converter(PyObject* arg, VkEvent** val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkEvent");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkEvent));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                VkEvent* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkEvent");
+                if (handle_pointer == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = *handle_pointer;
+            }
+
+            return 1;
+        }
+        static void pyc_handle_array_VkEvent_converter_free(VkEvent** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkEvent_converter(PyObject* arg, VkEvent* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkEvent* handle_pointer = PyCapsule_GetPointer(arg, "VkEvent");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkEvent_converter_free(VkEvent* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
+        
+        static int pyc_handle_array_VkSampler_converter(PyObject* arg, VkSampler** val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSampler");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSampler));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                VkSampler* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkSampler");
+                if (handle_pointer == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = *handle_pointer;
+            }
+
+            return 1;
+        }
+        static void pyc_handle_array_VkSampler_converter_free(VkSampler** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkSampler_converter(PyObject* arg, VkSampler* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkSampler* handle_pointer = PyCapsule_GetPointer(arg, "VkSampler");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkSampler_converter_free(VkSampler* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkCopyDescriptorSet_converter(PyObject* arg, VkCopyDescriptorSet** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkCopyDescriptorSet));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkCopyDescriptorSetType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkCopyDescriptorSet");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkCopyDescriptorSet*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkCopyDescriptorSet_converter_free(VkCopyDescriptorSet** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkGraphicsPipelineCreateInfo_converter(PyObject* arg, VkGraphicsPipelineCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkGraphicsPipelineCreateInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkGraphicsPipelineCreateInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkGraphicsPipelineCreateInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkGraphicsPipelineCreateInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkGraphicsPipelineCreateInfo_converter_free(VkGraphicsPipelineCreateInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkColorSpaceKHR_converter(PyObject* arg, VkColorSpaceKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkColorSpaceKHR or integer");
+                return 0;
+            }
+
+            *val = (VkColorSpaceKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkColorSpaceKHR_converter_free(VkColorSpaceKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkCommandPoolResetFlags_converter(PyObject* arg, VkCommandPoolResetFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandPoolResetFlags or integer");
+                return 0;
+            }
+
+            *val = (VkCommandPoolResetFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkCommandPoolResetFlags_converter_free(VkCommandPoolResetFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineShaderStageCreateFlags_converter(PyObject* arg, VkPipelineShaderStageCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineShaderStageCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineShaderStageCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineShaderStageCreateFlags_converter_free(VkPipelineShaderStageCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
+        
+        static int pyc_handle_array_VkImageView_converter(PyObject* arg, VkImageView** val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageView");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkImageView));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                VkImageView* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkImageView");
+                if (handle_pointer == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = *handle_pointer;
+            }
+
+            return 1;
+        }
+        static void pyc_handle_array_VkImageView_converter_free(VkImageView** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkImageView_converter(PyObject* arg, VkImageView* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkImageView* handle_pointer = PyCapsule_GetPointer(arg, "VkImageView");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkImageView_converter_free(VkImageView* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkComputePipelineCreateInfo_converter(PyObject* arg, VkComputePipelineCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkComputePipelineCreateInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkComputePipelineCreateInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkComputePipelineCreateInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkComputePipelineCreateInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkComputePipelineCreateInfo_converter_free(VkComputePipelineCreateInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkCommandBufferInheritanceInfo_converter(PyObject* arg, VkCommandBufferInheritanceInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkCommandBufferInheritanceInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferInheritanceInfo");
+                return 0;
+            }
+
+            *val = ((PyVkCommandBufferInheritanceInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkCommandBufferInheritanceInfo_converter_free(VkCommandBufferInheritanceInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkInstanceCreateFlags_converter(PyObject* arg, VkInstanceCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkInstanceCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkInstanceCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkInstanceCreateFlags_converter_free(VkInstanceCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkDescriptorSetLayoutBinding_converter(PyObject* arg, VkDescriptorSetLayoutBinding** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkDescriptorSetLayoutBinding));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkDescriptorSetLayoutBindingType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorSetLayoutBinding");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkDescriptorSetLayoutBinding*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkDescriptorSetLayoutBinding_converter_free(VkDescriptorSetLayoutBinding** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkCommandPool_converter(PyObject* arg, VkCommandPool* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkCommandPool* handle_pointer = PyCapsule_GetPointer(arg, "VkCommandPool");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkCommandPool_converter_free(VkCommandPool* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineStageFlagBits_converter(PyObject* arg, VkPipelineStageFlagBits* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineStageFlagBits or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineStageFlagBits) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineStageFlagBits_converter_free(VkPipelineStageFlagBits* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkSparseBufferMemoryBindInfo_converter(PyObject* arg, VkSparseBufferMemoryBindInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSparseBufferMemoryBindInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkSparseBufferMemoryBindInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseBufferMemoryBindInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkSparseBufferMemoryBindInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkSparseBufferMemoryBindInfo_converter_free(VkSparseBufferMemoryBindInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkColorComponentFlags_converter(PyObject* arg, VkColorComponentFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkColorComponentFlags or integer");
+                return 0;
+            }
+
+            *val = (VkColorComponentFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkColorComponentFlags_converter_free(VkColorComponentFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_MIR_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkMirSurfaceCreateInfoKHR_converter(PyObject* arg, VkMirSurfaceCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkMirSurfaceCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkMirSurfaceCreateInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkMirSurfaceCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkMirSurfaceCreateInfoKHR_converter_free(VkMirSurfaceCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkExtent2D_converter(PyObject* arg, VkExtent2D* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkExtent2DType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkExtent2D");
+                return 0;
+            }
+
+            *val = *(((PyVkExtent2D*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkExtent2D_converter_free(VkExtent2D* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDescriptorPoolResetFlags_converter(PyObject* arg, VkDescriptorPoolResetFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorPoolResetFlags or integer");
+                return 0;
+            }
+
+            *val = (VkDescriptorPoolResetFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDescriptorPoolResetFlags_converter_free(VkDescriptorPoolResetFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkImageSubresource_converter(PyObject* arg, VkImageSubresource** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresource");
+                return 0;
+            }
+
+            *val = ((PyVkImageSubresource*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkImageSubresource_converter_free(VkImageSubresource** val, int disable) {}
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkImageSubresource_converter(PyObject* arg, VkImageSubresource* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresource");
+                return 0;
+            }
+
+            *val = *(((PyVkImageSubresource*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkImageSubresource_converter_free(VkImageSubresource* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkAccessFlags_converter(PyObject* arg, VkAccessFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAccessFlags or integer");
+                return 0;
+            }
+
+            *val = (VkAccessFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkAccessFlags_converter_free(VkAccessFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkSparseImageOpaqueMemoryBindInfo_converter(PyObject* arg, VkSparseImageOpaqueMemoryBindInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSparseImageOpaqueMemoryBindInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkSparseImageOpaqueMemoryBindInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseImageOpaqueMemoryBindInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkSparseImageOpaqueMemoryBindInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkSparseImageOpaqueMemoryBindInfo_converter_free(VkSparseImageOpaqueMemoryBindInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_WAYLAND_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkWaylandSurfaceCreateInfoKHR_converter(PyObject* arg, VkWaylandSurfaceCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkWaylandSurfaceCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWaylandSurfaceCreateInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkWaylandSurfaceCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkWaylandSurfaceCreateInfoKHR_converter_free(VkWaylandSurfaceCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkDisplayKHR_converter(PyObject* arg, VkDisplayKHR* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkDisplayKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkDisplayKHR");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkDisplayKHR_converter_free(VkDisplayKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkDevice_converter(PyObject* arg, VkDevice* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkDevice* handle_pointer = PyCapsule_GetPointer(arg, "VkDevice");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkDevice_converter_free(VkDevice* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSharingMode_converter(PyObject* arg, VkSharingMode* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSharingMode or integer");
+                return 0;
+            }
+
+            *val = (VkSharingMode) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSharingMode_converter_free(VkSharingMode* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDisplayModeCreateFlagsKHR_converter(PyObject* arg, VkDisplayModeCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayModeCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkDisplayModeCreateFlagsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDisplayModeCreateFlagsKHR_converter_free(VkDisplayModeCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDebugMarkerMarkerInfoEXT_converter(PyObject* arg, VkDebugMarkerMarkerInfoEXT** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkDebugMarkerMarkerInfoEXTType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugMarkerMarkerInfoEXT");
+                return 0;
+            }
+
+            *val = ((PyVkDebugMarkerMarkerInfoEXT*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDebugMarkerMarkerInfoEXT_converter_free(VkDebugMarkerMarkerInfoEXT** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineMultisampleStateCreateFlags_converter(PyObject* arg, VkPipelineMultisampleStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineMultisampleStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineMultisampleStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineMultisampleStateCreateFlags_converter_free(VkPipelineMultisampleStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_flag_array_VkValidationCheckEXT_converter(PyObject* arg, VkValidationCheckEXT** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkValidationCheckEXT");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkValidationCheckEXT));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyLong_Check(item)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkValidationCheckEXT or integer");
+                    return 0;
+                }
+
+                VkValidationCheckEXT tmp = (VkValidationCheckEXT) PyLong_AsLong(item);
+                if (PyErr_Occurred()) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = tmp;
+            }
+            return 1;
+        }
+        static void pyc_flag_array_VkValidationCheckEXT_converter_free(VkValidationCheckEXT** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkDescriptorPool_converter(PyObject* arg, VkDescriptorPool* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkDescriptorPool* handle_pointer = PyCapsule_GetPointer(arg, "VkDescriptorPool");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkDescriptorPool_converter_free(VkDescriptorPool* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkIndirectCommandsLayoutCreateInfoNVX_converter(PyObject* arg, VkIndirectCommandsLayoutCreateInfoNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkIndirectCommandsLayoutCreateInfoNVXType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkIndirectCommandsLayoutCreateInfoNVX");
+                return 0;
+            }
+
+            *val = ((PyVkIndirectCommandsLayoutCreateInfoNVX*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkIndirectCommandsLayoutCreateInfoNVX_converter_free(VkIndirectCommandsLayoutCreateInfoNVX** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineVertexInputStateCreateFlags_converter(PyObject* arg, VkPipelineVertexInputStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineVertexInputStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineVertexInputStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineVertexInputStateCreateFlags_converter_free(VkPipelineVertexInputStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkImageSubresourceRange_converter(PyObject* arg, VkImageSubresourceRange** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkImageSubresourceRange));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkImageSubresourceRangeType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageSubresourceRange");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkImageSubresourceRange*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkImageSubresourceRange_converter_free(VkImageSubresourceRange** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkImageSubresourceRange_converter(PyObject* arg, VkImageSubresourceRange* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceRangeType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresourceRange");
+                return 0;
+            }
+
+            *val = *(((PyVkImageSubresourceRange*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkImageSubresourceRange_converter_free(VkImageSubresourceRange* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_ANDROID_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkAndroidSurfaceCreateInfoKHR_converter(PyObject* arg, VkAndroidSurfaceCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkAndroidSurfaceCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAndroidSurfaceCreateInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkAndroidSurfaceCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkAndroidSurfaceCreateInfoKHR_converter_free(VkAndroidSurfaceCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkImageMemoryBarrier_converter(PyObject* arg, VkImageMemoryBarrier** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkImageMemoryBarrier));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkImageMemoryBarrierType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageMemoryBarrier");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkImageMemoryBarrier*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkImageMemoryBarrier_converter_free(VkImageMemoryBarrier** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineRasterizationStateCreateInfo_converter(PyObject* arg, VkPipelineRasterizationStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineRasterizationStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineRasterizationStateCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkPipelineRasterizationStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineRasterizationStateCreateInfo_converter_free(VkPipelineRasterizationStateCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkInstance_converter(PyObject* arg, VkInstance* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkInstance* handle_pointer = PyCapsule_GetPointer(arg, "VkInstance");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkInstance_converter_free(VkInstance* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDescriptorPoolCreateInfo_converter(PyObject* arg, VkDescriptorPoolCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkDescriptorPoolCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorPoolCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkDescriptorPoolCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDescriptorPoolCreateInfo_converter_free(VkDescriptorPoolCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkOffset3D_converter(PyObject* arg, VkOffset3D** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkOffset3D));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkOffset3DType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkOffset3D");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkOffset3D*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkOffset3D_converter_free(VkOffset3D** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkOffset3D_converter(PyObject* arg, VkOffset3D* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkOffset3DType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkOffset3D");
+                return 0;
+            }
+
+            *val = *(((PyVkOffset3D*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkOffset3D_converter_free(VkOffset3D* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkAttachmentDescriptionFlags_converter(PyObject* arg, VkAttachmentDescriptionFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAttachmentDescriptionFlags or integer");
+                return 0;
+            }
+
+            *val = (VkAttachmentDescriptionFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkAttachmentDescriptionFlags_converter_free(VkAttachmentDescriptionFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDependencyFlags_converter(PyObject* arg, VkDependencyFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDependencyFlags or integer");
+                return 0;
+            }
+
+            *val = (VkDependencyFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDependencyFlags_converter_free(VkDependencyFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        // Specific ugly case
+        // handle_array_VkDeviceMemory_converter is used only by Windows
+        
+        static int pyc_handle_array_VkSemaphore_converter(PyObject* arg, VkSemaphore** val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSemaphore");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSemaphore));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                VkSemaphore* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkSemaphore");
+                if (handle_pointer == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = *handle_pointer;
+            }
+
+            return 1;
+        }
+        static void pyc_handle_array_VkSemaphore_converter_free(VkSemaphore** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkSemaphore_converter(PyObject* arg, VkSemaphore* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkSemaphore* handle_pointer = PyCapsule_GetPointer(arg, "VkSemaphore");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkSemaphore_converter_free(VkSemaphore* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineDynamicStateCreateInfo_converter(PyObject* arg, VkPipelineDynamicStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineDynamicStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDynamicStateCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkPipelineDynamicStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineDynamicStateCreateInfo_converter_free(VkPipelineDynamicStateCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkDisplayModeParametersKHR_converter(PyObject* arg, VkDisplayModeParametersKHR* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkDisplayModeParametersKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayModeParametersKHR");
+                return 0;
+            }
+
+            *val = *(((PyVkDisplayModeParametersKHR*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkDisplayModeParametersKHR_converter_free(VkDisplayModeParametersKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkCommandBufferLevel_converter(PyObject* arg, VkCommandBufferLevel* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferLevel or integer");
+                return 0;
+            }
+
+            *val = (VkCommandBufferLevel) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkCommandBufferLevel_converter_free(VkCommandBufferLevel* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineTessellationStateCreateInfo_converter(PyObject* arg, VkPipelineTessellationStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineTessellationStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineTessellationStateCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkPipelineTessellationStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineTessellationStateCreateInfo_converter_free(VkPipelineTessellationStateCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkXlibSurfaceCreateFlagsKHR_converter(PyObject* arg, VkXlibSurfaceCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXlibSurfaceCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkXlibSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkXlibSurfaceCreateFlagsKHR_converter_free(VkXlibSurfaceCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkPipelineColorBlendAttachmentState_converter(PyObject* arg, VkPipelineColorBlendAttachmentState** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkPipelineColorBlendAttachmentState));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkPipelineColorBlendAttachmentStateType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineColorBlendAttachmentState");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkPipelineColorBlendAttachmentState*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkPipelineColorBlendAttachmentState_converter_free(VkPipelineColorBlendAttachmentState** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkApplicationInfo_converter(PyObject* arg, VkApplicationInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkApplicationInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkApplicationInfo");
+                return 0;
+            }
+
+            *val = ((PyVkApplicationInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkApplicationInfo_converter_free(VkApplicationInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_flag_array_VkDeviceSize_converter(PyObject* arg, VkDeviceSize** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDeviceSize");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkDeviceSize));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyLong_Check(item)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDeviceSize or integer");
+                    return 0;
+                }
+
+                VkDeviceSize tmp = (VkDeviceSize) PyLong_AsLong(item);
+                if (PyErr_Occurred()) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = tmp;
+            }
+            return 1;
+        }
+        static void pyc_flag_array_VkDeviceSize_converter_free(VkDeviceSize** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDeviceSize_converter(PyObject* arg, VkDeviceSize* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceSize or integer");
+                return 0;
+            }
+
+            *val = (VkDeviceSize) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDeviceSize_converter_free(VkDeviceSize* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkFramebufferCreateFlags_converter(PyObject* arg, VkFramebufferCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFramebufferCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkFramebufferCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkFramebufferCreateFlags_converter_free(VkFramebufferCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkQueryResultFlags_converter(PyObject* arg, VkQueryResultFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryResultFlags or integer");
+                return 0;
+            }
+
+            *val = (VkQueryResultFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkQueryResultFlags_converter_free(VkQueryResultFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSemaphoreCreateFlags_converter(PyObject* arg, VkSemaphoreCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSemaphoreCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkSemaphoreCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSemaphoreCreateFlags_converter_free(VkSemaphoreCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkStencilFaceFlags_converter(PyObject* arg, VkStencilFaceFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStencilFaceFlags or integer");
+                return 0;
+            }
+
+            *val = (VkStencilFaceFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkStencilFaceFlags_converter_free(VkStencilFaceFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkBufferCopy_converter(PyObject* arg, VkBufferCopy** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkBufferCopy));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkBufferCopyType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkBufferCopy");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkBufferCopy*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkBufferCopy_converter_free(VkBufferCopy** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkFramebuffer_converter(PyObject* arg, VkFramebuffer* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkFramebuffer* handle_pointer = PyCapsule_GetPointer(arg, "VkFramebuffer");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkFramebuffer_converter_free(VkFramebuffer* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDisplayModeCreateInfoKHR_converter(PyObject* arg, VkDisplayModeCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkDisplayModeCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayModeCreateInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkDisplayModeCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDisplayModeCreateInfoKHR_converter_free(VkDisplayModeCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkImageViewCreateFlags_converter(PyObject* arg, VkImageViewCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageViewCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkImageViewCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkImageViewCreateFlags_converter_free(VkImageViewCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_handle_base_VkRenderPass_converter(PyObject* arg, VkRenderPass* val) {
+            if (arg == Py_None) {
+                *val = VK_NULL_HANDLE;
+                return 1;
+            }
+
+            VkRenderPass* handle_pointer = PyCapsule_GetPointer(arg, "VkRenderPass");
+            if (handle_pointer == NULL) {
+                return 0;
+            }
+
+            *val = *handle_pointer;
+            return 1;
+        }
+        static void pyc_handle_base_VkRenderPass_converter_free(VkRenderPass* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkBufferViewCreateFlags_converter(PyObject* arg, VkBufferViewCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferViewCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkBufferViewCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkBufferViewCreateFlags_converter_free(VkBufferViewCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDisplayPlaneAlphaFlagBitsKHR_converter(PyObject* arg, VkDisplayPlaneAlphaFlagBitsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayPlaneAlphaFlagBitsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkDisplayPlaneAlphaFlagBitsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDisplayPlaneAlphaFlagBitsKHR_converter_free(VkDisplayPlaneAlphaFlagBitsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDescriptorPoolCreateFlags_converter(PyObject* arg, VkDescriptorPoolCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorPoolCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkDescriptorPoolCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDescriptorPoolCreateFlags_converter_free(VkDescriptorPoolCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkBlendOp_converter(PyObject* arg, VkBlendOp* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBlendOp or integer");
+                return 0;
+            }
+
+            *val = (VkBlendOp) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkBlendOp_converter_free(VkBlendOp* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkFormat_converter(PyObject* arg, VkFormat* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFormat or integer");
+                return 0;
+            }
+
+            *val = (VkFormat) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkFormat_converter_free(VkFormat* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkShaderModuleCreateInfo_converter(PyObject* arg, VkShaderModuleCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkShaderModuleCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderModuleCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkShaderModuleCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkShaderModuleCreateInfo_converter_free(VkShaderModuleCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkSpecializationInfo_converter(PyObject* arg, VkSpecializationInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkSpecializationInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSpecializationInfo");
+                return 0;
+            }
+
+            *val = ((PyVkSpecializationInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkSpecializationInfo_converter_free(VkSpecializationInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_WAYLAND_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkWaylandSurfaceCreateFlagsKHR_converter(PyObject* arg, VkWaylandSurfaceCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWaylandSurfaceCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkWaylandSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkWaylandSurfaceCreateFlagsKHR_converter_free(VkWaylandSurfaceCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkRasterizationOrderAMD_converter(PyObject* arg, VkRasterizationOrderAMD* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRasterizationOrderAMD or integer");
+                return 0;
+            }
+
+            *val = (VkRasterizationOrderAMD) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkRasterizationOrderAMD_converter_free(VkRasterizationOrderAMD* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_flag_array_VkPipelineStageFlags_converter(PyObject* arg, VkPipelineStageFlags** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineStageFlags");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkPipelineStageFlags));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyLong_Check(item)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineStageFlags or integer");
+                    return 0;
+                }
+
+                VkPipelineStageFlags tmp = (VkPipelineStageFlags) PyLong_AsLong(item);
+                if (PyErr_Occurred()) {
+                    free(*val);
+                    return 0;
+                }
+
+                (*val)[i] = tmp;
+            }
+            return 1;
+        }
+        static void pyc_flag_array_VkPipelineStageFlags_converter_free(VkPipelineStageFlags** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineStageFlags_converter(PyObject* arg, VkPipelineStageFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineStageFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineStageFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineStageFlags_converter_free(VkPipelineStageFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkIndirectCommandsTokenNVX_converter(PyObject* arg, VkIndirectCommandsTokenNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkIndirectCommandsTokenNVX));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkIndirectCommandsTokenNVXType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkIndirectCommandsTokenNVX");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkIndirectCommandsTokenNVX*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkIndirectCommandsTokenNVX_converter_free(VkIndirectCommandsTokenNVX** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkRenderPassCreateInfo_converter(PyObject* arg, VkRenderPassCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkRenderPassCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRenderPassCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkRenderPassCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkRenderPassCreateInfo_converter_free(VkRenderPassCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkImageTiling_converter(PyObject* arg, VkImageTiling* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageTiling or integer");
+                return 0;
+            }
+
+            *val = (VkImageTiling) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkImageTiling_converter_free(VkImageTiling* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineCacheCreateFlags_converter(PyObject* arg, VkPipelineCacheCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineCacheCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineCacheCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineCacheCreateFlags_converter_free(VkPipelineCacheCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkEventCreateInfo_converter(PyObject* arg, VkEventCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkEventCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkEventCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkEventCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkEventCreateInfo_converter_free(VkEventCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkClearAttachment_converter(PyObject* arg, VkClearAttachment** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkClearAttachment));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkClearAttachmentType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkClearAttachment");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkClearAttachment*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkClearAttachment_converter_free(VkClearAttachment** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkBufferCreateInfo_converter(PyObject* arg, VkBufferCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkBufferCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkBufferCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkBufferCreateInfo_converter_free(VkBufferCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkMemoryAllocateInfo_converter(PyObject* arg, VkMemoryAllocateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkMemoryAllocateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkMemoryAllocateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkMemoryAllocateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkMemoryAllocateInfo_converter_free(VkMemoryAllocateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineViewportStateCreateFlags_converter(PyObject* arg, VkPipelineViewportStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineViewportStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineViewportStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineViewportStateCreateFlags_converter_free(VkPipelineViewportStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineMultisampleStateCreateInfo_converter(PyObject* arg, VkPipelineMultisampleStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineMultisampleStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineMultisampleStateCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkPipelineMultisampleStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineMultisampleStateCreateInfo_converter_free(VkPipelineMultisampleStateCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineRasterizationStateCreateFlags_converter(PyObject* arg, VkPipelineRasterizationStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineRasterizationStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineRasterizationStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineRasterizationStateCreateFlags_converter_free(VkPipelineRasterizationStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkImageSubresourceLayers_converter(PyObject* arg, VkImageSubresourceLayers* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceLayersType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresourceLayers");
+                return 0;
+            }
+
+            *val = *(((PyVkImageSubresourceLayers*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkImageSubresourceLayers_converter_free(VkImageSubresourceLayers* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkImageCopy_converter(PyObject* arg, VkImageCopy** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkImageCopy));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkImageCopyType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageCopy");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkImageCopy*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkImageCopy_converter_free(VkImageCopy** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkShaderStageFlags_converter(PyObject* arg, VkShaderStageFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderStageFlags or integer");
+                return 0;
+            }
+
+            *val = (VkShaderStageFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkShaderStageFlags_converter_free(VkShaderStageFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkSamplerCreateInfo_converter(PyObject* arg, VkSamplerCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkSamplerCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkSamplerCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkSamplerCreateInfo_converter_free(VkSamplerCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSubpassDescriptionFlags_converter(PyObject* arg, VkSubpassDescriptionFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSubpassDescriptionFlags or integer");
+                return 0;
+            }
+
+            *val = (VkSubpassDescriptionFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSubpassDescriptionFlags_converter_free(VkSubpassDescriptionFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkCommandBufferResetFlags_converter(PyObject* arg, VkCommandBufferResetFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferResetFlags or integer");
+                return 0;
+            }
+
+            *val = (VkCommandBufferResetFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkCommandBufferResetFlags_converter_free(VkCommandBufferResetFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineInputAssemblyStateCreateFlags_converter(PyObject* arg, VkPipelineInputAssemblyStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineInputAssemblyStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineInputAssemblyStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineInputAssemblyStateCreateFlags_converter_free(VkPipelineInputAssemblyStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSubpassContents_converter(PyObject* arg, VkSubpassContents* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSubpassContents or integer");
+                return 0;
+            }
+
+            *val = (VkSubpassContents) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSubpassContents_converter_free(VkSubpassContents* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkCompareOp_converter(PyObject* arg, VkCompareOp* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCompareOp or integer");
+                return 0;
+            }
+
+            *val = (VkCompareOp) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkCompareOp_converter_free(VkCompareOp* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkCompositeAlphaFlagBitsKHR_converter(PyObject* arg, VkCompositeAlphaFlagBitsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCompositeAlphaFlagBitsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkCompositeAlphaFlagBitsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkCompositeAlphaFlagBitsKHR_converter_free(VkCompositeAlphaFlagBitsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDeviceQueueCreateFlags_converter(PyObject* arg, VkDeviceQueueCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceQueueCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkDeviceQueueCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDeviceQueueCreateFlags_converter_free(VkDeviceQueueCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkIndirectCommandsLayoutUsageFlagsNVX_converter(PyObject* arg, VkIndirectCommandsLayoutUsageFlagsNVX* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkIndirectCommandsLayoutUsageFlagsNVX or integer");
+                return 0;
+            }
+
+            *val = (VkIndirectCommandsLayoutUsageFlagsNVX) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkIndirectCommandsLayoutUsageFlagsNVX_converter_free(VkIndirectCommandsLayoutUsageFlagsNVX* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkRect2D_converter(PyObject* arg, VkRect2D** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkRect2D));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkRect2DType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkRect2D");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkRect2D*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkRect2D_converter_free(VkRect2D** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkRect2D_converter(PyObject* arg, VkRect2D* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkRect2DType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRect2D");
+                return 0;
+            }
+
+            *val = *(((PyVkRect2D*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkRect2D_converter_free(VkRect2D* val, int disable) {}
         
     
 
@@ -15294,287 +18783,48 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
         
-        static int pyc_flag_base_VkSubpassDescriptionFlags_converter(PyObject* arg, VkSubpassDescriptionFlags* val) {
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkFilter_converter(PyObject* arg, VkFilter* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSubpassDescriptionFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFilter or integer");
                 return 0;
             }
 
-            *val = (VkSubpassDescriptionFlags) PyLong_AsLong(arg);
+            *val = (VkFilter) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkSubpassDescriptionFlags_converter_free(VkSubpassDescriptionFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkClearDepthStencilValue_converter(PyObject* arg, VkClearDepthStencilValue** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkClearDepthStencilValueType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkClearDepthStencilValue");
-                return 0;
-            }
-
-            *val = ((PyVkClearDepthStencilValue*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkClearDepthStencilValue_converter_free(VkClearDepthStencilValue** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkImageAspectFlags_converter(PyObject* arg, VkImageAspectFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageAspectFlags or integer");
-                return 0;
-            }
-
-            *val = (VkImageAspectFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkImageAspectFlags_converter_free(VkImageAspectFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkQueryPoolCreateFlags_converter(PyObject* arg, VkQueryPoolCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryPoolCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkQueryPoolCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkQueryPoolCreateFlags_converter_free(VkQueryPoolCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkSurfaceKHR_converter(PyObject* arg, VkSurfaceKHR* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkSurfaceKHR* handle_pointer = PyCapsule_GetPointer(arg, "VkSurfaceKHR");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkSurfaceKHR_converter_free(VkSurfaceKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkRasterizationOrderAMD_converter(PyObject* arg, VkRasterizationOrderAMD* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRasterizationOrderAMD or integer");
-                return 0;
-            }
-
-            *val = (VkRasterizationOrderAMD) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkRasterizationOrderAMD_converter_free(VkRasterizationOrderAMD* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkImageViewCreateFlags_converter(PyObject* arg, VkImageViewCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageViewCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkImageViewCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkImageViewCreateFlags_converter_free(VkImageViewCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkFilter_converter_free(VkFilter* val, int disable) {}
         
     
 
@@ -15597,19 +18847,337 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_array_VkResult_converter(PyObject* arg, VkResult** val) {
+        static int pyc_struct_array_VkPipelineShaderStageCreateInfo_converter(PyObject* arg, VkPipelineShaderStageCreateInfo** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
             if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkResult");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
                 return 0;
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkResult));
+            *val = malloc(size * sizeof(VkPipelineShaderStageCreateInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkPipelineShaderStageCreateInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineShaderStageCreateInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkPipelineShaderStageCreateInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkPipelineShaderStageCreateInfo_converter_free(VkPipelineShaderStageCreateInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_base_VkPipelineShaderStageCreateInfo_converter(PyObject* arg, VkPipelineShaderStageCreateInfo* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineShaderStageCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineShaderStageCreateInfo");
+                return 0;
+            }
+
+            *val = *(((PyVkPipelineShaderStageCreateInfo*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkPipelineShaderStageCreateInfo_converter_free(VkPipelineShaderStageCreateInfo* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkBlendFactor_converter(PyObject* arg, VkBlendFactor* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBlendFactor or integer");
+                return 0;
+            }
+
+            *val = (VkBlendFactor) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkBlendFactor_converter_free(VkBlendFactor* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkFramebufferCreateInfo_converter(PyObject* arg, VkFramebufferCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkFramebufferCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFramebufferCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkFramebufferCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkFramebufferCreateInfo_converter_free(VkFramebufferCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineDynamicStateCreateFlags_converter(PyObject* arg, VkPipelineDynamicStateCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDynamicStateCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineDynamicStateCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineDynamicStateCreateFlags_converter_free(VkPipelineDynamicStateCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDebugReportFlagsEXT_converter(PyObject* arg, VkDebugReportFlagsEXT* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugReportFlagsEXT or integer");
+                return 0;
+            }
+
+            *val = (VkDebugReportFlagsEXT) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDebugReportFlagsEXT_converter_free(VkDebugReportFlagsEXT* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_flag_array_VkObjectEntryTypeNVX_converter(PyObject* arg, VkObjectEntryTypeNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkObjectEntryTypeNVX");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkObjectEntryTypeNVX));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -15625,11 +19193,11 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
                 if (!PyLong_Check(item)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkResult or integer");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkObjectEntryTypeNVX or integer");
                     return 0;
                 }
 
-                VkResult tmp = (VkResult) PyLong_AsLong(item);
+                VkObjectEntryTypeNVX tmp = (VkObjectEntryTypeNVX) PyLong_AsLong(item);
                 if (PyErr_Occurred()) {
                     free(*val);
                     return 0;
@@ -15639,7 +19207,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
             return 1;
         }
-        static void pyc_flag_array_VkResult_converter_free(VkResult** val, int disable) {
+        static void pyc_flag_array_VkObjectEntryTypeNVX_converter_free(VkObjectEntryTypeNVX** val, int disable) {
             if (disable)
                 return;
 
@@ -15655,6 +19223,94 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+        
+        static int pyc_flag_base_VkObjectEntryTypeNVX_converter(PyObject* arg, VkObjectEntryTypeNVX* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkObjectEntryTypeNVX or integer");
+                return 0;
+            }
+
+            *val = (VkObjectEntryTypeNVX) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkObjectEntryTypeNVX_converter_free(VkObjectEntryTypeNVX* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDebugReportObjectTypeEXT_converter(PyObject* arg, VkDebugReportObjectTypeEXT* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugReportObjectTypeEXT or integer");
+                return 0;
+            }
+
+            *val = (VkDebugReportObjectTypeEXT) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDebugReportObjectTypeEXT_converter_free(VkDebugReportObjectTypeEXT* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
 
 
     
@@ -15675,7 +19331,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_array_VkSpecializationMapEntry_converter(PyObject* arg, VkSpecializationMapEntry** val) {
+        static int pyc_struct_array_VkDescriptorPoolSize_converter(PyObject* arg, VkDescriptorPoolSize** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
@@ -15687,7 +19343,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSpecializationMapEntry));
+            *val = malloc(size * sizeof(VkDescriptorPoolSize));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -15701,19 +19357,19 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkSpecializationMapEntryType)) {
+                if (!PyObject_TypeCheck(item, &PyVkDescriptorPoolSizeType)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSpecializationMapEntry");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorPoolSize");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkSpecializationMapEntry*) item)->base);
+                (*val)[i] = *(((PyVkDescriptorPoolSize*) item)->base);
             }
 
             return 1;
         }
 
-        static void pyc_struct_array_VkSpecializationMapEntry_converter_free(VkSpecializationMapEntry** val, int disable) {
+        static void pyc_struct_array_VkDescriptorPoolSize_converter_free(VkDescriptorPoolSize** val, int disable) {
             if (disable)
                 return;
 
@@ -15756,21 +19412,138 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
         
-        static int pyc_flag_base_VkColorSpaceKHR_converter(PyObject* arg, VkColorSpaceKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkColorSpaceKHR or integer");
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineCacheCreateInfo_converter(PyObject* arg, VkPipelineCacheCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineCacheCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineCacheCreateInfo");
                 return 0;
             }
 
-            *val = (VkColorSpaceKHR) PyLong_AsLong(arg);
+            *val = ((PyVkPipelineCacheCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineCacheCreateInfo_converter_free(VkPipelineCacheCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkImageViewCreateInfo_converter(PyObject* arg, VkImageViewCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkImageViewCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageViewCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkImageViewCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkImageViewCreateInfo_converter_free(VkImageViewCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkImageLayout_converter(PyObject* arg, VkImageLayout* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageLayout or integer");
+                return 0;
+            }
+
+            *val = (VkImageLayout) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkColorSpaceKHR_converter_free(VkColorSpaceKHR* val, int disable) {}
+        static void pyc_flag_base_VkImageLayout_converter_free(VkImageLayout* val, int disable) {}
         
     
 
@@ -15793,7 +19566,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_array_VkPipelineColorBlendAttachmentState_converter(PyObject* arg, VkPipelineColorBlendAttachmentState** val) {
+        static int pyc_struct_array_VkImageResolve_converter(PyObject* arg, VkImageResolve** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
@@ -15805,7 +19578,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkPipelineColorBlendAttachmentState));
+            *val = malloc(size * sizeof(VkImageResolve));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -15819,19 +19592,19 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkPipelineColorBlendAttachmentStateType)) {
+                if (!PyObject_TypeCheck(item, &PyVkImageResolveType)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineColorBlendAttachmentState");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageResolve");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkPipelineColorBlendAttachmentState*) item)->base);
+                (*val)[i] = *(((PyVkImageResolve*) item)->base);
             }
 
             return 1;
         }
 
-        static void pyc_struct_array_VkPipelineColorBlendAttachmentState_converter_free(VkPipelineColorBlendAttachmentState** val, int disable) {
+        static void pyc_struct_array_VkImageResolve_converter_free(VkImageResolve** val, int disable) {
             if (disable)
                 return;
 
@@ -15875,20 +19648,138 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkSamplerCreateFlags_converter(PyObject* arg, VkSamplerCreateFlags* val) {
+        static int pyc_flag_base_VkComponentSwizzle_converter(PyObject* arg, VkComponentSwizzle* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkComponentSwizzle or integer");
                 return 0;
             }
 
-            *val = (VkSamplerCreateFlags) PyLong_AsLong(arg);
+            *val = (VkComponentSwizzle) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkSamplerCreateFlags_converter_free(VkSamplerCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkComponentSwizzle_converter_free(VkComponentSwizzle* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_MIR_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkMirSurfaceCreateFlagsKHR_converter(PyObject* arg, VkMirSurfaceCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkMirSurfaceCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkMirSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkMirSurfaceCreateFlagsKHR_converter_free(VkMirSurfaceCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkSubpassDescription_converter(PyObject* arg, VkSubpassDescription** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSubpassDescription));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkSubpassDescriptionType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSubpassDescription");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkSubpassDescription*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkSubpassDescription_converter_free(VkSubpassDescription** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
         
     
 
@@ -16037,1558 +19928,21 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_MIR_KHR 
         
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkMirSurfaceCreateFlagsKHR_converter(PyObject* arg, VkMirSurfaceCreateFlagsKHR* val) {
+        static int pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter(PyObject* arg, VkExternalMemoryHandleTypeFlagsNV* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkMirSurfaceCreateFlagsKHR or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkExternalMemoryHandleTypeFlagsNV or integer");
                 return 0;
             }
 
-            *val = (VkMirSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
+            *val = (VkExternalMemoryHandleTypeFlagsNV) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkMirSurfaceCreateFlagsKHR_converter_free(VkMirSurfaceCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkQueryControlFlags_converter(PyObject* arg, VkQueryControlFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryControlFlags or integer");
-                return 0;
-            }
-
-            *val = (VkQueryControlFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkQueryControlFlags_converter_free(VkQueryControlFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineInputAssemblyStateCreateInfo_converter(PyObject* arg, VkPipelineInputAssemblyStateCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineInputAssemblyStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineInputAssemblyStateCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineInputAssemblyStateCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineInputAssemblyStateCreateInfo_converter_free(VkPipelineInputAssemblyStateCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkImageSubresourceLayers_converter(PyObject* arg, VkImageSubresourceLayers* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkImageSubresourceLayersType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageSubresourceLayers");
-                return 0;
-            }
-
-            *val = *(((PyVkImageSubresourceLayers*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkImageSubresourceLayers_converter_free(VkImageSubresourceLayers* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkCommandBufferResetFlags_converter(PyObject* arg, VkCommandBufferResetFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferResetFlags or integer");
-                return 0;
-            }
-
-            *val = (VkCommandBufferResetFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkCommandBufferResetFlags_converter_free(VkCommandBufferResetFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkEventCreateInfo_converter(PyObject* arg, VkEventCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkEventCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkEventCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkEventCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkEventCreateInfo_converter_free(VkEventCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkFramebuffer_converter(PyObject* arg, VkFramebuffer* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkFramebuffer* handle_pointer = PyCapsule_GetPointer(arg, "VkFramebuffer");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkFramebuffer_converter_free(VkFramebuffer* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkSharingMode_converter(PyObject* arg, VkSharingMode* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSharingMode or integer");
-                return 0;
-            }
-
-            *val = (VkSharingMode) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkSharingMode_converter_free(VkSharingMode* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkSparseMemoryBind_converter(PyObject* arg, VkSparseMemoryBind** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSparseMemoryBind));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkSparseMemoryBindType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseMemoryBind");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkSparseMemoryBind*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkSparseMemoryBind_converter_free(VkSparseMemoryBind** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkEvent_converter(PyObject* arg, VkEvent** val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkEvent");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkEvent));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                VkEvent* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkEvent");
-                if (handle_pointer == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = *handle_pointer;
-            }
-
-            return 1;
-        }
-        static void pyc_handle_array_VkEvent_converter_free(VkEvent** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkEvent_converter(PyObject* arg, VkEvent* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkEvent* handle_pointer = PyCapsule_GetPointer(arg, "VkEvent");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkEvent_converter_free(VkEvent* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineBindPoint_converter(PyObject* arg, VkPipelineBindPoint* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineBindPoint or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineBindPoint) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineBindPoint_converter_free(VkPipelineBindPoint* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkImageLayout_converter(PyObject* arg, VkImageLayout* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageLayout or integer");
-                return 0;
-            }
-
-            *val = (VkImageLayout) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkImageLayout_converter_free(VkImageLayout* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkRenderPassCreateFlags_converter(PyObject* arg, VkRenderPassCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRenderPassCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkRenderPassCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkRenderPassCreateFlags_converter_free(VkRenderPassCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkRenderPass_converter(PyObject* arg, VkRenderPass* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkRenderPass* handle_pointer = PyCapsule_GetPointer(arg, "VkRenderPass");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkRenderPass_converter_free(VkRenderPass* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkSemaphore_converter(PyObject* arg, VkSemaphore** val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSemaphore");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSemaphore));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                VkSemaphore* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkSemaphore");
-                if (handle_pointer == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = *handle_pointer;
-            }
-
-            return 1;
-        }
-        static void pyc_handle_array_VkSemaphore_converter_free(VkSemaphore** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkSemaphore_converter(PyObject* arg, VkSemaphore* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkSemaphore* handle_pointer = PyCapsule_GetPointer(arg, "VkSemaphore");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkSemaphore_converter_free(VkSemaphore* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkXcbSurfaceCreateFlagsKHR_converter(PyObject* arg, VkXcbSurfaceCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXcbSurfaceCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkXcbSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkXcbSurfaceCreateFlagsKHR_converter_free(VkXcbSurfaceCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_WIN32_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkWin32SurfaceCreateInfoKHR_converter(PyObject* arg, VkWin32SurfaceCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkWin32SurfaceCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWin32SurfaceCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkWin32SurfaceCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkWin32SurfaceCreateInfoKHR_converter_free(VkWin32SurfaceCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkDevice_converter(PyObject* arg, VkDevice* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkDevice* handle_pointer = PyCapsule_GetPointer(arg, "VkDevice");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkDevice_converter_free(VkDevice* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineInputAssemblyStateCreateFlags_converter(PyObject* arg, VkPipelineInputAssemblyStateCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineInputAssemblyStateCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineInputAssemblyStateCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineInputAssemblyStateCreateFlags_converter_free(VkPipelineInputAssemblyStateCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkSparseImageOpaqueMemoryBindInfo_converter(PyObject* arg, VkSparseImageOpaqueMemoryBindInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSparseImageOpaqueMemoryBindInfo));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkSparseImageOpaqueMemoryBindInfoType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseImageOpaqueMemoryBindInfo");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkSparseImageOpaqueMemoryBindInfo*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkSparseImageOpaqueMemoryBindInfo_converter_free(VkSparseImageOpaqueMemoryBindInfo** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkDisplayModeParametersKHR_converter(PyObject* arg, VkDisplayModeParametersKHR* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkDisplayModeParametersKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayModeParametersKHR");
-                return 0;
-            }
-
-            *val = *(((PyVkDisplayModeParametersKHR*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkDisplayModeParametersKHR_converter_free(VkDisplayModeParametersKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkFormat_converter(PyObject* arg, VkFormat* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFormat or integer");
-                return 0;
-            }
-
-            *val = (VkFormat) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkFormat_converter_free(VkFormat* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkSwapchainCreateFlagsKHR_converter(PyObject* arg, VkSwapchainCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSwapchainCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkSwapchainCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkSwapchainCreateFlagsKHR_converter_free(VkSwapchainCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkBufferImageCopy_converter(PyObject* arg, VkBufferImageCopy** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkBufferImageCopy));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkBufferImageCopyType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkBufferImageCopy");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkBufferImageCopy*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkBufferImageCopy_converter_free(VkBufferImageCopy** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDescriptorSetLayoutCreateInfo_converter(PyObject* arg, VkDescriptorSetLayoutCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDescriptorSetLayoutCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorSetLayoutCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkDescriptorSetLayoutCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDescriptorSetLayoutCreateInfo_converter_free(VkDescriptorSetLayoutCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_XCB_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkXcbSurfaceCreateInfoKHR_converter(PyObject* arg, VkXcbSurfaceCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkXcbSurfaceCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXcbSurfaceCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkXcbSurfaceCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkXcbSurfaceCreateInfoKHR_converter_free(VkXcbSurfaceCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkCommandPool_converter(PyObject* arg, VkCommandPool* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkCommandPool* handle_pointer = PyCapsule_GetPointer(arg, "VkCommandPool");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkCommandPool_converter_free(VkCommandPool* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkImageBlit_converter(PyObject* arg, VkImageBlit** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkImageBlit));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkImageBlitType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageBlit");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkImageBlit*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkImageBlit_converter_free(VkImageBlit** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineRasterizationStateCreateInfo_converter(PyObject* arg, VkPipelineRasterizationStateCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineRasterizationStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineRasterizationStateCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineRasterizationStateCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineRasterizationStateCreateInfo_converter_free(VkPipelineRasterizationStateCreateInfo** val, int disable) {}
-        
-    
-
-
+        static void pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter_free(VkExternalMemoryHandleTypeFlagsNV* val, int disable) {}
         
     
 
@@ -17647,96 +20001,6 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
     
 
     
-     #ifdef VK_USE_PLATFORM_ANDROID_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkAndroidSurfaceCreateInfoKHR_converter(PyObject* arg, VkAndroidSurfaceCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkAndroidSurfaceCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAndroidSurfaceCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkAndroidSurfaceCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkAndroidSurfaceCreateInfoKHR_converter_free(VkAndroidSurfaceCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPresentInfoKHR_converter(PyObject* arg, VkPresentInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPresentInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPresentInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkPresentInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPresentInfoKHR_converter_free(VkPresentInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
     
         
 
@@ -17750,150 +20014,6 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
     
 
 
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkInstanceCreateInfo_converter(PyObject* arg, VkInstanceCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkInstanceCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkInstanceCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkInstanceCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkInstanceCreateInfo_converter_free(VkInstanceCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_handle_base_VkPipeline_converter(PyObject* arg, VkPipeline* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkPipeline* handle_pointer = PyCapsule_GetPointer(arg, "VkPipeline");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkPipeline_converter_free(VkPipeline* val, int disable) {}
         
     
 
@@ -17993,181 +20113,49 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
         
-        static int pyc_struct_pointer_VkFramebufferCreateInfo_converter(PyObject* arg, VkFramebufferCreateInfo** val) {
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineViewportStateCreateInfo_converter(PyObject* arg, VkPipelineViewportStateCreateInfo** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkFramebufferCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFramebufferCreateInfo");
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineViewportStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineViewportStateCreateInfo");
                 return 0;
             }
 
-            *val = ((PyVkFramebufferCreateInfo*)arg)->base;
+            *val = ((PyVkPipelineViewportStateCreateInfo*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_VkFramebufferCreateInfo_converter_free(VkFramebufferCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkQueryType_converter(PyObject* arg, VkQueryType* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryType or integer");
-                return 0;
-            }
-
-            *val = (VkQueryType) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkQueryType_converter_free(VkQueryType* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkImageTiling_converter(PyObject* arg, VkImageTiling* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageTiling or integer");
-                return 0;
-            }
-
-            *val = (VkImageTiling) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkImageTiling_converter_free(VkImageTiling* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDebugReportObjectTypeEXT_converter(PyObject* arg, VkDebugReportObjectTypeEXT* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugReportObjectTypeEXT or integer");
-                return 0;
-            }
-
-            *val = (VkDebugReportObjectTypeEXT) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDebugReportObjectTypeEXT_converter_free(VkDebugReportObjectTypeEXT* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
+        static void pyc_struct_pointer_VkPipelineViewportStateCreateInfo_converter_free(VkPipelineViewportStateCreateInfo** val, int disable) {}
         
     
 
@@ -18294,20 +20282,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkPolygonMode_converter(PyObject* arg, VkPolygonMode* val) {
+        static int pyc_flag_base_VkDescriptorSetLayoutCreateFlags_converter(PyObject* arg, VkDescriptorSetLayoutCreateFlags* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPolygonMode or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorSetLayoutCreateFlags or integer");
                 return 0;
             }
 
-            *val = (VkPolygonMode) PyLong_AsLong(arg);
+            *val = (VkDescriptorSetLayoutCreateFlags) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkPolygonMode_converter_free(VkPolygonMode* val, int disable) {}
+        static void pyc_flag_base_VkDescriptorSetLayoutCreateFlags_converter_free(VkDescriptorSetLayoutCreateFlags* val, int disable) {}
         
     
 
@@ -18333,25 +20321,70 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
-        
-        static int pyc_flag_base_VkImageCreateFlags_converter(PyObject* arg, VkImageCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageCreateFlags or integer");
+        static int pyc_struct_pointer_VkDeviceCreateInfo_converter(PyObject* arg, VkDeviceCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkDeviceCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceCreateInfo");
                 return 0;
             }
 
-            *val = (VkImageCreateFlags) PyLong_AsLong(arg);
+            *val = ((PyVkDeviceCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkDeviceCreateInfo_converter_free(VkDeviceCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDescriptorType_converter(PyObject* arg, VkDescriptorType* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorType or integer");
+                return 0;
+            }
+
+            *val = (VkDescriptorType) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkImageCreateFlags_converter_free(VkImageCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkDescriptorType_converter_free(VkDescriptorType* val, int disable) {}
         
     
 
@@ -18374,7 +20407,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_array_VkSparseBufferMemoryBindInfo_converter(PyObject* arg, VkSparseBufferMemoryBindInfo** val) {
+        static int pyc_struct_array_VkDescriptorBufferInfo_converter(PyObject* arg, VkDescriptorBufferInfo** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
@@ -18386,7 +20419,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSparseBufferMemoryBindInfo));
+            *val = malloc(size * sizeof(VkDescriptorBufferInfo));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -18400,283 +20433,19 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkSparseBufferMemoryBindInfoType)) {
+                if (!PyObject_TypeCheck(item, &PyVkDescriptorBufferInfoType)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseBufferMemoryBindInfo");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorBufferInfo");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkSparseBufferMemoryBindInfo*) item)->base);
+                (*val)[i] = *(((PyVkDescriptorBufferInfo*) item)->base);
             }
 
             return 1;
         }
 
-        static void pyc_struct_array_VkSparseBufferMemoryBindInfo_converter_free(VkSparseBufferMemoryBindInfo** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDescriptorPoolCreateFlags_converter(PyObject* arg, VkDescriptorPoolCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorPoolCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkDescriptorPoolCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDescriptorPoolCreateFlags_converter_free(VkDescriptorPoolCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_ANDROID_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkAndroidSurfaceCreateFlagsKHR_converter(PyObject* arg, VkAndroidSurfaceCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAndroidSurfaceCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkAndroidSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkAndroidSurfaceCreateFlagsKHR_converter_free(VkAndroidSurfaceCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkLogicOp_converter(PyObject* arg, VkLogicOp* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkLogicOp or integer");
-                return 0;
-            }
-
-            *val = (VkLogicOp) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkLogicOp_converter_free(VkLogicOp* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_flag_array_VkDynamicState_converter(PyObject* arg, VkDynamicState** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDynamicState");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDynamicState));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyLong_Check(item)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDynamicState or integer");
-                    return 0;
-                }
-
-                VkDynamicState tmp = (VkDynamicState) PyLong_AsLong(item);
-                if (PyErr_Occurred()) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = tmp;
-            }
-            return 1;
-        }
-        static void pyc_flag_array_VkDynamicState_converter_free(VkDynamicState** val, int disable) {
+        static void pyc_struct_array_VkDescriptorBufferInfo_converter_free(VkDescriptorBufferInfo** val, int disable) {
             if (disable)
                 return;
 
@@ -18720,20 +20489,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkCullModeFlags_converter(PyObject* arg, VkCullModeFlags* val) {
+        static int pyc_flag_base_VkIndexType_converter(PyObject* arg, VkIndexType* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCullModeFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkIndexType or integer");
                 return 0;
             }
 
-            *val = (VkCullModeFlags) PyLong_AsLong(arg);
+            *val = (VkIndexType) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkCullModeFlags_converter_free(VkCullModeFlags* val, int disable) {}
+        static void pyc_flag_base_VkIndexType_converter_free(VkIndexType* val, int disable) {}
         
     
 
@@ -18764,20 +20533,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkShaderModuleCreateFlags_converter(PyObject* arg, VkShaderModuleCreateFlags* val) {
+        static int pyc_flag_base_VkStructureType_converter(PyObject* arg, VkStructureType* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderModuleCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStructureType or integer");
                 return 0;
             }
 
-            *val = (VkShaderModuleCreateFlags) PyLong_AsLong(arg);
+            *val = (VkStructureType) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkShaderModuleCreateFlags_converter_free(VkShaderModuleCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkStructureType_converter_free(VkStructureType* val, int disable) {}
         
     
 
@@ -18804,2042 +20573,21 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_pointer_VkFenceCreateInfo_converter(PyObject* arg, VkFenceCreateInfo** val) {
+        static int pyc_struct_pointer_VkDeviceGeneratedCommandsFeaturesNVX_converter(PyObject* arg, VkDeviceGeneratedCommandsFeaturesNVX** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkFenceCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFenceCreateInfo");
+            if (!PyObject_TypeCheck(arg, &PyVkDeviceGeneratedCommandsFeaturesNVXType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceGeneratedCommandsFeaturesNVX");
                 return 0;
             }
 
-            *val = ((PyVkFenceCreateInfo*)arg)->base;
+            *val = ((PyVkDeviceGeneratedCommandsFeaturesNVX*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_VkFenceCreateInfo_converter_free(VkFenceCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkExtent2D_converter(PyObject* arg, VkExtent2D* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkExtent2DType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkExtent2D");
-                return 0;
-            }
-
-            *val = *(((PyVkExtent2D*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkExtent2D_converter_free(VkExtent2D* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkPipelineShaderStageCreateInfo_converter(PyObject* arg, VkPipelineShaderStageCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkPipelineShaderStageCreateInfo));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkPipelineShaderStageCreateInfoType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPipelineShaderStageCreateInfo");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkPipelineShaderStageCreateInfo*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkPipelineShaderStageCreateInfo_converter_free(VkPipelineShaderStageCreateInfo** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkPipelineShaderStageCreateInfo_converter(PyObject* arg, VkPipelineShaderStageCreateInfo* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineShaderStageCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineShaderStageCreateInfo");
-                return 0;
-            }
-
-            *val = *(((PyVkPipelineShaderStageCreateInfo*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkPipelineShaderStageCreateInfo_converter_free(VkPipelineShaderStageCreateInfo* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDisplaySurfaceCreateFlagsKHR_converter(PyObject* arg, VkDisplaySurfaceCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplaySurfaceCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkDisplaySurfaceCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDisplaySurfaceCreateFlagsKHR_converter_free(VkDisplaySurfaceCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkBufferViewCreateFlags_converter(PyObject* arg, VkBufferViewCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferViewCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkBufferViewCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkBufferViewCreateFlags_converter_free(VkBufferViewCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineShaderStageCreateFlags_converter(PyObject* arg, VkPipelineShaderStageCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineShaderStageCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineShaderStageCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineShaderStageCreateFlags_converter_free(VkPipelineShaderStageCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkShaderModuleCreateInfo_converter(PyObject* arg, VkShaderModuleCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkShaderModuleCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderModuleCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkShaderModuleCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkShaderModuleCreateInfo_converter_free(VkShaderModuleCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkSwapchainCreateInfoKHR_converter(PyObject* arg, VkSwapchainCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSwapchainCreateInfoKHR));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkSwapchainCreateInfoKHRType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSwapchainCreateInfoKHR");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkSwapchainCreateInfoKHR*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkSwapchainCreateInfoKHR_converter_free(VkSwapchainCreateInfoKHR** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkSwapchainCreateInfoKHR_converter(PyObject* arg, VkSwapchainCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkSwapchainCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSwapchainCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkSwapchainCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkSwapchainCreateInfoKHR_converter_free(VkSwapchainCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_XLIB_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkXlibSurfaceCreateInfoKHR_converter(PyObject* arg, VkXlibSurfaceCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkXlibSurfaceCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXlibSurfaceCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkXlibSurfaceCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkXlibSurfaceCreateInfoKHR_converter_free(VkXlibSurfaceCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDebugReportFlagsEXT_converter(PyObject* arg, VkDebugReportFlagsEXT* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugReportFlagsEXT or integer");
-                return 0;
-            }
-
-            *val = (VkDebugReportFlagsEXT) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDebugReportFlagsEXT_converter_free(VkDebugReportFlagsEXT* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_flag_array_VkSampleMask_converter(PyObject* arg, VkSampleMask** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSampleMask");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSampleMask));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyLong_Check(item)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSampleMask or integer");
-                    return 0;
-                }
-
-                VkSampleMask tmp = (VkSampleMask) PyLong_AsLong(item);
-                if (PyErr_Occurred()) {
-                    free(*val);
-                    return 0;
-                }
-
-                (*val)[i] = tmp;
-            }
-            return 1;
-        }
-        static void pyc_flag_array_VkSampleMask_converter_free(VkSampleMask** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineViewportStateCreateFlags_converter(PyObject* arg, VkPipelineViewportStateCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineViewportStateCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineViewportStateCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineViewportStateCreateFlags_converter_free(VkPipelineViewportStateCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkImageCopy_converter(PyObject* arg, VkImageCopy** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkImageCopy));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkImageCopyType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkImageCopy");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkImageCopy*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkImageCopy_converter_free(VkImageCopy** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_MIR_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkMirSurfaceCreateInfoKHR_converter(PyObject* arg, VkMirSurfaceCreateInfoKHR** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkMirSurfaceCreateInfoKHRType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkMirSurfaceCreateInfoKHR");
-                return 0;
-            }
-
-            *val = ((PyVkMirSurfaceCreateInfoKHR*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkMirSurfaceCreateInfoKHR_converter_free(VkMirSurfaceCreateInfoKHR** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkImageViewCreateInfo_converter(PyObject* arg, VkImageViewCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkImageViewCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageViewCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkImageViewCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkImageViewCreateInfo_converter_free(VkImageViewCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkStencilOpState_converter(PyObject* arg, VkStencilOpState* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkStencilOpStateType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStencilOpState");
-                return 0;
-            }
-
-            *val = *(((PyVkStencilOpState*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkStencilOpState_converter_free(VkStencilOpState* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineLayoutCreateFlags_converter(PyObject* arg, VkPipelineLayoutCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineLayoutCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkPipelineLayoutCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPipelineLayoutCreateFlags_converter_free(VkPipelineLayoutCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkAttachmentLoadOp_converter(PyObject* arg, VkAttachmentLoadOp* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAttachmentLoadOp or integer");
-                return 0;
-            }
-
-            *val = (VkAttachmentLoadOp) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkAttachmentLoadOp_converter_free(VkAttachmentLoadOp* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkCommandPoolCreateFlags_converter(PyObject* arg, VkCommandPoolCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandPoolCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkCommandPoolCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkCommandPoolCreateFlags_converter_free(VkCommandPoolCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkQueryPoolCreateInfo_converter(PyObject* arg, VkQueryPoolCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkQueryPoolCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryPoolCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkQueryPoolCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkQueryPoolCreateInfo_converter_free(VkQueryPoolCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkSampleCountFlagBits_converter(PyObject* arg, VkSampleCountFlagBits* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSampleCountFlagBits or integer");
-                return 0;
-            }
-
-            *val = (VkSampleCountFlagBits) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkSampleCountFlagBits_converter_free(VkSampleCountFlagBits* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_base_VkExtent3D_converter(PyObject* arg, VkExtent3D* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkExtent3DType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkExtent3D");
-                return 0;
-            }
-
-            *val = *(((PyVkExtent3D*)arg)->base);
-            return 1;
-        }
-        static void pyc_struct_base_VkExtent3D_converter_free(VkExtent3D* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkSparseImageMemoryBindInfo_converter(PyObject* arg, VkSparseImageMemoryBindInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSparseImageMemoryBindInfo));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkSparseImageMemoryBindInfoType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseImageMemoryBindInfo");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkSparseImageMemoryBindInfo*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkSparseImageMemoryBindInfo_converter_free(VkSparseImageMemoryBindInfo** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkStencilFaceFlags_converter(PyObject* arg, VkStencilFaceFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkStencilFaceFlags or integer");
-                return 0;
-            }
-
-            *val = (VkStencilFaceFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkStencilFaceFlags_converter_free(VkStencilFaceFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-     #ifdef VK_USE_PLATFORM_WAYLAND_KHR 
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkWaylandSurfaceCreateFlagsKHR_converter(PyObject* arg, VkWaylandSurfaceCreateFlagsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWaylandSurfaceCreateFlagsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkWaylandSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkWaylandSurfaceCreateFlagsKHR_converter_free(VkWaylandSurfaceCreateFlagsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-     #endif 
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDeviceCreateFlags_converter(PyObject* arg, VkDeviceCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceCreateFlags or integer");
-                return 0;
-            }
-
-            *val = (VkDeviceCreateFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDeviceCreateFlags_converter_free(VkDeviceCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkExternalMemoryFeatureFlagsNV_converter(PyObject* arg, VkExternalMemoryFeatureFlagsNV* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkExternalMemoryFeatureFlagsNV or integer");
-                return 0;
-            }
-
-            *val = (VkExternalMemoryFeatureFlagsNV) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkExternalMemoryFeatureFlagsNV_converter_free(VkExternalMemoryFeatureFlagsNV* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkSubpassContents_converter(PyObject* arg, VkSubpassContents* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSubpassContents or integer");
-                return 0;
-            }
-
-            *val = (VkSubpassContents) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkSubpassContents_converter_free(VkSubpassContents* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDisplayPlaneAlphaFlagBitsKHR_converter(PyObject* arg, VkDisplayPlaneAlphaFlagBitsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplayPlaneAlphaFlagBitsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkDisplayPlaneAlphaFlagBitsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDisplayPlaneAlphaFlagBitsKHR_converter_free(VkDisplayPlaneAlphaFlagBitsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkCompositeAlphaFlagBitsKHR_converter(PyObject* arg, VkCompositeAlphaFlagBitsKHR* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCompositeAlphaFlagBitsKHR or integer");
-                return 0;
-            }
-
-            *val = (VkCompositeAlphaFlagBitsKHR) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkCompositeAlphaFlagBitsKHR_converter_free(VkCompositeAlphaFlagBitsKHR* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter(PyObject* arg, VkExternalMemoryHandleTypeFlagsNV* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkExternalMemoryHandleTypeFlagsNV or integer");
-                return 0;
-            }
-
-            *val = (VkExternalMemoryHandleTypeFlagsNV) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter_free(VkExternalMemoryHandleTypeFlagsNV* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDebugMarkerMarkerInfoEXT_converter(PyObject* arg, VkDebugMarkerMarkerInfoEXT** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDebugMarkerMarkerInfoEXTType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugMarkerMarkerInfoEXT");
-                return 0;
-            }
-
-            *val = ((PyVkDebugMarkerMarkerInfoEXT*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDebugMarkerMarkerInfoEXT_converter_free(VkDebugMarkerMarkerInfoEXT** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineVertexInputStateCreateInfo_converter(PyObject* arg, VkPipelineVertexInputStateCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineVertexInputStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineVertexInputStateCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineVertexInputStateCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineVertexInputStateCreateInfo_converter_free(VkPipelineVertexInputStateCreateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPrimitiveTopology_converter(PyObject* arg, VkPrimitiveTopology* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPrimitiveTopology or integer");
-                return 0;
-            }
-
-            *val = (VkPrimitiveTopology) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkPrimitiveTopology_converter_free(VkPrimitiveTopology* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDescriptorSetAllocateInfo_converter(PyObject* arg, VkDescriptorSetAllocateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDescriptorSetAllocateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorSetAllocateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkDescriptorSetAllocateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkDescriptorSetAllocateInfo_converter_free(VkDescriptorSetAllocateInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        static int pyc_struct_array_VkSubmitInfo_converter(PyObject* arg, VkSubmitInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
-                return 0;
-            }
-
-            int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkSubmitInfo));
-            if (*val == NULL) {
-                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
-                return 0;
-            }
-
-            int i;
-            for (i = 0; i < size; i++) {
-                PyObject* item = PyList_GetItem(arg, i);
-                if (item == NULL) {
-                    free(*val);
-                    return 0;
-                }
-
-                if (!PyObject_TypeCheck(item, &PyVkSubmitInfoType)) {
-                    free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSubmitInfo");
-                    return 0;
-                }
-
-                (*val)[i] = *(((PyVkSubmitInfo*) item)->base);
-            }
-
-            return 1;
-        }
-
-        static void pyc_struct_array_VkSubmitInfo_converter_free(VkSubmitInfo** val, int disable) {
-            if (disable)
-                return;
-
-            free(*val);
-        }
-        
-    
-
-
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
+        static void pyc_struct_pointer_VkDeviceGeneratedCommandsFeaturesNVX_converter_free(VkDeviceGeneratedCommandsFeaturesNVX** val, int disable) {}
         
     
 
@@ -20992,21 +20740,21 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_pointer_VkCommandBufferAllocateInfo_converter(PyObject* arg, VkCommandBufferAllocateInfo** val) {
+        static int pyc_struct_pointer_VkPipelineLayoutCreateInfo_converter(PyObject* arg, VkPipelineLayoutCreateInfo** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkCommandBufferAllocateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferAllocateInfo");
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineLayoutCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineLayoutCreateInfo");
                 return 0;
             }
 
-            *val = ((PyVkCommandBufferAllocateInfo*)arg)->base;
+            *val = ((PyVkPipelineLayoutCreateInfo*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_VkCommandBufferAllocateInfo_converter_free(VkCommandBufferAllocateInfo** val, int disable) {}
+        static void pyc_struct_pointer_VkPipelineLayoutCreateInfo_converter_free(VkPipelineLayoutCreateInfo** val, int disable) {}
         
     
 
@@ -21036,22 +20784,49 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
         
-        static int pyc_struct_pointer_VkPipelineMultisampleStateCreateInfo_converter(PyObject* arg, VkPipelineMultisampleStateCreateInfo** val) {
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkDescriptorSetLayoutCreateInfo_converter(PyObject* arg, VkDescriptorSetLayoutCreateInfo** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineMultisampleStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineMultisampleStateCreateInfo");
+            if (!PyObject_TypeCheck(arg, &PyVkDescriptorSetLayoutCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorSetLayoutCreateInfo");
                 return 0;
             }
 
-            *val = ((PyVkPipelineMultisampleStateCreateInfo*)arg)->base;
+            *val = ((PyVkDescriptorSetLayoutCreateInfo*)arg)->base;
             return 1;
         }
-        static void pyc_struct_pointer_VkPipelineMultisampleStateCreateInfo_converter_free(VkPipelineMultisampleStateCreateInfo** val, int disable) {}
+        static void pyc_struct_pointer_VkDescriptorSetLayoutCreateInfo_converter_free(VkDescriptorSetLayoutCreateInfo** val, int disable) {}
         
     
 
@@ -21086,153 +20861,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkEventCreateFlags_converter(PyObject* arg, VkEventCreateFlags* val) {
+        static int pyc_flag_base_VkPrimitiveTopology_converter(PyObject* arg, VkPrimitiveTopology* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkEventCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPrimitiveTopology or integer");
                 return 0;
             }
 
-            *val = (VkEventCreateFlags) PyLong_AsLong(arg);
+            *val = (VkPrimitiveTopology) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkEventCreateFlags_converter_free(VkEventCreateFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkDescriptorPoolResetFlags_converter(PyObject* arg, VkDescriptorPoolResetFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDescriptorPoolResetFlags or integer");
-                return 0;
-            }
-
-            *val = (VkDescriptorPoolResetFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkDescriptorPoolResetFlags_converter_free(VkDescriptorPoolResetFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkAttachmentStoreOp_converter(PyObject* arg, VkAttachmentStoreOp* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAttachmentStoreOp or integer");
-                return 0;
-            }
-
-            *val = (VkAttachmentStoreOp) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkAttachmentStoreOp_converter_free(VkAttachmentStoreOp* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkPipelineDepthStencilStateCreateInfo_converter(PyObject* arg, VkPipelineDepthStencilStateCreateInfo** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkPipelineDepthStencilStateCreateInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDepthStencilStateCreateInfo");
-                return 0;
-            }
-
-            *val = ((PyVkPipelineDepthStencilStateCreateInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkPipelineDepthStencilStateCreateInfo_converter_free(VkPipelineDepthStencilStateCreateInfo** val, int disable) {}
-        
-    
-
-
+        static void pyc_flag_base_VkPrimitiveTopology_converter_free(VkPrimitiveTopology* val, int disable) {}
         
     
 
@@ -21255,7 +20897,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_array_VkCopyDescriptorSet_converter(PyObject* arg, VkCopyDescriptorSet** val) {
+        static int pyc_struct_array_VkSpecializationMapEntry_converter(PyObject* arg, VkSpecializationMapEntry** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
@@ -21267,7 +20909,7 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkCopyDescriptorSet));
+            *val = malloc(size * sizeof(VkSpecializationMapEntry));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -21281,19 +20923,19 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                if (!PyObject_TypeCheck(item, &PyVkCopyDescriptorSetType)) {
+                if (!PyObject_TypeCheck(item, &PyVkSpecializationMapEntryType)) {
                     free(*val);
-                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkCopyDescriptorSet");
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSpecializationMapEntry");
                     return 0;
                 }
 
-                (*val)[i] = *(((PyVkCopyDescriptorSet*) item)->base);
+                (*val)[i] = *(((PyVkSpecializationMapEntry*) item)->base);
             }
 
             return 1;
         }
 
-        static void pyc_struct_array_VkCopyDescriptorSet_converter_free(VkCopyDescriptorSet** val, int disable) {
+        static void pyc_struct_array_VkSpecializationMapEntry_converter_free(VkSpecializationMapEntry** val, int disable) {
             if (disable)
                 return;
 
@@ -21332,107 +20974,61 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
-        
-        static int pyc_flag_base_VkBufferUsageFlags_converter(PyObject* arg, VkBufferUsageFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferUsageFlags or integer");
-                return 0;
-            }
-
-            *val = (VkBufferUsageFlags) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkBufferUsageFlags_converter_free(VkBufferUsageFlags* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkFilter_converter(PyObject* arg, VkFilter* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFilter or integer");
-                return 0;
-            }
-
-            *val = (VkFilter) PyLong_AsLong(arg);
-            if (PyErr_Occurred()) {
-                return 0;
-            }
-
-            return 1;
-        }
-        static void pyc_flag_base_VkFilter_converter_free(VkFilter* val, int disable) {}
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-        
-        // Specific ugly case
-        // handle_array_VkDeviceMemory_converter is used only by Windows
-        
-        static int pyc_handle_array_VkDescriptorSetLayout_converter(PyObject* arg, VkDescriptorSetLayout** val) {
+        static int pyc_struct_pointer_VkBufferViewCreateInfo_converter(PyObject* arg, VkBufferViewCreateInfo** val) {
             if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkBufferViewCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferViewCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkBufferViewCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkBufferViewCreateInfo_converter_free(VkBufferViewCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkSparseImageMemoryBind_converter(PyObject* arg, VkSparseImageMemoryBind** val) {
+            if (arg == Py_None) {
+                *val = NULL;
                 return 1;
             }
 
             if (!PyList_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkDescriptorSetLayout");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
                 return 0;
             }
 
             int size = PyList_Size(arg);
-            *val = malloc(size * sizeof(VkDescriptorSetLayout));
+            *val = malloc(size * sizeof(VkSparseImageMemoryBind));
             if (*val == NULL) {
                 PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
@@ -21446,25 +21042,25 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
                     return 0;
                 }
 
-                VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(PyList_GetItem(arg, i), "VkDescriptorSetLayout");
-                if (handle_pointer == NULL) {
+                if (!PyObject_TypeCheck(item, &PyVkSparseImageMemoryBindType)) {
                     free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseImageMemoryBind");
                     return 0;
                 }
 
-                (*val)[i] = *handle_pointer;
+                (*val)[i] = *(((PyVkSparseImageMemoryBind*) item)->base);
             }
 
             return 1;
         }
-        static void pyc_handle_array_VkDescriptorSetLayout_converter_free(VkDescriptorSetLayout** val, int disable) {
+
+        static void pyc_struct_array_VkSparseImageMemoryBind_converter_free(VkSparseImageMemoryBind** val, int disable) {
             if (disable)
                 return;
 
             free(*val);
         }
         
-        
     
 
 
@@ -21472,24 +21068,6 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
     
 
 
-        
-    
-        
-        static int pyc_handle_base_VkDescriptorSetLayout_converter(PyObject* arg, VkDescriptorSetLayout* val) {
-            if (arg == Py_None) {
-                *val = VK_NULL_HANDLE;
-                return 1;
-            }
-
-            VkDescriptorSetLayout* handle_pointer = PyCapsule_GetPointer(arg, "VkDescriptorSetLayout");
-            if (handle_pointer == NULL) {
-                return 0;
-            }
-
-            *val = *handle_pointer;
-            return 1;
-        }
-        static void pyc_handle_base_VkDescriptorSetLayout_converter_free(VkDescriptorSetLayout* val, int disable) {}
         
     
 
@@ -21519,21 +21097,48 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
         
-        static int pyc_flag_base_VkPipelineCacheCreateFlags_converter(PyObject* arg, VkPipelineCacheCreateFlags* val) {
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkBufferCreateFlags_converter(PyObject* arg, VkBufferCreateFlags* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineCacheCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkBufferCreateFlags or integer");
                 return 0;
             }
 
-            *val = (VkPipelineCacheCreateFlags) PyLong_AsLong(arg);
+            *val = (VkBufferCreateFlags) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkPipelineCacheCreateFlags_converter_free(VkPipelineCacheCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkBufferCreateFlags_converter_free(VkBufferCreateFlags* val, int disable) {}
         
     
 
@@ -21542,6 +21147,315 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
     
     
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSamplerCreateFlags_converter(PyObject* arg, VkSamplerCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSamplerCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkSamplerCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSamplerCreateFlags_converter_free(VkSamplerCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPolygonMode_converter(PyObject* arg, VkPolygonMode* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPolygonMode or integer");
+                return 0;
+            }
+
+            *val = (VkPolygonMode) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPolygonMode_converter_free(VkPolygonMode* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkShaderStageFlagBits_converter(PyObject* arg, VkShaderStageFlagBits* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderStageFlagBits or integer");
+                return 0;
+            }
+
+            *val = (VkShaderStageFlagBits) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkShaderStageFlagBits_converter_free(VkShaderStageFlagBits* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDisplaySurfaceCreateFlagsKHR_converter(PyObject* arg, VkDisplaySurfaceCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDisplaySurfaceCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkDisplaySurfaceCreateFlagsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDisplaySurfaceCreateFlagsKHR_converter_free(VkDisplaySurfaceCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkQueryType_converter(PyObject* arg, VkQueryType* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryType or integer");
+                return 0;
+            }
+
+            *val = (VkQueryType) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkQueryType_converter_free(VkQueryType* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_XLIB_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkXlibSurfaceCreateInfoKHR_converter(PyObject* arg, VkXlibSurfaceCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkXlibSurfaceCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkXlibSurfaceCreateInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkXlibSurfaceCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkXlibSurfaceCreateInfoKHR_converter_free(VkXlibSurfaceCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_WIN32_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkWin32SurfaceCreateFlagsKHR_converter(PyObject* arg, VkWin32SurfaceCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkWin32SurfaceCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkWin32SurfaceCreateFlagsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkWin32SurfaceCreateFlagsKHR_converter_free(VkWin32SurfaceCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+     #endif 
 
 
 
@@ -21665,20 +21579,20 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkPipelineDepthStencilStateCreateFlags_converter(PyObject* arg, VkPipelineDepthStencilStateCreateFlags* val) {
+        static int pyc_flag_base_VkCommandPoolCreateFlags_converter(PyObject* arg, VkCommandPoolCreateFlags* val) {
             if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineDepthStencilStateCreateFlags or integer");
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandPoolCreateFlags or integer");
                 return 0;
             }
 
-            *val = (VkPipelineDepthStencilStateCreateFlags) PyLong_AsLong(arg);
+            *val = (VkCommandPoolCreateFlags) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkPipelineDepthStencilStateCreateFlags_converter_free(VkPipelineDepthStencilStateCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkCommandPoolCreateFlags_converter_free(VkCommandPoolCreateFlags* val, int disable) {}
         
     
 
@@ -21700,30 +21614,608 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
-        
-        static int pyc_struct_pointer_VkApplicationInfo_converter(PyObject* arg, VkApplicationInfo** val) {
+        static int pyc_struct_array_VkSwapchainCreateInfoKHR_converter(PyObject* arg, VkSwapchainCreateInfoKHR** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkApplicationInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkApplicationInfo");
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
                 return 0;
             }
 
-            *val = ((PyVkApplicationInfo*)arg)->base;
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSwapchainCreateInfoKHR));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkSwapchainCreateInfoKHRType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSwapchainCreateInfoKHR");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkSwapchainCreateInfoKHR*) item)->base);
+            }
+
             return 1;
         }
-        static void pyc_struct_pointer_VkApplicationInfo_converter_free(VkApplicationInfo** val, int disable) {}
+
+        static void pyc_struct_array_VkSwapchainCreateInfoKHR_converter_free(VkSwapchainCreateInfoKHR** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
         
     
 
 
+        
+    
+        
+        static int pyc_struct_pointer_VkSwapchainCreateInfoKHR_converter(PyObject* arg, VkSwapchainCreateInfoKHR** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkSwapchainCreateInfoKHRType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSwapchainCreateInfoKHR");
+                return 0;
+            }
+
+            *val = ((PyVkSwapchainCreateInfoKHR*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkSwapchainCreateInfoKHR_converter_free(VkSwapchainCreateInfoKHR** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkSparseMemoryBind_converter(PyObject* arg, VkSparseMemoryBind** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSparseMemoryBind));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkSparseMemoryBindType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseMemoryBind");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkSparseMemoryBind*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkSparseMemoryBind_converter_free(VkSparseMemoryBind** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkImageViewType_converter(PyObject* arg, VkImageViewType* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageViewType or integer");
+                return 0;
+            }
+
+            *val = (VkImageViewType) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkImageViewType_converter_free(VkImageViewType* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkSemaphoreCreateInfo_converter(PyObject* arg, VkSemaphoreCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkSemaphoreCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSemaphoreCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkSemaphoreCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkSemaphoreCreateInfo_converter_free(VkSemaphoreCreateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkIndirectCommandsTokenTypeNVX_converter(PyObject* arg, VkIndirectCommandsTokenTypeNVX* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkIndirectCommandsTokenTypeNVX or integer");
+                return 0;
+            }
+
+            *val = (VkIndirectCommandsTokenTypeNVX) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkIndirectCommandsTokenTypeNVX_converter_free(VkIndirectCommandsTokenTypeNVX* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkCommandBufferUsageFlags_converter(PyObject* arg, VkCommandBufferUsageFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferUsageFlags or integer");
+                return 0;
+            }
+
+            *val = (VkCommandBufferUsageFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkCommandBufferUsageFlags_converter_free(VkCommandBufferUsageFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkSurfaceTransformFlagBitsKHR_converter(PyObject* arg, VkSurfaceTransformFlagBitsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSurfaceTransformFlagBitsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkSurfaceTransformFlagBitsKHR) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkSurfaceTransformFlagBitsKHR_converter_free(VkSurfaceTransformFlagBitsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkFrontFace_converter(PyObject* arg, VkFrontFace* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkFrontFace or integer");
+                return 0;
+            }
+
+            *val = (VkFrontFace) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkFrontFace_converter_free(VkFrontFace* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkWriteDescriptorSet_converter(PyObject* arg, VkWriteDescriptorSet** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkWriteDescriptorSet));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkWriteDescriptorSetType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkWriteDescriptorSet");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkWriteDescriptorSet*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkWriteDescriptorSet_converter_free(VkWriteDescriptorSet** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkClearRect_converter(PyObject* arg, VkClearRect** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkClearRect));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkClearRectType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkClearRect");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkClearRect*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkClearRect_converter_free(VkClearRect** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkImageAspectFlags_converter(PyObject* arg, VkImageAspectFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageAspectFlags or integer");
+                return 0;
+            }
+
+            *val = (VkImageAspectFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkImageAspectFlags_converter_free(VkImageAspectFlags* val, int disable) {}
         
     
 
@@ -21794,52 +22286,97 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
+        static int pyc_struct_pointer_VkRenderPassBeginInfo_converter(PyObject* arg, VkRenderPassBeginInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
 
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_flag_base_VkPipelineColorBlendStateCreateFlags_converter(PyObject* arg, VkPipelineColorBlendStateCreateFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineColorBlendStateCreateFlags or integer");
+            if (!PyObject_TypeCheck(arg, &PyVkRenderPassBeginInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkRenderPassBeginInfo");
                 return 0;
             }
 
-            *val = (VkPipelineColorBlendStateCreateFlags) PyLong_AsLong(arg);
+            *val = ((PyVkRenderPassBeginInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkRenderPassBeginInfo_converter_free(VkRenderPassBeginInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkQueryControlFlags_converter(PyObject* arg, VkQueryControlFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkQueryControlFlags or integer");
+                return 0;
+            }
+
+            *val = (VkQueryControlFlags) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkPipelineColorBlendStateCreateFlags_converter_free(VkPipelineColorBlendStateCreateFlags* val, int disable) {}
+        static void pyc_flag_base_VkQueryControlFlags_converter_free(VkQueryControlFlags* val, int disable) {}
         
     
 
@@ -21870,20 +22407,742 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_flag_base_VkImageUsageFlags_converter(PyObject* arg, VkImageUsageFlags* val) {
-            if (!PyLong_Check(arg)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkImageUsageFlags or integer");
+        static int pyc_struct_base_VkComponentMapping_converter(PyObject* arg, VkComponentMapping* val) {
+            if (!PyObject_TypeCheck(arg, &PyVkComponentMappingType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkComponentMapping");
                 return 0;
             }
 
-            *val = (VkImageUsageFlags) PyLong_AsLong(arg);
+            *val = *(((PyVkComponentMapping*)arg)->base);
+            return 1;
+        }
+        static void pyc_struct_base_VkComponentMapping_converter_free(VkComponentMapping* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkCommandBufferAllocateInfo_converter(PyObject* arg, VkCommandBufferAllocateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkCommandBufferAllocateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCommandBufferAllocateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkCommandBufferAllocateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkCommandBufferAllocateInfo_converter_free(VkCommandBufferAllocateInfo** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+     #ifdef VK_USE_PLATFORM_ANDROID_KHR 
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkAndroidSurfaceCreateFlagsKHR_converter(PyObject* arg, VkAndroidSurfaceCreateFlagsKHR* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAndroidSurfaceCreateFlagsKHR or integer");
+                return 0;
+            }
+
+            *val = (VkAndroidSurfaceCreateFlagsKHR) PyLong_AsLong(arg);
             if (PyErr_Occurred()) {
                 return 0;
             }
 
             return 1;
         }
-        static void pyc_flag_base_VkImageUsageFlags_converter_free(VkImageUsageFlags* val, int disable) {}
+        static void pyc_flag_base_VkAndroidSurfaceCreateFlagsKHR_converter_free(VkAndroidSurfaceCreateFlagsKHR* val, int disable) {}
+        
+    
+
+
+    
+
+    
+     #endif 
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkSubmitInfo_converter(PyObject* arg, VkSubmitInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSubmitInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkSubmitInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSubmitInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkSubmitInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkSubmitInfo_converter_free(VkSubmitInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkIndirectCommandsLayoutTokenNVX_converter(PyObject* arg, VkIndirectCommandsLayoutTokenNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkIndirectCommandsLayoutTokenNVX));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkIndirectCommandsLayoutTokenNVXType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkIndirectCommandsLayoutTokenNVX");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkIndirectCommandsLayoutTokenNVX*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkIndirectCommandsLayoutTokenNVX_converter_free(VkIndirectCommandsLayoutTokenNVX** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkAttachmentStoreOp_converter(PyObject* arg, VkAttachmentStoreOp* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkAttachmentStoreOp or integer");
+                return 0;
+            }
+
+            *val = (VkAttachmentStoreOp) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkAttachmentStoreOp_converter_free(VkAttachmentStoreOp* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkCmdReserveSpaceForCommandsInfoNVX_converter(PyObject* arg, VkCmdReserveSpaceForCommandsInfoNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkCmdReserveSpaceForCommandsInfoNVXType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkCmdReserveSpaceForCommandsInfoNVX");
+                return 0;
+            }
+
+            *val = ((PyVkCmdReserveSpaceForCommandsInfoNVX*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkCmdReserveSpaceForCommandsInfoNVX_converter_free(VkCmdReserveSpaceForCommandsInfoNVX** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkSparseImageMemoryBindInfo_converter(PyObject* arg, VkSparseImageMemoryBindInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkSparseImageMemoryBindInfo));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkSparseImageMemoryBindInfoType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkSparseImageMemoryBindInfo");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkSparseImageMemoryBindInfo*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkSparseImageMemoryBindInfo_converter_free(VkSparseImageMemoryBindInfo** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkVertexInputBindingDescription_converter(PyObject* arg, VkVertexInputBindingDescription** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkVertexInputBindingDescription));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkVertexInputBindingDescriptionType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkVertexInputBindingDescription");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkVertexInputBindingDescription*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkVertexInputBindingDescription_converter_free(VkVertexInputBindingDescription** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+        
+        static int pyc_struct_array_VkViewport_converter(PyObject* arg, VkViewport** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
+                return 0;
+            }
+
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkViewport));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
+                return 0;
+            }
+
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkViewportType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkViewport");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkViewport*) item)->base);
+            }
+
+            return 1;
+        }
+
+        static void pyc_struct_array_VkViewport_converter_free(VkViewport** val, int disable) {
+            if (disable)
+                return;
+
+            free(*val);
+        }
+        
+    
+
+
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkDeviceCreateFlags_converter(PyObject* arg, VkDeviceCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDeviceCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkDeviceCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkDeviceCreateFlags_converter_free(VkDeviceCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_flag_base_VkPipelineLayoutCreateFlags_converter(PyObject* arg, VkPipelineLayoutCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineLayoutCreateFlags or integer");
+                return 0;
+            }
+
+            *val = (VkPipelineLayoutCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
+            return 1;
+        }
+        static void pyc_flag_base_VkPipelineLayoutCreateFlags_converter_free(VkPipelineLayoutCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkObjectTableCreateInfoNVX_converter(PyObject* arg, VkObjectTableCreateInfoNVX** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkObjectTableCreateInfoNVXType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkObjectTableCreateInfoNVX");
+                return 0;
+            }
+
+            *val = ((PyVkObjectTableCreateInfoNVX*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkObjectTableCreateInfoNVX_converter_free(VkObjectTableCreateInfoNVX** val, int disable) {}
+        
+    
+
+
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+        
+        static int pyc_struct_pointer_VkPipelineColorBlendStateCreateInfo_converter(PyObject* arg, VkPipelineColorBlendStateCreateInfo** val) {
+            if (arg == Py_None) {
+                *val = NULL;
+                return 1;
+            }
+
+            if (!PyObject_TypeCheck(arg, &PyVkPipelineColorBlendStateCreateInfoType)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkPipelineColorBlendStateCreateInfo");
+                return 0;
+            }
+
+            *val = ((PyVkPipelineColorBlendStateCreateInfo*)arg)->base;
+            return 1;
+        }
+        static void pyc_struct_pointer_VkPipelineColorBlendStateCreateInfo_converter_free(VkPipelineColorBlendStateCreateInfo** val, int disable) {}
+        
+    
+
+
         
     
 
@@ -21950,94 +23209,51 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
 
         
     
-
-
         
-    
-        
-        static int pyc_struct_pointer_VkSpecializationInfo_converter(PyObject* arg, VkSpecializationInfo** val) {
+        static int pyc_struct_array_VkPushConstantRange_converter(PyObject* arg, VkPushConstantRange** val) {
             if (arg == Py_None) {
                 *val = NULL;
                 return 1;
             }
 
-            if (!PyObject_TypeCheck(arg, &PyVkSpecializationInfoType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkSpecializationInfo");
+            if (!PyList_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a list");
                 return 0;
             }
 
-            *val = ((PyVkSpecializationInfo*)arg)->base;
-            return 1;
-        }
-        static void pyc_struct_pointer_VkSpecializationInfo_converter_free(VkSpecializationInfo** val, int disable) {}
-        
-    
-
-
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
-        
-    
-
-
-        
-    
-        
-        static int pyc_struct_pointer_VkDebugMarkerObjectTagInfoEXT_converter(PyObject* arg, VkDebugMarkerObjectTagInfoEXT** val) {
-            if (arg == Py_None) {
-                *val = NULL;
-                return 1;
-            }
-
-            if (!PyObject_TypeCheck(arg, &PyVkDebugMarkerObjectTagInfoEXTType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkDebugMarkerObjectTagInfoEXT");
+            int size = PyList_Size(arg);
+            *val = malloc(size * sizeof(VkPushConstantRange));
+            if (*val == NULL) {
+                PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory");
                 return 0;
             }
 
-            *val = ((PyVkDebugMarkerObjectTagInfoEXT*)arg)->base;
+            int i;
+            for (i = 0; i < size; i++) {
+                PyObject* item = PyList_GetItem(arg, i);
+                if (item == NULL) {
+                    free(*val);
+                    return 0;
+                }
+
+                if (!PyObject_TypeCheck(item, &PyVkPushConstantRangeType)) {
+                    free(*val);
+                    PyErr_SetString(PyExc_TypeError, "Argument must be a list of VkPushConstantRange");
+                    return 0;
+                }
+
+                (*val)[i] = *(((PyVkPushConstantRange*) item)->base);
+            }
+
             return 1;
         }
-        static void pyc_struct_pointer_VkDebugMarkerObjectTagInfoEXT_converter_free(VkDebugMarkerObjectTagInfoEXT** val, int disable) {}
-        
-    
 
+        static void pyc_struct_array_VkPushConstantRange_converter_free(VkPushConstantRange** val, int disable) {
+            if (disable)
+                return;
 
-        
-    
-
-
-    
-
-    
-    
-
-
-
-    
-
-    
-    
-        
-
-    
-
+            free(*val);
+        }
         
     
 
@@ -22076,16 +23292,47 @@ static void pyc_wl_surface_converter_free(struct wl_surface** val, int disable) 
         
     
         
-        static int pyc_struct_base_VkComponentMapping_converter(PyObject* arg, VkComponentMapping* val) {
-            if (!PyObject_TypeCheck(arg, &PyVkComponentMappingType)) {
-                PyErr_SetString(PyExc_TypeError, "Argument must be a VkComponentMapping");
+        static int pyc_flag_base_VkShaderModuleCreateFlags_converter(PyObject* arg, VkShaderModuleCreateFlags* val) {
+            if (!PyLong_Check(arg)) {
+                PyErr_SetString(PyExc_TypeError, "Argument must be a VkShaderModuleCreateFlags or integer");
                 return 0;
             }
 
-            *val = *(((PyVkComponentMapping*)arg)->base);
+            *val = (VkShaderModuleCreateFlags) PyLong_AsLong(arg);
+            if (PyErr_Occurred()) {
+                return 0;
+            }
+
             return 1;
         }
-        static void pyc_struct_base_VkComponentMapping_converter_free(VkComponentMapping* val, int disable) {}
+        static void pyc_flag_base_VkShaderModuleCreateFlags_converter_free(VkShaderModuleCreateFlags* val, int disable) {}
+        
+    
+
+
+    
+
+    
+    
+
+
+
+    
+
+    
+    
+        
+
+    
+
+        
+    
+
+
+        
+    
+
+
         
     
 
@@ -49021,42 +50268,6 @@ pyc_handle_base_VkBuffer_converter_free(&buffer, 1);
     
     static int PyVkExternalImageFormatPropertiesNV_init(PyVkExternalImageFormatPropertiesNV *self, PyObject *args, PyObject *kwds) {
         
-            VkImageFormatProperties imageFormatProperties;
-VkExternalMemoryFeatureFlagsNV externalMemoryFeatures;
-VkExternalMemoryHandleTypeFlagsNV exportFromImportedHandleTypes;
-VkExternalMemoryHandleTypeFlagsNV compatibleHandleTypes;
-
-            static char *kwlist[] = {"imageFormatProperties","externalMemoryFeatures","exportFromImportedHandleTypes","compatibleHandleTypes",NULL};
-            
-    if( !PyArg_ParseTupleAndKeywords(args, kwds,
-        "O&O&O&O&", kwlist, pyc_struct_base_VkImageFormatProperties_converter,&imageFormatProperties,pyc_flag_base_VkExternalMemoryFeatureFlagsNV_converter,&externalMemoryFeatures,pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter,&exportFromImportedHandleTypes,pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter,&compatibleHandleTypes))
-        return -1;
-    
-
-            
-            
-                (self->base)->imageFormatProperties = imageFormatProperties;
-            
-            
-            
-                (self->base)->externalMemoryFeatures = externalMemoryFeatures;
-            
-            
-            
-                (self->base)->exportFromImportedHandleTypes = exportFromImportedHandleTypes;
-            
-            
-            
-                (self->base)->compatibleHandleTypes = compatibleHandleTypes;
-            
-            
-
-            pyc_struct_base_VkImageFormatProperties_converter_free(&imageFormatProperties, 1);
-pyc_flag_base_VkExternalMemoryFeatureFlagsNV_converter_free(&externalMemoryFeatures, 1);
-pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter_free(&exportFromImportedHandleTypes, 1);
-pyc_flag_base_VkExternalMemoryHandleTypeFlagsNV_converter_free(&compatibleHandleTypes, 1);
-
-        
 
         return 0;
     }
@@ -49938,6 +51149,2386 @@ pyc_array_uint64_t_converter_free(&pReleaseKeys, 1);
 
     
      #endif 
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkDeviceGeneratedCommandsFeaturesNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkDeviceGeneratedCommandsFeaturesNVX *self = (PyVkDeviceGeneratedCommandsFeaturesNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkDeviceGeneratedCommandsFeaturesNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkDeviceGeneratedCommandsFeaturesNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkDeviceGeneratedCommandsFeaturesNVX_del(PyVkDeviceGeneratedCommandsFeaturesNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkDeviceGeneratedCommandsFeaturesNVX_init(PyVkDeviceGeneratedCommandsFeaturesNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkStructureType sType;
+VkBool32 computeBindingPointSupport;
+
+            static char *kwlist[] = {"sType","computeBindingPointSupport",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_flag_base_VkStructureType_converter,&sType,pyc_flag_base_VkBool32_converter,&computeBindingPointSupport))
+        return -1;
+    
+
+            
+            
+                (self->base)->sType = sType;
+            
+            
+            
+                (self->base)->pNext = NULL;
+            
+            
+            
+                (self->base)->computeBindingPointSupport = computeBindingPointSupport;
+            
+            
+
+            pyc_flag_base_VkStructureType_converter_free(&sType, 1);
+pyc_flag_base_VkBool32_converter_free(&computeBindingPointSupport, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkDeviceGeneratedCommandsFeaturesNVX_getsType(PyVkDeviceGeneratedCommandsFeaturesNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsFeaturesNVX_getpNext(PyVkDeviceGeneratedCommandsFeaturesNVX *self, void *closure) {
+            
+            
+                
+        Py_INCREF(Py_None);
+        PyObject* pyvalue = Py_None;
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsFeaturesNVX_getcomputeBindingPointSupport(PyVkDeviceGeneratedCommandsFeaturesNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->computeBindingPointSupport));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkDeviceGeneratedCommandsFeaturesNVX_getsetters[] = {
+        
+            {"sType", (getter)PyVkDeviceGeneratedCommandsFeaturesNVX_getsType, NULL, "", NULL},
+        
+            {"pNext", (getter)PyVkDeviceGeneratedCommandsFeaturesNVX_getpNext, NULL, "", NULL},
+        
+            {"computeBindingPointSupport", (getter)PyVkDeviceGeneratedCommandsFeaturesNVX_getcomputeBindingPointSupport, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkDeviceGeneratedCommandsLimitsNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkDeviceGeneratedCommandsLimitsNVX *self = (PyVkDeviceGeneratedCommandsLimitsNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkDeviceGeneratedCommandsLimitsNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkDeviceGeneratedCommandsLimitsNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkDeviceGeneratedCommandsLimitsNVX_del(PyVkDeviceGeneratedCommandsLimitsNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkDeviceGeneratedCommandsLimitsNVX_init(PyVkDeviceGeneratedCommandsLimitsNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkStructureType sType;
+uint32_t maxIndirectCommandsLayoutTokenCount;
+uint32_t maxObjectEntryCounts;
+uint32_t minSequenceCountBufferOffsetAlignment;
+uint32_t minSequenceIndexBufferOffsetAlignment;
+uint32_t minCommandsTokenBufferOffsetAlignment;
+
+            static char *kwlist[] = {"sType","maxIndirectCommandsLayoutTokenCount","maxObjectEntryCounts","minSequenceCountBufferOffsetAlignment","minSequenceIndexBufferOffsetAlignment","minCommandsTokenBufferOffsetAlignment",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&O&O&", kwlist, pyc_flag_base_VkStructureType_converter,&sType,pyc_uint32_t_converter,&maxIndirectCommandsLayoutTokenCount,pyc_uint32_t_converter,&maxObjectEntryCounts,pyc_uint32_t_converter,&minSequenceCountBufferOffsetAlignment,pyc_uint32_t_converter,&minSequenceIndexBufferOffsetAlignment,pyc_uint32_t_converter,&minCommandsTokenBufferOffsetAlignment))
+        return -1;
+    
+
+            
+            
+                (self->base)->sType = sType;
+            
+            
+            
+                (self->base)->pNext = NULL;
+            
+            
+            
+                (self->base)->maxIndirectCommandsLayoutTokenCount = maxIndirectCommandsLayoutTokenCount;
+            
+            
+            
+                (self->base)->maxObjectEntryCounts = maxObjectEntryCounts;
+            
+            
+            
+                (self->base)->minSequenceCountBufferOffsetAlignment = minSequenceCountBufferOffsetAlignment;
+            
+            
+            
+                (self->base)->minSequenceIndexBufferOffsetAlignment = minSequenceIndexBufferOffsetAlignment;
+            
+            
+            
+                (self->base)->minCommandsTokenBufferOffsetAlignment = minCommandsTokenBufferOffsetAlignment;
+            
+            
+
+            pyc_flag_base_VkStructureType_converter_free(&sType, 1);
+pyc_uint32_t_converter_free(&maxIndirectCommandsLayoutTokenCount, 1);
+pyc_uint32_t_converter_free(&maxObjectEntryCounts, 1);
+pyc_uint32_t_converter_free(&minSequenceCountBufferOffsetAlignment, 1);
+pyc_uint32_t_converter_free(&minSequenceIndexBufferOffsetAlignment, 1);
+pyc_uint32_t_converter_free(&minCommandsTokenBufferOffsetAlignment, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkDeviceGeneratedCommandsLimitsNVX_getsType(PyVkDeviceGeneratedCommandsLimitsNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsLimitsNVX_getpNext(PyVkDeviceGeneratedCommandsLimitsNVX *self, void *closure) {
+            
+            
+                
+        Py_INCREF(Py_None);
+        PyObject* pyvalue = Py_None;
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsLimitsNVX_getmaxIndirectCommandsLayoutTokenCount(PyVkDeviceGeneratedCommandsLimitsNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxIndirectCommandsLayoutTokenCount));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsLimitsNVX_getmaxObjectEntryCounts(PyVkDeviceGeneratedCommandsLimitsNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxObjectEntryCounts));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsLimitsNVX_getminSequenceCountBufferOffsetAlignment(PyVkDeviceGeneratedCommandsLimitsNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->minSequenceCountBufferOffsetAlignment));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsLimitsNVX_getminSequenceIndexBufferOffsetAlignment(PyVkDeviceGeneratedCommandsLimitsNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->minSequenceIndexBufferOffsetAlignment));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkDeviceGeneratedCommandsLimitsNVX_getminCommandsTokenBufferOffsetAlignment(PyVkDeviceGeneratedCommandsLimitsNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->minCommandsTokenBufferOffsetAlignment));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkDeviceGeneratedCommandsLimitsNVX_getsetters[] = {
+        
+            {"sType", (getter)PyVkDeviceGeneratedCommandsLimitsNVX_getsType, NULL, "", NULL},
+        
+            {"pNext", (getter)PyVkDeviceGeneratedCommandsLimitsNVX_getpNext, NULL, "", NULL},
+        
+            {"maxIndirectCommandsLayoutTokenCount", (getter)PyVkDeviceGeneratedCommandsLimitsNVX_getmaxIndirectCommandsLayoutTokenCount, NULL, "", NULL},
+        
+            {"maxObjectEntryCounts", (getter)PyVkDeviceGeneratedCommandsLimitsNVX_getmaxObjectEntryCounts, NULL, "", NULL},
+        
+            {"minSequenceCountBufferOffsetAlignment", (getter)PyVkDeviceGeneratedCommandsLimitsNVX_getminSequenceCountBufferOffsetAlignment, NULL, "", NULL},
+        
+            {"minSequenceIndexBufferOffsetAlignment", (getter)PyVkDeviceGeneratedCommandsLimitsNVX_getminSequenceIndexBufferOffsetAlignment, NULL, "", NULL},
+        
+            {"minCommandsTokenBufferOffsetAlignment", (getter)PyVkDeviceGeneratedCommandsLimitsNVX_getminCommandsTokenBufferOffsetAlignment, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkIndirectCommandsTokenNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkIndirectCommandsTokenNVX *self = (PyVkIndirectCommandsTokenNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkIndirectCommandsTokenNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkIndirectCommandsTokenNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkIndirectCommandsTokenNVX_del(PyVkIndirectCommandsTokenNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkIndirectCommandsTokenNVX_init(PyVkIndirectCommandsTokenNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkIndirectCommandsTokenTypeNVX tokenType;
+VkBuffer buffer;
+VkDeviceSize offset;
+
+            static char *kwlist[] = {"tokenType","buffer","offset",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&", kwlist, pyc_flag_base_VkIndirectCommandsTokenTypeNVX_converter,&tokenType,pyc_handle_base_VkBuffer_converter,&buffer,pyc_flag_base_VkDeviceSize_converter,&offset))
+        return -1;
+    
+
+            
+            
+                (self->base)->tokenType = tokenType;
+            
+            
+            
+                (self->base)->buffer = buffer;
+            
+            
+            
+                (self->base)->offset = offset;
+            
+            
+
+            pyc_flag_base_VkIndirectCommandsTokenTypeNVX_converter_free(&tokenType, 1);
+pyc_handle_base_VkBuffer_converter_free(&buffer, 1);
+pyc_flag_base_VkDeviceSize_converter_free(&offset, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkIndirectCommandsTokenNVX_gettokenType(PyVkIndirectCommandsTokenNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->tokenType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsTokenNVX_getbuffer(PyVkIndirectCommandsTokenNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsTokenNVX_getoffset(PyVkIndirectCommandsTokenNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->offset));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkIndirectCommandsTokenNVX_getsetters[] = {
+        
+            {"tokenType", (getter)PyVkIndirectCommandsTokenNVX_gettokenType, NULL, "", NULL},
+        
+            {"buffer", (getter)PyVkIndirectCommandsTokenNVX_getbuffer, NULL, "", NULL},
+        
+            {"offset", (getter)PyVkIndirectCommandsTokenNVX_getoffset, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkIndirectCommandsLayoutTokenNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkIndirectCommandsLayoutTokenNVX *self = (PyVkIndirectCommandsLayoutTokenNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkIndirectCommandsLayoutTokenNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkIndirectCommandsLayoutTokenNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkIndirectCommandsLayoutTokenNVX_del(PyVkIndirectCommandsLayoutTokenNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkIndirectCommandsLayoutTokenNVX_init(PyVkIndirectCommandsLayoutTokenNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkIndirectCommandsTokenTypeNVX tokenType;
+uint32_t bindingUnit;
+uint32_t dynamicCount;
+uint32_t divisor;
+
+            static char *kwlist[] = {"tokenType","bindingUnit","dynamicCount","divisor",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&", kwlist, pyc_flag_base_VkIndirectCommandsTokenTypeNVX_converter,&tokenType,pyc_uint32_t_converter,&bindingUnit,pyc_uint32_t_converter,&dynamicCount,pyc_uint32_t_converter,&divisor))
+        return -1;
+    
+
+            
+            
+                (self->base)->tokenType = tokenType;
+            
+            
+            
+                (self->base)->bindingUnit = bindingUnit;
+            
+            
+            
+                (self->base)->dynamicCount = dynamicCount;
+            
+            
+            
+                (self->base)->divisor = divisor;
+            
+            
+
+            pyc_flag_base_VkIndirectCommandsTokenTypeNVX_converter_free(&tokenType, 1);
+pyc_uint32_t_converter_free(&bindingUnit, 1);
+pyc_uint32_t_converter_free(&dynamicCount, 1);
+pyc_uint32_t_converter_free(&divisor, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkIndirectCommandsLayoutTokenNVX_gettokenType(PyVkIndirectCommandsLayoutTokenNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->tokenType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutTokenNVX_getbindingUnit(PyVkIndirectCommandsLayoutTokenNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->bindingUnit));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutTokenNVX_getdynamicCount(PyVkIndirectCommandsLayoutTokenNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->dynamicCount));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutTokenNVX_getdivisor(PyVkIndirectCommandsLayoutTokenNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->divisor));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkIndirectCommandsLayoutTokenNVX_getsetters[] = {
+        
+            {"tokenType", (getter)PyVkIndirectCommandsLayoutTokenNVX_gettokenType, NULL, "", NULL},
+        
+            {"bindingUnit", (getter)PyVkIndirectCommandsLayoutTokenNVX_getbindingUnit, NULL, "", NULL},
+        
+            {"dynamicCount", (getter)PyVkIndirectCommandsLayoutTokenNVX_getdynamicCount, NULL, "", NULL},
+        
+            {"divisor", (getter)PyVkIndirectCommandsLayoutTokenNVX_getdivisor, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkIndirectCommandsLayoutCreateInfoNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkIndirectCommandsLayoutCreateInfoNVX *self = (PyVkIndirectCommandsLayoutCreateInfoNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkIndirectCommandsLayoutCreateInfoNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkIndirectCommandsLayoutCreateInfoNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkIndirectCommandsLayoutCreateInfoNVX_del(PyVkIndirectCommandsLayoutCreateInfoNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkIndirectCommandsLayoutCreateInfoNVX_init(PyVkIndirectCommandsLayoutCreateInfoNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkStructureType sType;
+VkPipelineBindPoint pipelineBindPoint;
+VkIndirectCommandsLayoutUsageFlagsNVX flags;
+uint32_t tokenCount;
+VkIndirectCommandsLayoutTokenNVX* pTokens;
+
+            static char *kwlist[] = {"sType","pipelineBindPoint","flags","tokenCount","pTokens",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&O&", kwlist, pyc_flag_base_VkStructureType_converter,&sType,pyc_flag_base_VkPipelineBindPoint_converter,&pipelineBindPoint,pyc_flag_base_VkIndirectCommandsLayoutUsageFlagsNVX_converter,&flags,pyc_uint32_t_converter,&tokenCount,pyc_struct_array_VkIndirectCommandsLayoutTokenNVX_converter,&pTokens))
+        return -1;
+    
+
+            
+            
+                (self->base)->sType = sType;
+            
+            
+            
+                (self->base)->pNext = NULL;
+            
+            
+            
+                (self->base)->pipelineBindPoint = pipelineBindPoint;
+            
+            
+            
+                (self->base)->flags = flags;
+            
+            
+            
+                (self->base)->tokenCount = tokenCount;
+            
+            
+            
+                (self->base)->pTokens = pTokens;
+            
+            
+
+            pyc_flag_base_VkStructureType_converter_free(&sType, 1);
+pyc_flag_base_VkPipelineBindPoint_converter_free(&pipelineBindPoint, 1);
+pyc_flag_base_VkIndirectCommandsLayoutUsageFlagsNVX_converter_free(&flags, 1);
+pyc_uint32_t_converter_free(&tokenCount, 1);
+pyc_struct_array_VkIndirectCommandsLayoutTokenNVX_converter_free(&pTokens, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkIndirectCommandsLayoutCreateInfoNVX_getsType(PyVkIndirectCommandsLayoutCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutCreateInfoNVX_getpNext(PyVkIndirectCommandsLayoutCreateInfoNVX *self, void *closure) {
+            
+            
+                
+        Py_INCREF(Py_None);
+        PyObject* pyvalue = Py_None;
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutCreateInfoNVX_getpipelineBindPoint(PyVkIndirectCommandsLayoutCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->pipelineBindPoint));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutCreateInfoNVX_getflags(PyVkIndirectCommandsLayoutCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutCreateInfoNVX_gettokenCount(PyVkIndirectCommandsLayoutCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->tokenCount));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkIndirectCommandsLayoutCreateInfoNVX_getpTokens(PyVkIndirectCommandsLayoutCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = _PyObject_New(&PyVkIndirectCommandsLayoutTokenNVXType);
+            if (!pyvalue)
+                return NULL;
+            ((PyVkIndirectCommandsLayoutTokenNVX*) pyvalue)->base = ((self->base)->pTokens);
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkIndirectCommandsLayoutCreateInfoNVX_getsetters[] = {
+        
+            {"sType", (getter)PyVkIndirectCommandsLayoutCreateInfoNVX_getsType, NULL, "", NULL},
+        
+            {"pNext", (getter)PyVkIndirectCommandsLayoutCreateInfoNVX_getpNext, NULL, "", NULL},
+        
+            {"pipelineBindPoint", (getter)PyVkIndirectCommandsLayoutCreateInfoNVX_getpipelineBindPoint, NULL, "", NULL},
+        
+            {"flags", (getter)PyVkIndirectCommandsLayoutCreateInfoNVX_getflags, NULL, "", NULL},
+        
+            {"tokenCount", (getter)PyVkIndirectCommandsLayoutCreateInfoNVX_gettokenCount, NULL, "", NULL},
+        
+            {"pTokens", (getter)PyVkIndirectCommandsLayoutCreateInfoNVX_getpTokens, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkCmdProcessCommandsInfoNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkCmdProcessCommandsInfoNVX *self = (PyVkCmdProcessCommandsInfoNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkCmdProcessCommandsInfoNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkCmdProcessCommandsInfoNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkCmdProcessCommandsInfoNVX_del(PyVkCmdProcessCommandsInfoNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkCmdProcessCommandsInfoNVX_init(PyVkCmdProcessCommandsInfoNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkStructureType sType;
+VkObjectTableNVX objectTable;
+VkIndirectCommandsLayoutNVX indirectCommandsLayout;
+uint32_t indirectCommandsTokenCount;
+VkIndirectCommandsTokenNVX* pIndirectCommandsTokens;
+uint32_t maxSequencesCount;
+VkCommandBuffer targetCommandBuffer;
+VkBuffer sequencesCountBuffer;
+VkDeviceSize sequencesCountOffset;
+VkBuffer sequencesIndexBuffer;
+VkDeviceSize sequencesIndexOffset;
+
+            static char *kwlist[] = {"sType","objectTable","indirectCommandsLayout","indirectCommandsTokenCount","pIndirectCommandsTokens","maxSequencesCount","targetCommandBuffer","sequencesCountBuffer","sequencesCountOffset","sequencesIndexBuffer","sequencesIndexOffset",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&O&O&O&O&O&O&O&", kwlist, pyc_flag_base_VkStructureType_converter,&sType,pyc_handle_base_VkObjectTableNVX_converter,&objectTable,pyc_handle_base_VkIndirectCommandsLayoutNVX_converter,&indirectCommandsLayout,pyc_uint32_t_converter,&indirectCommandsTokenCount,pyc_struct_array_VkIndirectCommandsTokenNVX_converter,&pIndirectCommandsTokens,pyc_uint32_t_converter,&maxSequencesCount,pyc_handle_base_VkCommandBuffer_converter,&targetCommandBuffer,pyc_handle_base_VkBuffer_converter,&sequencesCountBuffer,pyc_flag_base_VkDeviceSize_converter,&sequencesCountOffset,pyc_handle_base_VkBuffer_converter,&sequencesIndexBuffer,pyc_flag_base_VkDeviceSize_converter,&sequencesIndexOffset))
+        return -1;
+    
+
+            
+            
+                (self->base)->sType = sType;
+            
+            
+            
+                (self->base)->pNext = NULL;
+            
+            
+            
+                (self->base)->objectTable = objectTable;
+            
+            
+            
+                (self->base)->indirectCommandsLayout = indirectCommandsLayout;
+            
+            
+            
+                (self->base)->indirectCommandsTokenCount = indirectCommandsTokenCount;
+            
+            
+            
+                (self->base)->pIndirectCommandsTokens = pIndirectCommandsTokens;
+            
+            
+            
+                (self->base)->maxSequencesCount = maxSequencesCount;
+            
+            
+            
+                (self->base)->targetCommandBuffer = targetCommandBuffer;
+            
+            
+            
+                (self->base)->sequencesCountBuffer = sequencesCountBuffer;
+            
+            
+            
+                (self->base)->sequencesCountOffset = sequencesCountOffset;
+            
+            
+            
+                (self->base)->sequencesIndexBuffer = sequencesIndexBuffer;
+            
+            
+            
+                (self->base)->sequencesIndexOffset = sequencesIndexOffset;
+            
+            
+
+            pyc_flag_base_VkStructureType_converter_free(&sType, 1);
+pyc_handle_base_VkObjectTableNVX_converter_free(&objectTable, 1);
+pyc_handle_base_VkIndirectCommandsLayoutNVX_converter_free(&indirectCommandsLayout, 1);
+pyc_uint32_t_converter_free(&indirectCommandsTokenCount, 1);
+pyc_struct_array_VkIndirectCommandsTokenNVX_converter_free(&pIndirectCommandsTokens, 1);
+pyc_uint32_t_converter_free(&maxSequencesCount, 1);
+pyc_handle_base_VkCommandBuffer_converter_free(&targetCommandBuffer, 1);
+pyc_handle_base_VkBuffer_converter_free(&sequencesCountBuffer, 1);
+pyc_flag_base_VkDeviceSize_converter_free(&sequencesCountOffset, 1);
+pyc_handle_base_VkBuffer_converter_free(&sequencesIndexBuffer, 1);
+pyc_flag_base_VkDeviceSize_converter_free(&sequencesIndexOffset, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getsType(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getpNext(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+        Py_INCREF(Py_None);
+        PyObject* pyvalue = Py_None;
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getobjectTable(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getindirectCommandsLayout(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getindirectCommandsTokenCount(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->indirectCommandsTokenCount));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getpIndirectCommandsTokens(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = _PyObject_New(&PyVkIndirectCommandsTokenNVXType);
+            if (!pyvalue)
+                return NULL;
+            ((PyVkIndirectCommandsTokenNVX*) pyvalue)->base = ((self->base)->pIndirectCommandsTokens);
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getmaxSequencesCount(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxSequencesCount));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_gettargetCommandBuffer(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getsequencesCountBuffer(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getsequencesCountOffset(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sequencesCountOffset));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getsequencesIndexBuffer(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkCmdProcessCommandsInfoNVX_getsequencesIndexOffset(PyVkCmdProcessCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sequencesIndexOffset));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkCmdProcessCommandsInfoNVX_getsetters[] = {
+        
+            {"sType", (getter)PyVkCmdProcessCommandsInfoNVX_getsType, NULL, "", NULL},
+        
+            {"pNext", (getter)PyVkCmdProcessCommandsInfoNVX_getpNext, NULL, "", NULL},
+        
+            {"objectTable", (getter)PyVkCmdProcessCommandsInfoNVX_getobjectTable, NULL, "", NULL},
+        
+            {"indirectCommandsLayout", (getter)PyVkCmdProcessCommandsInfoNVX_getindirectCommandsLayout, NULL, "", NULL},
+        
+            {"indirectCommandsTokenCount", (getter)PyVkCmdProcessCommandsInfoNVX_getindirectCommandsTokenCount, NULL, "", NULL},
+        
+            {"pIndirectCommandsTokens", (getter)PyVkCmdProcessCommandsInfoNVX_getpIndirectCommandsTokens, NULL, "", NULL},
+        
+            {"maxSequencesCount", (getter)PyVkCmdProcessCommandsInfoNVX_getmaxSequencesCount, NULL, "", NULL},
+        
+            {"targetCommandBuffer", (getter)PyVkCmdProcessCommandsInfoNVX_gettargetCommandBuffer, NULL, "", NULL},
+        
+            {"sequencesCountBuffer", (getter)PyVkCmdProcessCommandsInfoNVX_getsequencesCountBuffer, NULL, "", NULL},
+        
+            {"sequencesCountOffset", (getter)PyVkCmdProcessCommandsInfoNVX_getsequencesCountOffset, NULL, "", NULL},
+        
+            {"sequencesIndexBuffer", (getter)PyVkCmdProcessCommandsInfoNVX_getsequencesIndexBuffer, NULL, "", NULL},
+        
+            {"sequencesIndexOffset", (getter)PyVkCmdProcessCommandsInfoNVX_getsequencesIndexOffset, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkCmdReserveSpaceForCommandsInfoNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkCmdReserveSpaceForCommandsInfoNVX *self = (PyVkCmdReserveSpaceForCommandsInfoNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkCmdReserveSpaceForCommandsInfoNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkCmdReserveSpaceForCommandsInfoNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkCmdReserveSpaceForCommandsInfoNVX_del(PyVkCmdReserveSpaceForCommandsInfoNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkCmdReserveSpaceForCommandsInfoNVX_init(PyVkCmdReserveSpaceForCommandsInfoNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkStructureType sType;
+VkObjectTableNVX objectTable;
+VkIndirectCommandsLayoutNVX indirectCommandsLayout;
+uint32_t maxSequencesCount;
+
+            static char *kwlist[] = {"sType","objectTable","indirectCommandsLayout","maxSequencesCount",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&", kwlist, pyc_flag_base_VkStructureType_converter,&sType,pyc_handle_base_VkObjectTableNVX_converter,&objectTable,pyc_handle_base_VkIndirectCommandsLayoutNVX_converter,&indirectCommandsLayout,pyc_uint32_t_converter,&maxSequencesCount))
+        return -1;
+    
+
+            
+            
+                (self->base)->sType = sType;
+            
+            
+            
+                (self->base)->pNext = NULL;
+            
+            
+            
+                (self->base)->objectTable = objectTable;
+            
+            
+            
+                (self->base)->indirectCommandsLayout = indirectCommandsLayout;
+            
+            
+            
+                (self->base)->maxSequencesCount = maxSequencesCount;
+            
+            
+
+            pyc_flag_base_VkStructureType_converter_free(&sType, 1);
+pyc_handle_base_VkObjectTableNVX_converter_free(&objectTable, 1);
+pyc_handle_base_VkIndirectCommandsLayoutNVX_converter_free(&indirectCommandsLayout, 1);
+pyc_uint32_t_converter_free(&maxSequencesCount, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkCmdReserveSpaceForCommandsInfoNVX_getsType(PyVkCmdReserveSpaceForCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdReserveSpaceForCommandsInfoNVX_getpNext(PyVkCmdReserveSpaceForCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+        Py_INCREF(Py_None);
+        PyObject* pyvalue = Py_None;
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkCmdReserveSpaceForCommandsInfoNVX_getobjectTable(PyVkCmdReserveSpaceForCommandsInfoNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkCmdReserveSpaceForCommandsInfoNVX_getindirectCommandsLayout(PyVkCmdReserveSpaceForCommandsInfoNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkCmdReserveSpaceForCommandsInfoNVX_getmaxSequencesCount(PyVkCmdReserveSpaceForCommandsInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxSequencesCount));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkCmdReserveSpaceForCommandsInfoNVX_getsetters[] = {
+        
+            {"sType", (getter)PyVkCmdReserveSpaceForCommandsInfoNVX_getsType, NULL, "", NULL},
+        
+            {"pNext", (getter)PyVkCmdReserveSpaceForCommandsInfoNVX_getpNext, NULL, "", NULL},
+        
+            {"objectTable", (getter)PyVkCmdReserveSpaceForCommandsInfoNVX_getobjectTable, NULL, "", NULL},
+        
+            {"indirectCommandsLayout", (getter)PyVkCmdReserveSpaceForCommandsInfoNVX_getindirectCommandsLayout, NULL, "", NULL},
+        
+            {"maxSequencesCount", (getter)PyVkCmdReserveSpaceForCommandsInfoNVX_getmaxSequencesCount, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkObjectTableCreateInfoNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkObjectTableCreateInfoNVX *self = (PyVkObjectTableCreateInfoNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkObjectTableCreateInfoNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkObjectTableCreateInfoNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkObjectTableCreateInfoNVX_del(PyVkObjectTableCreateInfoNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkObjectTableCreateInfoNVX_init(PyVkObjectTableCreateInfoNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkStructureType sType;
+uint32_t objectCount;
+VkObjectEntryTypeNVX* pObjectEntryTypes;
+uint32_t* pObjectEntryCounts;
+VkObjectEntryUsageFlagsNVX* pObjectEntryUsageFlags;
+uint32_t maxUniformBuffersPerDescriptor;
+uint32_t maxStorageBuffersPerDescriptor;
+uint32_t maxStorageImagesPerDescriptor;
+uint32_t maxSampledImagesPerDescriptor;
+uint32_t maxPipelineLayouts;
+
+            static char *kwlist[] = {"sType","objectCount","pObjectEntryTypes","pObjectEntryCounts","pObjectEntryUsageFlags","maxUniformBuffersPerDescriptor","maxStorageBuffersPerDescriptor","maxStorageImagesPerDescriptor","maxSampledImagesPerDescriptor","maxPipelineLayouts",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&O&O&O&O&O&O&", kwlist, pyc_flag_base_VkStructureType_converter,&sType,pyc_uint32_t_converter,&objectCount,pyc_flag_array_VkObjectEntryTypeNVX_converter,&pObjectEntryTypes,pyc_array_uint32_t_converter,&pObjectEntryCounts,pyc_flag_array_VkObjectEntryUsageFlagsNVX_converter,&pObjectEntryUsageFlags,pyc_uint32_t_converter,&maxUniformBuffersPerDescriptor,pyc_uint32_t_converter,&maxStorageBuffersPerDescriptor,pyc_uint32_t_converter,&maxStorageImagesPerDescriptor,pyc_uint32_t_converter,&maxSampledImagesPerDescriptor,pyc_uint32_t_converter,&maxPipelineLayouts))
+        return -1;
+    
+
+            
+            
+                (self->base)->sType = sType;
+            
+            
+            
+                (self->base)->pNext = NULL;
+            
+            
+            
+                (self->base)->objectCount = objectCount;
+            
+            
+            
+                (self->base)->pObjectEntryTypes = pObjectEntryTypes;
+            
+            
+            
+                (self->base)->pObjectEntryCounts = pObjectEntryCounts;
+            
+            
+            
+                (self->base)->pObjectEntryUsageFlags = pObjectEntryUsageFlags;
+            
+            
+            
+                (self->base)->maxUniformBuffersPerDescriptor = maxUniformBuffersPerDescriptor;
+            
+            
+            
+                (self->base)->maxStorageBuffersPerDescriptor = maxStorageBuffersPerDescriptor;
+            
+            
+            
+                (self->base)->maxStorageImagesPerDescriptor = maxStorageImagesPerDescriptor;
+            
+            
+            
+                (self->base)->maxSampledImagesPerDescriptor = maxSampledImagesPerDescriptor;
+            
+            
+            
+                (self->base)->maxPipelineLayouts = maxPipelineLayouts;
+            
+            
+
+            pyc_flag_base_VkStructureType_converter_free(&sType, 1);
+pyc_uint32_t_converter_free(&objectCount, 1);
+pyc_flag_array_VkObjectEntryTypeNVX_converter_free(&pObjectEntryTypes, 1);
+pyc_array_uint32_t_converter_free(&pObjectEntryCounts, 1);
+pyc_flag_array_VkObjectEntryUsageFlagsNVX_converter_free(&pObjectEntryUsageFlags, 1);
+pyc_uint32_t_converter_free(&maxUniformBuffersPerDescriptor, 1);
+pyc_uint32_t_converter_free(&maxStorageBuffersPerDescriptor, 1);
+pyc_uint32_t_converter_free(&maxStorageImagesPerDescriptor, 1);
+pyc_uint32_t_converter_free(&maxSampledImagesPerDescriptor, 1);
+pyc_uint32_t_converter_free(&maxPipelineLayouts, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getsType(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->sType));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getpNext(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+        Py_INCREF(Py_None);
+        PyObject* pyvalue = Py_None;
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getobjectCount(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->objectCount));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getpObjectEntryTypes(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(*((self->base)->pObjectEntryTypes));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getpObjectEntryCounts(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+        PyObject* pyvalue = PyLong_FromLong((long) (*(((self->base)->pObjectEntryCounts))));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getpObjectEntryUsageFlags(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(*((self->base)->pObjectEntryUsageFlags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getmaxUniformBuffersPerDescriptor(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxUniformBuffersPerDescriptor));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getmaxStorageBuffersPerDescriptor(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxStorageBuffersPerDescriptor));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getmaxStorageImagesPerDescriptor(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxStorageImagesPerDescriptor));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getmaxSampledImagesPerDescriptor(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxSampledImagesPerDescriptor));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableCreateInfoNVX_getmaxPipelineLayouts(PyVkObjectTableCreateInfoNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong((long) ((self->base)->maxPipelineLayouts));
+        
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkObjectTableCreateInfoNVX_getsetters[] = {
+        
+            {"sType", (getter)PyVkObjectTableCreateInfoNVX_getsType, NULL, "", NULL},
+        
+            {"pNext", (getter)PyVkObjectTableCreateInfoNVX_getpNext, NULL, "", NULL},
+        
+            {"objectCount", (getter)PyVkObjectTableCreateInfoNVX_getobjectCount, NULL, "", NULL},
+        
+            {"pObjectEntryTypes", (getter)PyVkObjectTableCreateInfoNVX_getpObjectEntryTypes, NULL, "", NULL},
+        
+            {"pObjectEntryCounts", (getter)PyVkObjectTableCreateInfoNVX_getpObjectEntryCounts, NULL, "", NULL},
+        
+            {"pObjectEntryUsageFlags", (getter)PyVkObjectTableCreateInfoNVX_getpObjectEntryUsageFlags, NULL, "", NULL},
+        
+            {"maxUniformBuffersPerDescriptor", (getter)PyVkObjectTableCreateInfoNVX_getmaxUniformBuffersPerDescriptor, NULL, "", NULL},
+        
+            {"maxStorageBuffersPerDescriptor", (getter)PyVkObjectTableCreateInfoNVX_getmaxStorageBuffersPerDescriptor, NULL, "", NULL},
+        
+            {"maxStorageImagesPerDescriptor", (getter)PyVkObjectTableCreateInfoNVX_getmaxStorageImagesPerDescriptor, NULL, "", NULL},
+        
+            {"maxSampledImagesPerDescriptor", (getter)PyVkObjectTableCreateInfoNVX_getmaxSampledImagesPerDescriptor, NULL, "", NULL},
+        
+            {"maxPipelineLayouts", (getter)PyVkObjectTableCreateInfoNVX_getmaxPipelineLayouts, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkObjectTableEntryNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkObjectTableEntryNVX *self = (PyVkObjectTableEntryNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkObjectTableEntryNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkObjectTableEntryNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkObjectTableEntryNVX_del(PyVkObjectTableEntryNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkObjectTableEntryNVX_init(PyVkObjectTableEntryNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkObjectEntryTypeNVX type;
+VkObjectEntryUsageFlagsNVX flags;
+
+            static char *kwlist[] = {"type","flags",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_flag_base_VkObjectEntryTypeNVX_converter,&type,pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter,&flags))
+        return -1;
+    
+
+            
+            
+                (self->base)->type = type;
+            
+            
+            
+                (self->base)->flags = flags;
+            
+            
+
+            pyc_flag_base_VkObjectEntryTypeNVX_converter_free(&type, 1);
+pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter_free(&flags, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkObjectTableEntryNVX_gettype(PyVkObjectTableEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->type));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableEntryNVX_getflags(PyVkObjectTableEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkObjectTableEntryNVX_getsetters[] = {
+        
+            {"type", (getter)PyVkObjectTableEntryNVX_gettype, NULL, "", NULL},
+        
+            {"flags", (getter)PyVkObjectTableEntryNVX_getflags, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkObjectTablePipelineEntryNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkObjectTablePipelineEntryNVX *self = (PyVkObjectTablePipelineEntryNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkObjectTablePipelineEntryNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkObjectTablePipelineEntryNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkObjectTablePipelineEntryNVX_del(PyVkObjectTablePipelineEntryNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkObjectTablePipelineEntryNVX_init(PyVkObjectTablePipelineEntryNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkObjectEntryTypeNVX type;
+VkObjectEntryUsageFlagsNVX flags;
+VkPipeline pipeline;
+
+            static char *kwlist[] = {"type","flags","pipeline",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&", kwlist, pyc_flag_base_VkObjectEntryTypeNVX_converter,&type,pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter,&flags,pyc_handle_base_VkPipeline_converter,&pipeline))
+        return -1;
+    
+
+            
+            
+                (self->base)->type = type;
+            
+            
+            
+                (self->base)->flags = flags;
+            
+            
+            
+                (self->base)->pipeline = pipeline;
+            
+            
+
+            pyc_flag_base_VkObjectEntryTypeNVX_converter_free(&type, 1);
+pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter_free(&flags, 1);
+pyc_handle_base_VkPipeline_converter_free(&pipeline, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkObjectTablePipelineEntryNVX_gettype(PyVkObjectTablePipelineEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->type));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTablePipelineEntryNVX_getflags(PyVkObjectTablePipelineEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTablePipelineEntryNVX_getpipeline(PyVkObjectTablePipelineEntryNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkObjectTablePipelineEntryNVX_getsetters[] = {
+        
+            {"type", (getter)PyVkObjectTablePipelineEntryNVX_gettype, NULL, "", NULL},
+        
+            {"flags", (getter)PyVkObjectTablePipelineEntryNVX_getflags, NULL, "", NULL},
+        
+            {"pipeline", (getter)PyVkObjectTablePipelineEntryNVX_getpipeline, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkObjectTableDescriptorSetEntryNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkObjectTableDescriptorSetEntryNVX *self = (PyVkObjectTableDescriptorSetEntryNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkObjectTableDescriptorSetEntryNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkObjectTableDescriptorSetEntryNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkObjectTableDescriptorSetEntryNVX_del(PyVkObjectTableDescriptorSetEntryNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkObjectTableDescriptorSetEntryNVX_init(PyVkObjectTableDescriptorSetEntryNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkObjectEntryTypeNVX type;
+VkObjectEntryUsageFlagsNVX flags;
+VkPipelineLayout pipelineLayout;
+VkDescriptorSet descriptorSet;
+
+            static char *kwlist[] = {"type","flags","pipelineLayout","descriptorSet",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&", kwlist, pyc_flag_base_VkObjectEntryTypeNVX_converter,&type,pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter,&flags,pyc_handle_base_VkPipelineLayout_converter,&pipelineLayout,pyc_handle_base_VkDescriptorSet_converter,&descriptorSet))
+        return -1;
+    
+
+            
+            
+                (self->base)->type = type;
+            
+            
+            
+                (self->base)->flags = flags;
+            
+            
+            
+                (self->base)->pipelineLayout = pipelineLayout;
+            
+            
+            
+                (self->base)->descriptorSet = descriptorSet;
+            
+            
+
+            pyc_flag_base_VkObjectEntryTypeNVX_converter_free(&type, 1);
+pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter_free(&flags, 1);
+pyc_handle_base_VkPipelineLayout_converter_free(&pipelineLayout, 1);
+pyc_handle_base_VkDescriptorSet_converter_free(&descriptorSet, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkObjectTableDescriptorSetEntryNVX_gettype(PyVkObjectTableDescriptorSetEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->type));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableDescriptorSetEntryNVX_getflags(PyVkObjectTableDescriptorSetEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableDescriptorSetEntryNVX_getpipelineLayout(PyVkObjectTableDescriptorSetEntryNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkObjectTableDescriptorSetEntryNVX_getdescriptorSet(PyVkObjectTableDescriptorSetEntryNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkObjectTableDescriptorSetEntryNVX_getsetters[] = {
+        
+            {"type", (getter)PyVkObjectTableDescriptorSetEntryNVX_gettype, NULL, "", NULL},
+        
+            {"flags", (getter)PyVkObjectTableDescriptorSetEntryNVX_getflags, NULL, "", NULL},
+        
+            {"pipelineLayout", (getter)PyVkObjectTableDescriptorSetEntryNVX_getpipelineLayout, NULL, "", NULL},
+        
+            {"descriptorSet", (getter)PyVkObjectTableDescriptorSetEntryNVX_getdescriptorSet, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkObjectTableVertexBufferEntryNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkObjectTableVertexBufferEntryNVX *self = (PyVkObjectTableVertexBufferEntryNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkObjectTableVertexBufferEntryNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkObjectTableVertexBufferEntryNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkObjectTableVertexBufferEntryNVX_del(PyVkObjectTableVertexBufferEntryNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkObjectTableVertexBufferEntryNVX_init(PyVkObjectTableVertexBufferEntryNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkObjectEntryTypeNVX type;
+VkObjectEntryUsageFlagsNVX flags;
+VkBuffer buffer;
+
+            static char *kwlist[] = {"type","flags","buffer",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&", kwlist, pyc_flag_base_VkObjectEntryTypeNVX_converter,&type,pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter,&flags,pyc_handle_base_VkBuffer_converter,&buffer))
+        return -1;
+    
+
+            
+            
+                (self->base)->type = type;
+            
+            
+            
+                (self->base)->flags = flags;
+            
+            
+            
+                (self->base)->buffer = buffer;
+            
+            
+
+            pyc_flag_base_VkObjectEntryTypeNVX_converter_free(&type, 1);
+pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter_free(&flags, 1);
+pyc_handle_base_VkBuffer_converter_free(&buffer, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkObjectTableVertexBufferEntryNVX_gettype(PyVkObjectTableVertexBufferEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->type));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableVertexBufferEntryNVX_getflags(PyVkObjectTableVertexBufferEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableVertexBufferEntryNVX_getbuffer(PyVkObjectTableVertexBufferEntryNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkObjectTableVertexBufferEntryNVX_getsetters[] = {
+        
+            {"type", (getter)PyVkObjectTableVertexBufferEntryNVX_gettype, NULL, "", NULL},
+        
+            {"flags", (getter)PyVkObjectTableVertexBufferEntryNVX_getflags, NULL, "", NULL},
+        
+            {"buffer", (getter)PyVkObjectTableVertexBufferEntryNVX_getbuffer, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkObjectTableIndexBufferEntryNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkObjectTableIndexBufferEntryNVX *self = (PyVkObjectTableIndexBufferEntryNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkObjectTableIndexBufferEntryNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkObjectTableIndexBufferEntryNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkObjectTableIndexBufferEntryNVX_del(PyVkObjectTableIndexBufferEntryNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkObjectTableIndexBufferEntryNVX_init(PyVkObjectTableIndexBufferEntryNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkObjectEntryTypeNVX type;
+VkObjectEntryUsageFlagsNVX flags;
+VkBuffer buffer;
+
+            static char *kwlist[] = {"type","flags","buffer",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&", kwlist, pyc_flag_base_VkObjectEntryTypeNVX_converter,&type,pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter,&flags,pyc_handle_base_VkBuffer_converter,&buffer))
+        return -1;
+    
+
+            
+            
+                (self->base)->type = type;
+            
+            
+            
+                (self->base)->flags = flags;
+            
+            
+            
+                (self->base)->buffer = buffer;
+            
+            
+
+            pyc_flag_base_VkObjectEntryTypeNVX_converter_free(&type, 1);
+pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter_free(&flags, 1);
+pyc_handle_base_VkBuffer_converter_free(&buffer, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkObjectTableIndexBufferEntryNVX_gettype(PyVkObjectTableIndexBufferEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->type));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableIndexBufferEntryNVX_getflags(PyVkObjectTableIndexBufferEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTableIndexBufferEntryNVX_getbuffer(PyVkObjectTableIndexBufferEntryNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkObjectTableIndexBufferEntryNVX_getsetters[] = {
+        
+            {"type", (getter)PyVkObjectTableIndexBufferEntryNVX_gettype, NULL, "", NULL},
+        
+            {"flags", (getter)PyVkObjectTableIndexBufferEntryNVX_getflags, NULL, "", NULL},
+        
+            {"buffer", (getter)PyVkObjectTableIndexBufferEntryNVX_getbuffer, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
+
+
+    
+    
+        
+
+
+    // ----------
+    // New
+    // ----------
+    static PyObject * PyVkObjectTablePushConstantEntryNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyVkObjectTablePushConstantEntryNVX *self = (PyVkObjectTablePushConstantEntryNVX *)type->tp_alloc(type, 0);
+        if (self == NULL) return NULL;
+        self->base = malloc(sizeof(VkObjectTablePushConstantEntryNVX));
+        if (self->base == NULL) {
+            PyErr_SetString(PyExc_MemoryError, "Cannot allocate memory for VkObjectTablePushConstantEntryNVX");
+            return NULL;
+        }
+
+        return (PyObject *)self;
+    }
+
+
+    // ----------
+    // Del
+    // ---------
+    static void PyVkObjectTablePushConstantEntryNVX_del(PyVkObjectTablePushConstantEntryNVX* self) {
+        if (self->base != NULL) {
+            free(self->base);
+        }
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+
+    // ----------
+    // Init
+    // ----------
+    
+    
+    static int PyVkObjectTablePushConstantEntryNVX_init(PyVkObjectTablePushConstantEntryNVX *self, PyObject *args, PyObject *kwds) {
+        
+            VkObjectEntryTypeNVX type;
+VkObjectEntryUsageFlagsNVX flags;
+VkPipelineLayout pipelineLayout;
+VkShaderStageFlags stageFlags;
+
+            static char *kwlist[] = {"type","flags","pipelineLayout","stageFlags",NULL};
+            
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&", kwlist, pyc_flag_base_VkObjectEntryTypeNVX_converter,&type,pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter,&flags,pyc_handle_base_VkPipelineLayout_converter,&pipelineLayout,pyc_flag_base_VkShaderStageFlags_converter,&stageFlags))
+        return -1;
+    
+
+            
+            
+                (self->base)->type = type;
+            
+            
+            
+                (self->base)->flags = flags;
+            
+            
+            
+                (self->base)->pipelineLayout = pipelineLayout;
+            
+            
+            
+                (self->base)->stageFlags = stageFlags;
+            
+            
+
+            pyc_flag_base_VkObjectEntryTypeNVX_converter_free(&type, 1);
+pyc_flag_base_VkObjectEntryUsageFlagsNVX_converter_free(&flags, 1);
+pyc_handle_base_VkPipelineLayout_converter_free(&pipelineLayout, 1);
+pyc_flag_base_VkShaderStageFlags_converter_free(&stageFlags, 1);
+
+        
+
+        return 0;
+    }
+    
+
+
+    // ----------
+    // Get
+    // ----------
+    
+        static PyObject* PyVkObjectTablePushConstantEntryNVX_gettype(PyVkObjectTablePushConstantEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->type));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTablePushConstantEntryNVX_getflags(PyVkObjectTablePushConstantEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->flags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+        static PyObject* PyVkObjectTablePushConstantEntryNVX_getpipelineLayout(PyVkObjectTablePushConstantEntryNVX *self, void *closure) {
+            
+            
+                PyErr_SetString(PyExc_ImportError, "Not Implemented, ask to the maintener");
+                return NULL;
+            
+        }
+    
+        static PyObject* PyVkObjectTablePushConstantEntryNVX_getstageFlags(PyVkObjectTablePushConstantEntryNVX *self, void *closure) {
+            
+            
+                
+            PyObject* pyvalue = PyLong_FromLong(((self->base)->stageFlags));
+            
+                Py_INCREF(pyvalue);
+                return pyvalue;
+            
+        }
+    
+
+
+    // ----------
+    // PyGetSetDef
+    // ----------
+    static PyGetSetDef PyVkObjectTablePushConstantEntryNVX_getsetters[] = {
+        
+            {"type", (getter)PyVkObjectTablePushConstantEntryNVX_gettype, NULL, "", NULL},
+        
+            {"flags", (getter)PyVkObjectTablePushConstantEntryNVX_getflags, NULL, "", NULL},
+        
+            {"pipelineLayout", (getter)PyVkObjectTablePushConstantEntryNVX_getpipelineLayout, NULL, "", NULL},
+        
+            {"stageFlags", (getter)PyVkObjectTablePushConstantEntryNVX_getstageFlags, NULL, "", NULL},
+        
+        {NULL}
+    };
+
+
+
+
+    
+    
 
 
     
@@ -52477,6 +56068,230 @@ void init_pytype_objects(void) {
             };
         
      #endif 
+
+    
+        
+    
+        
+            PyVkDeviceGeneratedCommandsFeaturesNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkDeviceGeneratedCommandsFeaturesNVX", sizeof(PyVkDeviceGeneratedCommandsFeaturesNVX), 0,
+                (destructor)PyVkDeviceGeneratedCommandsFeaturesNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkDeviceGeneratedCommandsFeaturesNVX object",0,0,0,0,0,0,0,0,
+                PyVkDeviceGeneratedCommandsFeaturesNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkDeviceGeneratedCommandsFeaturesNVX_init,0,PyVkDeviceGeneratedCommandsFeaturesNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkDeviceGeneratedCommandsLimitsNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkDeviceGeneratedCommandsLimitsNVX", sizeof(PyVkDeviceGeneratedCommandsLimitsNVX), 0,
+                (destructor)PyVkDeviceGeneratedCommandsLimitsNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkDeviceGeneratedCommandsLimitsNVX object",0,0,0,0,0,0,0,0,
+                PyVkDeviceGeneratedCommandsLimitsNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkDeviceGeneratedCommandsLimitsNVX_init,0,PyVkDeviceGeneratedCommandsLimitsNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkIndirectCommandsTokenNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkIndirectCommandsTokenNVX", sizeof(PyVkIndirectCommandsTokenNVX), 0,
+                (destructor)PyVkIndirectCommandsTokenNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkIndirectCommandsTokenNVX object",0,0,0,0,0,0,0,0,
+                PyVkIndirectCommandsTokenNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkIndirectCommandsTokenNVX_init,0,PyVkIndirectCommandsTokenNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkIndirectCommandsLayoutTokenNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkIndirectCommandsLayoutTokenNVX", sizeof(PyVkIndirectCommandsLayoutTokenNVX), 0,
+                (destructor)PyVkIndirectCommandsLayoutTokenNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkIndirectCommandsLayoutTokenNVX object",0,0,0,0,0,0,0,0,
+                PyVkIndirectCommandsLayoutTokenNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkIndirectCommandsLayoutTokenNVX_init,0,PyVkIndirectCommandsLayoutTokenNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkIndirectCommandsLayoutCreateInfoNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkIndirectCommandsLayoutCreateInfoNVX", sizeof(PyVkIndirectCommandsLayoutCreateInfoNVX), 0,
+                (destructor)PyVkIndirectCommandsLayoutCreateInfoNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkIndirectCommandsLayoutCreateInfoNVX object",0,0,0,0,0,0,0,0,
+                PyVkIndirectCommandsLayoutCreateInfoNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkIndirectCommandsLayoutCreateInfoNVX_init,0,PyVkIndirectCommandsLayoutCreateInfoNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkCmdProcessCommandsInfoNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkCmdProcessCommandsInfoNVX", sizeof(PyVkCmdProcessCommandsInfoNVX), 0,
+                (destructor)PyVkCmdProcessCommandsInfoNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkCmdProcessCommandsInfoNVX object",0,0,0,0,0,0,0,0,
+                PyVkCmdProcessCommandsInfoNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkCmdProcessCommandsInfoNVX_init,0,PyVkCmdProcessCommandsInfoNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkCmdReserveSpaceForCommandsInfoNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkCmdReserveSpaceForCommandsInfoNVX", sizeof(PyVkCmdReserveSpaceForCommandsInfoNVX), 0,
+                (destructor)PyVkCmdReserveSpaceForCommandsInfoNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkCmdReserveSpaceForCommandsInfoNVX object",0,0,0,0,0,0,0,0,
+                PyVkCmdReserveSpaceForCommandsInfoNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkCmdReserveSpaceForCommandsInfoNVX_init,0,PyVkCmdReserveSpaceForCommandsInfoNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkObjectTableCreateInfoNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkObjectTableCreateInfoNVX", sizeof(PyVkObjectTableCreateInfoNVX), 0,
+                (destructor)PyVkObjectTableCreateInfoNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkObjectTableCreateInfoNVX object",0,0,0,0,0,0,0,0,
+                PyVkObjectTableCreateInfoNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkObjectTableCreateInfoNVX_init,0,PyVkObjectTableCreateInfoNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkObjectTableEntryNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkObjectTableEntryNVX", sizeof(PyVkObjectTableEntryNVX), 0,
+                (destructor)PyVkObjectTableEntryNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkObjectTableEntryNVX object",0,0,0,0,0,0,0,0,
+                PyVkObjectTableEntryNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkObjectTableEntryNVX_init,0,PyVkObjectTableEntryNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkObjectTablePipelineEntryNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkObjectTablePipelineEntryNVX", sizeof(PyVkObjectTablePipelineEntryNVX), 0,
+                (destructor)PyVkObjectTablePipelineEntryNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkObjectTablePipelineEntryNVX object",0,0,0,0,0,0,0,0,
+                PyVkObjectTablePipelineEntryNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkObjectTablePipelineEntryNVX_init,0,PyVkObjectTablePipelineEntryNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkObjectTableDescriptorSetEntryNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkObjectTableDescriptorSetEntryNVX", sizeof(PyVkObjectTableDescriptorSetEntryNVX), 0,
+                (destructor)PyVkObjectTableDescriptorSetEntryNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkObjectTableDescriptorSetEntryNVX object",0,0,0,0,0,0,0,0,
+                PyVkObjectTableDescriptorSetEntryNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkObjectTableDescriptorSetEntryNVX_init,0,PyVkObjectTableDescriptorSetEntryNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkObjectTableVertexBufferEntryNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkObjectTableVertexBufferEntryNVX", sizeof(PyVkObjectTableVertexBufferEntryNVX), 0,
+                (destructor)PyVkObjectTableVertexBufferEntryNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkObjectTableVertexBufferEntryNVX object",0,0,0,0,0,0,0,0,
+                PyVkObjectTableVertexBufferEntryNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkObjectTableVertexBufferEntryNVX_init,0,PyVkObjectTableVertexBufferEntryNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkObjectTableIndexBufferEntryNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkObjectTableIndexBufferEntryNVX", sizeof(PyVkObjectTableIndexBufferEntryNVX), 0,
+                (destructor)PyVkObjectTableIndexBufferEntryNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkObjectTableIndexBufferEntryNVX object",0,0,0,0,0,0,0,0,
+                PyVkObjectTableIndexBufferEntryNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkObjectTableIndexBufferEntryNVX_init,0,PyVkObjectTableIndexBufferEntryNVX_new,
+            };
+        
+    
+
+    
+        
+    
+        
+            PyVkObjectTablePushConstantEntryNVXType = (PyTypeObject) {
+                PyVarObject_HEAD_INIT(NULL, 0)
+                "vulkan.VkObjectTablePushConstantEntryNVX", sizeof(PyVkObjectTablePushConstantEntryNVX), 0,
+                (destructor)PyVkObjectTablePushConstantEntryNVX_del,
+                0,0,0,0,0,0,0,0,0,0,0,0,0,0,Py_TPFLAGS_DEFAULT,
+                "VkObjectTablePushConstantEntryNVX object",0,0,0,0,0,0,0,0,
+                PyVkObjectTablePushConstantEntryNVX_getsetters,0,0,0,0,0,
+                (initproc)PyVkObjectTablePushConstantEntryNVX_init,0,PyVkObjectTablePushConstantEntryNVX_new,
+            };
+        
+    
 
     
         
@@ -62607,6 +66422,719 @@ pyc_uint32_t_converter_free(&stride, 0);
     
 
 
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkCmdProcessCommandsNVX pfn; } PyvkCmdProcessCommandsNVX;
+
+    static PyObject* PyvkCmdProcessCommandsNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkCmdProcessCommandsNVX *self;
+        self = (PyvkCmdProcessCommandsNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkCmdProcessCommandsNVX_del(PyvkCmdProcessCommandsNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkCmdProcessCommandsNVX_init(PyvkCmdProcessCommandsNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkCmdProcessCommandsNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkCmdProcessCommandsNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkCommandBuffer commandBuffer;
+VkCmdProcessCommandsInfoNVX* pProcessCommandsInfo;
+
+    static char *kwlist[] = {"commandBuffer","pProcessCommandsInfo",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_handle_base_VkCommandBuffer_converter,&commandBuffer,pyc_struct_pointer_VkCmdProcessCommandsInfoNVX_converter,&pProcessCommandsInfo))
+        return NULL;
+    
+
+    
+
+    
+        
+
+        
+            (*(((PyvkCmdProcessCommandsNVX*)self)->pfn))(commandBuffer,pProcessCommandsInfo);
+            Py_INCREF(Py_None);
+            PyObject* return_value = Py_None;
+        
+    
+
+    pyc_handle_base_VkCommandBuffer_converter_free(&commandBuffer, 0);
+pyc_struct_pointer_VkCmdProcessCommandsInfoNVX_converter_free(&pProcessCommandsInfo, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkCmdProcessCommandsNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkCmdProcessCommandsNVX", sizeof(PyvkCmdProcessCommandsNVX), 0,
+        (destructor)PyvkCmdProcessCommandsNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkCmdProcessCommandsNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkCmdProcessCommandsNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkCmdProcessCommandsNVX_init,0,PyvkCmdProcessCommandsNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkCmdReserveSpaceForCommandsNVX pfn; } PyvkCmdReserveSpaceForCommandsNVX;
+
+    static PyObject* PyvkCmdReserveSpaceForCommandsNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkCmdReserveSpaceForCommandsNVX *self;
+        self = (PyvkCmdReserveSpaceForCommandsNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkCmdReserveSpaceForCommandsNVX_del(PyvkCmdReserveSpaceForCommandsNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkCmdReserveSpaceForCommandsNVX_init(PyvkCmdReserveSpaceForCommandsNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkCmdReserveSpaceForCommandsNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkCmdReserveSpaceForCommandsNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkCommandBuffer commandBuffer;
+VkCmdReserveSpaceForCommandsInfoNVX* pReserveSpaceInfo;
+
+    static char *kwlist[] = {"commandBuffer","pReserveSpaceInfo",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_handle_base_VkCommandBuffer_converter,&commandBuffer,pyc_struct_pointer_VkCmdReserveSpaceForCommandsInfoNVX_converter,&pReserveSpaceInfo))
+        return NULL;
+    
+
+    
+
+    
+        
+
+        
+            (*(((PyvkCmdReserveSpaceForCommandsNVX*)self)->pfn))(commandBuffer,pReserveSpaceInfo);
+            Py_INCREF(Py_None);
+            PyObject* return_value = Py_None;
+        
+    
+
+    pyc_handle_base_VkCommandBuffer_converter_free(&commandBuffer, 0);
+pyc_struct_pointer_VkCmdReserveSpaceForCommandsInfoNVX_converter_free(&pReserveSpaceInfo, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkCmdReserveSpaceForCommandsNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkCmdReserveSpaceForCommandsNVX", sizeof(PyvkCmdReserveSpaceForCommandsNVX), 0,
+        (destructor)PyvkCmdReserveSpaceForCommandsNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkCmdReserveSpaceForCommandsNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkCmdReserveSpaceForCommandsNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkCmdReserveSpaceForCommandsNVX_init,0,PyvkCmdReserveSpaceForCommandsNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkCreateIndirectCommandsLayoutNVX pfn; } PyvkCreateIndirectCommandsLayoutNVX;
+
+    static PyObject* PyvkCreateIndirectCommandsLayoutNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkCreateIndirectCommandsLayoutNVX *self;
+        self = (PyvkCreateIndirectCommandsLayoutNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkCreateIndirectCommandsLayoutNVX_del(PyvkCreateIndirectCommandsLayoutNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkCreateIndirectCommandsLayoutNVX_init(PyvkCreateIndirectCommandsLayoutNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkCreateIndirectCommandsLayoutNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkCreateIndirectCommandsLayoutNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkDevice device;
+VkIndirectCommandsLayoutCreateInfoNVX* pCreateInfo;
+
+    static char *kwlist[] = {"device","pCreateInfo",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_handle_base_VkDevice_converter,&device,pyc_struct_pointer_VkIndirectCommandsLayoutCreateInfoNVX_converter,&pCreateInfo))
+        return NULL;
+    
+
+    
+
+    
+        int allocate_size = 1;
+
+        
+
+        VkIndirectCommandsLayoutNVX *value = malloc(allocate_size * sizeof(VkIndirectCommandsLayoutNVX));
+        
+        
+            if (raise((*(((PyvkCreateIndirectCommandsLayoutNVX*)self)->pfn))(device,pCreateInfo,NULL,value)))
+                return NULL;
+        
+
+
+        
+            
+                PyObject* return_value = PyCapsule_New(value, "VkIndirectCommandsLayoutNVX", NULL);
+            
+        
+
+    
+
+    pyc_handle_base_VkDevice_converter_free(&device, 0);
+pyc_struct_pointer_VkIndirectCommandsLayoutCreateInfoNVX_converter_free(&pCreateInfo, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkCreateIndirectCommandsLayoutNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkCreateIndirectCommandsLayoutNVX", sizeof(PyvkCreateIndirectCommandsLayoutNVX), 0,
+        (destructor)PyvkCreateIndirectCommandsLayoutNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkCreateIndirectCommandsLayoutNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkCreateIndirectCommandsLayoutNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkCreateIndirectCommandsLayoutNVX_init,0,PyvkCreateIndirectCommandsLayoutNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkDestroyIndirectCommandsLayoutNVX pfn; } PyvkDestroyIndirectCommandsLayoutNVX;
+
+    static PyObject* PyvkDestroyIndirectCommandsLayoutNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkDestroyIndirectCommandsLayoutNVX *self;
+        self = (PyvkDestroyIndirectCommandsLayoutNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkDestroyIndirectCommandsLayoutNVX_del(PyvkDestroyIndirectCommandsLayoutNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkDestroyIndirectCommandsLayoutNVX_init(PyvkDestroyIndirectCommandsLayoutNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkDestroyIndirectCommandsLayoutNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkDestroyIndirectCommandsLayoutNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkDevice device;
+VkIndirectCommandsLayoutNVX indirectCommandsLayout;
+
+    static char *kwlist[] = {"device","indirectCommandsLayout",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_handle_base_VkDevice_converter,&device,pyc_handle_base_VkIndirectCommandsLayoutNVX_converter,&indirectCommandsLayout))
+        return NULL;
+    
+
+    
+
+    
+        
+
+        
+            (*(((PyvkDestroyIndirectCommandsLayoutNVX*)self)->pfn))(device,indirectCommandsLayout,NULL);
+            Py_INCREF(Py_None);
+            PyObject* return_value = Py_None;
+        
+    
+
+    pyc_handle_base_VkDevice_converter_free(&device, 0);
+pyc_handle_base_VkIndirectCommandsLayoutNVX_converter_free(&indirectCommandsLayout, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkDestroyIndirectCommandsLayoutNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkDestroyIndirectCommandsLayoutNVX", sizeof(PyvkDestroyIndirectCommandsLayoutNVX), 0,
+        (destructor)PyvkDestroyIndirectCommandsLayoutNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkDestroyIndirectCommandsLayoutNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkDestroyIndirectCommandsLayoutNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkDestroyIndirectCommandsLayoutNVX_init,0,PyvkDestroyIndirectCommandsLayoutNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkCreateObjectTableNVX pfn; } PyvkCreateObjectTableNVX;
+
+    static PyObject* PyvkCreateObjectTableNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkCreateObjectTableNVX *self;
+        self = (PyvkCreateObjectTableNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkCreateObjectTableNVX_del(PyvkCreateObjectTableNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkCreateObjectTableNVX_init(PyvkCreateObjectTableNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkCreateObjectTableNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkCreateObjectTableNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkDevice device;
+VkObjectTableCreateInfoNVX* pCreateInfo;
+
+    static char *kwlist[] = {"device","pCreateInfo",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_handle_base_VkDevice_converter,&device,pyc_struct_pointer_VkObjectTableCreateInfoNVX_converter,&pCreateInfo))
+        return NULL;
+    
+
+    
+
+    
+        int allocate_size = 1;
+
+        
+
+        VkObjectTableNVX *value = malloc(allocate_size * sizeof(VkObjectTableNVX));
+        
+        
+            if (raise((*(((PyvkCreateObjectTableNVX*)self)->pfn))(device,pCreateInfo,NULL,value)))
+                return NULL;
+        
+
+
+        
+            
+                PyObject* return_value = PyCapsule_New(value, "VkObjectTableNVX", NULL);
+            
+        
+
+    
+
+    pyc_handle_base_VkDevice_converter_free(&device, 0);
+pyc_struct_pointer_VkObjectTableCreateInfoNVX_converter_free(&pCreateInfo, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkCreateObjectTableNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkCreateObjectTableNVX", sizeof(PyvkCreateObjectTableNVX), 0,
+        (destructor)PyvkCreateObjectTableNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkCreateObjectTableNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkCreateObjectTableNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkCreateObjectTableNVX_init,0,PyvkCreateObjectTableNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkDestroyObjectTableNVX pfn; } PyvkDestroyObjectTableNVX;
+
+    static PyObject* PyvkDestroyObjectTableNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkDestroyObjectTableNVX *self;
+        self = (PyvkDestroyObjectTableNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkDestroyObjectTableNVX_del(PyvkDestroyObjectTableNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkDestroyObjectTableNVX_init(PyvkDestroyObjectTableNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkDestroyObjectTableNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkDestroyObjectTableNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkDevice device;
+VkObjectTableNVX objectTable;
+
+    static char *kwlist[] = {"device","objectTable",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_handle_base_VkDevice_converter,&device,pyc_handle_base_VkObjectTableNVX_converter,&objectTable))
+        return NULL;
+    
+
+    
+
+    
+        
+
+        
+            (*(((PyvkDestroyObjectTableNVX*)self)->pfn))(device,objectTable,NULL);
+            Py_INCREF(Py_None);
+            PyObject* return_value = Py_None;
+        
+    
+
+    pyc_handle_base_VkDevice_converter_free(&device, 0);
+pyc_handle_base_VkObjectTableNVX_converter_free(&objectTable, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkDestroyObjectTableNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkDestroyObjectTableNVX", sizeof(PyvkDestroyObjectTableNVX), 0,
+        (destructor)PyvkDestroyObjectTableNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkDestroyObjectTableNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkDestroyObjectTableNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkDestroyObjectTableNVX_init,0,PyvkDestroyObjectTableNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkRegisterObjectsNVX pfn; } PyvkRegisterObjectsNVX;
+
+    static PyObject* PyvkRegisterObjectsNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkRegisterObjectsNVX *self;
+        self = (PyvkRegisterObjectsNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkRegisterObjectsNVX_del(PyvkRegisterObjectsNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkRegisterObjectsNVX_init(PyvkRegisterObjectsNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkRegisterObjectsNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkRegisterObjectsNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkDevice device;
+VkObjectTableNVX objectTable;
+uint32_t objectCount;
+VkObjectTableEntryNVX* ppObjectTableEntries;
+uint32_t* pObjectIndices;
+
+    static char *kwlist[] = {"device","objectTable","objectCount","ppObjectTableEntries","pObjectIndices",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&O&", kwlist, pyc_handle_base_VkDevice_converter,&device,pyc_handle_base_VkObjectTableNVX_converter,&objectTable,pyc_uint32_t_converter,&objectCount,pyc_struct_array_VkObjectTableEntryNVX_converter,&ppObjectTableEntries,pyc_array_uint32_t_converter,&pObjectIndices))
+        return NULL;
+    
+
+    
+
+    
+        
+
+        
+            (*(((PyvkRegisterObjectsNVX*)self)->pfn))(device,objectTable,objectCount,ppObjectTableEntries,pObjectIndices);
+            Py_INCREF(Py_None);
+            PyObject* return_value = Py_None;
+        
+    
+
+    pyc_handle_base_VkDevice_converter_free(&device, 0);
+pyc_handle_base_VkObjectTableNVX_converter_free(&objectTable, 0);
+pyc_uint32_t_converter_free(&objectCount, 0);
+pyc_struct_array_VkObjectTableEntryNVX_converter_free(&ppObjectTableEntries, 0);
+pyc_array_uint32_t_converter_free(&pObjectIndices, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkRegisterObjectsNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkRegisterObjectsNVX", sizeof(PyvkRegisterObjectsNVX), 0,
+        (destructor)PyvkRegisterObjectsNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkRegisterObjectsNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkRegisterObjectsNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkRegisterObjectsNVX_init,0,PyvkRegisterObjectsNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkUnregisterObjectsNVX pfn; } PyvkUnregisterObjectsNVX;
+
+    static PyObject* PyvkUnregisterObjectsNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkUnregisterObjectsNVX *self;
+        self = (PyvkUnregisterObjectsNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkUnregisterObjectsNVX_del(PyvkUnregisterObjectsNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkUnregisterObjectsNVX_init(PyvkUnregisterObjectsNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkUnregisterObjectsNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkUnregisterObjectsNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkDevice device;
+VkObjectTableNVX objectTable;
+uint32_t objectCount;
+VkObjectEntryTypeNVX* pObjectEntryTypes;
+uint32_t* pObjectIndices;
+
+    static char *kwlist[] = {"device","objectTable","objectCount","pObjectEntryTypes","pObjectIndices",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&O&O&O&", kwlist, pyc_handle_base_VkDevice_converter,&device,pyc_handle_base_VkObjectTableNVX_converter,&objectTable,pyc_uint32_t_converter,&objectCount,pyc_flag_array_VkObjectEntryTypeNVX_converter,&pObjectEntryTypes,pyc_array_uint32_t_converter,&pObjectIndices))
+        return NULL;
+    
+
+    
+
+    
+        
+
+        
+            (*(((PyvkUnregisterObjectsNVX*)self)->pfn))(device,objectTable,objectCount,pObjectEntryTypes,pObjectIndices);
+            Py_INCREF(Py_None);
+            PyObject* return_value = Py_None;
+        
+    
+
+    pyc_handle_base_VkDevice_converter_free(&device, 0);
+pyc_handle_base_VkObjectTableNVX_converter_free(&objectTable, 0);
+pyc_uint32_t_converter_free(&objectCount, 0);
+pyc_flag_array_VkObjectEntryTypeNVX_converter_free(&pObjectEntryTypes, 0);
+pyc_array_uint32_t_converter_free(&pObjectIndices, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkUnregisterObjectsNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkUnregisterObjectsNVX", sizeof(PyvkUnregisterObjectsNVX), 0,
+        (destructor)PyvkUnregisterObjectsNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkUnregisterObjectsNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkUnregisterObjectsNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkUnregisterObjectsNVX_init,0,PyvkUnregisterObjectsNVX_new,
+    };
+    
+    
+
+
+    
+    
+        
+
+    typedef struct { PyObject_HEAD PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX pfn; } PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX;
+
+    static PyObject* PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_new(PyTypeObject *type, PyObject *args, PyObject *kwds) {
+        PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX *self;
+        self = (PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX *)type->tp_alloc(type, 0);
+        return (PyObject *)self;
+    }
+
+    static void PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_del(PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX* self) {
+        Py_TYPE(self)->tp_free((PyObject*)self);
+    }
+
+    static int PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_init(PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX *self, PyObject *args, PyObject *kwds) {
+        PyObject* capsule;
+        if (!PyArg_ParseTuple(args, "O", &capsule))
+            return -1;
+        self->pfn = (PFN_vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX) PyCapsule_GetPointer(capsule, NULL);
+        if (self->pfn == NULL)
+            return -1;
+        return 0;
+    }
+
+
+    static PyObject* PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_call(PyObject *self, PyObject *args, PyObject *kwds) {
+        
+    
+    
+        
+    
+
+    VkPhysicalDevice physicalDevice;
+VkDeviceGeneratedCommandsFeaturesNVX* pFeatures;
+
+    static char *kwlist[] = {"physicalDevice","pFeatures",NULL};
+    
+    if( !PyArg_ParseTupleAndKeywords(args, kwds,
+        "O&O&", kwlist, pyc_handle_base_VkPhysicalDevice_converter,&physicalDevice,pyc_struct_pointer_VkDeviceGeneratedCommandsFeaturesNVX_converter,&pFeatures))
+        return NULL;
+    
+
+    
+
+    
+        int allocate_size = 1;
+
+        
+
+        VkDeviceGeneratedCommandsLimitsNVX *value = malloc(allocate_size * sizeof(VkDeviceGeneratedCommandsLimitsNVX));
+        
+        
+            (*(((PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX*)self)->pfn))(physicalDevice,pFeatures,value);
+        
+
+
+        
+            
+                PyObject* return_value = _PyObject_New(&PyVkDeviceGeneratedCommandsLimitsNVXType);
+                if (!return_value)
+                    return NULL;
+                ((PyVkDeviceGeneratedCommandsLimitsNVX*)return_value)->base = value;
+            
+        
+
+    
+
+    pyc_handle_base_VkPhysicalDevice_converter_free(&physicalDevice, 0);
+pyc_struct_pointer_VkDeviceGeneratedCommandsFeaturesNVX_converter_free(&pFeatures, 0);
+
+
+    return return_value;
+
+    }
+
+    static PyTypeObject PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVXType = {
+        PyVarObject_HEAD_INIT(NULL, 0) "vulkan.vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX", sizeof(PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX), 0,
+        (destructor)PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_del, 0,0,0,0,0,0,0,0,0,(ternaryfunc)PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_call,
+        0,0,0,0,Py_TPFLAGS_DEFAULT, "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX object",0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,(initproc)PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_init,0,PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVX_new,
+    };
+    
+    
+
+
 
 
 // ---------------
@@ -63213,6 +67741,114 @@ static PyObject* PyvkGetInstanceProcAddr(PyObject *self, PyObject *args, PyObjec
     
 
     
+        
+    
+        
+            if (strcmp(arg1, "vkCmdProcessCommandsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCmdProcessCommandsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkCmdReserveSpaceForCommandsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCmdReserveSpaceForCommandsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkCreateIndirectCommandsLayoutNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCreateIndirectCommandsLayoutNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkDestroyIndirectCommandsLayoutNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkDestroyIndirectCommandsLayoutNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkCreateObjectTableNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCreateObjectTableNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkDestroyObjectTableNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkDestroyObjectTableNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkRegisterObjectsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkRegisterObjectsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkUnregisterObjectsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkUnregisterObjectsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
 
     if (pyreturn == NULL) {
         char error[100];
@@ -63743,6 +68379,114 @@ static PyObject* PyvkGetDeviceProcAddr(PyObject *self, PyObject *args, PyObject 
         
             if (strcmp(arg1, "vkCmdDrawIndexedIndirectCountAMD") == 0) {
                 pyreturn = PyObject_Call((PyObject *)&PyvkCmdDrawIndexedIndirectCountAMDType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkCmdProcessCommandsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCmdProcessCommandsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkCmdReserveSpaceForCommandsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCmdReserveSpaceForCommandsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkCreateIndirectCommandsLayoutNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCreateIndirectCommandsLayoutNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkDestroyIndirectCommandsLayoutNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkDestroyIndirectCommandsLayoutNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkCreateObjectTableNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkCreateObjectTableNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkDestroyObjectTableNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkDestroyObjectTableNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkRegisterObjectsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkRegisterObjectsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkUnregisterObjectsNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkUnregisterObjectsNVXType, call_args, NULL);
+                if (pyreturn == NULL)
+                    return NULL;
+            }
+        
+    
+
+    
+        
+    
+        
+            if (strcmp(arg1, "vkGetPhysicalDeviceGeneratedCommandsPropertiesNVX") == 0) {
+                pyreturn = PyObject_Call((PyObject *)&PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVXType, call_args, NULL);
                 if (pyreturn == NULL)
                     return NULL;
             }
@@ -64836,23 +69580,23 @@ static PyMethodDef VulkanMethods[] = {
     
 
     
-        {"vkGetInstanceProcAddr", (PyCFunction)PyvkGetInstanceProcAddr, METH_VARARGS, ""},
+        {"vkGetInstanceProcAddr", (PyCFunction)PyvkGetInstanceProcAddr, METH_VARARGS | METH_KEYWORDS, ""},
     
-        {"vkGetDeviceProcAddr", (PyCFunction)PyvkGetDeviceProcAddr, METH_VARARGS, ""},
+        {"vkGetDeviceProcAddr", (PyCFunction)PyvkGetDeviceProcAddr, METH_VARARGS | METH_KEYWORDS, ""},
     
-        {"vkMapMemory", (PyCFunction)PyvkMapMemory, METH_VARARGS, ""},
+        {"vkMapMemory", (PyCFunction)PyvkMapMemory, METH_VARARGS | METH_KEYWORDS, ""},
     
-        {"vkGetPipelineCacheData", (PyCFunction)PyvkGetPipelineCacheData, METH_VARARGS, ""},
+        {"vkGetPipelineCacheData", (PyCFunction)PyvkGetPipelineCacheData, METH_VARARGS | METH_KEYWORDS, ""},
     
 
     
-        {"VK_MAKE_VERSION", (PyCFunction)PyVK_MAKE_VERSION, METH_VARARGS, ""},
+        {"VK_MAKE_VERSION", (PyCFunction)PyVK_MAKE_VERSION, METH_VARARGS | METH_KEYWORDS, ""},
     
-        {"VK_VERSION_MAJOR", (PyCFunction)PyVK_VERSION_MAJOR, METH_VARARGS, ""},
+        {"VK_VERSION_MAJOR", (PyCFunction)PyVK_VERSION_MAJOR, METH_VARARGS | METH_KEYWORDS, ""},
     
-        {"VK_VERSION_MINOR", (PyCFunction)PyVK_VERSION_MINOR, METH_VARARGS, ""},
+        {"VK_VERSION_MINOR", (PyCFunction)PyVK_VERSION_MINOR, METH_VARARGS | METH_KEYWORDS, ""},
     
-        {"VK_VERSION_PATCH", (PyCFunction)PyVK_VERSION_PATCH, METH_VARARGS, ""},
+        {"VK_VERSION_PATCH", (PyCFunction)PyVK_VERSION_PATCH, METH_VARARGS | METH_KEYWORDS, ""},
     
 
     {NULL, NULL, 0, NULL}
@@ -67424,6 +72168,22 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
         
     
         
+            PyModule_AddIntConstant(module, "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_KHR_EXT", 29);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_DEBUG_REPORT_OBJECT_TYPE_DISPLAY_MODE_KHR_EXT", 30);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_DEBUG_REPORT_OBJECT_TYPE_OBJECT_TABLE_NVX_EXT", 31);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_DEBUG_REPORT_OBJECT_TYPE_INDIRECT_COMMANDS_LAYOUT_NVX_EXT", 32);
+        
+    
+        
             PyModule_AddIntConstant(module, "VK_DEBUG_REPORT_ERROR_NONE_EXT", 0);
         
     
@@ -67469,6 +72229,82 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     
         
             PyModule_AddIntConstant(module, "VK_VALIDATION_CHECK_ALL_EXT", 0);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_UNORDERED_SEQUENCES_BIT_NVX", 0x00000001);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_SPARSE_SEQUENCES_BIT_NVX", 0x00000002);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_EMPTY_EXECUTIONS_BIT_NVX", 0x00000004);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_LAYOUT_USAGE_INDEXED_SEQUENCES_BIT_NVX", 0x00000008);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_OBJECT_ENTRY_USAGE_GRAPHICS_BIT_NVX", 0x00000001);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_OBJECT_ENTRY_USAGE_COMPUTE_BIT_NVX", 0x00000002);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_PIPELINE_NVX", 0);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_DESCRIPTOR_SET_NVX", 1);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_INDEX_BUFFER_NVX", 2);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_VERTEX_BUFFER_NVX", 3);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_PUSH_CONSTANT_NVX", 4);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_DRAW_INDEXED_NVX", 5);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_DRAW_NVX", 6);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_INDIRECT_COMMANDS_TOKEN_DISPATCH_NVX", 7);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_OBJECT_ENTRY_DESCRIPTOR_SET_NVX", 0);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_OBJECT_ENTRY_PIPELINE_NVX", 1);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_OBJECT_ENTRY_INDEX_BUFFER_NVX", 2);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_OBJECT_ENTRY_VERTEX_BUFFER_NVX", 3);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_OBJECT_ENTRY_PUSH_CONSTANT_NVX", 4);
         
     
         
@@ -67636,7 +72472,7 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
         
     
         
-            PyModule_AddIntConstant(module, "VK_EXT_DEBUG_REPORT_SPEC_VERSION", 3);
+            PyModule_AddIntConstant(module, "VK_EXT_DEBUG_REPORT_SPEC_VERSION", 4);
         
     
         
@@ -68333,6 +73169,210 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     
         
             PyModule_AddStringConstant(module, "VK_KHR_EXTENSION_84_EXTENSION_NAME", "VK_KHR_extension_84");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_KHR_EXTENSION_85_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_KHR_EXTENSION_85_EXTENSION_NAME", "VK_KHR_extension_85");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_KHR_EXTENSION_86_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_KHR_EXTENSION_86_EXTENSION_NAME", "VK_KHR_extension_86");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NVX_DEVICE_GENERATED_COMMANDS_SPEC_VERSION", 1);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NVX_DEVICE_GENERATED_COMMANDS_EXTENSION_NAME", "VK_NVX_device_generated_commands");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_STRUCTURE_TYPE_OBJECT_TABLE_CREATE_INFO_NVX", 1000086000);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_STRUCTURE_TYPE_INDIRECT_COMMANDS_LAYOUT_CREATE_INFO_NVX", 1000086001);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_STRUCTURE_TYPE_CMD_PROCESS_COMMANDS_INFO_NVX", 1000086002);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_STRUCTURE_TYPE_CMD_RESERVE_SPACE_FOR_COMMANDS_INFO_NVX", 1000086003);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_STRUCTURE_TYPE_DEVICE_GENERATED_COMMANDS_LIMITS_NVX", 1000086004);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_STRUCTURE_TYPE_DEVICE_GENERATED_COMMANDS_FEATURES_NVX", 1000086005);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_PIPELINE_STAGE_COMMAND_PROCESS_BIT_NVX", 0x00020000);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_ACCESS_COMMAND_PROCESS_READ_BIT_NVX", 0x00020000);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_ACCESS_COMMAND_PROCESS_WRITE_BIT_NVX", 0x00040000);
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_KHR_EXTENSION_88_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_KHR_EXTENSION_88_EXTENSION_NAME", "VK_KHR_extension_88");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_EXT_EXTENSION_89_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_EXT_EXTENSION_89_EXTENSION_NAME", "VK_EXT_extension_89");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_EXT_EXTENSION_90_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_EXT_EXTENSION_90_EXTENSION_NAME", "VK_EXT_extension_90");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_EXT_EXTENSION_91_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_EXT_EXTENSION_91_EXTENSION_NAME", "VK_EXT_extension_91");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_EXT_EXTENSION_92_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_EXT_EXTENSION_92_EXTENSION_NAME", "VK_EXT_extension_92");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_GOOGLE_EXTENSION_93_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_GOOGLE_EXTENSION_93_EXTENSION_NAME", "VK_GOOGLE_extension_93");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_KHR_EXTENSION_94_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_KHR_EXTENSION_94_EXTENSION_NAME", "VK_KHR_extension_94");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_95_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_95_EXTENSION_NAME", "VK_NV_extension_95");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_96_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_96_EXTENSION_NAME", "VK_NV_extension_96");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_97_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_97_EXTENSION_NAME", "VK_NV_extension_97");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_98_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_98_EXTENSION_NAME", "VK_NV_extension_98");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_99_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_99_EXTENSION_NAME", "VK_NV_extension_99");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_100_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_100_EXTENSION_NAME", "VK_NV_extension_100");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_101_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_101_EXTENSION_NAME", "VK_NV_extension_101");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_102_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_102_EXTENSION_NAME", "VK_NV_extension_102");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_103_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_103_EXTENSION_NAME", "VK_NV_extension_103");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_NV_EXTENSION_104_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_NV_EXTENSION_104_EXTENSION_NAME", "VK_NV_extension_104");
+        
+    
+        
+            PyModule_AddIntConstant(module, "VK_KHR_EXTENSION_105_SPEC_VERSION", 0);
+        
+    
+        
+            PyModule_AddStringConstant(module, "VK_KHR_EXTENSION_105_EXTENSION_NAME", "VK_EXT_extension_105");
         
     
         
@@ -69881,6 +74921,160 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     
     
         
+        if (PyType_Ready(&PyVkDeviceGeneratedCommandsFeaturesNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkDeviceGeneratedCommandsFeaturesNVXType);
+        PyModule_AddObject(module, "VkDeviceGeneratedCommandsFeaturesNVX", (PyObject *)&PyVkDeviceGeneratedCommandsFeaturesNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkDeviceGeneratedCommandsLimitsNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkDeviceGeneratedCommandsLimitsNVXType);
+        PyModule_AddObject(module, "VkDeviceGeneratedCommandsLimitsNVX", (PyObject *)&PyVkDeviceGeneratedCommandsLimitsNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkIndirectCommandsTokenNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkIndirectCommandsTokenNVXType);
+        PyModule_AddObject(module, "VkIndirectCommandsTokenNVX", (PyObject *)&PyVkIndirectCommandsTokenNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkIndirectCommandsLayoutTokenNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkIndirectCommandsLayoutTokenNVXType);
+        PyModule_AddObject(module, "VkIndirectCommandsLayoutTokenNVX", (PyObject *)&PyVkIndirectCommandsLayoutTokenNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkIndirectCommandsLayoutCreateInfoNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkIndirectCommandsLayoutCreateInfoNVXType);
+        PyModule_AddObject(module, "VkIndirectCommandsLayoutCreateInfoNVX", (PyObject *)&PyVkIndirectCommandsLayoutCreateInfoNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkCmdProcessCommandsInfoNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkCmdProcessCommandsInfoNVXType);
+        PyModule_AddObject(module, "VkCmdProcessCommandsInfoNVX", (PyObject *)&PyVkCmdProcessCommandsInfoNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkCmdReserveSpaceForCommandsInfoNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkCmdReserveSpaceForCommandsInfoNVXType);
+        PyModule_AddObject(module, "VkCmdReserveSpaceForCommandsInfoNVX", (PyObject *)&PyVkCmdReserveSpaceForCommandsInfoNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkObjectTableCreateInfoNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkObjectTableCreateInfoNVXType);
+        PyModule_AddObject(module, "VkObjectTableCreateInfoNVX", (PyObject *)&PyVkObjectTableCreateInfoNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkObjectTableEntryNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkObjectTableEntryNVXType);
+        PyModule_AddObject(module, "VkObjectTableEntryNVX", (PyObject *)&PyVkObjectTableEntryNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkObjectTablePipelineEntryNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkObjectTablePipelineEntryNVXType);
+        PyModule_AddObject(module, "VkObjectTablePipelineEntryNVX", (PyObject *)&PyVkObjectTablePipelineEntryNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkObjectTableDescriptorSetEntryNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkObjectTableDescriptorSetEntryNVXType);
+        PyModule_AddObject(module, "VkObjectTableDescriptorSetEntryNVX", (PyObject *)&PyVkObjectTableDescriptorSetEntryNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkObjectTableVertexBufferEntryNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkObjectTableVertexBufferEntryNVXType);
+        PyModule_AddObject(module, "VkObjectTableVertexBufferEntryNVX", (PyObject *)&PyVkObjectTableVertexBufferEntryNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkObjectTableIndexBufferEntryNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkObjectTableIndexBufferEntryNVXType);
+        PyModule_AddObject(module, "VkObjectTableIndexBufferEntryNVX", (PyObject *)&PyVkObjectTableIndexBufferEntryNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyVkObjectTablePushConstantEntryNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyVkObjectTablePushConstantEntryNVXType);
+        PyModule_AddObject(module, "VkObjectTablePushConstantEntryNVX", (PyObject *)&PyVkObjectTablePushConstantEntryNVXType);
+    
+    
+
+    
+    
+    
+        
         if (PyType_Ready(&PyVkClearColorValueType) < 0)
             return NULL;
         Py_INCREF(&PyVkClearColorValueType);
@@ -70326,6 +75520,96 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     
 
     
+    
+    
+        
+        if (PyType_Ready(&PyvkCmdProcessCommandsNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCmdProcessCommandsNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCmdReserveSpaceForCommandsNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCmdReserveSpaceForCommandsNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCreateIndirectCommandsLayoutNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateIndirectCommandsLayoutNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDestroyIndirectCommandsLayoutNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDestroyIndirectCommandsLayoutNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkCreateObjectTableNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkCreateObjectTableNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkDestroyObjectTableNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkDestroyObjectTableNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkRegisterObjectsNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkRegisterObjectsNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkUnregisterObjectsNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkUnregisterObjectsNVXType);
+    
+    
+
+    
+    
+    
+        
+        if (PyType_Ready(&PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVXType) < 0)
+            return NULL;
+        Py_INCREF(&PyvkGetPhysicalDeviceGeneratedCommandsPropertiesNVXType);
+    
+    
+
+    
 
 
     // ----------
@@ -70336,53 +75620,13 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
     PyModule_AddObject(module, "VulkanError", VulkanError);
 
     
-        VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
-        Py_INCREF(VkTimeout);
-        PyModule_AddObject(module, "VkTimeout", VkTimeout);
-    
-        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
-        Py_INCREF(VkErrorDeviceLost);
-        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
-    
-        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
-        Py_INCREF(VkErrorMemoryMapFailed);
-        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
-    
         VkNotReady = PyErr_NewException("vulkan.VkNotReady", VulkanError, NULL);
         Py_INCREF(VkNotReady);
         PyModule_AddObject(module, "VkNotReady", VkNotReady);
     
-        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
-        Py_INCREF(VkErrorTooManyObjects);
-        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
-    
-        VkErrorFeatureNotPresent = PyErr_NewException("vulkan.VkErrorFeatureNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorFeatureNotPresent);
-        PyModule_AddObject(module, "VkErrorFeatureNotPresent", VkErrorFeatureNotPresent);
-    
-        VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
-        Py_INCREF(VkErrorInitializationFailed);
-        PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
-    
-        VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
-        Py_INCREF(VkErrorIncompatibleDriver);
-        PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
-    
-        VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorExtensionNotPresent);
-        PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
-    
-        VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
-        Py_INCREF(VkErrorLayerNotPresent);
-        PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
-    
-        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
-        Py_INCREF(VkIncomplete);
-        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
-    
-        VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
-        Py_INCREF(VkErrorFormatNotSupported);
-        PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
+        VkTimeout = PyErr_NewException("vulkan.VkTimeout", VulkanError, NULL);
+        Py_INCREF(VkTimeout);
+        PyModule_AddObject(module, "VkTimeout", VkTimeout);
     
         VkEventSet = PyErr_NewException("vulkan.VkEventSet", VulkanError, NULL);
         Py_INCREF(VkEventSet);
@@ -70392,17 +75636,57 @@ PyMODINIT_FUNC PyInit_vulkan(void) {
         Py_INCREF(VkEventReset);
         PyModule_AddObject(module, "VkEventReset", VkEventReset);
     
+        VkIncomplete = PyErr_NewException("vulkan.VkIncomplete", VulkanError, NULL);
+        Py_INCREF(VkIncomplete);
+        PyModule_AddObject(module, "VkIncomplete", VkIncomplete);
+    
         VkErrorOutOfHostMemory = PyErr_NewException("vulkan.VkErrorOutOfHostMemory", VulkanError, NULL);
         Py_INCREF(VkErrorOutOfHostMemory);
         PyModule_AddObject(module, "VkErrorOutOfHostMemory", VkErrorOutOfHostMemory);
     
-        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
-        Py_INCREF(VkErrorFragmentedPool);
-        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
-    
         VkErrorOutOfDeviceMemory = PyErr_NewException("vulkan.VkErrorOutOfDeviceMemory", VulkanError, NULL);
         Py_INCREF(VkErrorOutOfDeviceMemory);
         PyModule_AddObject(module, "VkErrorOutOfDeviceMemory", VkErrorOutOfDeviceMemory);
+    
+        VkErrorInitializationFailed = PyErr_NewException("vulkan.VkErrorInitializationFailed", VulkanError, NULL);
+        Py_INCREF(VkErrorInitializationFailed);
+        PyModule_AddObject(module, "VkErrorInitializationFailed", VkErrorInitializationFailed);
+    
+        VkErrorDeviceLost = PyErr_NewException("vulkan.VkErrorDeviceLost", VulkanError, NULL);
+        Py_INCREF(VkErrorDeviceLost);
+        PyModule_AddObject(module, "VkErrorDeviceLost", VkErrorDeviceLost);
+    
+        VkErrorMemoryMapFailed = PyErr_NewException("vulkan.VkErrorMemoryMapFailed", VulkanError, NULL);
+        Py_INCREF(VkErrorMemoryMapFailed);
+        PyModule_AddObject(module, "VkErrorMemoryMapFailed", VkErrorMemoryMapFailed);
+    
+        VkErrorLayerNotPresent = PyErr_NewException("vulkan.VkErrorLayerNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorLayerNotPresent);
+        PyModule_AddObject(module, "VkErrorLayerNotPresent", VkErrorLayerNotPresent);
+    
+        VkErrorExtensionNotPresent = PyErr_NewException("vulkan.VkErrorExtensionNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorExtensionNotPresent);
+        PyModule_AddObject(module, "VkErrorExtensionNotPresent", VkErrorExtensionNotPresent);
+    
+        VkErrorFeatureNotPresent = PyErr_NewException("vulkan.VkErrorFeatureNotPresent", VulkanError, NULL);
+        Py_INCREF(VkErrorFeatureNotPresent);
+        PyModule_AddObject(module, "VkErrorFeatureNotPresent", VkErrorFeatureNotPresent);
+    
+        VkErrorIncompatibleDriver = PyErr_NewException("vulkan.VkErrorIncompatibleDriver", VulkanError, NULL);
+        Py_INCREF(VkErrorIncompatibleDriver);
+        PyModule_AddObject(module, "VkErrorIncompatibleDriver", VkErrorIncompatibleDriver);
+    
+        VkErrorTooManyObjects = PyErr_NewException("vulkan.VkErrorTooManyObjects", VulkanError, NULL);
+        Py_INCREF(VkErrorTooManyObjects);
+        PyModule_AddObject(module, "VkErrorTooManyObjects", VkErrorTooManyObjects);
+    
+        VkErrorFormatNotSupported = PyErr_NewException("vulkan.VkErrorFormatNotSupported", VulkanError, NULL);
+        Py_INCREF(VkErrorFormatNotSupported);
+        PyModule_AddObject(module, "VkErrorFormatNotSupported", VkErrorFormatNotSupported);
+    
+        VkErrorFragmentedPool = PyErr_NewException("vulkan.VkErrorFragmentedPool", VulkanError, NULL);
+        Py_INCREF(VkErrorFragmentedPool);
+        PyModule_AddObject(module, "VkErrorFragmentedPool", VkErrorFragmentedPool);
     
 
 
