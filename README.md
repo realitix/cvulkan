@@ -47,7 +47,7 @@ Here the basic steps:
 
 ## Community
 
-You can checkout my blog, I speaks about **CVulkan**:
+You can checkout my blog, I speak about **CVulkan**:
 [Blog](https://realitix.github.io)
 
 ## Supported By

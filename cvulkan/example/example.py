@@ -27,6 +27,8 @@ layers = vkEnumerateInstanceLayerProperties(None)
 layers = [l.layerName for l in layers]
 print("availables layers: %s\n" % layers)
 
+layers = ['VK_LAYER_LUNARG_standard_validation']
+extensions = ['VK_KHR_surface', 'VK_KHR_xlib_surface', 'VK_EXT_debug_report']
 createInfo = VkInstanceCreateInfo(
     sType=VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
     flags=0,
