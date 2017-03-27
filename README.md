@@ -1,6 +1,5 @@
-![logo](https://cdn.rawgit.com/realitix/cvulkan/master/logo/cvulkan-web.svg)
-
-CVulkan is a C extension for Vulkan. It leverages power of Vulkan with simplicity of Python.
+**I will not maintain CVulkan anymore, I have developed a better Vulkan wrapper: [vulkan](https://github.com/realitix/vulkan).
+This wrapper it written in plain C whereas *vulkan* uses CFFI internally.**
 
 ## Presentation
 
