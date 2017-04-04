@@ -1,5 +1,4 @@
-**I will not maintain CVulkan anymore, I have developed a better Vulkan wrapper: [vulkan](https://github.com/realitix/vulkan).
-This wrapper it written in plain C whereas *vulkan* uses CFFI internally.**
+# I will not maintain CVulkan anymore, I have developed a better Vulkan wrapper: [vulkan](https://github.com/realitix/vulkan). This wrapper is written in plain C whereas *vulkan* uses CFFI internally.**
 
 ## Presentation
 
